@@ -57,17 +57,18 @@
       <text x="309.2517" xml:space="preserve" y="353.0698" clip-path="url(#clipPath2)" stroke="none">Гость</text>
     </g>
     <g fill="white" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,240,-202)" stroke="white">
-      <ellipse rx="85.4" ry="25" clip-path="url(#clipPath2)" cx="707.8" cy="242.75" stroke="none"/>
+      <ellipse rx="85.4" ry="25" clip-path="url(#clipPath2)" cx="711.05" cy="242.75" stroke="none"/>
     </g>
     <g font-size="13px" stroke-linecap="butt" transform="matrix(1,0,0,1,240,-202)" text-rendering="geometricPrecision" font-family="sans-serif" shape-rendering="geometricPrecision" stroke-miterlimit="1.45">
-      <text x="668.7048" xml:space="preserve" y="247.8567" clip-path="url(#clipPath2)" stroke="none">Авторизация</text>
-      <ellipse rx="85.4" fill="none" ry="25" clip-path="url(#clipPath2)" cx="707.8" cy="242.75"/>
+      <text x="671.9548" xml:space="preserve" y="247.8567" clip-path="url(#clipPath2)" stroke="none">Авторизация</text>
+      <ellipse rx="85.4" fill="none" ry="25" clip-path="url(#clipPath2)" cx="711.05" cy="242.75"/>
     </g>
     <g fill="white" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,240,-202)" stroke="white">
       <ellipse rx="93.5" ry="25" clip-path="url(#clipPath2)" cx="89.1449" cy="437.425" stroke="none"/>
     </g>
     <g font-size="13px" stroke-linecap="butt" transform="matrix(1,0,0,1,240,-202)" text-rendering="geometricPrecision" font-family="sans-serif" shape-rendering="geometricPrecision" stroke-miterlimit="1.45">
-      <text x="8.974" xml:space="preserve" y="442.5317" clip-path="url(#clipPath2)" stroke="none">Просмотр профиля игрока</text>
+      <text x="26.7442" xml:space="preserve" y="434.5685" clip-path="url(#clipPath2)" stroke="none">Просмотр профилей</text>
+      <text x="66.0013" xml:space="preserve" y="450.4948" clip-path="url(#clipPath2)" stroke="none">игроков</text>
       <ellipse rx="93.5" fill="none" ry="25" clip-path="url(#clipPath2)" cx="89.1449" cy="437.425"/>
     </g>
     <g fill="white" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,240,-202)" stroke="white">
@@ -148,28 +149,27 @@
       <text x="308.8835" xml:space="preserve" y="591.6948" clip-path="url(#clipPath2)" stroke="none">Игрок</text>
     </g>
     <g fill="white" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,240,-202)" stroke="white">
-      <ellipse rx="93.5" ry="25" clip-path="url(#clipPath2)" cx="707.8" cy="322.75" stroke="none"/>
+      <ellipse rx="93.5" ry="25" clip-path="url(#clipPath2)" cx="711.05" cy="322.75" stroke="none"/>
     </g>
     <g font-size="13px" stroke-linecap="butt" transform="matrix(1,0,0,1,240,-202)" text-rendering="geometricPrecision" font-family="sans-serif" shape-rendering="geometricPrecision" stroke-miterlimit="1.45">
-      <text x="650.1125" xml:space="preserve" y="327.8567" clip-path="url(#clipPath2)" stroke="none">Создание аккаунта</text>
-      <ellipse rx="93.5" fill="none" ry="25" clip-path="url(#clipPath2)" cx="707.8" cy="322.75"/>
+      <text x="653.3625" xml:space="preserve" y="327.8567" clip-path="url(#clipPath2)" stroke="none">Создание аккаунта</text>
+      <ellipse rx="93.5" fill="none" ry="25" clip-path="url(#clipPath2)" cx="711.05" cy="322.75"/>
     </g>
     <g fill="white" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,240,-202)" stroke="white">
       <ellipse rx="90.25" ry="33.4" clip-path="url(#clipPath2)" cx="704.55" cy="570.725" stroke="none"/>
     </g>
     <g font-size="13px" stroke-linecap="butt" transform="matrix(1,0,0,1,240,-202)" text-rendering="geometricPrecision" font-family="sans-serif" shape-rendering="geometricPrecision" stroke-miterlimit="1.45">
-      <text x="654.1306" xml:space="preserve" y="559.9054" clip-path="url(#clipPath2)" stroke="none">Отправка своего</text>
-      <text x="661.716" xml:space="preserve" y="575.8317" clip-path="url(#clipPath2)" stroke="none">результата на</text>
-      <text x="661.8937" xml:space="preserve" y="591.7579" clip-path="url(#clipPath2)" stroke="none">соревнование</text>
+      <text x="674.6874" xml:space="preserve" y="567.8685" clip-path="url(#clipPath2)" stroke="none">Участие в</text>
+      <text x="661.8779" xml:space="preserve" y="583.7948" clip-path="url(#clipPath2)" stroke="none">соревновании</text>
       <ellipse rx="90.25" fill="none" ry="33.4" clip-path="url(#clipPath2)" cx="704.55" cy="570.725"/>
     </g>
     <g fill="white" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,240,-202)" stroke="white">
-      <ellipse rx="93.5" ry="25" clip-path="url(#clipPath2)" cx="707.8" cy="482.325" stroke="none"/>
+      <ellipse rx="93.5" ry="25" clip-path="url(#clipPath2)" cx="711.05" cy="482.325" stroke="none"/>
     </g>
     <g font-size="13px" stroke-linecap="butt" transform="matrix(1,0,0,1,240,-202)" text-rendering="geometricPrecision" font-family="sans-serif" shape-rendering="geometricPrecision" stroke-miterlimit="1.45">
-      <text x="636.1318" xml:space="preserve" y="479.4686" clip-path="url(#clipPath2)" stroke="none">Редактирование своего</text>
-      <text x="678.9531" xml:space="preserve" y="495.3948" clip-path="url(#clipPath2)" stroke="none"> профиля</text>
-      <ellipse rx="93.5" fill="none" ry="25" clip-path="url(#clipPath2)" cx="707.8" cy="482.325"/>
+      <text x="639.3818" xml:space="preserve" y="479.4686" clip-path="url(#clipPath2)" stroke="none">Редактирование своего</text>
+      <text x="682.2031" xml:space="preserve" y="495.3948" clip-path="url(#clipPath2)" stroke="none"> профиля</text>
+      <ellipse rx="93.5" fill="none" ry="25" clip-path="url(#clipPath2)" cx="711.05" cy="482.325"/>
     </g>
     <g fill="white" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,240,-202)" stroke="white">
       <ellipse rx="90.25" ry="25" clip-path="url(#clipPath2)" cx="704.55" cy="739.125" stroke="none"/>
@@ -196,19 +196,19 @@
       <ellipse rx="90.25" fill="none" ry="25" clip-path="url(#clipPath2)" cx="704.55" cy="981.125"/>
     </g>
     <g fill="white" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,240,-202)" stroke="white">
-      <ellipse rx="90.25" ry="25" clip-path="url(#clipPath2)" cx="973.2875" cy="808.725" stroke="none"/>
+      <ellipse rx="90.25" ry="25" clip-path="url(#clipPath2)" cx="973.2875" cy="802.425" stroke="none"/>
     </g>
     <g font-size="13px" stroke-linecap="butt" transform="matrix(1,0,0,1,240,-202)" text-rendering="geometricPrecision" font-family="sans-serif" shape-rendering="geometricPrecision" stroke-miterlimit="1.45">
-      <text x="899.3881" xml:space="preserve" y="813.8317" clip-path="url(#clipPath2)" stroke="none">Создание соревнования</text>
-      <ellipse rx="90.25" fill="none" ry="25" clip-path="url(#clipPath2)" cx="973.2875" cy="808.725"/>
+      <text x="899.3881" xml:space="preserve" y="807.5317" clip-path="url(#clipPath2)" stroke="none">Создание соревнования</text>
+      <ellipse rx="90.25" fill="none" ry="25" clip-path="url(#clipPath2)" cx="973.2875" cy="802.425"/>
     </g>
     <g fill="white" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,240,-202)" stroke="white">
-      <ellipse rx="90.25" ry="25" clip-path="url(#clipPath2)" cx="973.2875" cy="888.725" stroke="none"/>
+      <ellipse rx="90.25" ry="25" clip-path="url(#clipPath2)" cx="973.2875" cy="876.725" stroke="none"/>
     </g>
     <g font-size="13px" stroke-linecap="butt" transform="matrix(1,0,0,1,240,-202)" text-rendering="geometricPrecision" font-family="sans-serif" shape-rendering="geometricPrecision" stroke-miterlimit="1.45">
-      <text x="893.8434" xml:space="preserve" y="885.8685" clip-path="url(#clipPath2)" stroke="none">Удаление нежелательных</text>
-      <text x="936.0109" xml:space="preserve" y="901.7948" clip-path="url(#clipPath2)" stroke="none">результатов</text>
-      <ellipse rx="90.25" fill="none" ry="25" clip-path="url(#clipPath2)" cx="973.2875" cy="888.725"/>
+      <text x="893.8434" xml:space="preserve" y="873.8685" clip-path="url(#clipPath2)" stroke="none">Удаление нежелательных</text>
+      <text x="936.0109" xml:space="preserve" y="889.7948" clip-path="url(#clipPath2)" stroke="none">результатов</text>
+      <ellipse rx="90.25" fill="none" ry="25" clip-path="url(#clipPath2)" cx="973.2875" cy="876.725"/>
     </g>
     <g fill="white" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,240,-202)" stroke="white">
       <ellipse rx="90.25" ry="30.2" clip-path="url(#clipPath2)" cx="973.2875" cy="733.925" stroke="none"/>
@@ -277,8 +277,8 @@
       <text x="-191.1095" xml:space="preserve" y="646.0497" clip-path="url(#clipPath2)" stroke="none">Просмотр описания</text>
       <text x="-151.7033" xml:space="preserve" y="661.976" clip-path="url(#clipPath2)" stroke="none">наград</text>
       <ellipse rx="93.5" fill="none" ry="30.2" clip-path="url(#clipPath2)" cx="-131.1051" cy="648.9061"/>
-      <path fill="none" d="M355.968 280.7622 L619.7286 252.2653" clip-path="url(#clipPath2)"/>
-      <path d="M627.6823 251.406 L615.2147 247.7239 L618.7344 252.3727 L616.2888 257.666 Z" stroke="none" clip-path="url(#clipPath2)"/>
+      <path fill="none" d="M356.035 280.7824 L622.897 252.1937" clip-path="url(#clipPath2)"/>
+      <path d="M630.8514 251.3416 L618.3871 247.6483 L621.9026 252.3003 L619.4523 257.5914 Z" stroke="none" clip-path="url(#clipPath2)"/>
       <path fill="none" d="M295.9885 316.1196 L188.1066 431.5796" clip-path="url(#clipPath2)"/>
       <path d="M182.6449 437.425 L194.4909 432.0705 L188.7894 430.8489 L187.1841 425.2432 Z" stroke="none" clip-path="url(#clipPath2)"/>
       <path fill="none" d="M355.9901 746.4836 L629.8665 677.8427" clip-path="url(#clipPath2)"/>
@@ -289,22 +289,22 @@
       <path d="M182.6449 437.425 L190.406 447.854 L190.3816 442.0231 L195.515 439.2577 Z" stroke="none" clip-path="url(#clipPath2)"/>
       <path fill="none" d="M355.9901 533.439 L642.0435 636.586" clip-path="url(#clipPath2)"/>
       <path d="M649.5692 639.2997 L639.9767 630.5256 L641.1028 636.2468 L636.5847 639.9327 Z" stroke="none" clip-path="url(#clipPath2)"/>
-      <path fill="none" d="M355.968 287.0415 L612.4265 313.0703" clip-path="url(#clipPath2)"/>
-      <path d="M620.3856 313.8781 L608.9518 307.692 L611.4316 312.9693 L607.9421 317.6408 Z" stroke="none" clip-path="url(#clipPath2)"/>
+      <path fill="none" d="M356.035 287.0226 L615.5832 313.1426" clip-path="url(#clipPath2)"/>
+      <path d="M623.543 313.9436 L612.1039 307.7672 L614.5882 313.0424 L611.1026 317.7169 Z" stroke="none" clip-path="url(#clipPath2)"/>
       <path fill="none" d="M355.9901 526.4357 L611.2548 558.8705" clip-path="url(#clipPath2)"/>
       <path d="M619.191 559.879 L607.917 553.4062 L610.2628 558.7445 L606.6564 563.3264 Z" stroke="none" clip-path="url(#clipPath2)"/>
-      <path fill="none" d="M355.968 519.4618 L612.8755 492.3445" clip-path="url(#clipPath2)"/>
-      <path d="M620.8314 491.5048 L608.3728 487.792 L611.8811 492.4495 L609.4225 497.7368 Z" stroke="none" clip-path="url(#clipPath2)"/>
+      <path fill="none" d="M356.035 519.4815 L616.0261 492.2704" clip-path="url(#clipPath2)"/>
+      <path d="M623.9827 491.4376 L611.5274 487.7139 L615.0316 492.3745 L612.5683 497.6595 Z" stroke="none" clip-path="url(#clipPath2)"/>
       <path fill="none" d="M355.9901 752.8215 L607.2007 742.9503" clip-path="url(#clipPath2)"/>
       <path d="M615.1946 742.6362 L603.0075 738.1113 L606.2015 742.9896 L603.4002 748.1035 Z" stroke="none" clip-path="url(#clipPath2)"/>
       <path fill="none" d="M355.9901 761.554 L630.0195 830.5771" clip-path="url(#clipPath2)"/>
       <path d="M637.7772 832.5311 L627.3619 824.7515 L629.0497 830.3328 L624.9194 834.4486 Z" stroke="none" clip-path="url(#clipPath2)"/>
       <path fill="none" d="M356.0132 772.0075 L659.8597 954.3114" clip-path="url(#clipPath2)"/>
       <path d="M666.7197 958.4273 L659.0022 947.9659 L659.0023 953.7969 L653.8573 956.541 Z" stroke="none" clip-path="url(#clipPath2)"/>
-      <path fill="none" d="M783.7711 837.3741 L886.1562 821.8966" clip-path="url(#clipPath2)"/>
-      <path d="M894.0664 820.7009 L881.4539 817.5507 L885.1675 822.0461 L882.9485 827.4383 Z" stroke="none" clip-path="url(#clipPath2)"/>
-      <path fill="none" d="M784.3277 861.0389 L885.5943 875.8763" clip-path="url(#clipPath2)"/>
-      <path d="M893.5098 877.0361 L882.3613 870.3493 L884.6049 875.7314 L880.9117 880.2437 Z" stroke="none" clip-path="url(#clipPath2)"/>
+      <path fill="none" d="M780.8976 836.0187 L889.0591 817.1323" clip-path="url(#clipPath2)"/>
+      <path d="M896.9399 815.7563 L884.2587 812.8948 L888.074 817.3043 L885.9788 822.7458 Z" stroke="none" clip-path="url(#clipPath2)"/>
+      <path fill="none" d="M789.2543 857.9785 L880.6243 867.2858" clip-path="url(#clipPath2)"/>
+      <path d="M888.5831 868.0966 L877.1516 861.9062 L879.6295 867.1845 L876.1382 871.8547 Z" stroke="none" clip-path="url(#clipPath2)"/>
       <path fill="none" d="M794.5806 737.3829 L875.1895 735.8232" clip-path="url(#clipPath2)"/>
       <path d="M883.188 735.6684 L871.0935 730.9015 L874.1897 735.8425 L871.287 740.8997 Z" stroke="none" clip-path="url(#clipPath2)"/>
       <path fill="none" d="M766.1952 720.8657 L898.0385 681.8137" clip-path="url(#clipPath2)"/>
