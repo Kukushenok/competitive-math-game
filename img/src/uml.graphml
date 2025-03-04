@@ -1,0 +1,3645 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--Created by yFiles for HTML 3.0-EAP4-->
+<graphml xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://www.yworks.com/xml/schema/graphml.html/2.0/ygraphml.xsd " xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:yca="http://www.yworks.com/xml/yfiles-compat-arrows/1.0" xmlns:ycns="http://www.yworks.com/xml/yfiles-compat-node-styles/1.0" xmlns:yjs2="http://www.yworks.com/xml/yfiles-for-html/2.0/xaml" xmlns:demostyle2="http://www.yworks.com/yFilesHTML/demos/FlatDemoStyle/2.0" xmlns:demostyle="http://www.yworks.com/yFilesHTML/demos/FlatDemoStyle/1.0" xmlns:icon-style="http://www.yworks.com/yed-live/icon-style/1.0" xmlns:bpmn="http://www.yworks.com/xml/yfiles-bpmn/2.0" xmlns:demotablestyle="http://www.yworks.com/yFilesHTML/demos/FlatDemoTableStyle/1.0" xmlns:uml="http://www.yworks.com/yFilesHTML/demos/UMLDemoStyle/1.0" xmlns:GraphvizNodeStyle="http://www.yworks.com/yFilesHTML/graphviz-node-style/1.0" xmlns:Vue2jsNodeStyle="http://www.yworks.com/demos/yfiles-vuejs-node-style/1.0" xmlns:Vue3jsNodeStyle="http://www.yworks.com/demos/yfiles-vue-node-style/3.0" xmlns:explorer-style="http://www.yworks.com/data-explorer/1.0" xmlns:yx="http://www.yworks.com/xml/yfiles-common/4.0" xmlns:y="http://www.yworks.com/xml/yfiles-common/3.0" xmlns:x="http://www.yworks.com/xml/yfiles-common/markup/3.0" xmlns:yjs="http://www.yworks.com/xml/yfiles-for-html/3.0/xaml" xmlns:sys="http://www.yworks.com/xml/yfiles-common/markup/primitives/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<key id="d0" for="node" attr.type="int" attr.name="zOrder" y:attr.uri="http://www.yworks.com/xml/yfiles-z-order/1.0/zOrder"/>
+	<key id="d1" for="node" attr.type="boolean" attr.name="Expanded" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/folding/Expanded">
+		<default>true</default>
+	</key>
+	<key id="d2" for="node" attr.type="string" attr.name="url"/>
+	<key id="d3" for="node" attr.type="string" attr.name="description"/>
+	<key id="d4" for="node" attr.name="NodeLabels" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/NodeLabels"/>
+	<key id="d5" for="node" attr.name="NodeGeometry" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/NodeGeometry"/>
+	<key id="d6" for="all" attr.name="UserTags" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/UserTags"/>
+	<key id="d7" for="node" attr.name="NodeStyle" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/NodeStyle"/>
+	<key id="d8" for="node" attr.name="NodeViewState" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/folding/1.1/NodeViewState"/>
+	<key id="d9" for="edge" attr.type="string" attr.name="url"/>
+	<key id="d10" for="edge" attr.type="string" attr.name="description"/>
+	<key id="d11" for="edge" attr.name="EdgeLabels" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/EdgeLabels"/>
+	<key id="d12" for="edge" attr.name="EdgeGeometry" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/EdgeGeometry"/>
+	<key id="d13" for="edge" attr.name="EdgeStyle" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/EdgeStyle"/>
+	<key id="d14" for="edge" attr.name="EdgeViewState" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/folding/1.1/EdgeViewState"/>
+	<key id="d15" for="port" attr.name="PortLabels" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/PortLabels"/>
+	<key id="d16" for="port" attr.name="PortLocationParameter" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/PortLocationParameter">
+		<default>
+			<x:Static Member="y:FreeNodePortLocationModel.NodeCenterAnchored"/>
+		</default>
+	</key>
+	<key id="d17" for="port" attr.name="PortStyle" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/PortStyle">
+		<default>
+			<x:Static Member="y:VoidPortStyle.Instance"/>
+		</default>
+	</key>
+	<key id="d18" for="port" attr.name="PortViewState" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/folding/1.1/PortViewState"/>
+	<key id="d19" attr.name="SharedData" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/SharedData"/>
+	<data key="d19">
+		<y:SharedData>
+			<yjs:Color x:Key="1" value="#FF607D8B"/>
+			<yjs:CssFill x:Key="2" cssString="#a3f1bb"/>
+			<yx:ExteriorNodeLabelModel x:Key="3" Margins="5"/>
+			<yjs:Font x:Key="4" fontSize="12" fontFamily="Roboto" lineSpacing="0.2"/>
+			<yx:GroupNodeLabelModelParameter x:Key="5" PlaceOnTab="false">
+				<yx:GroupNodeLabelModelParameter.Model>
+					<yx:GroupNodeLabelModel/>
+				</yx:GroupNodeLabelModelParameter.Model>
+			</yx:GroupNodeLabelModelParameter>
+			<yjs:CssFill x:Key="6" cssString="#EEE"/>
+			<yjs:CssFill x:Key="7" cssString="#0b7189"/>
+			<yjs:CssFill x:Key="8" cssString="#0b7189"/>
+			<yjs:CssFill x:Key="9" cssString="#FFF"/>
+			<yjs:CssFill x:Key="10" cssString="#9dc6d0"/>
+			<yjs:Stroke x:Key="11" lineCap="SQUARE" thickness="2">
+				<yjs:Stroke.fill>
+					<yjs:CssFill cssString="#0b7189"/>
+				</yjs:Stroke.fill>
+			</yjs:Stroke>
+			<yjs:CssFill x:Key="12" cssString="#0b7189"/>
+			<yjs:CssFill x:Key="13" cssString="#0b7189"/>
+			<yjs:CssFill x:Key="14" cssString="#FFF"/>
+			<yjs:CssFill x:Key="15" cssString="#9dc6d0"/>
+			<yjs:Stroke x:Key="16" lineCap="SQUARE" thickness="2">
+				<yjs:Stroke.fill>
+					<yjs:CssFill cssString="#0b7189"/>
+				</yjs:Stroke.fill>
+			</yjs:Stroke>
+			<y:FreeNodePortLocationModelParameter x:Key="17" Ratio="0.5,0"/>
+			<yjs:Color x:Key="18" value="#FF4CAF50"/>
+			<yjs:CssFill x:Key="19" cssString="#a3f1bb"/>
+			<y:FreeNodePortLocationModelParameter x:Key="20" Ratio="0.5,0.005952380952380931"/>
+			<y:FreeNodePortLocationModelParameter x:Key="21" Ratio="0.5,0.005952380952380931"/>
+			<y:FreeNodePortLocationModelParameter x:Key="22" Ratio="0.5,0.9945652173913043"/>
+			<y:FreeNodePortLocationModelParameter x:Key="23" Ratio="0.5,0.9945652173913043"/>
+			<y:FreeNodePortLocationModelParameter x:Key="24" Ratio="0.5,0.007352941176470562"/>
+			<yx:CompositeLabelModel x:Key="25">
+				<yx:CompositeLabelModel.Models>
+					<yx:CompositeLabelModelModelPair Model="{y:GraphMLReference 3}"/>
+					<yx:CompositeLabelModelModelPair>
+						<yx:CompositeLabelModelModelPair.Model>
+							<yx:InteriorNodeLabelModel/>
+						</yx:CompositeLabelModelModelPair.Model>
+					</yx:CompositeLabelModelModelPair>
+					<yx:CompositeLabelModelModelPair Model="{x:Static yx:FreeNodeLabelModel.Instance}"/>
+				</yx:CompositeLabelModel.Models>
+			</yx:CompositeLabelModel>
+			<yjs:CssFill x:Key="26" cssString="black"/>
+			<yjs:Color x:Key="27" value="#FFB0BEC5"/>
+			<yx:CompositeLabelModelParameter x:Key="28" Model="{y:GraphMLReference 25}">
+				<yx:CompositeLabelModelParameter.Parameter>
+					<yx:ExteriorNodeLabelModelParameter Position="Bottom" Model="{y:GraphMLReference 3}"/>
+				</yx:CompositeLabelModelParameter.Parameter>
+			</yx:CompositeLabelModelParameter>
+			<yjs:CssFill x:Key="29" cssString="#a3f1bb"/>
+			<y:FreeNodePortLocationModelParameter x:Key="30" Ratio="0.5,0.007352941176470562"/>
+			<y:FreeNodePortLocationModelParameter x:Key="31" Ratio="0.5,0.9926470588235294"/>
+			<y:FreeNodePortLocationModelParameter x:Key="32" Ratio="0,0.5"/>
+			<y:FreeNodePortLocationModelParameter x:Key="33" Ratio="0.5,0.007352941176470562"/>
+			<y:FreeNodePortLocationModelParameter x:Key="34" Ratio="0.5,0.007352941176470562"/>
+			<y:FreeNodePortLocationModelParameter x:Key="35" Ratio="0.5,0.9926470588235294"/>
+			<y:FreeNodePortLocationModelParameter x:Key="36" Ratio="0.5,0.9926470588235294"/>
+			<yjs:PolylineEdgeStyle x:Key="37" targetArrow="{y:GraphMLReference 39}">
+				<yjs:PolylineEdgeStyle.stroke>
+					<yjs:Stroke dashStyle="Dash">
+						<yjs:Stroke.fill>
+							<yjs:CssFill cssString="#000000"/>
+						</yjs:Stroke.fill>
+					</yjs:Stroke>
+				</yjs:PolylineEdgeStyle.stroke>
+				<yjs:PolylineEdgeStyle.sourceArrow>
+					<yjs:Arrow fill="WHITE" type="TRIANGLE">
+						<yjs:Arrow.stroke>
+							<yjs:Stroke>
+								<yjs:Stroke.fill>
+									<yjs:CssFill cssString="#000000"/>
+								</yjs:Stroke.fill>
+							</yjs:Stroke>
+						</yjs:Arrow.stroke>
+					</yjs:Arrow>
+				</yjs:PolylineEdgeStyle.sourceArrow>
+			</yjs:PolylineEdgeStyle>
+			<yjs:Stroke x:Key="38">
+				<yjs:Stroke.fill>
+					<yjs:CssFill cssString="#000000"/>
+				</yjs:Stroke.fill>
+			</yjs:Stroke>
+			<yjs:Arrow x:Key="39" fill="BLACK" type="NONE"/>
+			<yjs:PolylineEdgeStyle x:Key="40" stroke="{y:GraphMLReference 55}" targetArrow="{y:GraphMLReference 56}" sourceArrow="{y:GraphMLReference 39}"/>
+			<yjs:PolylineEdgeStyle x:Key="41" targetArrow="{y:GraphMLReference 58}">
+				<yjs:PolylineEdgeStyle.stroke>
+					<yjs:Stroke dashStyle="Dash">
+						<yjs:Stroke.fill>
+							<yjs:CssFill cssString="#000000"/>
+						</yjs:Stroke.fill>
+					</yjs:Stroke>
+				</yjs:PolylineEdgeStyle.stroke>
+				<yjs:PolylineEdgeStyle.sourceArrow>
+					<yjs:Arrow fill="WHITE" type="TRIANGLE">
+						<yjs:Arrow.stroke>
+							<yjs:Stroke>
+								<yjs:Stroke.fill>
+									<yjs:CssFill cssString="#000000"/>
+								</yjs:Stroke.fill>
+							</yjs:Stroke>
+						</yjs:Arrow.stroke>
+					</yjs:Arrow>
+				</yjs:PolylineEdgeStyle.sourceArrow>
+			</yjs:PolylineEdgeStyle>
+			<y:FreeNodePortLocationModelParameter x:Key="42" Ratio="0.5,0.006578947368421073"/>
+			<y:FreeNodePortLocationModelParameter x:Key="43" Ratio="0.5,0.006578947368421073"/>
+			<y:FreeNodePortLocationModelParameter x:Key="44" Ratio="0.5,0.005952380952380931"/>
+			<y:FreeNodePortLocationModelParameter x:Key="45" Ratio="0.5,0.005952380952380931"/>
+			<y:FreeNodePortLocationModelParameter x:Key="46" Ratio="0.5,0.007352941176470562"/>
+			<y:FreeNodePortLocationModelParameter x:Key="47" Ratio="0.5,0.007352941176470562"/>
+			<y:FreeNodePortLocationModelParameter x:Key="48" Ratio="0.5,0.007352941176470562"/>
+			<y:FreeNodePortLocationModelParameter x:Key="49" Ratio="0.5,0.005952380952380931"/>
+			<y:FreeNodePortLocationModelParameter x:Key="50" Ratio="0.5,0.005952380952380931"/>
+			<y:FreeNodePortLocationModelParameter x:Key="51" Ratio="0.5,0.007352941176470562"/>
+			<y:FreeNodePortLocationModelParameter x:Key="52" Ratio="0.5,0.007352941176470562"/>
+			<y:FreeNodePortLocationModelParameter x:Key="53" Ratio="0.5,0.005952380952380931"/>
+			<y:FreeNodePortLocationModelParameter x:Key="54" Ratio="0.5,0.005952380952380931"/>
+			<yjs:Stroke x:Key="55" dashStyle="Dash">
+				<yjs:Stroke.fill>
+					<yjs:CssFill cssString="#000000"/>
+				</yjs:Stroke.fill>
+			</yjs:Stroke>
+			<yjs:Arrow x:Key="56" fill="BLACK">
+				<yjs:Arrow.stroke>
+					<yjs:Stroke>
+						<yjs:Stroke.fill>
+							<yjs:CssFill cssString="#000000"/>
+						</yjs:Stroke.fill>
+					</yjs:Stroke>
+				</yjs:Arrow.stroke>
+			</yjs:Arrow>
+			<yjs:PolylineEdgeStyle x:Key="57" stroke="{y:GraphMLReference 55}" targetArrow="{y:GraphMLReference 56}" sourceArrow="{y:GraphMLReference 39}"/>
+			<yjs:Arrow x:Key="58" fill="BLACK" type="NONE"/>
+			<yjs:PolylineEdgeStyle x:Key="59" sourceArrow="{y:GraphMLReference 58}">
+				<yjs:PolylineEdgeStyle.stroke>
+					<yjs:Stroke dashStyle="Dash">
+						<yjs:Stroke.fill>
+							<yjs:CssFill cssString="#000000"/>
+						</yjs:Stroke.fill>
+					</yjs:Stroke>
+				</yjs:PolylineEdgeStyle.stroke>
+				<yjs:PolylineEdgeStyle.targetArrow>
+					<yjs:Arrow fill="BLACK">
+						<yjs:Arrow.stroke>
+							<yjs:Stroke>
+								<yjs:Stroke.fill>
+									<yjs:CssFill cssString="#000000"/>
+								</yjs:Stroke.fill>
+							</yjs:Stroke>
+						</yjs:Arrow.stroke>
+					</yjs:Arrow>
+				</yjs:PolylineEdgeStyle.targetArrow>
+			</yjs:PolylineEdgeStyle>
+		</y:SharedData>
+	</data>
+	<graph id="G" edgedefault="directed">
+		<data key="d6">
+			<y:Json>{"version":"2.0.0","origin":"yed-live","theme":{"name":"light","version":"1.0.0"},"layout":"layout-uml","config":{"p_useDrawingAsSketch":false,"p_selectedElementsIncrementally":false,"p_nodeToNodeDistance":30,"p_automaticEdgeGroupingEnabled":false,"p_considerNodeLabels":true,"p_edgeLabeling":0,"p_orientation":0}}</y:Json>
+		</data>
+		<node id="n0">
+			<data key="d0">16</data>
+			<data key="d4">
+				<x:List>
+					<y:Label Text="Сущности БД" LayoutParameter="{y:GraphMLReference 5}">
+						<y:Label.Style>
+							<yjs:LabelStyle verticalTextAlignment="CENTER" wrapping="WRAP_CHARACTER_ELLIPSIS" font="{y:GraphMLReference 4}" textFill="{y:GraphMLReference 6}"/>
+						</y:Label.Style>
+					</y:Label>
+				</x:List>
+			</data>
+			<data key="d5">
+				<y:RectD X="-2540.25" Y="400.5" Width="1420.5" Height="519"/>
+			</data>
+			<data key="d7">
+				<yjs:GroupNodeStyle tabWidth="30" tabHeight="20" tabPadding="3" tabPosition="TOP_TRAILING" groupIcon="MINUS" iconForegroundFill="{y:GraphMLReference 7}" iconOffset="2" minimumContentAreaSize="0,0" hitTransparentContentArea="true" tabBackgroundFill="{y:GraphMLReference 8}" contentAreaFill="{y:GraphMLReference 9}" tabFill="{y:GraphMLReference 10}" stroke="{y:GraphMLReference 11}" cssClass="y-group-node"/>
+			</data>
+			<graph id="n0:" edgedefault="directed">
+				<node id="n0::n0">
+					<data key="d0">0</data>
+					<data key="d5">
+						<y:RectD X="-2476.75" Y="488" Width="250" Height="182"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="Account" attributesOpen="true" operationsOpen="false">
+									<uml:UMLClassModel.attributes>
+										<x:Array>
+											<sys:String><![CDATA[uint identifier]]></sys:String>
+											<sys:String><![CDATA[string name]]></sys:String>
+											<sys:String><![CDATA[string? email]]></sys:String>
+											<sys:String><![CDATA[string passwordHash]]></sys:String>
+											<sys:String><![CDATA[int accountPrivilegyLevel]]></sys:String>
+										</x:Array>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array/>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+				</node>
+				<node id="n0::n1">
+					<data key="d0">2</data>
+					<data key="d5">
+						<y:RectD X="-2196.75" Y="480" Width="250" Height="198"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="Competition" attributesOpen="true" operationsOpen="false">
+									<uml:UMLClassModel.attributes>
+										<x:Array>
+											<sys:String><![CDATA[uint identifier]]></sys:String>
+											<sys:String><![CDATA[string name]]></sys:String>
+											<sys:String><![CDATA[string description]]></sys:String>
+											<sys:String><![CDATA[TimeStamp startTime]]></sys:String>
+											<sys:String><![CDATA[TimeStamp endTime]]></sys:String>
+											<sys:String><![CDATA[blob levelDescription]]></sys:String>
+										</x:Array>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array/>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+				</node>
+				<node id="n0::n2">
+					<data key="d0">3</data>
+					<data key="d5">
+						<y:RectD X="-1916.75" Y="488" Width="250" Height="182"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="PlayerProfile" attributesOpen="true" operationsOpen="false">
+									<uml:UMLClassModel.attributes>
+										<x:Array>
+											<sys:String><![CDATA[uint identifier]]></sys:String>
+											<sys:String><![CDATA[int accountId]]></sys:String>
+											<sys:String><![CDATA[blob? profileIconContent]]></sys:String>
+											<sys:String><![CDATA[string? description]]></sys:String>
+										</x:Array>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array/>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+				</node>
+				<node id="n0::n3">
+					<data key="d0">4</data>
+					<data key="d5">
+						<y:RectD X="-2485.75" Y="705.25" Width="250" Height="150"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="PlayerParticipation" attributesOpen="true" operationsOpen="false">
+									<uml:UMLClassModel.attributes>
+										<x:Array>
+											<sys:String><![CDATA[uint competitionId]]></sys:String>
+											<sys:String><![CDATA[uint playerId]]></sys:String>
+											<sys:String><![CDATA[int score]]></sys:String>
+										</x:Array>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array/>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+				</node>
+				<node id="n0::n4">
+					<data key="d0">5</data>
+					<data key="d5">
+						<y:RectD X="-2205.75" Y="689.25" Width="250" Height="182"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="PlayerReward" attributesOpen="true" operationsOpen="false">
+									<uml:UMLClassModel.attributes>
+										<x:Array>
+											<sys:String><![CDATA[uint identifier ]]></sys:String>
+											<sys:String><![CDATA[uint playerId]]></sys:String>
+											<sys:String><![CDATA[uint rewardDescriptionId]]></sys:String>
+											<sys:String><![CDATA[TimeStamp rewardDate]]></sys:String>
+											<sys:String><![CDATA[uint? competitionId]]></sys:String>
+										</x:Array>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String></sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+				</node>
+				<node id="n0::n5">
+					<data key="d0">6</data>
+					<data key="d5">
+						<y:RectD X="-1925.75" Y="689.25" Width="250" Height="182"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="PlayerRewardDescription" attributesOpen="true" operationsOpen="false">
+									<uml:UMLClassModel.attributes>
+										<x:Array>
+											<sys:String><![CDATA[uint identifier]]></sys:String>
+											<sys:String><![CDATA[string name]]></sys:String>
+											<sys:String><![CDATA[blob iconImage]]></sys:String>
+											<sys:String><![CDATA[string description]]></sys:String>
+											<sys:String><![CDATA[blob gameAsset]]></sys:String>
+										</x:Array>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String></sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+				</node>
+				<node id="n0::n6">
+					<data key="d0">7</data>
+					<data key="d5">
+						<y:RectD X="-1623.25" Y="487.25" Width="305" Height="214"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="CompetitionRewardCondition" attributesOpen="true" operationsOpen="false">
+									<uml:UMLClassModel.attributes>
+										<x:Array>
+											<sys:String><![CDATA[uint identifier]]></sys:String>
+											<sys:String><![CDATA[uint rewardDescriptionId]]></sys:String>
+											<sys:String><![CDATA[uint competitionId]]></sys:String>
+											<sys:String><![CDATA[int? minRank]]></sys:String>
+											<sys:String><![CDATA[int? maxRank]]></sys:String>
+											<sys:String><![CDATA[int? minScore]]></sys:String>
+											<sys:String><![CDATA[int? maxScore]]></sys:String>
+										</x:Array>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array/>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+				</node>
+				<node id="n0::n7">
+					<data key="d0">8</data>
+					<data key="d4">
+						<x:List>
+							<y:Label LayoutParameter="{y:GraphMLReference 28}">
+								<y:Label.Text><![CDATA[Может быть, blob-контент хранить отдельно в другой БД? (например, файлы)]]></y:Label.Text>
+								<y:Label.Style>
+									<yjs:LabelStyle verticalTextAlignment="CENTER" horizontalTextAlignment="CENTER" font="{y:GraphMLReference 4}" textFill="{y:GraphMLReference 26}"/>
+								</y:Label.Style>
+							</y:Label>
+						</x:List>
+					</data>
+					<data key="d5">
+						<y:RectD X="-1454" Y="753.75" Width="47.5" Height="52.5"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNoteStyle fill="{y:GraphMLReference 27}" stroke="BLACK"/>
+					</data>
+				</node>
+			</graph>
+		</node>
+		<node id="n1">
+			<data key="d0">28</data>
+			<data key="d4">
+				<x:List>
+					<y:Label Text="Транспортные сущности" LayoutParameter="{y:GraphMLReference 5}">
+						<y:Label.Style>
+							<yjs:LabelStyle verticalTextAlignment="CENTER" wrapping="WRAP_CHARACTER_ELLIPSIS" font="{y:GraphMLReference 4}" textFill="{y:GraphMLReference 6}"/>
+						</y:Label.Style>
+					</y:Label>
+				</x:List>
+			</data>
+			<data key="d5">
+				<y:RectD X="-2541.5" Y="934.75" Width="1783" Height="1250.5"/>
+			</data>
+			<data key="d7">
+				<yjs:GroupNodeStyle tabWidth="30" tabHeight="20" tabPadding="3" tabPosition="TOP_TRAILING" groupIcon="MINUS" iconForegroundFill="{y:GraphMLReference 7}" iconOffset="2" minimumContentAreaSize="0,0" hitTransparentContentArea="true" tabBackgroundFill="{y:GraphMLReference 8}" contentAreaFill="{y:GraphMLReference 9}" tabFill="{y:GraphMLReference 10}" stroke="{y:GraphMLReference 11}" cssClass="y-group-node"/>
+			</data>
+			<data key="d8">
+				<y:ViewState>
+					<y:FolderNodeState x:Key="c|view" Layout="-2701,1239.5,1742,701"/>
+				</y:ViewState>
+			</data>
+			<graph id="n1:" edgedefault="directed">
+				<node id="n1::n0">
+					<data key="d0">14</data>
+					<data key="d4">
+						<x:List>
+							<y:Label Text="Аккаунт">
+								<y:Label.LayoutParameter>
+									<yx:GroupNodeLabelModelParameter PlaceOnTab="false">
+										<yx:GroupNodeLabelModelParameter.Model>
+											<yx:GroupNodeLabelModel/>
+										</yx:GroupNodeLabelModelParameter.Model>
+									</yx:GroupNodeLabelModelParameter>
+								</y:Label.LayoutParameter>
+								<y:Label.Style>
+									<yjs:LabelStyle verticalTextAlignment="CENTER" wrapping="WRAP_CHARACTER_ELLIPSIS" font="{y:GraphMLReference 4}">
+										<yjs:LabelStyle.textFill>
+											<yjs:CssFill cssString="#EEE"/>
+										</yjs:LabelStyle.textFill>
+									</yjs:LabelStyle>
+								</y:Label.Style>
+							</y:Label>
+						</x:List>
+					</data>
+					<data key="d5">
+						<y:RectD X="-2515.75" Y="981.25" Width="274.5" Height="334"/>
+					</data>
+					<data key="d7">
+						<yjs:GroupNodeStyle tabWidth="30" tabHeight="20" tabPadding="3" tabPosition="TOP_TRAILING" groupIcon="MINUS" iconForegroundFill="{y:GraphMLReference 12}" iconOffset="2" minimumContentAreaSize="0,0" hitTransparentContentArea="true" tabBackgroundFill="{y:GraphMLReference 13}" contentAreaFill="{y:GraphMLReference 14}" tabFill="{y:GraphMLReference 15}" stroke="{y:GraphMLReference 16}" cssClass="y-group-node"/>
+					</data>
+					<graph id="n1::n0:" edgedefault="directed">
+						<node id="n1::n0::n0">
+							<data key="d0">0</data>
+							<data key="d5">
+								<y:RectD X="-2503.5" Y="1008.25" Width="250" Height="134"/>
+							</data>
+							<data key="d7">
+								<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+									<uml:UMLNodeStyle.model>
+										<uml:UMLClassModel stereotype="" constraint="" className="LogInResult" attributesOpen="true" operationsOpen="false">
+											<uml:UMLClassModel.attributes>
+												<x:Array>
+													<sys:String><![CDATA[string roleName]]></sys:String>
+													<sys:String><![CDATA[string authToken]]></sys:String>
+												</x:Array>
+											</uml:UMLClassModel.attributes>
+											<uml:UMLClassModel.operations>
+												<x:Array/>
+											</uml:UMLClassModel.operations>
+										</uml:UMLClassModel>
+									</uml:UMLNodeStyle.model>
+								</uml:UMLNodeStyle>
+							</data>
+						</node>
+						<node id="n1::n0::n1">
+							<data key="d0">1</data>
+							<data key="d5">
+								<y:RectD X="-2503.5" Y="1158.25" Width="250" Height="134"/>
+							</data>
+							<data key="d7">
+								<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+									<uml:UMLNodeStyle.model>
+										<uml:UMLClassModel stereotype="" constraint="" className="AccountLogIn" attributesOpen="true" operationsOpen="false">
+											<uml:UMLClassModel.attributes>
+												<x:Array>
+													<sys:String><![CDATA[string name]]></sys:String>
+													<sys:String><![CDATA[string password]]></sys:String>
+												</x:Array>
+											</uml:UMLClassModel.attributes>
+											<uml:UMLClassModel.operations>
+												<x:Array/>
+											</uml:UMLClassModel.operations>
+										</uml:UMLClassModel>
+									</uml:UMLNodeStyle.model>
+								</uml:UMLNodeStyle>
+							</data>
+						</node>
+					</graph>
+				</node>
+				<node id="n1::n1">
+					<data key="d0">15</data>
+					<data key="d4">
+						<x:List>
+							<y:Label Text="Соревнование">
+								<y:Label.LayoutParameter>
+									<yx:GroupNodeLabelModelParameter PlaceOnTab="false">
+										<yx:GroupNodeLabelModelParameter.Model>
+											<yx:GroupNodeLabelModel/>
+										</yx:GroupNodeLabelModelParameter.Model>
+									</yx:GroupNodeLabelModelParameter>
+								</y:Label.LayoutParameter>
+								<y:Label.Style>
+									<yjs:LabelStyle verticalTextAlignment="CENTER" wrapping="WRAP_CHARACTER_ELLIPSIS" font="{y:GraphMLReference 4}">
+										<yjs:LabelStyle.textFill>
+											<yjs:CssFill cssString="#EEE"/>
+										</yjs:LabelStyle.textFill>
+									</yjs:LabelStyle>
+								</y:Label.Style>
+							</y:Label>
+						</x:List>
+					</data>
+					<data key="d5">
+						<y:RectD X="-2504.5" Y="1421.875" Width="552" Height="386.75"/>
+					</data>
+					<data key="d7">
+						<yjs:GroupNodeStyle tabWidth="30" tabHeight="20" tabPadding="3" tabPosition="TOP_TRAILING" groupIcon="MINUS" iconForegroundFill="{y:GraphMLReference 12}" iconOffset="2" minimumContentAreaSize="0,0" hitTransparentContentArea="true" tabBackgroundFill="{y:GraphMLReference 13}" contentAreaFill="{y:GraphMLReference 14}" tabFill="{y:GraphMLReference 15}" stroke="{y:GraphMLReference 16}" cssClass="y-group-node"/>
+					</data>
+					<graph id="n1::n1:" edgedefault="directed">
+						<node id="n1::n1::n0">
+							<data key="d0">0</data>
+							<data key="d5">
+								<y:RectD X="-2497.5" Y="1463.625" Width="250" Height="198"/>
+							</data>
+							<data key="d7">
+								<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+									<uml:UMLNodeStyle.model>
+										<uml:UMLClassModel stereotype="" constraint="" className="UpdateCompetitionData" attributesOpen="true" operationsOpen="true">
+											<uml:UMLClassModel.attributes>
+												<x:Array>
+													<sys:String><![CDATA[uint targetIdentifier]]></sys:String>
+													<sys:String><![CDATA[string name]]></sys:String>
+													<sys:String><![CDATA[string description]]></sys:String>
+													<sys:String><![CDATA[TimeStamp startTime]]></sys:String>
+													<sys:String><![CDATA[TimeStamp endTime]]></sys:String>
+													<sys:String><![CDATA[byte[] levelDescription]]></sys:String>
+												</x:Array>
+											</uml:UMLClassModel.attributes>
+											<uml:UMLClassModel.operations>
+												<x:Array/>
+											</uml:UMLClassModel.operations>
+										</uml:UMLClassModel>
+									</uml:UMLNodeStyle.model>
+								</uml:UMLNodeStyle>
+							</data>
+						</node>
+						<node id="n1::n1::n1">
+							<data key="d0">1</data>
+							<data key="d5">
+								<y:RectD X="-2227.5" Y="1683.625" Width="250" Height="118"/>
+							</data>
+							<data key="d7">
+								<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+									<uml:UMLNodeStyle.model>
+										<uml:UMLClassModel stereotype="" constraint="" className="CompetitionLevelData" attributesOpen="true" operationsOpen="false">
+											<uml:UMLClassModel.attributes>
+												<x:Array>
+													<sys:String><![CDATA[byte[] levelGameAsset]]></sys:String>
+												</x:Array>
+											</uml:UMLClassModel.attributes>
+											<uml:UMLClassModel.operations>
+												<x:Array/>
+											</uml:UMLClassModel.operations>
+										</uml:UMLClassModel>
+									</uml:UMLNodeStyle.model>
+								</uml:UMLNodeStyle>
+							</data>
+						</node>
+						<node id="n1::n1::n2">
+							<data key="d0">2</data>
+							<data key="d5">
+								<y:RectD X="-2227.5" Y="1471.625" Width="250" Height="182"/>
+							</data>
+							<data key="d7">
+								<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+									<uml:UMLNodeStyle.model>
+										<uml:UMLClassModel stereotype="" constraint="" className="CompetitionData" attributesOpen="true" operationsOpen="false">
+											<uml:UMLClassModel.attributes>
+												<x:Array>
+													<sys:String><![CDATA[uint identifier]]></sys:String>
+													<sys:String><![CDATA[string name]]></sys:String>
+													<sys:String><![CDATA[string description]]></sys:String>
+													<sys:String><![CDATA[TimeStamp startTime]]></sys:String>
+													<sys:String><![CDATA[TimeStamp endTime]]></sys:String>
+												</x:Array>
+											</uml:UMLClassModel.attributes>
+											<uml:UMLClassModel.operations>
+												<x:Array/>
+											</uml:UMLClassModel.operations>
+										</uml:UMLClassModel>
+									</uml:UMLNodeStyle.model>
+								</uml:UMLNodeStyle>
+							</data>
+						</node>
+					</graph>
+				</node>
+				<node id="n1::n2">
+					<data key="d0">16</data>
+					<data key="d4">
+						<x:List>
+							<y:Label Text="Профиль">
+								<y:Label.LayoutParameter>
+									<yx:GroupNodeLabelModelParameter PlaceOnTab="false">
+										<yx:GroupNodeLabelModelParameter.Model>
+											<yx:GroupNodeLabelModel/>
+										</yx:GroupNodeLabelModelParameter.Model>
+									</yx:GroupNodeLabelModelParameter>
+								</y:Label.LayoutParameter>
+								<y:Label.Style>
+									<yjs:LabelStyle verticalTextAlignment="CENTER" wrapping="WRAP_CHARACTER_ELLIPSIS" font="{y:GraphMLReference 4}">
+										<yjs:LabelStyle.textFill>
+											<yjs:CssFill cssString="#EEE"/>
+										</yjs:LabelStyle.textFill>
+									</yjs:LabelStyle>
+								</y:Label.Style>
+							</y:Label>
+						</x:List>
+					</data>
+					<data key="d5">
+						<y:RectD X="-1351" Y="1417.75" Width="544.5" Height="407.5"/>
+					</data>
+					<data key="d7">
+						<yjs:GroupNodeStyle tabWidth="30" tabHeight="20" tabPadding="3" tabPosition="TOP_TRAILING" groupIcon="MINUS" iconForegroundFill="{y:GraphMLReference 12}" iconOffset="2" minimumContentAreaSize="0,0" hitTransparentContentArea="true" tabBackgroundFill="{y:GraphMLReference 13}" contentAreaFill="{y:GraphMLReference 14}" tabFill="{y:GraphMLReference 15}" stroke="{y:GraphMLReference 16}" cssClass="y-group-node"/>
+					</data>
+					<graph id="n1::n2:" edgedefault="directed">
+						<node id="n1::n2::n0">
+							<data key="d0">0</data>
+							<data key="d5">
+								<y:RectD X="-1333.5" Y="1450.25" Width="250" Height="150"/>
+							</data>
+							<data key="d7">
+								<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+									<uml:UMLNodeStyle.model>
+										<uml:UMLClassModel stereotype="" constraint="" className="UpdatePlayerProfile" attributesOpen="true" operationsOpen="false">
+											<uml:UMLClassModel.attributes>
+												<x:Array>
+													<sys:String><![CDATA[uint identifier]]></sys:String>
+													<sys:String><![CDATA[byte[]? profileIcon]]></sys:String>
+													<sys:String><![CDATA[string? description]]></sys:String>
+												</x:Array>
+											</uml:UMLClassModel.attributes>
+											<uml:UMLClassModel.operations>
+												<x:Array/>
+											</uml:UMLClassModel.operations>
+										</uml:UMLClassModel>
+									</uml:UMLNodeStyle.model>
+								</uml:UMLNodeStyle>
+							</data>
+						</node>
+						<node id="n1::n2::n1">
+							<data key="d0">1</data>
+							<data key="d5">
+								<y:RectD X="-1063.5" Y="1450.25" Width="250" Height="182"/>
+							</data>
+							<data key="d7">
+								<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+									<uml:UMLNodeStyle.model>
+										<uml:UMLClassModel stereotype="" constraint="" className="PlayerProfile" attributesOpen="true" operationsOpen="false">
+											<uml:UMLClassModel.attributes>
+												<x:Array>
+													<sys:String><![CDATA[uint identifier]]></sys:String>
+													<sys:String><![CDATA[int accountId]]></sys:String>
+													<sys:String><![CDATA[byte[]? profileIcon]]></sys:String>
+													<sys:String><![CDATA[string? description]]></sys:String>
+												</x:Array>
+											</uml:UMLClassModel.attributes>
+											<uml:UMLClassModel.operations>
+												<x:Array/>
+											</uml:UMLClassModel.operations>
+										</uml:UMLClassModel>
+									</uml:UMLNodeStyle.model>
+								</uml:UMLNodeStyle>
+							</data>
+						</node>
+						<node id="n1::n2::n2">
+							<data key="d0">2</data>
+							<data key="d5">
+								<y:RectD X="-1333.5" Y="1638.25" Width="250" Height="134"/>
+							</data>
+							<data key="d7">
+								<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+									<uml:UMLNodeStyle.model>
+										<uml:UMLClassModel stereotype="" constraint="" className="GetPlayerProfile" attributesOpen="true" operationsOpen="false">
+											<uml:UMLClassModel.attributes>
+												<x:Array>
+													<sys:String><![CDATA[uint? playerId]]></sys:String>
+													<sys:String><![CDATA[bool fetchImages]]></sys:String>
+												</x:Array>
+											</uml:UMLClassModel.attributes>
+											<uml:UMLClassModel.operations>
+												<x:Array>
+													<sys:String></sys:String>
+												</x:Array>
+											</uml:UMLClassModel.operations>
+										</uml:UMLClassModel>
+									</uml:UMLNodeStyle.model>
+								</uml:UMLNodeStyle>
+							</data>
+						</node>
+					</graph>
+				</node>
+				<node id="n1::n3">
+					<data key="d0">17</data>
+					<data key="d4">
+						<x:List>
+							<y:Label Text="Участие игрока в соревновании">
+								<y:Label.LayoutParameter>
+									<yx:GroupNodeLabelModelParameter PlaceOnTab="false">
+										<yx:GroupNodeLabelModelParameter.Model>
+											<yx:GroupNodeLabelModel/>
+										</yx:GroupNodeLabelModelParameter.Model>
+									</yx:GroupNodeLabelModelParameter>
+								</y:Label.LayoutParameter>
+								<y:Label.Style>
+									<yjs:LabelStyle verticalTextAlignment="CENTER" wrapping="WRAP_CHARACTER_ELLIPSIS" font="{y:GraphMLReference 4}">
+										<yjs:LabelStyle.textFill>
+											<yjs:CssFill cssString="#EEE"/>
+										</yjs:LabelStyle.textFill>
+									</yjs:LabelStyle>
+								</y:Label.Style>
+							</y:Label>
+						</x:List>
+					</data>
+					<data key="d5">
+						<y:RectD X="-2223.5" Y="973.25" Width="295" Height="342"/>
+					</data>
+					<data key="d7">
+						<yjs:GroupNodeStyle tabWidth="30" tabHeight="20" tabPadding="3" tabPosition="TOP_TRAILING" groupIcon="MINUS" iconForegroundFill="{y:GraphMLReference 12}" iconOffset="2" minimumContentAreaSize="0,0" hitTransparentContentArea="true" tabBackgroundFill="{y:GraphMLReference 13}" contentAreaFill="{y:GraphMLReference 14}" tabFill="{y:GraphMLReference 15}" stroke="{y:GraphMLReference 16}" cssClass="y-group-node"/>
+					</data>
+					<graph id="n1::n3:" edgedefault="directed">
+						<node id="n1::n3::n0">
+							<data key="d0">0</data>
+							<data key="d5">
+								<y:RectD X="-2203.5" Y="1000.25" Width="250" Height="150"/>
+							</data>
+							<data key="d7">
+								<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+									<uml:UMLNodeStyle.model>
+										<uml:UMLClassModel stereotype="" constraint="" className="PlayerParticipation" attributesOpen="true" operationsOpen="false">
+											<uml:UMLClassModel.attributes>
+												<x:Array>
+													<sys:String><![CDATA[uint competitionId]]></sys:String>
+													<sys:String><![CDATA[uint playerId]]></sys:String>
+													<sys:String><![CDATA[int score]]></sys:String>
+												</x:Array>
+											</uml:UMLClassModel.attributes>
+											<uml:UMLClassModel.operations>
+												<x:Array/>
+											</uml:UMLClassModel.operations>
+										</uml:UMLClassModel>
+									</uml:UMLNodeStyle.model>
+								</uml:UMLNodeStyle>
+							</data>
+						</node>
+						<node id="n1::n3::n1">
+							<data key="d0">1</data>
+							<data key="d5">
+								<y:RectD X="-2203.5" Y="1158.25" Width="250" Height="134"/>
+							</data>
+							<data key="d7">
+								<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+									<uml:UMLNodeStyle.model>
+										<uml:UMLClassModel stereotype="" constraint="" className="DeletePlayerParticipation" attributesOpen="true" operationsOpen="false">
+											<uml:UMLClassModel.attributes>
+												<x:Array>
+													<sys:String><![CDATA[uint competitionId]]></sys:String>
+													<sys:String><![CDATA[uint playerId]]></sys:String>
+												</x:Array>
+											</uml:UMLClassModel.attributes>
+											<uml:UMLClassModel.operations>
+												<x:Array/>
+											</uml:UMLClassModel.operations>
+										</uml:UMLClassModel>
+									</uml:UMLNodeStyle.model>
+								</uml:UMLNodeStyle>
+							</data>
+						</node>
+					</graph>
+				</node>
+				<node id="n1::n4">
+					<data key="d0">18</data>
+					<data key="d4">
+						<x:List>
+							<y:Label Text="Награда">
+								<y:Label.LayoutParameter>
+									<yx:GroupNodeLabelModelParameter PlaceOnTab="false">
+										<yx:GroupNodeLabelModelParameter.Model>
+											<yx:GroupNodeLabelModel/>
+										</yx:GroupNodeLabelModelParameter.Model>
+									</yx:GroupNodeLabelModelParameter>
+								</y:Label.LayoutParameter>
+								<y:Label.Style>
+									<yjs:LabelStyle verticalTextAlignment="CENTER" wrapping="WRAP_CHARACTER_ELLIPSIS" font="{y:GraphMLReference 4}">
+										<yjs:LabelStyle.textFill>
+											<yjs:CssFill cssString="#EEE"/>
+										</yjs:LabelStyle.textFill>
+									</yjs:LabelStyle>
+								</y:Label.Style>
+							</y:Label>
+						</x:List>
+					</data>
+					<data key="d5">
+						<y:RectD X="-1910.5" Y="970.25" Width="540.625" Height="394.5"/>
+					</data>
+					<data key="d7">
+						<yjs:GroupNodeStyle tabWidth="30" tabHeight="20" tabPadding="3" tabPosition="TOP_TRAILING" groupIcon="MINUS" iconForegroundFill="{y:GraphMLReference 12}" iconOffset="2" minimumContentAreaSize="0,0" hitTransparentContentArea="true" tabBackgroundFill="{y:GraphMLReference 13}" contentAreaFill="{y:GraphMLReference 14}" tabFill="{y:GraphMLReference 15}" stroke="{y:GraphMLReference 16}" cssClass="y-group-node"/>
+					</data>
+					<graph id="n1::n4:" edgedefault="directed">
+						<node id="n1::n4::n0">
+							<data key="d0">0</data>
+							<data key="d5">
+								<y:RectD X="-1891.25" Y="1006.5" Width="250" Height="166"/>
+							</data>
+							<data key="d7">
+								<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+									<uml:UMLNodeStyle.model>
+										<uml:UMLClassModel stereotype="" constraint="" className="PlayerRewardInfo" attributesOpen="true" operationsOpen="false">
+											<uml:UMLClassModel.attributes>
+												<x:Array>
+													<sys:String><![CDATA[TimeStamp rewardDate]]></sys:String>
+													<sys:String><![CDATA[uint? competitionId]]></sys:String>
+													<sys:String><![CDATA[byte[]? image]]></sys:String>
+													<sys:String><![CDATA[byte[]? gameAsset]]></sys:String>
+												</x:Array>
+											</uml:UMLClassModel.attributes>
+											<uml:UMLClassModel.operations>
+												<x:Array>
+													<sys:String></sys:String>
+												</x:Array>
+											</uml:UMLClassModel.operations>
+										</uml:UMLClassModel>
+									</uml:UMLNodeStyle.model>
+								</uml:UMLNodeStyle>
+							</data>
+						</node>
+						<node id="n1::n4::n1">
+							<data key="d0">1</data>
+							<data key="d5">
+								<y:RectD X="-1891.25" Y="1192.75" Width="250" Height="150"/>
+							</data>
+							<data key="d7">
+								<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+									<uml:UMLNodeStyle.model>
+										<uml:UMLClassModel stereotype="" constraint="" className="GetPlayerRewardsInfo" attributesOpen="true" operationsOpen="false">
+											<uml:UMLClassModel.attributes>
+												<x:Array>
+													<sys:String><![CDATA[uint? playerId]]></sys:String>
+													<sys:String><![CDATA[bool fetchImages]]></sys:String>
+													<sys:String><![CDATA[bool fetchAssets]]></sys:String>
+												</x:Array>
+											</uml:UMLClassModel.attributes>
+											<uml:UMLClassModel.operations>
+												<x:Array>
+													<sys:String></sys:String>
+												</x:Array>
+											</uml:UMLClassModel.operations>
+										</uml:UMLClassModel>
+									</uml:UMLNodeStyle.model>
+								</uml:UMLNodeStyle>
+							</data>
+						</node>
+						<node id="n1::n4::n2">
+							<data key="d0">2</data>
+							<data key="d5">
+								<y:RectD X="-1626.875" Y="1006.75" Width="250" Height="150"/>
+							</data>
+							<data key="d7">
+								<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+									<uml:UMLNodeStyle.model>
+										<uml:UMLClassModel stereotype="" constraint="" className="GetRewardInfo" attributesOpen="true" operationsOpen="false">
+											<uml:UMLClassModel.attributes>
+												<x:Array>
+													<sys:String><![CDATA[uint? rewardId]]></sys:String>
+													<sys:String><![CDATA[bool fetchImages]]></sys:String>
+													<sys:String><![CDATA[bool fetchAssets]]></sys:String>
+												</x:Array>
+											</uml:UMLClassModel.attributes>
+											<uml:UMLClassModel.operations>
+												<x:Array>
+													<sys:String></sys:String>
+												</x:Array>
+											</uml:UMLClassModel.operations>
+										</uml:UMLClassModel>
+									</uml:UMLNodeStyle.model>
+								</uml:UMLNodeStyle>
+							</data>
+						</node>
+					</graph>
+				</node>
+				<node id="n1::n5">
+					<data key="d0">19</data>
+					<data key="d4">
+						<x:List>
+							<y:Label Text="Награды соревнования">
+								<y:Label.LayoutParameter>
+									<yx:GroupNodeLabelModelParameter PlaceOnTab="false">
+										<yx:GroupNodeLabelModelParameter.Model>
+											<yx:GroupNodeLabelModel/>
+										</yx:GroupNodeLabelModelParameter.Model>
+									</yx:GroupNodeLabelModelParameter>
+								</y:Label.LayoutParameter>
+								<y:Label.Style>
+									<yjs:LabelStyle verticalTextAlignment="CENTER" wrapping="WRAP_CHARACTER_ELLIPSIS" font="{y:GraphMLReference 4}">
+										<yjs:LabelStyle.textFill>
+											<yjs:CssFill cssString="#EEE"/>
+										</yjs:LabelStyle.textFill>
+									</yjs:LabelStyle>
+								</y:Label.Style>
+							</y:Label>
+						</x:List>
+					</data>
+					<data key="d5">
+						<y:RectD X="-1921" Y="1423.25" Width="532.5" Height="416"/>
+					</data>
+					<data key="d7">
+						<yjs:GroupNodeStyle tabWidth="30" tabHeight="20" tabPadding="3" tabPosition="TOP_TRAILING" groupIcon="MINUS" iconForegroundFill="{y:GraphMLReference 12}" iconOffset="2" minimumContentAreaSize="0,0" hitTransparentContentArea="true" tabBackgroundFill="{y:GraphMLReference 13}" contentAreaFill="{y:GraphMLReference 14}" tabFill="{y:GraphMLReference 15}" stroke="{y:GraphMLReference 16}" cssClass="y-group-node"/>
+					</data>
+					<data key="d8">
+						<y:ViewState>
+							<y:FolderNodeState x:Key="c|view" Layout="-1981,1423.25,532.5,416"/>
+						</y:ViewState>
+					</data>
+					<graph id="n1::n5:" edgedefault="directed">
+						<node id="n1::n5::n0">
+							<data key="d0">0</data>
+							<data key="d5">
+								<y:RectD X="-1911" Y="1450.25" Width="250" Height="230"/>
+							</data>
+							<data key="d7">
+								<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+									<uml:UMLNodeStyle.model>
+										<uml:UMLClassModel stereotype="" constraint="" className="CompetitionRewardData" attributesOpen="true" operationsOpen="true">
+											<uml:UMLClassModel.attributes>
+												<x:Array>
+													<sys:String><![CDATA[uint identifier;]]></sys:String>
+													<sys:String><![CDATA[string rewardName;]]></sys:String>
+													<sys:String><![CDATA[byte[] image;]]></sys:String>
+													<sys:String><![CDATA[uint rewardId;]]></sys:String>
+													<sys:String><![CDATA[int? minRank]]></sys:String>
+													<sys:String><![CDATA[int? maxRank]]></sys:String>
+													<sys:String><![CDATA[int? minScore]]></sys:String>
+													<sys:String><![CDATA[int? maxScore]]></sys:String>
+												</x:Array>
+											</uml:UMLClassModel.attributes>
+											<uml:UMLClassModel.operations>
+												<x:Array/>
+											</uml:UMLClassModel.operations>
+										</uml:UMLClassModel>
+									</uml:UMLNodeStyle.model>
+								</uml:UMLNodeStyle>
+							</data>
+						</node>
+						<node id="n1::n5::n1">
+							<data key="d0">1</data>
+							<data key="d5">
+								<y:RectD X="-1911" Y="1698.25" Width="250" Height="134"/>
+							</data>
+							<data key="d7">
+								<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+									<uml:UMLNodeStyle.model>
+										<uml:UMLClassModel stereotype="" constraint="" className="GetCompetitionRewardData" attributesOpen="true" operationsOpen="true">
+											<uml:UMLClassModel.attributes>
+												<x:Array>
+													<sys:String><![CDATA[uint competitionId;]]></sys:String>
+													<sys:String><![CDATA[bool fetchImages;]]></sys:String>
+												</x:Array>
+											</uml:UMLClassModel.attributes>
+											<uml:UMLClassModel.operations>
+												<x:Array/>
+											</uml:UMLClassModel.operations>
+										</uml:UMLClassModel>
+									</uml:UMLNodeStyle.model>
+								</uml:UMLNodeStyle>
+							</data>
+						</node>
+					</graph>
+				</node>
+				<node id="n1::n6">
+					<data key="d0">20</data>
+					<data key="d4">
+						<x:List>
+							<y:Label Text="Аккаунт">
+								<y:Label.LayoutParameter>
+									<yx:GroupNodeLabelModelParameter PlaceOnTab="false">
+										<yx:GroupNodeLabelModelParameter.Model>
+											<yx:GroupNodeLabelModel/>
+										</yx:GroupNodeLabelModelParameter.Model>
+									</yx:GroupNodeLabelModelParameter>
+								</y:Label.LayoutParameter>
+								<y:Label.Style>
+									<yjs:LabelStyle verticalTextAlignment="CENTER" wrapping="WRAP_CHARACTER_ELLIPSIS" font="{y:GraphMLReference 4}">
+										<yjs:LabelStyle.textFill>
+											<yjs:CssFill cssString="#EEE"/>
+										</yjs:LabelStyle.textFill>
+									</yjs:LabelStyle>
+								</y:Label.Style>
+							</y:Label>
+						</x:List>
+					</data>
+					<data key="d5">
+						<y:RectD X="-1335.25" Y="979.75" Width="433.5" Height="371"/>
+					</data>
+					<data key="d7">
+						<yjs:GroupNodeStyle tabWidth="30" tabHeight="20" tabPadding="3" tabPosition="TOP_TRAILING" groupIcon="MINUS" iconForegroundFill="{y:GraphMLReference 12}" iconOffset="2" minimumContentAreaSize="0,0" hitTransparentContentArea="true" tabBackgroundFill="{y:GraphMLReference 13}" contentAreaFill="{y:GraphMLReference 14}" tabFill="{y:GraphMLReference 15}" stroke="{y:GraphMLReference 16}" cssClass="y-group-node"/>
+					</data>
+					<graph id="n1::n6:" edgedefault="directed">
+						<node id="n1::n6::n0">
+							<data key="d0">0</data>
+							<data key="d5">
+								<y:RectD X="-1326.75" Y="1013.75" Width="250" Height="134"/>
+							</data>
+							<data key="d7">
+								<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+									<uml:UMLNodeStyle.model>
+										<uml:UMLClassModel stereotype="" constraint="" className="AccountInfo" attributesOpen="true" operationsOpen="false">
+											<uml:UMLClassModel.attributes>
+												<x:Array>
+													<sys:String><![CDATA[string? email]]></sys:String>
+													<sys:String><![CDATA[string login]]></sys:String>
+												</x:Array>
+											</uml:UMLClassModel.attributes>
+											<uml:UMLClassModel.operations>
+												<x:Array/>
+											</uml:UMLClassModel.operations>
+										</uml:UMLClassModel>
+									</uml:UMLNodeStyle.model>
+								</uml:UMLNodeStyle>
+							</data>
+						</node>
+						<node id="n1::n6::n1">
+							<data key="d0">1</data>
+							<data key="d5">
+								<y:RectD X="-1326.75" Y="1163.75" Width="250" Height="134"/>
+							</data>
+							<data key="d7">
+								<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+									<uml:UMLNodeStyle.model>
+										<uml:UMLClassModel stereotype="" constraint="" className="CreateAccount" attributesOpen="true" operationsOpen="false">
+											<uml:UMLClassModel.attributes>
+												<x:Array>
+													<sys:String><![CDATA[string? email]]></sys:String>
+													<sys:String><![CDATA[string login]]></sys:String>
+												</x:Array>
+											</uml:UMLClassModel.attributes>
+											<uml:UMLClassModel.operations>
+												<x:Array/>
+											</uml:UMLClassModel.operations>
+										</uml:UMLClassModel>
+									</uml:UMLNodeStyle.model>
+								</uml:UMLNodeStyle>
+							</data>
+						</node>
+					</graph>
+				</node>
+				<node id="n1::n7">
+					<data key="d0">21</data>
+					<data key="d4">
+						<x:List>
+							<y:Label Text="Описание наград">
+								<y:Label.LayoutParameter>
+									<yx:GroupNodeLabelModelParameter PlaceOnTab="false">
+										<yx:GroupNodeLabelModelParameter.Model>
+											<yx:GroupNodeLabelModel/>
+										</yx:GroupNodeLabelModelParameter.Model>
+									</yx:GroupNodeLabelModelParameter>
+								</y:Label.LayoutParameter>
+								<y:Label.Style>
+									<yjs:LabelStyle verticalTextAlignment="CENTER" wrapping="WRAP_CHARACTER_ELLIPSIS" font="{y:GraphMLReference 4}">
+										<yjs:LabelStyle.textFill>
+											<yjs:CssFill cssString="#EEE"/>
+										</yjs:LabelStyle.textFill>
+									</yjs:LabelStyle>
+								</y:Label.Style>
+							</y:Label>
+						</x:List>
+					</data>
+					<data key="d5">
+						<y:RectD X="-2506" Y="1852.75" Width="555" Height="305"/>
+					</data>
+					<data key="d7">
+						<yjs:GroupNodeStyle tabWidth="30" tabHeight="20" tabPadding="3" tabPosition="TOP_TRAILING" groupIcon="MINUS" iconForegroundFill="{y:GraphMLReference 12}" iconOffset="2" minimumContentAreaSize="0,0" hitTransparentContentArea="true" tabBackgroundFill="{y:GraphMLReference 13}" contentAreaFill="{y:GraphMLReference 14}" tabFill="{y:GraphMLReference 15}" stroke="{y:GraphMLReference 16}" cssClass="y-group-node"/>
+					</data>
+					<graph id="n1::n7:" edgedefault="directed">
+						<node id="n1::n7::n0">
+							<data key="d0">0</data>
+							<data key="d5">
+								<y:RectD X="-2496" Y="1886.75" Width="250" Height="182"/>
+							</data>
+							<data key="d7">
+								<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+									<uml:UMLNodeStyle.model>
+										<uml:UMLClassModel stereotype="" constraint="" className="CreatePlayerRewardDescription" attributesOpen="false" operationsOpen="true">
+											<uml:UMLClassModel.attributes>
+												<x:Array/>
+											</uml:UMLClassModel.attributes>
+											<uml:UMLClassModel.operations>
+												<x:Array>
+													<sys:String><![CDATA[uint identifier]]></sys:String>
+													<sys:String><![CDATA[string name]]></sys:String>
+													<sys:String><![CDATA[byte[] iconImage]]></sys:String>
+													<sys:String><![CDATA[string description]]></sys:String>
+													<sys:String><![CDATA[byte[] gameAsset]]></sys:String>
+												</x:Array>
+											</uml:UMLClassModel.operations>
+										</uml:UMLClassModel>
+									</uml:UMLNodeStyle.model>
+								</uml:UMLNodeStyle>
+							</data>
+						</node>
+						<node id="n1::n7::n1">
+							<data key="d0">1</data>
+							<data key="d5">
+								<y:RectD X="-2226" Y="1894.75" Width="250" Height="166"/>
+							</data>
+							<data key="d7">
+								<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+									<uml:UMLNodeStyle.model>
+										<uml:UMLClassModel stereotype="" constraint="" className="UpdatePlayerRewardDescription" attributesOpen="true" operationsOpen="false">
+											<uml:UMLClassModel.attributes>
+												<x:Array>
+													<sys:String><![CDATA[string name]]></sys:String>
+													<sys:String><![CDATA[blob iconImage]]></sys:String>
+													<sys:String><![CDATA[string description]]></sys:String>
+													<sys:String><![CDATA[blob gameAsset]]></sys:String>
+												</x:Array>
+											</uml:UMLClassModel.attributes>
+											<uml:UMLClassModel.operations>
+												<x:Array/>
+											</uml:UMLClassModel.operations>
+										</uml:UMLClassModel>
+									</uml:UMLNodeStyle.model>
+								</uml:UMLNodeStyle>
+							</data>
+						</node>
+					</graph>
+				</node>
+			</graph>
+		</node>
+		<node id="n2">
+			<data key="d0">51</data>
+			<data key="d4">
+				<x:List>
+					<y:Label Text="Компоненты бизнес-логики">
+						<y:Label.LayoutParameter>
+							<yx:GroupNodeLabelModelParameter PlaceOnTab="false">
+								<yx:GroupNodeLabelModelParameter.Model>
+									<yx:GroupNodeLabelModel/>
+								</yx:GroupNodeLabelModelParameter.Model>
+							</yx:GroupNodeLabelModelParameter>
+						</y:Label.LayoutParameter>
+						<y:Label.Style>
+							<yjs:LabelStyle verticalTextAlignment="CENTER" wrapping="WRAP_CHARACTER_ELLIPSIS" font="{y:GraphMLReference 4}">
+								<yjs:LabelStyle.textFill>
+									<yjs:CssFill cssString="#EEE"/>
+								</yjs:LabelStyle.textFill>
+							</yjs:LabelStyle>
+						</y:Label.Style>
+					</y:Label>
+				</x:List>
+			</data>
+			<data key="d5">
+				<y:RectD X="-691" Y="416" Width="4021" Height="1068.9375"/>
+			</data>
+			<data key="d7">
+				<yjs:GroupNodeStyle tabWidth="30" tabHeight="20" tabPadding="3" tabPosition="TOP_TRAILING" groupIcon="MINUS" iconForegroundFill="{y:GraphMLReference 7}" iconOffset="2" minimumContentAreaSize="0,0" hitTransparentContentArea="true" tabBackgroundFill="{y:GraphMLReference 8}" contentAreaFill="{y:GraphMLReference 9}" tabFill="{y:GraphMLReference 10}" stroke="{y:GraphMLReference 11}" cssClass="y-group-node"/>
+			</data>
+			<graph id="n2:" edgedefault="directed">
+				<node id="n2::n0">
+					<data key="d0">0</data>
+					<data key="d5">
+						<y:RectD X="1773" Y="642" Width="250" Height="118"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="interface" constraint="" className="IAuthService" attributesOpen="false" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>LogIn()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="32"/>
+						</data>
+					</port>
+					<port name="p1">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="33"/>
+						</data>
+					</port>
+					<port name="p2">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="34"/>
+						</data>
+					</port>
+					<port name="p3">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="35"/>
+						</data>
+					</port>
+					<port name="p4"/>
+					<port name="p5"/>
+					<port name="p6">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="36"/>
+						</data>
+					</port>
+					<port name="p7"/>
+				</node>
+				<node id="n2::n1">
+					<data key="d0">1</data>
+					<data key="d5">
+						<y:RectD X="3045" Y="975" Width="250" Height="150"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="GuestSessionToken" attributesOpen="false" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String><![CDATA[bool isAuthenticated() => false]]></sys:String>
+											<sys:String><![CDATA[bool isPlayer() => false]]></sys:String>
+											<sys:String><![CDATA[bool isAdmin() => false]]></sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0"/>
+						</data>
+					</port>
+				</node>
+				<node id="n2::n2">
+					<data key="d0">2</data>
+					<data key="d5">
+						<y:RectD X="2764.7736222466" Y="743.9999999999964" Width="250" Height="166"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="#FFFF5722">
+							<uml:UMLNodeStyle.highlightFill>
+								<yjs:CssFill cssString="#a3f1bb"/>
+							</uml:UMLNodeStyle.highlightFill>
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="abstract" constraint="" className="SessionToken" attributesOpen="true" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array>
+											<sys:String><![CDATA[int accountId]]></sys:String>
+										</x:Array>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String><![CDATA[bool isAuthenticated()]]></sys:String>
+											<sys:String><![CDATA[bool isPlayer()]]></sys:String>
+											<sys:String><![CDATA[bool isAdmin()]]></sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,1"/>
+						</data>
+					</port>
+					<port name="p1">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,1"/>
+						</data>
+					</port>
+					<port name="p2">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,1"/>
+						</data>
+					</port>
+					<port name="p3">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="1,0.5"/>
+						</data>
+					</port>
+					<port name="p4">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="1,0.5"/>
+						</data>
+					</port>
+				</node>
+				<node id="n2::n3">
+					<data key="d0">3</data>
+					<data key="d5">
+						<y:RectD X="2765" Y="975" Width="250" Height="150"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="PlayerSessionToken" attributesOpen="false" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String><![CDATA[bool isAuthenticated() => true]]></sys:String>
+											<sys:String><![CDATA[bool isPlayer() => true]]></sys:String>
+											<sys:String><![CDATA[bool isAdmin() => false]]></sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="17"/>
+						</data>
+					</port>
+					<port name="p1">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0"/>
+						</data>
+					</port>
+				</node>
+				<node id="n2::n4">
+					<data key="d0">4</data>
+					<data key="d5">
+						<y:RectD X="2485" Y="975" Width="250" Height="150"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="AdminSessionToken" attributesOpen="false" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String><![CDATA[bool isAuthenticated() => true]]></sys:String>
+											<sys:String><![CDATA[bool isPlayer() => false]]></sys:String>
+											<sys:String><![CDATA[bool isAdmin() => true]]></sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="17"/>
+						</data>
+					</port>
+					<port name="p1">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0"/>
+						</data>
+					</port>
+					<port name="p2">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.993421052631579"/>
+						</data>
+					</port>
+				</node>
+				<node id="n2::n5">
+					<data key="d0">5</data>
+					<data key="d5">
+						<y:RectD X="2395" Y="767.9999999999964" Width="250" Height="118"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="interface" constraint="" className="ISessionTokenResolver" attributesOpen="false" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String><![CDATA[SessionToken Resolve(string token)]]></sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0,0.5"/>
+						</data>
+					</port>
+					<port name="p1">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.9916666666666667"/>
+						</data>
+					</port>
+					<port name="p2"/>
+				</node>
+				<node id="n2::n6">
+					<data key="d0">6</data>
+					<data key="d5">
+						<y:RectD X="-666" Y="634" Width="250" Height="150"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="interface" constraint="" className="IRewardService" attributesOpen="false" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>GetPlayerRewards()</sys:String>
+											<sys:String>GrantRewardToPlayer()</sys:String>
+											<sys:String>RewokeRewardFromPlayer()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.9916666666666667"/>
+						</data>
+					</port>
+				</node>
+				<node id="n2::n7">
+					<data key="d0">7</data>
+					<data key="d5">
+						<y:RectD X="-66" Y="626" Width="250" Height="182"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="interface" constraint="" className="IPlayerParticipationService" attributesOpen="true" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>GetCompetitionLevel()</sys:String>
+											<sys:String>ApplyInCompetition()</sys:String>
+											<sys:String>GetLeaderboardForCompetition()</sys:String>
+											<sys:String>RemoveParticipation()</sys:String>
+											<sys:String>GetParticipation()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.9926470588235294"/>
+						</data>
+					</port>
+				</node>
+				<node id="n2::n8">
+					<data key="d0">8</data>
+					<data key="d5">
+						<y:RectD X="1083" Y="651" Width="250" Height="134"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="interface" constraint="" className="IPlayerProfileService" attributesOpen="true" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>GetPlayerProfile()</sys:String>
+											<sys:String>UpdatePlayerProfile()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.9926470588235294"/>
+						</data>
+					</port>
+				</node>
+				<node id="n2::n9">
+					<data key="d0">9</data>
+					<data key="d5">
+						<y:RectD X="505" Y="577" Width="250" Height="166"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="interface" constraint="" className="ICompetitionService" attributesOpen="false" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>GetActiveCompetitions()</sys:String>
+											<sys:String>GetAllCompetitions()</sys:String>
+											<sys:String>CreateCompetition()</sys:String>
+											<sys:String>UpdateCompetition()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.993421052631579"/>
+						</data>
+					</port>
+				</node>
+				<node id="n2::n10">
+					<data key="d0">10</data>
+					<data key="d5">
+						<y:RectD X="-366" Y="642" Width="250" Height="150"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="interface" constraint="" className="IRewardDescriptionService" attributesOpen="false" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>CreateRewardDescription()</sys:String>
+											<sys:String>UpdateRewardDescription()</sys:String>
+											<sys:String>GetAllRewardDescriptions()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.993421052631579"/>
+						</data>
+					</port>
+					<port name="p1"/>
+				</node>
+				<node id="n2::n11">
+					<data key="d0">11</data>
+					<data key="d5">
+						<y:RectD X="-66" Y="860.25" Width="250" Height="182"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="PlayerParticipationService" attributesOpen="false" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>GetCompetitionLevel()</sys:String>
+											<sys:String>ApplyInCompetition()</sys:String>
+											<sys:String>RemoveParticipation()</sys:String>
+											<sys:String>GetLeaderboardForCompetition()</sys:String>
+											<sys:String>GetParticipation()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.006578947368421073"/>
+						</data>
+					</port>
+					<port name="p1">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.006578947368421073"/>
+						</data>
+					</port>
+					<port name="p2"/>
+					<port name="p3"/>
+					<port name="p4"/>
+				</node>
+				<node id="n2::n12">
+					<data key="d0">12</data>
+					<data key="d5">
+						<y:RectD X="-666" Y="858" Width="250" Height="150"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="RewardService" attributesOpen="true" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>GetPlayerRewards()</sys:String>
+											<sys:String>GrantRewardToPlayer()</sys:String>
+											<sys:String>RewokeRewardFromPlayer()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="20"/>
+						</data>
+					</port>
+					<port name="p1">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="21"/>
+						</data>
+					</port>
+					<port name="p2">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="22"/>
+						</data>
+					</port>
+					<port name="p3">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="23"/>
+						</data>
+					</port>
+					<port name="p4"/>
+				</node>
+				<node id="n2::n13">
+					<data key="d0">13</data>
+					<data key="d5">
+						<y:RectD X="1083" Y="882" Width="250" Height="134"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="PlayerProfileService" attributesOpen="false" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>GetPlayerProfile()</sys:String>
+											<sys:String>UpdatePlayerProfile()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="24"/>
+						</data>
+					</port>
+					<port name="p1"/>
+				</node>
+				<node id="n2::n14">
+					<data key="d0">14</data>
+					<data key="d5">
+						<y:RectD X="505" Y="764.5" Width="250" Height="182"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="CompetitionService" attributesOpen="false" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>GetActiveCompetitions()</sys:String>
+											<sys:String>GetAllCompetitions()</sys:String>
+											<sys:String>CreateCompetition()</sys:String>
+											<sys:String>UpdateCompetition()</sys:String>
+											<sys:String>GetCompetitionLevel()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.010638297872340441"/>
+						</data>
+					</port>
+					<port name="p1">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.009615384615384637"/>
+						</data>
+					</port>
+					<port name="p2">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.009615384615384637"/>
+						</data>
+					</port>
+					<port name="p3">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.9945652173913043"/>
+						</data>
+					</port>
+					<port name="p4"/>
+					<port name="p5"/>
+				</node>
+				<node id="n2::n15">
+					<data key="d0">15</data>
+					<data key="d5">
+						<y:RectD X="1773" Y="896" Width="250" Height="134"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="AuthService" attributesOpen="true" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>LogIn()</sys:String>
+											<sys:String><![CDATA[SessionToken Resolve(string token)]]></sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.010638297872340441"/>
+						</data>
+					</port>
+					<port name="p1">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.9926470588235294"/>
+						</data>
+					</port>
+					<port name="p2">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.007352941176470562"/>
+						</data>
+					</port>
+					<port name="p3"/>
+					<port name="p4">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.993421052631579"/>
+						</data>
+					</port>
+				</node>
+				<node id="n2::n16">
+					<data key="d0">16</data>
+					<data key="d5">
+						<y:RectD X="-366" Y="858" Width="250" Height="150"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="RewardDescriptionService" attributesOpen="false" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>CreateRewardDescription()</sys:String>
+											<sys:String>UpdateRewardDescription()</sys:String>
+											<sys:String>GetAllRewardDescriptions()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="20"/>
+						</data>
+					</port>
+					<port name="p1">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="21"/>
+						</data>
+					</port>
+					<port name="p2">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="22"/>
+						</data>
+					</port>
+					<port name="p3">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="23"/>
+						</data>
+					</port>
+					<port name="p4">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.007352941176470562"/>
+						</data>
+					</port>
+					<port name="p5"/>
+				</node>
+				<node id="n2::n17">
+					<data key="d0">17</data>
+					<data key="d5">
+						<y:RectD X="1443" Y="650" Width="250" Height="166"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="interface" constraint="" className="ICompetitionRewardService" attributesOpen="false" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>AddCompetitionReward()</sys:String>
+											<sys:String>RemoveCompetitionReward()</sys:String>
+											<sys:String>UpdateCompetitionReward()</sys:String>
+											<sys:String>GetAllCompetitionRewards()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0"/>
+				</node>
+				<node id="n2::n18">
+					<data key="d0">18</data>
+					<data key="d5">
+						<y:RectD X="1443" Y="896" Width="250" Height="166"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="CompetitionRewardService" attributesOpen="false" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>AddCompetitionReward()</sys:String>
+											<sys:String>RemoveCompetitionReward()</sys:String>
+											<sys:String>UpdateCompetitionReward()</sys:String>
+											<sys:String>GetCompetitionRewardsDescription()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.005952380952380931"/>
+						</data>
+					</port>
+					<port name="p1">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.9940476190476191"/>
+						</data>
+					</port>
+				</node>
+				<node id="n2::n19">
+					<data key="d0">19</data>
+					<data key="d5">
+						<y:RectD X="794" Y="788.5" Width="250" Height="134"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 29}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="interface" constraint="" className="ICompetitionRewardScheduler" attributesOpen="true" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>OnCompetitionCreated()</sys:String>
+											<sys:String>OnCompetitionUpdated()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.9926470588235294"/>
+						</data>
+					</port>
+					<port name="p1"/>
+					<port name="p2">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.007352941176470562"/>
+						</data>
+					</port>
+					<port name="p3">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.003968253968253954,0.5"/>
+						</data>
+					</port>
+					<port name="p4"/>
+				</node>
+				<node id="n2::n20">
+					<data key="d0">20</data>
+					<data key="d5">
+						<y:RectD X="655" Y="1253" Width="250" Height="118"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="BasicRewardConverter" attributesOpen="false" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>GrantRewardsForCompetition()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="24"/>
+						</data>
+					</port>
+					<port name="p1"/>
+					<port name="p2">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="30"/>
+						</data>
+					</port>
+					<port name="p3">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="31"/>
+						</data>
+					</port>
+					<port name="p4"/>
+					<port name="p5"/>
+					<port name="p6">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.00833333333333336"/>
+						</data>
+					</port>
+				</node>
+				<node id="n2::n21">
+					<data key="d0">22</data>
+					<data key="d4">
+						<x:List>
+							<y:Label Text="Запросы к БД для выдачи наград">
+								<y:Label.LayoutParameter>
+									<yx:CompositeLabelModelParameter Model="{y:GraphMLReference 25}">
+										<yx:CompositeLabelModelParameter.Parameter>
+											<yx:ExteriorNodeLabelModelParameter Position="Top" Model="{y:GraphMLReference 3}"/>
+										</yx:CompositeLabelModelParameter.Parameter>
+									</yx:CompositeLabelModelParameter>
+								</y:Label.LayoutParameter>
+								<y:Label.Style>
+									<yjs:LabelStyle verticalTextAlignment="CENTER" horizontalTextAlignment="CENTER" font="{y:GraphMLReference 4}" textFill="{y:GraphMLReference 26}"/>
+								</y:Label.Style>
+							</y:Label>
+						</x:List>
+					</data>
+					<data key="d5">
+						<y:RectD X="761.125" Y="1437.8125" Width="37.75" Height="40.125"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNoteStyle fill="{y:GraphMLReference 27}" stroke="BLACK"/>
+					</data>
+				</node>
+				<node id="n2::n22">
+					<data key="d0">24</data>
+					<data key="d4">
+						<x:List>
+							<y:Label Text="Класс вместо enum?" LayoutParameter="{y:GraphMLReference 28}">
+								<y:Label.Style>
+									<yjs:LabelStyle verticalTextAlignment="CENTER" horizontalTextAlignment="CENTER" font="{y:GraphMLReference 4}" textFill="{y:GraphMLReference 26}"/>
+								</y:Label.Style>
+							</y:Label>
+						</x:List>
+					</data>
+					<data key="d5">
+						<y:RectD X="2877.25" Y="663.75" Width="47.5" Height="52.5"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNoteStyle fill="{y:GraphMLReference 27}" stroke="BLACK"/>
+					</data>
+				</node>
+				<node id="n2::n23">
+					<data key="d0">26</data>
+					<data key="d5">
+						<y:RectD X="794" Y="1111" Width="250" Height="118"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 29}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="interface" constraint="" className="IRewardConverter" attributesOpen="false" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>GrantRewardsForCompetition()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.00833333333333336"/>
+						</data>
+					</port>
+					<port name="p1"/>
+					<port name="p2">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.00833333333333336"/>
+						</data>
+					</port>
+					<port name="p3"/>
+					<port name="p4"/>
+				</node>
+				<node id="n2::n24">
+					<data key="d0">27</data>
+					<data key="d5">
+						<y:RectD X="794" Y="953" Width="250" Height="134"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="CompetitionRewardScheduler" attributesOpen="false" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>OnCompetitionCreated()</sys:String>
+											<sys:String>OnCompetitionUpdated()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="24"/>
+						</data>
+					</port>
+					<port name="p1"/>
+					<port name="p2">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="30"/>
+						</data>
+					</port>
+					<port name="p3">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="31"/>
+						</data>
+					</port>
+					<port name="p4"/>
+					<port name="p5"/>
+					<port name="p6">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.007352941176470562"/>
+						</data>
+					</port>
+					<port name="p7"/>
+				</node>
+				<node id="n2::n25">
+					<data key="d0">28</data>
+					<data key="d5">
+						<y:RectD X="2079.5323459594792" Y="639.704802733233" Width="250" Height="134"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="interface" constraint="" className="IAccountService" attributesOpen="true" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>CreateAccount()</sys:String>
+											<sys:String>RemoveAccount()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="32"/>
+						</data>
+					</port>
+					<port name="p1">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="33"/>
+						</data>
+					</port>
+					<port name="p2">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="34"/>
+						</data>
+					</port>
+					<port name="p3">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="35"/>
+						</data>
+					</port>
+					<port name="p4"/>
+					<port name="p5"/>
+					<port name="p6">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="36"/>
+						</data>
+					</port>
+					<port name="p7"/>
+					<port name="p8">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.007352941176470562"/>
+						</data>
+					</port>
+					<port name="p9"/>
+				</node>
+				<node id="n2::n26">
+					<data key="d0">29</data>
+					<data key="d5">
+						<y:RectD X="2079.5323459594792" Y="893" Width="250" Height="134"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="AccountService" attributesOpen="false" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>CreateAccount()</sys:String>
+											<sys:String>RemoveAccount()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.007352941176470562"/>
+						</data>
+					</port>
+					<port name="p1"/>
+				</node>
+				<node id="n2::n27">
+					<data key="d0">30</data>
+					<data key="d5">
+						<y:RectD X="2079.5323459594792" Y="1055.5" Width="250" Height="134"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 29}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="interface" constraint="" className="IAccountCreationStrategy" attributesOpen="false" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>Create()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0"/>
+					<port name="p1">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.007352941176470562"/>
+						</data>
+					</port>
+					<port name="p2"/>
+					<port name="p3"/>
+				</node>
+				<node id="n2::n28">
+					<data key="d0">31</data>
+					<data key="d5">
+						<y:RectD X="1945" Y="1253" Width="250" Height="134"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="AdminAccountCreationStrategy" attributesOpen="false" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>Create()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.007352941176470562"/>
+						</data>
+					</port>
+					<port name="p1"/>
+				</node>
+				<node id="n2::n29">
+					<data key="d0">32</data>
+					<data key="d5">
+						<y:RectD X="2215" Y="1253" Width="250" Height="134"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="PlayerAccountCreationStrategy" attributesOpen="false" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>Create()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.007352941176470562"/>
+						</data>
+					</port>
+					<port name="p1">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.9926470588235294"/>
+						</data>
+					</port>
+					<port name="p2"/>
+				</node>
+				<node id="n2::n30">
+					<data key="d0">33</data>
+					<data key="d4">
+						<x:List>
+							<y:Label LayoutParameter="{y:GraphMLReference 28}">
+								<y:Label.Text><![CDATA[От него зависят почти все сервисы.]]></y:Label.Text>
+								<y:Label.Style>
+									<yjs:LabelStyle verticalTextAlignment="CENTER" horizontalTextAlignment="CENTER" font="{y:GraphMLReference 4}" textFill="{y:GraphMLReference 26}"/>
+								</y:Label.Style>
+							</y:Label>
+						</x:List>
+					</data>
+					<data key="d5">
+						<y:RectD X="2496.25" Y="680.454802733233" Width="47.5" Height="52.5"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNoteStyle fill="{y:GraphMLReference 27}" stroke="BLACK"/>
+					</data>
+				</node>
+				<edge id="n2::e0" source="n2::n2" target="n2::n1" sourceport="p0" targetport="p0">
+					<data key="d12">
+						<x:List>
+							<y:Bend Location="2890,950"/>
+							<y:Bend Location="3170,950"/>
+							<y:Bend Location="3170,1070"/>
+						</x:List>
+					</data>
+					<data key="d13">
+						<y:GraphMLReference ResourceKey="37"/>
+					</data>
+				</edge>
+				<edge id="n2::e1" source="n2::n2" target="n2::n3" sourceport="p1" targetport="p1">
+					<data key="d13">
+						<y:GraphMLReference ResourceKey="37"/>
+					</data>
+				</edge>
+				<edge id="n2::e2" source="n2::n2" target="n2::n4" sourceport="p2" targetport="p1">
+					<data key="d12">
+						<x:List>
+							<y:Bend Location="2890,950"/>
+							<y:Bend Location="2610,950"/>
+						</x:List>
+					</data>
+					<data key="d13">
+						<y:GraphMLReference ResourceKey="37"/>
+					</data>
+				</edge>
+				<edge id="n2::e3" source="n2::n5" target="n2::n2" sourceport="p0" targetport="p4">
+					<data key="d13">
+						<yjs:PolylineEdgeStyle stroke="{y:GraphMLReference 38}" sourceArrow="{y:GraphMLReference 39}">
+							<yjs:PolylineEdgeStyle.targetArrow>
+								<yjs:Arrow stroke="{y:GraphMLReference 38}" fill="BLACK"/>
+							</yjs:PolylineEdgeStyle.targetArrow>
+						</yjs:PolylineEdgeStyle>
+					</data>
+				</edge>
+				<edge id="n2::e4" source="n2::n6" target="n2::n12" sourceport="p0" targetport="p0">
+					<data key="d12">
+						<x:List>
+							<y:Bend Location="-541,829"/>
+							<y:Bend Location="-541,829"/>
+						</x:List>
+					</data>
+					<data key="d13">
+						<y:GraphMLReference ResourceKey="37"/>
+					</data>
+				</edge>
+				<edge id="n2::e5" source="n2::n7" target="n2::n11" sourceport="p0" targetport="p0">
+					<data key="d12">
+						<x:List>
+							<y:Bend Location="59,829"/>
+							<y:Bend Location="59,829"/>
+							<y:Bend Location="59,859"/>
+						</x:List>
+					</data>
+					<data key="d13">
+						<y:GraphMLReference ResourceKey="37"/>
+					</data>
+				</edge>
+				<edge id="n2::e6" source="n2::n8" target="n2::n13" sourceport="p0" targetport="p0">
+					<data key="d13">
+						<y:GraphMLReference ResourceKey="37"/>
+					</data>
+				</edge>
+				<edge id="n2::e7" source="n2::n9" target="n2::n14" sourceport="p0" targetport="p0">
+					<data key="d12">
+						<x:List>
+							<y:Bend Location="629,829"/>
+							<y:Bend Location="629,829"/>
+						</x:List>
+					</data>
+					<data key="d13">
+						<y:GraphMLReference ResourceKey="37"/>
+					</data>
+				</edge>
+				<edge id="n2::e8" source="n2::n0" target="n2::n15" sourceport="p6" targetport="p0">
+					<data key="d13">
+						<y:GraphMLReference ResourceKey="37"/>
+					</data>
+				</edge>
+				<edge id="n2::e9" source="n2::n10" target="n2::n16" sourceport="p1" targetport="p4">
+					<data key="d13">
+						<y:GraphMLReference ResourceKey="37"/>
+					</data>
+				</edge>
+				<edge id="n2::e10" source="n2::n17" target="n2::n18" sourceport="p0" targetport="p0">
+					<data key="d13">
+						<y:GraphMLReference ResourceKey="37"/>
+					</data>
+				</edge>
+				<edge id="n2::e11" source="n2::n5" target="n2::n15" sourceport="p2" targetport="p2">
+					<data key="d12">
+						<x:List>
+							<y:Bend Location="2520,930"/>
+							<y:Bend Location="2370,930"/>
+							<y:Bend Location="2370,829"/>
+							<y:Bend Location="1898,829"/>
+						</x:List>
+					</data>
+					<data key="d13">
+						<y:GraphMLReference ResourceKey="37"/>
+					</data>
+				</edge>
+				<edge id="n2::e12" source="n2::n14" target="n2::n19" sourceport="p5" targetport="p3">
+					<data key="d13">
+						<y:GraphMLReference ResourceKey="40"/>
+					</data>
+				</edge>
+				<edge id="n2::e13" source="n2::n19" target="n2::n24" sourceport="p4" targetport="p6">
+					<data key="d13">
+						<y:GraphMLReference ResourceKey="41"/>
+					</data>
+				</edge>
+				<edge id="n2::e14" source="n2::n24" target="n2::n23" sourceport="p7" targetport="p2">
+					<data key="d13">
+						<y:GraphMLReference ResourceKey="40"/>
+					</data>
+				</edge>
+				<edge id="n2::e15" source="n2::n23" target="n2::n20" sourceport="p3" targetport="p6">
+					<data key="d12">
+						<x:List>
+							<y:Bend Location="919,1241"/>
+							<y:Bend Location="780,1241"/>
+						</x:List>
+					</data>
+					<data key="d13">
+						<y:GraphMLReference ResourceKey="41"/>
+					</data>
+				</edge>
+				<edge id="n2::e16" source="n2::n25" target="n2::n26" sourceport="p9" targetport="p0">
+					<data key="d13">
+						<y:GraphMLReference ResourceKey="41"/>
+					</data>
+				</edge>
+				<edge id="n2::e17" source="n2::n26" target="n2::n27" sourceport="p1" targetport="p1">
+					<data key="d13">
+						<y:GraphMLReference ResourceKey="40"/>
+					</data>
+				</edge>
+				<edge id="n2::e18" source="n2::n27" target="n2::n28" sourceport="p2" targetport="p0">
+					<data key="d12">
+						<x:List>
+							<y:Bend Location="2203.4073459594792,1230"/>
+							<y:Bend Location="2068.875,1230"/>
+						</x:List>
+					</data>
+					<data key="d13">
+						<y:GraphMLReference ResourceKey="41"/>
+					</data>
+				</edge>
+				<edge id="n2::e19" source="n2::n27" target="n2::n29" sourceport="p3" targetport="p0">
+					<data key="d12">
+						<x:List>
+							<y:Bend Location="2203.4073459594792,1230"/>
+							<y:Bend Location="2338.875,1230"/>
+						</x:List>
+					</data>
+					<data key="d13">
+						<y:GraphMLReference ResourceKey="41"/>
+					</data>
+				</edge>
+			</graph>
+		</node>
+		<node id="n3">
+			<data key="d0">52</data>
+			<data key="d4">
+				<x:List>
+					<y:Label Text="Компоненты доступа к данным">
+						<y:Label.LayoutParameter>
+							<yx:GroupNodeLabelModelParameter PlaceOnTab="false">
+								<yx:GroupNodeLabelModelParameter.Model>
+									<yx:GroupNodeLabelModel/>
+								</yx:GroupNodeLabelModelParameter.Model>
+							</yx:GroupNodeLabelModelParameter>
+						</y:Label.LayoutParameter>
+						<y:Label.Style>
+							<yjs:LabelStyle verticalTextAlignment="CENTER" wrapping="WRAP_CHARACTER_ELLIPSIS" font="{y:GraphMLReference 4}">
+								<yjs:LabelStyle.textFill>
+									<yjs:CssFill cssString="#EEE"/>
+								</yjs:LabelStyle.textFill>
+							</yjs:LabelStyle>
+						</y:Label.Style>
+					</y:Label>
+				</x:List>
+			</data>
+			<data key="d5">
+				<y:RectD X="-690" Y="1514.5" Width="2760" Height="675.5"/>
+			</data>
+			<data key="d7">
+				<yjs:GroupNodeStyle tabWidth="30" tabHeight="20" tabPadding="3" tabPosition="TOP_TRAILING" groupIcon="MINUS" iconForegroundFill="{y:GraphMLReference 7}" iconOffset="2" minimumContentAreaSize="0,0" hitTransparentContentArea="true" tabBackgroundFill="{y:GraphMLReference 8}" contentAreaFill="{y:GraphMLReference 9}" tabFill="{y:GraphMLReference 10}" stroke="{y:GraphMLReference 11}" cssClass="y-group-node"/>
+			</data>
+			<graph id="n3:" edgedefault="directed">
+				<node id="n3::n0">
+					<data key="d0">0</data>
+					<data key="d5">
+						<y:RectD X="1081.75" Y="1560.625" Width="250" Height="150"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="interface" constraint="" className="IPlayerProfileRepository" attributesOpen="false" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>CreatePlayerForAccount()</sys:String>
+											<sys:String>GetPlayerData()</sys:String>
+											<sys:String>UpdatePlayerData()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="42"/>
+						</data>
+					</port>
+					<port name="p1">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="43"/>
+						</data>
+					</port>
+					<port name="p2">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.993421052631579"/>
+						</data>
+					</port>
+					<port name="p3">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.585,0" Offset="0,-0.625"/>
+						</data>
+					</port>
+				</node>
+				<node id="n3::n1">
+					<data key="d0">1</data>
+					<data key="d5">
+						<y:RectD X="502.75" Y="1552.625" Width="250" Height="166"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="interface" constraint="" className="ICompetitionRepository" attributesOpen="true" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>CreateCompetition()</sys:String>
+											<sys:String>UpdateCompetition()</sys:String>
+											<sys:String>GetCompetition()</sys:String>
+											<sys:String>GetActiveCompetitions()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="44"/>
+						</data>
+					</port>
+					<port name="p1">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="45"/>
+						</data>
+					</port>
+					<port name="p2">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.9940476190476191"/>
+						</data>
+					</port>
+				</node>
+				<node id="n3::n2">
+					<data key="d0">2</data>
+					<data key="d5">
+						<y:RectD X="-367.25" Y="1568.625" Width="250" Height="150"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="interface" constraint="" className="IRewardDescriptionRepository" attributesOpen="false" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>CreateRewardDescription()</sys:String>
+											<sys:String>UpdateRewardDescription()</sys:String>
+											<sys:String>GetAllRewardDescriptions()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="46"/>
+						</data>
+					</port>
+					<port name="p1">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="47"/>
+						</data>
+					</port>
+					<port name="p2">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="48"/>
+						</data>
+					</port>
+					<port name="p3">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.9926470588235294"/>
+						</data>
+					</port>
+				</node>
+				<node id="n3::n3">
+					<data key="d0">3</data>
+					<data key="d5">
+						<y:RectD X="-667.25" Y="1568.625" Width="250" Height="166"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="interface" constraint="" className="IRewardRepository" attributesOpen="false" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>CreateReward()</sys:String>
+											<sys:String>GetPlayerRewards()</sys:String>
+											<sys:String>DeleteReward()</sys:String>
+											<sys:String>GetReward()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="49"/>
+						</data>
+					</port>
+					<port name="p1">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.9940476190476191"/>
+						</data>
+					</port>
+					<port name="p2">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.005952380952380931"/>
+						</data>
+					</port>
+				</node>
+				<node id="n3::n4">
+					<data key="d0">4</data>
+					<data key="d5">
+						<y:RectD X="-67.25" Y="1552.625" Width="250" Height="166"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="interface" constraint="" className="IPlayerParticipationRepository" attributesOpen="false" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>CreateParticipation()</sys:String>
+											<sys:String>UpdateParticipation()</sys:String>
+											<sys:String>DeleteParticipation()</sys:String>
+											<sys:String>GetParticipation()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="50"/>
+						</data>
+					</port>
+					<port name="p1">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.9940476190476191"/>
+						</data>
+					</port>
+					<port name="p2">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.9940476190476191"/>
+						</data>
+					</port>
+				</node>
+				<node id="n3::n5">
+					<data key="d0">5</data>
+					<data key="d5">
+						<y:RectD X="205" Y="1561" Width="250" Height="118"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="interface" constraint="" attributesOpen="true" operationsOpen="true">
+									<uml:UMLClassModel.className>IParticipationLeaderboardRepository</uml:UMLClassModel.className>
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>GetLeaderboardForCompetition()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.00833333333333336"/>
+						</data>
+					</port>
+					<port name="p1">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.9916666666666667"/>
+						</data>
+					</port>
+					<port name="p2">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.9916666666666667"/>
+						</data>
+					</port>
+					<port name="p3">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.00833333333333336"/>
+						</data>
+					</port>
+				</node>
+				<node id="n3::n6">
+					<data key="d0">6</data>
+					<data key="d5">
+						<y:RectD X="1771.75" Y="1568.625" Width="250" Height="134"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="interface" constraint="" className="IAccountRepository" attributesOpen="false" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>GetAccount()</sys:String>
+											<sys:String>CreateAccount()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="51"/>
+						</data>
+					</port>
+					<port name="p1">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="52"/>
+						</data>
+					</port>
+					<port name="p2">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.9926470588235294"/>
+						</data>
+					</port>
+					<port name="p3">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.007352941176470562"/>
+						</data>
+					</port>
+					<port name="p4">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.007352941176470562"/>
+						</data>
+					</port>
+				</node>
+				<node id="n3::n7">
+					<data key="d0">7</data>
+					<data key="d5">
+						<y:RectD X="1441.75" Y="1552.625" Width="250" Height="166"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="interface" constraint="" className="ICompetitionRewardRepository" attributesOpen="true" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>CreateCompetitionReward()</sys:String>
+											<sys:String>UpdateCompetitionReward()</sys:String>
+											<sys:String>GetAllCompetitionRewards()</sys:String>
+											<sys:String>RemoveCompetitionReward()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="53"/>
+						</data>
+					</port>
+					<port name="p1">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.9940476190476191"/>
+						</data>
+					</port>
+					<port name="p2">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.005952380952380931"/>
+						</data>
+					</port>
+				</node>
+				<node id="n3::n8">
+					<data key="d0">8</data>
+					<data key="d5">
+						<y:RectD X="1085.5" Y="1836.875" Width="250" Height="150"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 19}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="PlayerProfileRepository" attributesOpen="false" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>CreatePlayerForAccount()</sys:String>
+											<sys:String>GetPlayerData()</sys:String>
+											<sys:String>UpdatePlayerData()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<data key="d8">
+						<y:ViewState>
+							<y:FolderNodeState x:Key="c|view" Layout="1375,1575,250,150"/>
+						</y:ViewState>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="42"/>
+						</data>
+						<data key="d18">
+							<y:ViewState>
+								<y:Port x:Key="c|view"/>
+							</y:ViewState>
+						</data>
+					</port>
+					<port name="p1">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="43"/>
+						</data>
+						<data key="d18">
+							<y:ViewState>
+								<y:Port x:Key="c|view"/>
+							</y:ViewState>
+						</data>
+					</port>
+					<port name="p2">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.006578947368421073"/>
+						</data>
+						<data key="d18">
+							<y:ViewState>
+								<y:Port x:Key="c|view"/>
+							</y:ViewState>
+						</data>
+					</port>
+				</node>
+				<node id="n3::n9">
+					<data key="d0">9</data>
+					<data key="d5">
+						<y:RectD X="506.5" Y="1828.875" Width="250" Height="166"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 19}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="CompetitionRepository" attributesOpen="true" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>CreateCompetition()</sys:String>
+											<sys:String>UpdateCompetition()</sys:String>
+											<sys:String>GetCompetition()</sys:String>
+											<sys:String>GetActiveCompetitions()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<data key="d8">
+						<y:ViewState>
+							<y:FolderNodeState x:Key="c|view" Layout="1015,1567,250,166"/>
+						</y:ViewState>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="44"/>
+						</data>
+						<data key="d18">
+							<y:ViewState>
+								<y:Port x:Key="c|view"/>
+							</y:ViewState>
+						</data>
+					</port>
+					<port name="p1">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="45"/>
+						</data>
+						<data key="d18">
+							<y:ViewState>
+								<y:Port x:Key="c|view"/>
+							</y:ViewState>
+						</data>
+					</port>
+					<port name="p2">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="54"/>
+						</data>
+						<data key="d18">
+							<y:ViewState>
+								<y:Port x:Key="c|view"/>
+							</y:ViewState>
+						</data>
+					</port>
+				</node>
+				<node id="n3::n10">
+					<data key="d0">10</data>
+					<data key="d5">
+						<y:RectD X="-365" Y="1807" Width="250" Height="150"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 19}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="RewardDescriptionRepository" attributesOpen="false" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>CreateRewardDescription()</sys:String>
+											<sys:String>UpdateRewardDescription()</sys:String>
+											<sys:String>GetAllRewardDescriptions()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<data key="d8">
+						<y:ViewState>
+							<y:FolderNodeState x:Key="c|view" Layout="-35,1583,250,134"/>
+						</y:ViewState>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="46"/>
+						</data>
+						<data key="d18">
+							<y:ViewState>
+								<y:Port x:Key="c|view"/>
+							</y:ViewState>
+						</data>
+					</port>
+					<port name="p1">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="47"/>
+						</data>
+						<data key="d18">
+							<y:ViewState>
+								<y:Port x:Key="c|view"/>
+							</y:ViewState>
+						</data>
+					</port>
+					<port name="p2">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="48"/>
+						</data>
+						<data key="d18">
+							<y:ViewState>
+								<y:Port x:Key="c|view"/>
+							</y:ViewState>
+						</data>
+					</port>
+					<port name="p3">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.007352941176470562"/>
+						</data>
+						<data key="d18">
+							<y:ViewState>
+								<y:Port x:Key="c|view"/>
+							</y:ViewState>
+						</data>
+					</port>
+				</node>
+				<node id="n3::n11">
+					<data key="d0">11</data>
+					<data key="d5">
+						<y:RectD X="-665" Y="1807" Width="250" Height="166"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 19}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="RewardRepository" attributesOpen="false" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>CreateReward()</sys:String>
+											<sys:String>GetPlayerRewards()</sys:String>
+											<sys:String>DeleteReward()</sys:String>
+											<sys:String>GetReward()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<data key="d8">
+						<y:ViewState>
+							<y:FolderNodeState x:Key="c|view" Layout="-335,1583,250,166"/>
+						</y:ViewState>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="49"/>
+						</data>
+						<data key="d18">
+							<y:ViewState>
+								<y:Port x:Key="c|view"/>
+							</y:ViewState>
+						</data>
+					</port>
+					<port name="p1">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.005952380952380931"/>
+						</data>
+						<data key="d18">
+							<y:ViewState>
+								<y:Port x:Key="c|view"/>
+							</y:ViewState>
+						</data>
+					</port>
+				</node>
+				<node id="n3::n12">
+					<data key="d0">12</data>
+					<data key="d5">
+						<y:RectD X="86.5" Y="1858.875" Width="250" Height="182"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 19}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="PlayerParticipationRepository" attributesOpen="false" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>CreateParticipation()</sys:String>
+											<sys:String>UpdateParticipation()</sys:String>
+											<sys:String>DeleteParticipation()</sys:String>
+											<sys:String>GetParticipation()</sys:String>
+											<sys:String>GetLeaderboardForCompetition()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<data key="d8">
+						<y:ViewState>
+							<y:FolderNodeState x:Key="c|view" Layout="385,1567,250,166"/>
+						</y:ViewState>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="50"/>
+						</data>
+						<data key="d18">
+							<y:ViewState>
+								<y:Port x:Key="c|view"/>
+							</y:ViewState>
+						</data>
+					</port>
+					<port name="p1">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.005952380952380931"/>
+						</data>
+						<data key="d18">
+							<y:ViewState>
+								<y:Port x:Key="c|view"/>
+							</y:ViewState>
+						</data>
+					</port>
+					<port name="p2">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.005952380952380931"/>
+						</data>
+						<data key="d18">
+							<y:ViewState>
+								<y:Port x:Key="c|view"/>
+							</y:ViewState>
+						</data>
+					</port>
+					<port name="p3">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.005952380952380931"/>
+						</data>
+						<data key="d18">
+							<y:ViewState>
+								<y:Port x:Key="c|view"/>
+							</y:ViewState>
+						</data>
+					</port>
+				</node>
+				<node id="n3::n13">
+					<data key="d0">13</data>
+					<data key="d5">
+						<y:RectD X="1775.5" Y="1844.875" Width="250" Height="134"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 19}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="AccountRepository" attributesOpen="false" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>GetAccount()</sys:String>
+											<sys:String>CreateAccount()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<data key="d8">
+						<y:ViewState>
+							<y:FolderNodeState x:Key="c|view" Layout="-635,1583,250,134"/>
+						</y:ViewState>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="51"/>
+						</data>
+						<data key="d18">
+							<y:ViewState>
+								<y:Port x:Key="c|view"/>
+							</y:ViewState>
+						</data>
+					</port>
+					<port name="p1">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="52"/>
+						</data>
+						<data key="d18">
+							<y:ViewState>
+								<y:Port x:Key="c|view"/>
+							</y:ViewState>
+						</data>
+					</port>
+					<port name="p2">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.007352941176470562"/>
+						</data>
+						<data key="d18">
+							<y:ViewState>
+								<y:Port x:Key="c|view"/>
+							</y:ViewState>
+						</data>
+					</port>
+				</node>
+				<node id="n3::n14">
+					<data key="d0">14</data>
+					<data key="d5">
+						<y:RectD X="1445.5" Y="1828.875" Width="250" Height="166"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 19}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="CompetitionRewardRepository" attributesOpen="true" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>CreateCompetitionReward()</sys:String>
+											<sys:String>UpdateCompetitionReward()</sys:String>
+											<sys:String>GetAllCompetitionRewards()</sys:String>
+											<sys:String>RemoveCompetitionReward()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<data key="d8">
+						<y:ViewState>
+							<y:FolderNodeState x:Key="c|view" Layout="1735,1567,250,166"/>
+						</y:ViewState>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="53"/>
+						</data>
+						<data key="d18">
+							<y:ViewState>
+								<y:Port x:Key="c|view"/>
+							</y:ViewState>
+						</data>
+					</port>
+					<port name="p1">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.005952380952380931"/>
+						</data>
+						<data key="d18">
+							<y:ViewState>
+								<y:Port x:Key="c|view"/>
+							</y:ViewState>
+						</data>
+					</port>
+				</node>
+				<node id="n3::n15">
+					<data key="d0">18</data>
+					<data key="d4">
+						<x:List>
+							<y:Label Text="JOIN по RewardDescription" LayoutParameter="{y:GraphMLReference 28}">
+								<y:Label.Style>
+									<yjs:LabelStyle verticalTextAlignment="CENTER" horizontalTextAlignment="CENTER" font="{y:GraphMLReference 4}" textFill="{y:GraphMLReference 26}"/>
+								</y:Label.Style>
+							</y:Label>
+						</x:List>
+					</data>
+					<data key="d5">
+						<y:RectD X="-563.75" Y="2013.75" Width="47.5" Height="52.5"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNoteStyle fill="{y:GraphMLReference 27}" stroke="BLACK"/>
+					</data>
+				</node>
+				<node id="n3::n16">
+					<data key="d0">19</data>
+					<data key="d4">
+						<x:List>
+							<y:Label LayoutParameter="{y:GraphMLReference 28}">
+								<y:Label.Text><![CDATA[<p>Таблица лидеров <strong>активных </strong>соревнований будет получаться через Redis</p><p>Всё остальное идёт через PostgreSQL</p>]]></y:Label.Text>
+								<y:Label.Style>
+									<yjs:MarkupLabelStyle verticalTextAlignment="CENTER" horizontalTextAlignment="CENTER" font="{y:GraphMLReference 4}" textFill="{y:GraphMLReference 26}"/>
+								</y:Label.Style>
+							</y:Label>
+						</x:List>
+					</data>
+					<data key="d5">
+						<y:RectD X="186.25" Y="2059.125" Width="47.5" Height="52.5"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNoteStyle fill="{y:GraphMLReference 27}" stroke="BLACK"/>
+					</data>
+				</node>
+				<node id="n3::n17">
+					<data key="d0">21</data>
+					<data key="d5">
+						<y:RectD X="805" Y="1591" Width="250" Height="118"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 19}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="StoredProcedureConverter" attributesOpen="true" operationsOpen="true">
+									<uml:UMLClassModel.attributes>
+										<x:Array/>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array>
+											<sys:String>GrantRewardsForCompetition()</sys:String>
+										</x:Array>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<data key="d8">
+						<y:ViewState>
+							<y:FolderNodeState x:Key="c|view" Layout="1030,1582,250,166">
+								<y:FolderNodeState.Style>
+									<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 19}">
+										<uml:UMLNodeStyle.model>
+											<uml:UMLClassModel stereotype="" constraint="" className="CompetitionRepository" attributesOpen="true" operationsOpen="true">
+												<uml:UMLClassModel.attributes>
+													<x:Array/>
+												</uml:UMLClassModel.attributes>
+												<uml:UMLClassModel.operations>
+													<x:Array>
+														<sys:String>CreateCompetition()</sys:String>
+														<sys:String>UpdateCompetition()</sys:String>
+														<sys:String>GetCompetition()</sys:String>
+														<sys:String>GetActiveCompetitions()</sys:String>
+													</x:Array>
+												</uml:UMLClassModel.operations>
+											</uml:UMLClassModel>
+										</uml:UMLNodeStyle.model>
+									</uml:UMLNodeStyle>
+								</y:FolderNodeState.Style>
+							</y:FolderNodeState>
+						</y:ViewState>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="44"/>
+						</data>
+						<data key="d18">
+							<y:ViewState>
+								<y:Port x:Key="c|view">
+									<y:Port.LocationParameter>
+										<y:FreeNodePortLocationModelParameter Ratio="0.452,0" Offset="0,-11.011904761904816"/>
+									</y:Port.LocationParameter>
+								</y:Port>
+							</y:ViewState>
+						</data>
+					</port>
+					<port name="p1">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="45"/>
+						</data>
+						<data key="d18">
+							<y:ViewState>
+								<y:Port x:Key="c|view">
+									<y:Port.LocationParameter>
+										<y:FreeNodePortLocationModelParameter Ratio="0.452,0" Offset="0,-11.011904761904816"/>
+									</y:Port.LocationParameter>
+								</y:Port>
+							</y:ViewState>
+						</data>
+					</port>
+					<port name="p2">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="54"/>
+						</data>
+						<data key="d18">
+							<y:ViewState>
+								<y:Port x:Key="c|view">
+									<y:Port.LocationParameter>
+										<y:FreeNodePortLocationModelParameter Ratio="0.452,0" Offset="0,-11.011904761904816"/>
+									</y:Port.LocationParameter>
+								</y:Port>
+							</y:ViewState>
+						</data>
+					</port>
+					<port name="p3">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.00833333333333336"/>
+						</data>
+						<data key="d18">
+							<y:ViewState>
+								<y:Port x:Key="c|view"/>
+							</y:ViewState>
+						</data>
+					</port>
+					<port name="p4">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.00833333333333336"/>
+						</data>
+						<data key="d18">
+							<y:ViewState>
+								<y:Port x:Key="c|view"/>
+							</y:ViewState>
+						</data>
+					</port>
+				</node>
+				<node id="n3::n18">
+					<data key="d0">22</data>
+					<data key="d4">
+						<x:List>
+							<y:Label>
+								<y:Label.Text><![CDATA[Использование хранимой процедуры БД]]></y:Label.Text>
+								<y:Label.LayoutParameter>
+									<yx:CompositeLabelModelParameter Model="{y:GraphMLReference 25}">
+										<yx:CompositeLabelModelParameter.Parameter>
+											<yx:ExteriorNodeLabelModelParameter Position="Top" Model="{y:GraphMLReference 3}"/>
+										</yx:CompositeLabelModelParameter.Parameter>
+									</yx:CompositeLabelModelParameter>
+								</y:Label.LayoutParameter>
+								<y:Label.Style>
+									<yjs:LabelStyle verticalTextAlignment="CENTER" horizontalTextAlignment="CENTER" font="{y:GraphMLReference 4}" textFill="{y:GraphMLReference 26}"/>
+								</y:Label.Style>
+							</y:Label>
+						</x:List>
+					</data>
+					<data key="d5">
+						<y:RectD X="911.125" Y="1749.9375" Width="37.75" Height="40.125"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNoteStyle fill="{y:GraphMLReference 27}" stroke="BLACK"/>
+					</data>
+				</node>
+				<edge id="n3::e0" source="n3::n6" target="n3::n13" sourceport="p2" targetport="p2">
+					<data key="d13">
+						<y:GraphMLReference ResourceKey="37"/>
+					</data>
+				</edge>
+				<edge id="n3::e1" source="n3::n3" target="n3::n11" sourceport="p1" targetport="p1">
+					<data key="d13">
+						<y:GraphMLReference ResourceKey="37"/>
+					</data>
+				</edge>
+				<edge id="n3::e2" source="n3::n2" target="n3::n10" sourceport="p3" targetport="p3">
+					<data key="d13">
+						<y:GraphMLReference ResourceKey="37"/>
+					</data>
+				</edge>
+				<edge id="n3::e3" source="n3::n1" target="n3::n9" sourceport="p2" targetport="p2">
+					<data key="d13">
+						<y:GraphMLReference ResourceKey="37"/>
+					</data>
+				</edge>
+				<edge id="n3::e4" source="n3::n0" target="n3::n8" sourceport="p2" targetport="p2">
+					<data key="d13">
+						<y:GraphMLReference ResourceKey="37"/>
+					</data>
+				</edge>
+				<edge id="n3::e5" source="n3::n7" target="n3::n14" sourceport="p1" targetport="p1">
+					<data key="d13">
+						<y:GraphMLReference ResourceKey="37"/>
+					</data>
+				</edge>
+				<edge id="n3::e6" source="n3::n4" target="n3::n12" sourceport="p2" targetport="p2">
+					<data key="d12">
+						<x:List>
+							<y:Bend Location="61.5,1821.875"/>
+							<y:Bend Location="211.5,1821.875"/>
+						</x:List>
+					</data>
+					<data key="d13">
+						<y:GraphMLReference ResourceKey="37"/>
+					</data>
+				</edge>
+				<edge id="n3::e7" source="n3::n5" target="n3::n12" sourceport="p2" targetport="p3">
+					<data key="d12">
+						<x:List>
+							<y:Bend Location="331.5,1821.875"/>
+							<y:Bend Location="211.5,1821.875"/>
+						</x:List>
+					</data>
+					<data key="d13">
+						<y:GraphMLReference ResourceKey="37"/>
+					</data>
+				</edge>
+			</graph>
+		</node>
+		<edge id="e0" source="n2::n15" target="n3::n6" sourceport="p1" targetport="p1">
+			<data key="d13">
+				<y:GraphMLReference ResourceKey="57"/>
+			</data>
+		</edge>
+		<edge id="e1" source="n2::n12" target="n3::n3" sourceport="p2" targetport="p0">
+			<data key="d12">
+				<x:List>
+					<y:Bend Location="-541,1129"/>
+					<y:Bend Location="-541,1129"/>
+				</x:List>
+			</data>
+			<data key="d13">
+				<y:GraphMLReference ResourceKey="57"/>
+			</data>
+		</edge>
+		<edge id="e2" source="n2::n16" target="n3::n2" sourceport="p5" targetport="p1">
+			<data key="d13">
+				<y:GraphMLReference ResourceKey="57"/>
+			</data>
+		</edge>
+		<edge id="e3" source="n2::n12" target="n3::n2" sourceport="p4" targetport="p2">
+			<data key="d12">
+				<x:List>
+					<y:Bend Location="-541,1039"/>
+					<y:Bend Location="-241,1039"/>
+				</x:List>
+			</data>
+			<data key="d13">
+				<y:GraphMLReference ResourceKey="57"/>
+			</data>
+		</edge>
+		<edge id="e4" source="n2::n11" target="n3::n4" sourceport="p2" targetport="p0">
+			<data key="d13">
+				<y:GraphMLReference ResourceKey="57"/>
+			</data>
+		</edge>
+		<edge id="e5" source="n2::n11" target="n3::n1" sourceport="p3" targetport="p0">
+			<data key="d12">
+				<x:List>
+					<y:Bend Location="59,1099"/>
+					<y:Bend Location="629,1099"/>
+				</x:List>
+			</data>
+			<data key="d13">
+				<y:GraphMLReference ResourceKey="57"/>
+			</data>
+		</edge>
+		<edge id="e6" source="n2::n11" target="n3::n5" sourceport="p4" targetport="p0">
+			<data key="d12">
+				<x:List>
+					<y:Bend Location="59,1099"/>
+					<y:Bend Location="329,1099"/>
+				</x:List>
+			</data>
+			<data key="d13">
+				<yjs:PolylineEdgeStyle stroke="{y:GraphMLReference 55}" targetArrow="{y:GraphMLReference 56}" sourceArrow="{y:GraphMLReference 39}"/>
+			</data>
+		</edge>
+		<edge id="e7" source="n2::n14" target="n3::n1" sourceport="p3" targetport="p1">
+			<data key="d12">
+				<x:List>
+					<y:Bend Location="629,1069"/>
+					<y:Bend Location="629,1069"/>
+				</x:List>
+			</data>
+			<data key="d13">
+				<y:GraphMLReference ResourceKey="57"/>
+			</data>
+		</edge>
+		<edge id="e8" source="n2::n13" target="n3::n0" sourceport="p1" targetport="p1">
+			<data key="d12">
+				<x:List>
+					<y:Bend Location="1208,1099"/>
+					<y:Bend Location="1208,1099"/>
+				</x:List>
+			</data>
+			<data key="d13">
+				<y:GraphMLReference ResourceKey="57"/>
+			</data>
+		</edge>
+		<edge id="e9" source="n2::n18" target="n3::n7" sourceport="p1" targetport="p0">
+			<data key="d13">
+				<y:GraphMLReference ResourceKey="57"/>
+			</data>
+		</edge>
+		<edge id="e10" source="n2::n20" target="n3::n5" sourceport="p3" targetport="p3">
+			<data key="d12">
+				<x:List>
+					<y:Bend Location="780,1410"/>
+					<y:Bend Location="330,1410"/>
+				</x:List>
+			</data>
+			<data key="d13">
+				<y:GraphMLReference ResourceKey="59"/>
+			</data>
+		</edge>
+		<edge id="e11" source="n2::n20" target="n3::n7" sourceport="p4" targetport="p2">
+			<data key="d12">
+				<x:List>
+					<y:Bend Location="780,1410"/>
+					<y:Bend Location="1566.15625,1410"/>
+					<y:Bend Location="1566.75,1410"/>
+				</x:List>
+			</data>
+			<data key="d13">
+				<y:GraphMLReference ResourceKey="59"/>
+			</data>
+		</edge>
+		<edge id="e12" source="n2::n20" target="n3::n3" sourceport="p5" targetport="p2">
+			<data key="d12">
+				<x:List>
+					<y:Bend Location="780,1410"/>
+					<y:Bend Location="-540,1410"/>
+				</x:List>
+			</data>
+			<data key="d13">
+				<y:GraphMLReference ResourceKey="59"/>
+			</data>
+		</edge>
+		<edge id="e13" source="n2::n29" target="n3::n0" sourceport="p1" targetport="p3">
+			<data key="d12">
+				<x:List>
+					<y:Bend Location="2340,1440"/>
+					<y:Bend Location="1230,1440"/>
+				</x:List>
+			</data>
+			<data key="d13">
+				<y:GraphMLReference ResourceKey="40"/>
+			</data>
+		</edge>
+		<edge id="e14" source="n2::n23" target="n3::n17" sourceport="p4" targetport="p4">
+			<data key="d13">
+				<y:GraphMLReference ResourceKey="41"/>
+			</data>
+		</edge>
+		<edge id="e15" source="n2::n28" target="n3::n6" sourceport="p1" targetport="p3">
+			<data key="d12">
+				<x:List>
+					<y:Bend Location="2070,1410"/>
+					<y:Bend Location="1896.75,1410"/>
+				</x:List>
+			</data>
+			<data key="d13">
+				<y:GraphMLReference ResourceKey="40"/>
+			</data>
+		</edge>
+		<edge id="e16" source="n2::n29" target="n3::n6" sourceport="p2" targetport="p4">
+			<data key="d12">
+				<x:List>
+					<y:Bend Location="2340,1420.4984031936128"/>
+					<y:Bend Location="1896.75,1420.4984031936128"/>
+				</x:List>
+			</data>
+			<data key="d13">
+				<y:GraphMLReference ResourceKey="40"/>
+			</data>
+		</edge>
+	</graph>
+</graphml>
