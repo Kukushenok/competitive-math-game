@@ -49,5 +49,12 @@ namespace CompetitiveBackend.Services.RewardDescriptionService
             LargeData processed = await _imageProcessor.Process(data);
             await _repository.SetRewardIcon(rewardID, processed);
         }
+
+        public async Task UpdateRewardDescription(int rewardDescrID, string? name = null, string? description = null)
+        {
+            RewardDescription d = await _repository.GetRewardDescription(rewardDescrID);
+            RewardDescription nw = new RewardDescription(name ?? d.Name, description ?? d.Description, rewardDescrID);
+            await _repository.UpdateRewardDescription(d);
+        }
     }
 }

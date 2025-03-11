@@ -55,7 +55,7 @@ namespace CompetitiveBackend.Services.AccountSevice
             try
             {
                 string passwordHash = _hashAlgorithm.Hash(password); // account is ref type so it changes data :(
-                await _accountRepository.CreateAccount(new Account(data.Login, passwordHash, data.Email, data.PlayerProfileId, data.Id), _roleCreator.Create(data));
+                await _accountRepository.CreateAccount(new Account(data.Login, passwordHash, data.Email, data.Id), _roleCreator.Create(data));
             }
             catch (RepositoryException ex)
             {

@@ -26,6 +26,11 @@ namespace CompetitiveBackend.Services.PlayerProfileService
             return _profileRepository.GetPlayerProfileImage(playerProfileId);
         }
 
+        public async Task SetPlayerProfileImage(int playerID, LargeData data)
+        {
+            await _profileRepository.UpdatePlayerProfileImage(playerID, data);
+        }
+
         public Task UpdatePlayerProfile(PlayerProfile p)
         {
             return _profileRepository.UpdatePlayerProfile(p);
