@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CompetitiveBackend\CompetitiveBackend.csproj" />
+    <ProjectReference Include="..\ServicesRealisation\ServicesRealisation.csproj" />
   </ItemGroup>
 
 </Project>

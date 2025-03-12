@@ -1,18 +1,12 @@
-﻿using Castle.Core.Logging;
-using CompetitiveBackend.Core.Exceptions.Repository;
-using CompetitiveBackend.Core.Exceptions.Services;
+﻿using CompetitiveBackend.Core.Auth;
 using CompetitiveBackend.Core.Objects;
-using CompetitiveBackend.LogicComponents;
 using CompetitiveBackend.Repositories;
-using CompetitiveBackend.Services.AccountSevice;
+using CompetitiveBackend.Repositories.Exceptions;
+using CompetitiveBackend.Services.AuthService;
+using CompetitiveBackend.Services.Exceptions;
+using CompetitiveBackend.Services.Objects;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
 
 namespace Tests.ServiceTests
 {
