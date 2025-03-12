@@ -4,7 +4,7 @@ using CompetitiveBackend.Repositories;
 
 namespace CompetitiveBackend.Services.PlayerParticipationService
 {
-    public class PlayerParticipationService : LogService<PlayerParticipationService>, IPlayerParticipationService
+    public class PlayerParticipationService : BaseService<PlayerParticipationService>, IPlayerParticipationService
     {
         private readonly IPlayerParticipationRepository _playerParticipationRepository;
         private readonly IPlayerProfileRepository _playerProfileRepository;

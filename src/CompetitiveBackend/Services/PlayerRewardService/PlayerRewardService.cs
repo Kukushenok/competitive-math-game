@@ -4,7 +4,7 @@ using CompetitiveBackend.Repositories;
 
 namespace CompetitiveBackend.Services.PlayerRewardService
 {
-    public class PlayerRewardService : LogService<PlayerRewardService>, IPlayerRewardService
+    public class PlayerRewardService : BaseService<PlayerRewardService>, IPlayerRewardService
     {
         private IPlayerRewardRepository _repository;
         private IRewardDescriptionRepository _rewardDescriptionRepository;

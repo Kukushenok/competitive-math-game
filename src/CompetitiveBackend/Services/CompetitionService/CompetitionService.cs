@@ -4,7 +4,7 @@ using CompetitiveBackend.Repositories;
 
 namespace CompetitiveBackend.Services.CompetitionService
 {
-    public class CompetitionService : LogService<CompetitionService>, ICompetitionService
+    public class CompetitionService : BaseService<CompetitionService>, ICompetitionService
     {
         private readonly ICompetitionRepository _competitionRepository;
         public CompetitionService(ILogger<CompetitionService> logger, ICompetitionRepository competitionRepository) : base(logger)

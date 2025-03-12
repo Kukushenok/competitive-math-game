@@ -2,13 +2,13 @@
 
 namespace CompetitiveBackend.Services
 {
-    public class LogService
+    public class BaseService
     {
     }
-    public class LogService<T>: LogService where T: LogService<T>
+    public class BaseService<T>: BaseService where T: BaseService<T>
     {
         protected readonly ILogger<T> _logger;
-        public LogService(ILogger<T> logger)
+        public BaseService(ILogger<T> logger)
         {
             this._logger = logger;
         }

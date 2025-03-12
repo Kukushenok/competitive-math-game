@@ -5,7 +5,7 @@ using CompetitiveBackend.LogicComponents;
 using CompetitiveBackend.Repositories;
 namespace CompetitiveBackend.Services.AccountSevice
 {
-    public class AuthService : LogService<AuthService>, IAuthService
+    public class AuthService : BaseService<AuthService>, IAuthService
     {
         private readonly IAccountRepository _accountRepository;
         private readonly ISessionRepository _sessionRepository;

@@ -1,4 +1,5 @@
 ﻿using CompetitiveBackend.Repositories;
+using CompetitiveBackend.Services.AccountSevice;
 using Microsoft.AspNetCore.Authorization;
 
 namespace CompetitiveBackend.LogicComponents
@@ -12,8 +13,8 @@ namespace CompetitiveBackend.LogicComponents
     }
     public class SessionTokenPolicy : AuthorizationHandler<SessionTokenAttribute>
     {
-        private ISessionRepository resolver;
-        public SessionTokenPolicy(ISessionRepository resolver)
+        private IAuthService resolver;
+        public SessionTokenPolicy(IAuthService resolver)
         {
             this.resolver = resolver;
         }

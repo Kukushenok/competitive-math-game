@@ -3,7 +3,7 @@ using CompetitiveBackend.Repositories;
 
 namespace CompetitiveBackend.Services.CompetitionRewardService
 {
-    public class CompetitionRewardService : LogService<CompetitionRewardService>, ICompetitionRewardService
+    public class CompetitionRewardService : BaseService<CompetitionRewardService>, ICompetitionRewardService
     {
         private readonly ICompetitionRewardRepository repository;
         public CompetitionRewardService(ILogger<CompetitionRewardService> logger, ICompetitionRewardRepository rewardRepository) : base(logger)

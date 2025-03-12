@@ -4,7 +4,7 @@ using CompetitiveBackend.Repositories;
 
 namespace CompetitiveBackend.Services.RewardDescriptionService
 {
-    public class RewardDescriptionService : LogService<RewardDescriptionService>, IRewardDescriptionService
+    public class RewardDescriptionService : BaseService<RewardDescriptionService>, IRewardDescriptionService
     {
         private readonly IRewardDescriptionRepository _repository;
         private readonly ILargeFileProcessor _imageProcessor;
