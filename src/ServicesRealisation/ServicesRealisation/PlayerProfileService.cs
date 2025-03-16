@@ -8,13 +8,11 @@ namespace CompetitiveBackend.Services.PlayerProfileService
 {
     public class PlayerProfileService : IPlayerProfileService
     {
-        private readonly ILogger<PlayerProfileService> _logger;
         private readonly IPlayerProfileRepository _profileRepository;
         private readonly ILargeFileProcessor _imageProcessor;
-        public PlayerProfileService(IPlayerProfileRepository profileRepository, ILogger<PlayerProfileService> logger, ILargeFileProcessor processor)
+        public PlayerProfileService(IPlayerProfileRepository profileRepository, ILargeFileProcessor processor)
         {
             _profileRepository = profileRepository;
-            _logger = logger;
             _imageProcessor = processor;
         }
 
@@ -30,18 +28,13 @@ namespace CompetitiveBackend.Services.PlayerProfileService
 
         public async Task SetPlayerProfileImage(int playerID, LargeData data)
         {
-            await _profileRepository.UpdatePlayerProfileImage(playerID, data);
+            LargeData processed = await _imageProcessor.Process(data);
+            await _profileRepository.UpdatePlayerProfileImage(playerID, processed);
         }
 
         public Task UpdatePlayerProfile(PlayerProfile p)
         {
             return _profileRepository.UpdatePlayerProfile(p);
-        }
-
-        public async Task UpdatePlayerProfileImage(int playerProfileId, LargeData data)
-        {
-            LargeData processed = await _imageProcessor.Process(data);
-            await _profileRepository.UpdatePlayerProfileImage(playerProfileId, processed);
         }
     }
 }

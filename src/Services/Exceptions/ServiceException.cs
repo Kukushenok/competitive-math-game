@@ -1,12 +1,9 @@
 ﻿namespace CompetitiveBackend.Services.Exceptions
 {
-    public abstract class ServiceException: Exception
+    public class ServiceException : Exception
     {
-        public override string Message => SourceClass() + " " + base.Message;
-        protected abstract string SourceClass();
-    }
-    public class ServiceException<T>: ServiceException where T : class
-    {
-        protected sealed override string SourceClass() => typeof(T).ToString();
+        public ServiceException() { }
+        public ServiceException(string message) : base(message) { }
+        public ServiceException(string message, Exception? innerException) : base(message, innerException) { }
     }
 }

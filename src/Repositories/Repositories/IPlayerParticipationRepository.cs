@@ -8,14 +8,14 @@ namespace CompetitiveBackend.Repositories
         /// </summary>
         /// <param name="participation">Заявка на соревнование</param>
         /// <returns></returns>
-        /// <exception cref="Core.Exceptions.Repository.IncorrectOperationException">Соответствующая заявка уже существует</exception>
+        /// <exception cref="CompetitiveBackend.Repositories.Exceptions.IncorrectOperationException">Соответствующая заявка уже существует</exception>
         public Task CreateParticipation(PlayerParticipation participation);
         /// <summary>
         /// Обновить заявку на соревновани
         /// </summary>
         /// <param name="participation">Заявка на соревнование</param>
         /// <returns></returns>
-        ///<exception cref="Core.Exceptions.Repository.IncorrectOperationException">Соответствующей заявки не существует</exception>
+        ///<exception cref="CompetitiveBackend.Repositories.Exceptions.IncorrectOperationException">Соответствующей заявки не существует</exception>
         public Task UpdateParticipation(PlayerParticipation participation);
         /// <summary>
         /// Удалить заявку игрока
@@ -36,7 +36,7 @@ namespace CompetitiveBackend.Repositories
         /// <param name="playerID">Идентификатор аккаунта</param>
         /// <param name="limiter">Ограничитель данных</param>
         /// <returns>Заявки игрока</returns>
-        /// <exception cref="Core.Exceptions.Repository.MissingDataException">Игрок с таким ID не найден</exception>
+        /// <exception cref="CompetitiveBackend.Repositories.Exceptions.MissingDataException">Игрок с таким ID не найден</exception>
         public Task<IEnumerable<PlayerParticipation>> GetPlayerParticipations(int accountID, DataLimiter limiter);
         /// <summary>
         /// Получить список лидеров соревнования
@@ -44,7 +44,7 @@ namespace CompetitiveBackend.Repositories
         /// <param name="competitionID">Идентификатор соревнования</param>
         /// <param name="limiter">Ограничитель данных</param>
         /// <returns>Заявки игрока, расположенные по убыванию</returns>
-        /// <exception cref="Core.Exceptions.Repository.MissingDataException">Соревнование с таким ID не найдено</exception>
+        /// <exception cref="CompetitiveBackend.Repositories.Exceptions.MissingDataException">Соревнование с таким ID не найдено</exception>
         public Task<IEnumerable<PlayerParticipation>> GetLeaderboard(int competitionID, DataLimiter limiter);
     }
 }

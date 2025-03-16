@@ -5,6 +5,7 @@ using CompetitiveBackend.Repositories.Exceptions;
 using CompetitiveBackend.Services.Exceptions;
 using CompetitiveBackend.Services.Objects;
 using Microsoft.Extensions.Logging;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace CompetitiveBackend.Services.AuthService
 {
     public class PlayerRoleCreator : IRoleCreator { public Role Create(Account data) => new PlayerRole(); }
@@ -16,8 +17,9 @@ namespace CompetitiveBackend.Services.AuthService
             return new PlayerRole();
         }
     }
-    public class AuthService : BaseService<AuthService>, IAuthService
+    public class AuthService : IAuthService
     {
+        private readonly ILogger<AuthService> _logger;
         private readonly IAccountRepository _accountRepository;
         private readonly ISessionRepository _sessionRepository;
         private readonly IHashAlgorithm _hashAlgorithm;
@@ -27,8 +29,9 @@ namespace CompetitiveBackend.Services.AuthService
             IAccountRepository accountRepository,
             ISessionRepository sessionRepository,
             IHashAlgorithm hashAlgo,
-            IRoleCreator roleCreator): base(logger)
+            IRoleCreator roleCreator)
         {
+            _logger = logger;
             _accountRepository = accountRepository;
             _hashAlgorithm = hashAlgo;
             _sessionRepository = sessionRepository;
@@ -42,37 +45,30 @@ namespace CompetitiveBackend.Services.AuthService
 
         public async Task<AuthSuccessResult> LogIn(string login, string password)
         {
-            try
-            {
-                Account acc = await _accountRepository.GetAccount(login);
+            Account acc = await _accountRepository.GetAccount(login);
 
-                if (!_hashAlgorithm.Verify(password, acc.PasswordHash))
-                {
-                    throw new ServiceException<AuthService>();
-                }
-                string token = await _sessionRepository.CreateSessionFor(acc.Id!.Value);
-                string roleName = (await _sessionRepository.GetSessionToken(token)).Role.ToString();
-                return new AuthSuccessResult(token, roleName, acc.Id!.Value);
-            }
-            catch (RepositoryException ex)
+            if (!_hashAlgorithm.Verify(password, acc.PasswordHash))
             {
-                _logger.LogError($"Log in failure: {ex}");
-                throw new ServiceException<AuthService>();
+                throw new IncorrectPasswordException();
             }
+            string token = await _sessionRepository.CreateSessionFor(acc.Id!.Value);
+            string roleName = (await _sessionRepository.GetSessionToken(token)).Role.ToString();
+            return new AuthSuccessResult(token, roleName, acc.Id!.Value);
         }
 
         public async Task Register(Account data, string password)
         {
-            try
+            string passwordHash = _hashAlgorithm.Hash(password);
+            if(CheckLogin(data.Login))
             {
-                string passwordHash = _hashAlgorithm.Hash(password); // account is ref type so it changes data :(
-                await _accountRepository.CreateAccount(new Account(data.Login, passwordHash, data.Email, data.Id), _roleCreator.Create(data));
+                throw new BadLoginException();
             }
-            catch (RepositoryException ex)
-            {
-                _logger.LogError(ex, $"Unable to register user with login {data.Login}");
-                throw new ServiceException<AuthService>();
-            }
+            await _accountRepository.CreateAccount(new Account(data.Login, passwordHash, data.Email, data.Id), _roleCreator.Create(data));
+        }
+        private bool CheckLogin(string login)
+        {
+            int len = login.Length;
+            return len >= 3 && len <= 64 && !login.Contains(' ');
         }
     }
 }

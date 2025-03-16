@@ -2,17 +2,16 @@
 using CompetitiveBackend.Core;
 using CompetitiveBackend.Repositories;
 using Microsoft.Extensions.Logging;
+using CompetitiveBackend.Repositories.Exceptions;
 
 namespace CompetitiveBackend.Services.PlayerParticipationService
 {
-    public class PlayerParticipationService : BaseService<PlayerParticipationService>, IPlayerParticipationService
+    public class PlayerParticipationService : IPlayerParticipationService
     {
         private readonly IPlayerParticipationRepository _playerParticipationRepository;
-        private readonly IPlayerProfileRepository _playerProfileRepository;
-        public PlayerParticipationService(ILogger<PlayerParticipationService> logger, IPlayerParticipationRepository playerParticipationRepository, IPlayerProfileRepository playerProfileRepository) : base(logger)
+        public PlayerParticipationService(IPlayerParticipationRepository playerParticipationRepository)
         {
             _playerParticipationRepository = playerParticipationRepository;
-            _playerProfileRepository = playerProfileRepository;
         }
 
         public async Task DeleteParticipation(int playerID, int competitionID)
@@ -37,7 +36,17 @@ namespace CompetitiveBackend.Services.PlayerParticipationService
 
         public async Task SubmitParticipation(int userID, int competitionID, int score)
         {
-            await _playerParticipationRepository.UpdateParticipation(new PlayerParticipation(userID, competitionID, score));
+            PlayerParticipation participation;
+            try
+            {
+                participation = await _playerParticipationRepository.GetParticipation(userID, competitionID);
+            }
+            catch(MissingDataException)
+            {
+                participation = new PlayerParticipation(competitionID, userID, score);
+            }
+            if (participation.Score < score) participation.Score = score;
+            await _playerParticipationRepository.UpdateParticipation(participation);
         }
     }
 

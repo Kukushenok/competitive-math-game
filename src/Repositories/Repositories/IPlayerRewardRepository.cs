@@ -13,7 +13,7 @@ namespace CompetitiveBackend.Repositories
         /// Удалить награду по идентификатору
         /// </summary>
         /// <param name="playerRewardID">Идентификатор награды</param>
-        /// <exception cref="Core.Exceptions.Repository.MissingDataException">Соответствующей награды нет</exception>
+        /// <exception cref="CompetitiveBackend.Repositories.Exceptions.MissingDataException">Соответствующей награды нет</exception>
         public Task DeleteReward(int playerRewardID);
         /// <summary>
         /// Получить все награды игрока
@@ -27,8 +27,8 @@ namespace CompetitiveBackend.Repositories
         /// </summary>
         /// <param name="competitionID"></param>
         /// <returns>Награды за соревнование</returns>
-        /// <exception cref="Core.Exceptions.Repository.IncorrectOperationException">Соревнование ещё не завершено</exception>
-        /// <exception cref="Core.Exceptions.Repository.IncorrectOperationException">Награды за соревнование уже выданы</exception>
+        /// <exception cref="CompetitiveBackend.Repositories.Exceptions.IncorrectOperationException">Соревнование ещё не завершено</exception>
+        /// <exception cref="CompetitiveBackend.Repositories.Exceptions.IncorrectOperationException">Награды за соревнование уже выданы</exception>
         public Task GrantRewardsFor(int competitionID);
     }
 }

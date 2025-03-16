@@ -26,28 +26,28 @@ namespace CompetitiveBackend.Repositories
         /// </summary>
         /// <param name="c">Соревнование, где ID явно указан</param>
         /// <returns></returns>
-        /// <exception cref="Core.Exceptions.Repository.IncorrectOperationException">Соревнование с таким ID уже существует</exception>
+        /// <exception cref="CompetitiveBackend.Repositories.Exceptions.IncorrectOperationException">Соревнование с таким ID уже существует</exception>
         public Task UpdateCompetition(Competition c);
         /// <summary>
         /// Получить данные о соревновании по идентификатору
         /// </summary>
         /// <param name="competitionID">Идентификатор соревнования</param>
         /// <returns>Данные о соревновании</returns>
-        /// <exception cref="Core.Exceptions.Repository.MissingDataException">Соревнование с таким ID не найдено</exception>
+        /// <exception cref="CompetitiveBackend.Repositories.Exceptions.MissingDataException">Соревнование с таким ID не найдено</exception>
         public Task<Competition> GetCompetition(int competitionID);
         /// <summary>
         /// Получить данные об уровне соревнования
         /// </summary>
         /// <param name="competitionID">Идентификатор соревнования</param>
         /// <returns>Данные</returns>
-        /// <exception cref="Core.Exceptions.Repository.MissingDataException">Соревнование с таким ID не найдено</exception>
+        /// <exception cref="CompetitiveBackend.Repositories.Exceptions.MissingDataException">Соревнование с таким ID не найдено</exception>
         public Task<LargeData> GetCompetitionLevel(int competitionID);
         /// <summary>
         /// Загрузить уровень соревнования
         /// </summary>
         /// <param name="competitionID">Идентификатор соревнования</param>
         /// <param name="levelData">Данные об уровне соревнования</param>
-        /// <exception cref="Core.Exceptions.Repository.MissingDataException">Соревнование с таким ID не найдено</exception>
+        /// <exception cref="CompetitiveBackend.Repositories.Exceptions.MissingDataException">Соревнование с таким ID не найдено</exception>
         public Task SetCompetitionLevel(int competitionID, LargeData levelData);
     }
 }

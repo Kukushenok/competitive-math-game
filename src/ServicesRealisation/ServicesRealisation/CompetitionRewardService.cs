@@ -4,10 +4,10 @@ using Microsoft.Extensions.Logging;
 
 namespace CompetitiveBackend.Services.CompetitionRewardService
 {
-    public class CompetitionRewardService : BaseService<CompetitionRewardService>, ICompetitionRewardService
+    public class CompetitionRewardService : ICompetitionRewardService
     {
         private readonly ICompetitionRewardRepository repository;
-        public CompetitionRewardService(ILogger<CompetitionRewardService> logger, ICompetitionRewardRepository rewardRepository) : base(logger)
+        public CompetitionRewardService(ICompetitionRewardRepository rewardRepository)
         {
             repository = rewardRepository;
         }

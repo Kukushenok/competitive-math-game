@@ -6,11 +6,11 @@ using CompetitiveBackend.Services.Objects;
 
 namespace CompetitiveBackend.Services.RewardDescriptionService
 {
-    public class RewardDescriptionService : BaseService<RewardDescriptionService>, IRewardDescriptionService
+    public class RewardDescriptionService : IRewardDescriptionService
     {
         private readonly IRewardDescriptionRepository _repository;
         private readonly ILargeFileProcessor _imageProcessor;
-        public RewardDescriptionService(ILogger<RewardDescriptionService> logger, IRewardDescriptionRepository repository, ILargeFileProcessor imageProcessor) : base(logger)
+        public RewardDescriptionService(IRewardDescriptionRepository repository, ILargeFileProcessor imageProcessor)
         {
             _repository = repository;
             _imageProcessor = imageProcessor;

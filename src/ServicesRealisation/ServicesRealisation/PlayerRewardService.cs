@@ -5,11 +5,11 @@ using Microsoft.Extensions.Logging;
 
 namespace CompetitiveBackend.Services.PlayerRewardService
 {
-    public class PlayerRewardService : BaseService<PlayerRewardService>, IPlayerRewardService
+    public class PlayerRewardService : IPlayerRewardService
     {
         private IPlayerRewardRepository _repository;
         private IRewardDescriptionRepository _rewardDescriptionRepository;
-        public PlayerRewardService(ILogger<PlayerRewardService> logger, IPlayerRewardRepository repository, IRewardDescriptionRepository rewardDescriptionRepository) : base(logger)
+        public PlayerRewardService(IPlayerRewardRepository repository, IRewardDescriptionRepository rewardDescriptionRepository)
         {
             _repository = repository;
             _rewardDescriptionRepository = rewardDescriptionRepository;

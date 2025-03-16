@@ -22,14 +22,14 @@ namespace CompetitiveBackend.Repositories
         /// </summary>
         /// <param name="p">Профиль игрока</param>
         /// <returns></returns>
-        /// <exception cref="Core.Exceptions.Repository.IncorrectOperationException">Соответствующего игрока не существует</exception>
+        /// <exception cref="CompetitiveBackend.Repositories.Exceptions.IncorrectOperationException">Соответствующего игрока не существует</exception>
         public Task UpdatePlayerProfile(PlayerProfile p);
         /// <summary>
         /// Получить изображение игрока
         /// </summary>
         /// <param name="accountId">Идентификатор аккаунта</param>
         /// <returns>Данные изображения игрока</returns>
-        /// <exception cref="Core.Exceptions.Repository.MissingDataException">Игрок с таким идентификатором не найден</exception>
+        /// <exception cref="CompetitiveBackend.Repositories.Exceptions.MissingDataException">Игрок с таким идентификатором не найден</exception>
         public Task<LargeData> GetPlayerProfileImage(int accountId);
         /// <summary>
         /// Обновить изображение у профиля игрока
@@ -37,7 +37,7 @@ namespace CompetitiveBackend.Repositories
         /// <param name="accountId">Идентификатор аккаунта</param>
         /// <param name="data">Изображение</param>
         /// <returns></returns>
-        /// <exception cref="Core.Exceptions.Repository.IncorrectOperationException">Соответствующего игрока не существует</exception>
+        /// <exception cref="CompetitiveBackend.Repositories.Exceptions.IncorrectOperationException">Соответствующего игрока не существует</exception>
         public Task UpdatePlayerProfileImage(int accountId, LargeData data);
     }
 }
