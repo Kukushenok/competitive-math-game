@@ -19,19 +19,16 @@ namespace CompetitiveBackend.Services.AuthService
     }
     public class AuthService : IAuthService
     {
-        private readonly ILogger<AuthService> _logger;
         private readonly IAccountRepository _accountRepository;
         private readonly ISessionRepository _sessionRepository;
         private readonly IHashAlgorithm _hashAlgorithm;
         private readonly IRoleCreator _roleCreator;
         public AuthService(
-            ILogger<AuthService> logger,
             IAccountRepository accountRepository,
             ISessionRepository sessionRepository,
             IHashAlgorithm hashAlgo,
             IRoleCreator roleCreator)
         {
-            _logger = logger;
             _accountRepository = accountRepository;
             _hashAlgorithm = hashAlgo;
             _sessionRepository = sessionRepository;
@@ -59,16 +56,7 @@ namespace CompetitiveBackend.Services.AuthService
         public async Task Register(Account data, string password)
         {
             string passwordHash = _hashAlgorithm.Hash(password);
-            if(CheckLogin(data.Login))
-            {
-                throw new BadLoginException();
-            }
             await _accountRepository.CreateAccount(new Account(data.Login, passwordHash, data.Email, data.Id), _roleCreator.Create(data));
-        }
-        private bool CheckLogin(string login)
-        {
-            int len = login.Length;
-            return len >= 3 && len <= 64 && !login.Contains(' ');
         }
     }
 }

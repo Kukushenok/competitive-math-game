@@ -1,4 +1,11 @@
 
+using CompetitiveBackend.Controllers;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.OpenApi.Models;
+using RepositoriesRealisation;
+using ServicesRealisation;
+
 namespace CompetitiveBackend
 {
     public class Program
@@ -8,11 +15,49 @@ namespace CompetitiveBackend
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
+            builder.Services.AddScoped<IAuthorizationHandler, SessionTokenAuthorizationHandler>();
+            builder.Services.AddAuthorization((options) =>
+            {
+                options.AddPolicy("Player", (pol) => pol.Requirements.Add(new PlayerTokenRequirement()));
+                options.AddPolicy("Admin", (pol) => pol.Requirements.Add(new AdminTokenRequirement()));
+            });
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme);//,
+            //options =>
+            //{
+            //    options.LoginPath = new PathString("/auth/login");
+            //    options.AccessDeniedPath = new PathString("/auth/denied");
+            //});
+            // The SIN of us. Pray for it to work blud.
+            builder.Services.AddRepositories();
+            builder.Services.AddAuthService();
+            //
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(setup =>
+            {
+                var jwtSecurityScheme = new OpenApiSecurityScheme
+                {
+                    BearerFormat = "JWT",
+                    Name = "Bearer",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Description = "Put **_ONLY_** your JWT Bearer token on textbox below!",
+                    Reference = new OpenApiReference
+                    {
+                        Id = "Bearer",
+                        Type = ReferenceType.SecurityScheme
+                    }
+                };
+
+                setup.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
+
+                setup.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    { jwtSecurityScheme, Array.Empty<string>() }
+                });
+            });
 
             var app = builder.Build();
 
@@ -21,13 +66,14 @@ namespace CompetitiveBackend
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+
             }
 
             //app.UseHttpsRedirection();
 
             app.UseAuthorization();
 
-
+            
             app.MapControllers();
 
             app.Run();
