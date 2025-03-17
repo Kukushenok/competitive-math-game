@@ -1,4 +1,6 @@
-﻿using CompetitiveBackend.Services;
+﻿using CompetitiveBackend.Repositories.Exceptions;
+using CompetitiveBackend.Services;
+using CompetitiveBackend.Services.Exceptions;
 using CompetitiveBackend.Services.Objects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -30,11 +32,23 @@ namespace CompetitiveBackend.Controllers
             return ":3";
         }
         [HttpPost(Name = "login")]
-        public async Task<ObjectResult> Login(string login, string password)
+        public async Task<IActionResult> Login(string login, string password)
         {
+            try
+            {
+                AuthSuccessResult result = await Service.LogIn(login, password);
+                return Ok(result);
+            }
+            catch(MissingDataException)
+            {
+                return NotFound();
+            }
+            catch(IncorrectPasswordException)
+            {
+                return Forbid();
+            }
             //try
             //{
-            return Ok(await Service.LogIn(login, password));
             //}
             //catch
             //{
@@ -42,12 +56,20 @@ namespace CompetitiveBackend.Controllers
             //}
         }
         [HttpPost(Name = "register")]
-        public async Task<StatusCodeResult> Register(string login, string password)
+        public async Task<IActionResult> Register(string login, string password)
         {
             //try
             //{
-            await Service.Register(new Core.Objects.Account(login, null, null, null), password);
-            return Ok();
+            try
+            {
+                await Service.Register(new Core.Objects.Account(login, null, null, null), password);
+                return Ok();
+            }
+            catch (RepositoryException exp)
+            {
+                return BadRequest(exp.Message);
+            }
+
             //}
             //catch
             //{

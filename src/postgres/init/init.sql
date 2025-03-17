@@ -4,5 +4,7 @@ create table if not exists account(
 	email varchar(32),
 	password_hash varchar,
 	privilegy_level int,
+	description varchar(128),
+	profile_image bytea,
 	check (login not like '% %')
 );

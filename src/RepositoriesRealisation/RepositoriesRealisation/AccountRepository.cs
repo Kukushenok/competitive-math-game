@@ -11,17 +11,13 @@ using System.Threading.Tasks;
 
 namespace CompetitiveBackend.Repositories
 {
-    class AccountRepository : IAccountRepository
+    class AccountRepository : BaseRepository, IAccountRepository
     {
-        private IDbContextFactory<BaseDbContext> contextFactory;
-        public AccountRepository(IDbContextFactory<BaseDbContext> contextFactory)
-        {
-            this.contextFactory = contextFactory;
-        }
+        public AccountRepository(IDbContextFactory<BaseDbContext> contextFactory) : base(contextFactory) { }
 
         public async Task CreateAccount(Account acc, Role accountRole)
         {
-            using BaseDbContext context = await contextFactory.CreateDbContextAsync();
+            using BaseDbContext context = await GetDbContext();
             try
             {
                 await context.Accounts.AddAsync(new AccountModel(acc, accountRole));
@@ -35,18 +31,18 @@ namespace CompetitiveBackend.Repositories
 
         public async Task<Account> GetAccount(string login)
         {
-            using BaseDbContext context = await contextFactory.CreateDbContextAsync();
-            AccountModel? Q = await context.Accounts.Where((x) => x.Name == login).FirstAsync();
+            using BaseDbContext context = await GetDbContext();
+            AccountModel? Q = await context.Accounts.Where((x) => x.Name == login).FirstOrDefaultAsync();
             if (Q == null) throw new Exceptions.MissingDataException($"No account with login {login}");
-            return Q.ToCore();
+            return Q.ToCoreAccount();
         }
 
         public async Task<Account> GetAccount(int identifier)
         {
-            using BaseDbContext context = await contextFactory.CreateDbContextAsync();
+            using BaseDbContext context = await GetDbContext();
             AccountModel? Q = await context.Accounts.FindAsync(identifier);
             if (Q == null) throw new Exceptions.MissingDataException($"No account with id {identifier}");
-            return Q.ToCore();
+            return Q.ToCoreAccount();
         }
     }
 }

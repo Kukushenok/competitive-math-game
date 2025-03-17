@@ -7,7 +7,7 @@ using Microsoft.Extensions.Options;
 using System.Text.Encodings.Web;
 using CompetitiveBackend.Services;
 using CompetitiveBackend.Core.Auth;
-using Microsoft.Extensions.Primitives;
+using Microsoft.AspNetCore.Http;
 
 namespace CompetitiveBackend.Controllers
 {
@@ -34,10 +34,9 @@ namespace CompetitiveBackend.Controllers
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, SessionTokenRequirement requirement)
         {
             var httpContext = context.Resource as HttpContext;
-            StringValues q;
-            if ((httpContext?.Request.Headers.TryGetValue("Bearer", out q) ?? false) && q[0] != null)
+            if (httpContext?.TryGetTokenValue(out string token) ?? false)
             {
-                SessionToken s = await authService.GetSessionToken(q[0]!);
+                SessionToken s = await authService.GetSessionToken(token);
                 if (requirement.Check(s)) context.Succeed(requirement);
                 else context.Fail();
             }

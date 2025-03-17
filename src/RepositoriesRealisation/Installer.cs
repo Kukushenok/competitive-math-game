@@ -15,6 +15,7 @@ namespace RepositoriesRealisation
         {
             container.AddScoped<IAccountRepository, AccountRepository>();
             container.AddScoped<ISessionRepository, SessionRepository>();
+            container.AddScoped<IPlayerProfileRepository, PlayerProfileRepository>();
             container.AddScoped<SessionRepositoryConfiguration>();
             container.AddDbContextFactory<BaseDbContext, BaseContextFactory>();
             return container;

@@ -26,6 +26,11 @@ namespace RepositoriesRealisation.DatabaseObjects
 
         [Column("privilegy_level")]
         public int AccountPrivilegyLevel { get; set; }
+        [Column("description", TypeName = "varchar(128)")]
+        public string? Description { get; set; }
+
+        [Column("profile_image", TypeName = "blob")]
+        public byte[]? ProfileImage { get; set; }
         public AccountModel()
         {
 
@@ -39,9 +44,13 @@ namespace RepositoriesRealisation.DatabaseObjects
             PasswordHash = coreObject.PasswordHash;
             AccountPrivilegyLevel = PrivilegyRoleResolver.Resolve(role);
         }
-        public Account ToCore()
+        public Account ToCoreAccount()
         {
             return new Account(Name, PasswordHash, Email, Id);
+        }
+        public PlayerProfile ToCoreProfile()
+        {
+            return new PlayerProfile(Name, Description, Id);
         }
     }
     public class PrivilegyRoleResolver
