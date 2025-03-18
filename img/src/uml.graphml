@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!--Created by yFiles for HTML 3.0-EAP4-->
-<graphml xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://www.yworks.com/xml/schema/graphml.html/2.0/ygraphml.xsd " xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:yca="http://www.yworks.com/xml/yfiles-compat-arrows/1.0" xmlns:ycns="http://www.yworks.com/xml/yfiles-compat-node-styles/1.0" xmlns:yjs2="http://www.yworks.com/xml/yfiles-for-html/2.0/xaml" xmlns:demostyle2="http://www.yworks.com/yFilesHTML/demos/FlatDemoStyle/2.0" xmlns:demostyle="http://www.yworks.com/yFilesHTML/demos/FlatDemoStyle/1.0" xmlns:icon-style="http://www.yworks.com/yed-live/icon-style/1.0" xmlns:bpmn="http://www.yworks.com/xml/yfiles-bpmn/2.0" xmlns:demotablestyle="http://www.yworks.com/yFilesHTML/demos/FlatDemoTableStyle/1.0" xmlns:uml="http://www.yworks.com/yFilesHTML/demos/UMLDemoStyle/1.0" xmlns:GraphvizNodeStyle="http://www.yworks.com/yFilesHTML/graphviz-node-style/1.0" xmlns:Vue2jsNodeStyle="http://www.yworks.com/demos/yfiles-vuejs-node-style/1.0" xmlns:Vue3jsNodeStyle="http://www.yworks.com/demos/yfiles-vue-node-style/3.0" xmlns:explorer-style="http://www.yworks.com/data-explorer/1.0" xmlns:yx="http://www.yworks.com/xml/yfiles-common/4.0" xmlns:y="http://www.yworks.com/xml/yfiles-common/3.0" xmlns:x="http://www.yworks.com/xml/yfiles-common/markup/3.0" xmlns:yjs="http://www.yworks.com/xml/yfiles-for-html/3.0/xaml" xmlns:sys="http://www.yworks.com/xml/yfiles-common/markup/primitives/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<!--Created by yFiles for HTML 3.0-->
+<graphml xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://www.yworks.com/xml/schema/graphml.html/2.0/ygraphml.xsd " xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:yca="http://www.yworks.com/xml/yfiles-compat-arrows/1.0" xmlns:ycns="http://www.yworks.com/xml/yfiles-compat-node-styles/1.0" xmlns:yjs2="http://www.yworks.com/xml/yfiles-for-html/2.0/xaml" xmlns:demostyle2="http://www.yworks.com/yFilesHTML/demos/FlatDemoStyle/2.0" xmlns:demostyle="http://www.yworks.com/yFilesHTML/demos/FlatDemoStyle/1.0" xmlns:icon-style="http://www.yworks.com/yed-live/icon-style/1.0" xmlns:bpmn="http://www.yworks.com/xml/yfiles-bpmn/2.0" xmlns:demotablestyle="http://www.yworks.com/yFilesHTML/demos/FlatDemoTableStyle/1.0" xmlns:uml="http://www.yworks.com/yFilesHTML/demos/UMLDemoStyle/1.0" xmlns:GraphvizNodeStyle="http://www.yworks.com/yFilesHTML/graphviz-node-style/1.0" xmlns:Vue2jsNodeStyle="http://www.yworks.com/demos/yfiles-vuejs-node-style/2.0" xmlns:Vue3jsNodeStyle="http://www.yworks.com/demos/yfiles-vue-node-style/3.0" xmlns:explorer-style="http://www.yworks.com/data-explorer/1.0" xmlns:yx="http://www.yworks.com/xml/yfiles-common/4.0" xmlns:y="http://www.yworks.com/xml/yfiles-common/3.0" xmlns:x="http://www.yworks.com/xml/yfiles-common/markup/3.0" xmlns:yjs="http://www.yworks.com/xml/yfiles-for-html/3.0/xaml" xmlns:sys="http://www.yworks.com/xml/yfiles-common/markup/primitives/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<key id="d0" for="node" attr.type="int" attr.name="zOrder" y:attr.uri="http://www.yworks.com/xml/yfiles-z-order/1.0/zOrder"/>
 	<key id="d1" for="node" attr.type="boolean" attr.name="Expanded" y:attr.uri="http://www.yworks.com/xml/yfiles-common/2.0/folding/Expanded">
 		<default>true</default>
@@ -68,7 +68,7 @@
 			<y:FreeNodePortLocationModelParameter x:Key="21" Ratio="0.5,0.005952380952380931"/>
 			<y:FreeNodePortLocationModelParameter x:Key="22" Ratio="0.5,0.9945652173913043"/>
 			<y:FreeNodePortLocationModelParameter x:Key="23" Ratio="0.5,0.9945652173913043"/>
-			<yx:CompositeLabelModelParameter x:Key="24" Model="{y:GraphMLReference 73}">
+			<yx:CompositeLabelModelParameter x:Key="24" Model="{y:GraphMLReference 74}">
 				<yx:CompositeLabelModelParameter.Parameter>
 					<yx:ExteriorNodeLabelModelParameter Position="Bottom" Model="{y:GraphMLReference 3}"/>
 				</yx:CompositeLabelModelParameter.Parameter>
@@ -114,14 +114,15 @@
 					<yx:ExteriorNodeLabelModelParameter Position="Bottom" Model="{y:GraphMLReference 45}"/>
 				</yx:CompositeLabelModelParameter.Parameter>
 			</yx:CompositeLabelModelParameter>
-			<yjs:PolylineEdgeStyle x:Key="52" stroke="{y:GraphMLReference 58}" targetArrow="{y:GraphMLReference 53}" sourceArrow="{y:GraphMLReference 59}"/>
-			<yjs:Arrow x:Key="53" fill="BLACK" type="NONE"/>
-			<yjs:Stroke x:Key="54" dashStyle="Dash">
+			<y:FreeNodePortLocationModelParameter x:Key="52" Ratio="0.5,0.9940476190476191"/>
+			<yjs:PolylineEdgeStyle x:Key="53" stroke="{y:GraphMLReference 59}" targetArrow="{y:GraphMLReference 54}" sourceArrow="{y:GraphMLReference 60}"/>
+			<yjs:Arrow x:Key="54" fill="BLACK" type="NONE"/>
+			<yjs:Stroke x:Key="55" dashStyle="Dash">
 				<yjs:Stroke.fill>
 					<yjs:CssFill cssString="#000000"/>
 				</yjs:Stroke.fill>
 			</yjs:Stroke>
-			<yjs:Arrow x:Key="55" fill="BLACK">
+			<yjs:Arrow x:Key="56" fill="BLACK">
 				<yjs:Arrow.stroke>
 					<yjs:Stroke>
 						<yjs:Stroke.fill>
@@ -130,14 +131,14 @@
 					</yjs:Stroke>
 				</yjs:Arrow.stroke>
 			</yjs:Arrow>
-			<yjs:PolylineEdgeStyle x:Key="56" stroke="{y:GraphMLReference 54}" targetArrow="{y:GraphMLReference 55}" sourceArrow="{y:GraphMLReference 53}"/>
-			<yjs:PolylineEdgeStyle x:Key="57" stroke="{y:GraphMLReference 54}" targetArrow="{y:GraphMLReference 55}" sourceArrow="{y:GraphMLReference 53}"/>
-			<yjs:Stroke x:Key="58" dashStyle="Dash">
+			<yjs:PolylineEdgeStyle x:Key="57" stroke="{y:GraphMLReference 55}" targetArrow="{y:GraphMLReference 56}" sourceArrow="{y:GraphMLReference 54}"/>
+			<yjs:PolylineEdgeStyle x:Key="58" stroke="{y:GraphMLReference 55}" targetArrow="{y:GraphMLReference 56}" sourceArrow="{y:GraphMLReference 54}"/>
+			<yjs:Stroke x:Key="59" dashStyle="Dash">
 				<yjs:Stroke.fill>
 					<yjs:CssFill cssString="#000000"/>
 				</yjs:Stroke.fill>
 			</yjs:Stroke>
-			<yjs:Arrow x:Key="59" fill="WHITE" type="TRIANGLE">
+			<yjs:Arrow x:Key="60" fill="WHITE" type="TRIANGLE">
 				<yjs:Arrow.stroke>
 					<yjs:Stroke>
 						<yjs:Stroke.fill>
@@ -146,8 +147,8 @@
 					</yjs:Stroke>
 				</yjs:Arrow.stroke>
 			</yjs:Arrow>
-			<yjs:PolylineEdgeStyle x:Key="60" stroke="{y:GraphMLReference 58}" targetArrow="{y:GraphMLReference 53}" sourceArrow="{y:GraphMLReference 59}"/>
-			<yjs:PolylineEdgeStyle x:Key="61" sourceArrow="None">
+			<yjs:PolylineEdgeStyle x:Key="61" stroke="{y:GraphMLReference 59}" targetArrow="{y:GraphMLReference 54}" sourceArrow="{y:GraphMLReference 60}"/>
+			<yjs:PolylineEdgeStyle x:Key="62" sourceArrow="None">
 				<yjs:PolylineEdgeStyle.stroke>
 					<yjs:Stroke dashStyle="Dash">
 						<yjs:Stroke.fill>
@@ -167,18 +168,18 @@
 					</yjs:Arrow>
 				</yjs:PolylineEdgeStyle.targetArrow>
 			</yjs:PolylineEdgeStyle>
-			<y:FreeNodePortLocationModelParameter x:Key="62" Ratio="0.5,0.006578947368421073"/>
 			<y:FreeNodePortLocationModelParameter x:Key="63" Ratio="0.5,0.006578947368421073"/>
-			<y:FreeNodePortLocationModelParameter x:Key="64" Ratio="0.5,0.005952380952380931"/>
+			<y:FreeNodePortLocationModelParameter x:Key="64" Ratio="0.5,0.006578947368421073"/>
 			<y:FreeNodePortLocationModelParameter x:Key="65" Ratio="0.5,0.005952380952380931"/>
-			<y:FreeNodePortLocationModelParameter x:Key="66" Ratio="0.5,0.007352941176470562"/>
+			<y:FreeNodePortLocationModelParameter x:Key="66" Ratio="0.5,0.005952380952380931"/>
 			<y:FreeNodePortLocationModelParameter x:Key="67" Ratio="0.5,0.007352941176470562"/>
 			<y:FreeNodePortLocationModelParameter x:Key="68" Ratio="0.5,0.007352941176470562"/>
-			<y:FreeNodePortLocationModelParameter x:Key="69" Ratio="0.5,0.005952380952380931"/>
+			<y:FreeNodePortLocationModelParameter x:Key="69" Ratio="0.5,0.007352941176470562"/>
 			<y:FreeNodePortLocationModelParameter x:Key="70" Ratio="0.5,0.005952380952380931"/>
 			<y:FreeNodePortLocationModelParameter x:Key="71" Ratio="0.5,0.005952380952380931"/>
 			<y:FreeNodePortLocationModelParameter x:Key="72" Ratio="0.5,0.005952380952380931"/>
-			<yx:CompositeLabelModel x:Key="73">
+			<y:FreeNodePortLocationModelParameter x:Key="73" Ratio="0.5,0.005952380952380931"/>
+			<yx:CompositeLabelModel x:Key="74">
 				<yx:CompositeLabelModel.Models>
 					<yx:CompositeLabelModelModelPair Model="{y:GraphMLReference 3}"/>
 					<yx:CompositeLabelModelModelPair>
@@ -189,9 +190,9 @@
 					<yx:CompositeLabelModelModelPair Model="{x:Static yx:FreeNodeLabelModel.Instance}"/>
 				</yx:CompositeLabelModel.Models>
 			</yx:CompositeLabelModel>
-			<yjs:CssFill x:Key="74" cssString="#a3f1bb"/>
-			<y:FreeNodePortLocationModelParameter x:Key="75" Ratio="0.5,0.007352941176470562"/>
-			<yjs:PolylineEdgeStyle x:Key="76">
+			<yjs:CssFill x:Key="75" cssString="#a3f1bb"/>
+			<y:FreeNodePortLocationModelParameter x:Key="76" Ratio="0.5,0.007352941176470562"/>
+			<yjs:PolylineEdgeStyle x:Key="77">
 				<yjs:PolylineEdgeStyle.stroke>
 					<yjs:Stroke dashStyle="Dash">
 						<yjs:Stroke.fill>
@@ -1225,7 +1226,7 @@
 				<node id="n2::n0">
 					<data key="d0">0</data>
 					<data key="d5">
-						<y:RectD X="1773" Y="675" Width="250" Height="150"/>
+						<y:RectD X="1824.178768028959" Y="666" Width="324.14246394208226" Height="150"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
@@ -1236,9 +1237,9 @@
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String>LogIn()</sys:String>
-											<sys:String>Register()</sys:String>
-											<sys:String>GetSessionToken()</sys:String>
+											<sys:String><![CDATA[AuthSuccessResult LogIn(string login, string password)]]></sys:String>
+											<sys:String><![CDATA[void Register(Account, string password)]]></sys:String>
+											<sys:String><![CDATA[SessionToken GetSessionToken(string token)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -1274,11 +1275,12 @@
 					</port>
 					<port name="p7"/>
 					<port name="p8"/>
+					<port name="p9"/>
 				</node>
 				<node id="n2::n1">
 					<data key="d0">2</data>
 					<data key="d5">
-						<y:RectD X="2593.7736222466" Y="1155.9999999999964" Width="250" Height="150"/>
+						<y:RectD X="2682.0236222466" Y="1155.9999999999964" Width="250" Height="150"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 33}" highlightFill="{y:GraphMLReference 34}">
@@ -1334,7 +1336,7 @@
 				<node id="n2::n2">
 					<data key="d0">3</data>
 					<data key="d5">
-						<y:RectD X="2725" Y="1403" Width="250" Height="134"/>
+						<y:RectD X="2813.25" Y="1403" Width="250" Height="134"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
@@ -1368,7 +1370,7 @@
 				<node id="n2::n3">
 					<data key="d0">4</data>
 					<data key="d5">
-						<y:RectD X="2455" Y="1403" Width="250" Height="134"/>
+						<y:RectD X="2543.25" Y="1403" Width="250" Height="134"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
@@ -1407,7 +1409,7 @@
 				<node id="n2::n4">
 					<data key="d0">6</data>
 					<data key="d5">
-						<y:RectD X="-426" Y="634" Width="250" Height="150"/>
+						<y:RectD X="-514.5037948145057" Y="652.3257648625945" Width="306.75758962901136" Height="150"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
@@ -1418,9 +1420,9 @@
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String>GrantRewardToPlayer()</sys:String>
-											<sys:String>DeleteReward()</sys:String>
-											<sys:String>GetAllRewardsOf()</sys:String>
+											<sys:String><![CDATA[void GrantRewardToPlayer(int p, int descr)]]></sys:String>
+											<sys:String><![CDATA[void DeleteReward(int)]]></sys:String>
+											<sys:String><![CDATA[PlayerReward[] GetAllRewardsOf(int p, DataLimiter)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -1437,7 +1439,7 @@
 				<node id="n2::n5">
 					<data key="d0">7</data>
 					<data key="d5">
-						<y:RectD X="175" Y="646.625" Width="250" Height="182"/>
+						<y:RectD X="224.52251392613994" Y="646.744693922542" Width="325.45497214772024" Height="182"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
@@ -1448,11 +1450,11 @@
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String>SubmitParticipation()</sys:String>
-											<sys:String>DeleteParticipation()</sys:String>
-											<sys:String>GetParticipation()</sys:String>
-											<sys:String>GetPlayerParticipations()</sys:String>
-											<sys:String>GetLeaderboard()</sys:String>
+											<sys:String><![CDATA[void SubmitParticipation(int pID, int compID, int score);]]></sys:String>
+											<sys:String><![CDATA[void DeleteParticipation(int pID, int compID);]]></sys:String>
+											<sys:String><![CDATA[PlayerParticipation GetParticipation(int pID, int compID)]]></sys:String>
+											<sys:String><![CDATA[PlayerParticipation[] GetPlayerParticipations(int, DataLimiter)]]></sys:String>
+											<sys:String><![CDATA[PlayerParticipation[] GetLeaderboard(int, DataLimiter)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -1467,23 +1469,25 @@
 					<port name="p1"/>
 				</node>
 				<node id="n2::n6">
-					<data key="d0">8</data>
+					<data key="d0">62</data>
 					<data key="d5">
-						<y:RectD X="1083" Y="651" Width="250" Height="182"/>
+						<y:RectD X="1165.7097180540732" Y="664.8159346539392" Width="258.1127542575539" Height="166"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
 							<uml:UMLNodeStyle.model>
-								<uml:UMLClassModel stereotype="interface" constraint="" className="IPlayerProfileService" attributesOpen="true" operationsOpen="true">
+								<uml:UMLClassModel stereotype="interface" constraint="" className="IPlayerProfileService" attributesOpen="false" operationsOpen="true">
 									<uml:UMLClassModel.attributes>
-										<x:Array/>
+										<x:Array>
+											<sys:String></sys:String>
+										</x:Array>
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String>GetPlayerProfile()</sys:String>
-											<sys:String>UpdatePlayerProfile()</sys:String>
-											<sys:String>GetPlayerProfileImage()</sys:String>
-											<sys:String>SetPlayerProfileImage()</sys:String>
+											<sys:String><![CDATA[PlayerProfile GetPlayerProfile(int)]]></sys:String>
+											<sys:String><![CDATA[void UpdatePlayerProfile(PlayerProfile)]]></sys:String>
+											<sys:String><![CDATA[LargeData GetPlayerProfileImage(int)]]></sys:String>
+											<sys:String><![CDATA[void SetPlayerProfileImage(int, LargeData)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -1506,7 +1510,7 @@
 				<node id="n2::n7">
 					<data key="d0">9</data>
 					<data key="d5">
-						<y:RectD X="505" Y="577" Width="250" Height="214"/>
+						<y:RectD X="580.2052854272558" Y="577.3633174758465" Width="276.08942914548834" Height="214"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
@@ -1517,13 +1521,13 @@
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String>GetAllCompetitions()</sys:String>
-											<sys:String>GetActiveCompetitions()</sys:String>
-											<sys:String>CreateCompetition()</sys:String>
-											<sys:String>UpdateCompetition()</sys:String>
-											<sys:String>GetCompetition()</sys:String>
-											<sys:String>GetCompetitionLevel()</sys:String>
-											<sys:String>SetCompetitionLevel()</sys:String>
+											<sys:String><![CDATA[Competition[] GetAllCompetitions(DataLimiter)]]></sys:String>
+											<sys:String><![CDATA[Competition[] GetActiveCompetitions()]]></sys:String>
+											<sys:String><![CDATA[void CreateCompetition(Competition)]]></sys:String>
+											<sys:String><![CDATA[void UpdateCompetition(int id, <...>)]]></sys:String>
+											<sys:String><![CDATA[Competition GetCompetition(int)]]></sys:String>
+											<sys:String><![CDATA[LargeData GetCompetitionLevel(int)]]></sys:String>
+											<sys:String><![CDATA[void SetCompetitionLevel(int, LargeData)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -1541,7 +1545,7 @@
 				<node id="n2::n8">
 					<data key="d0">10</data>
 					<data key="d5">
-						<y:RectD X="-126" Y="642" Width="250" Height="246"/>
+						<y:RectD X="-174.75847898062506" Y="630.8257648625945" Width="344.1054793733706" Height="230"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
@@ -1552,14 +1556,14 @@
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String>CreateRewardDescription()</sys:String>
-											<sys:String>UpdateRewardDescription()</sys:String>
-											<sys:String>GetRewardDescription()</sys:String>
-											<sys:String>GetAllRewardDescriptions()</sys:String>
-											<sys:String>GetRewardIcon()</sys:String>
-											<sys:String>SetRewardIcon()</sys:String>
-											<sys:String>GetRewardGameAsset()</sys:String>
-											<sys:String>SetRewardGameAsset()</sys:String>
+											<sys:String><![CDATA[void CreateRewardDescription(RewardDescription)]]></sys:String>
+											<sys:String><![CDATA[void UpdateRewardDescription(int id, <...>)]]></sys:String>
+											<sys:String><![CDATA[RewardDescription GetRewardDescription(int)]]></sys:String>
+											<sys:String><![CDATA[RewardDescription GetAllRewardDescriptions(DataLimiter)]]></sys:String>
+											<sys:String><![CDATA[LargeData GetRewardIcon(int)]]></sys:String>
+											<sys:String><![CDATA[void SetRewardIcon(int, LargeData)]]></sys:String>
+											<sys:String><![CDATA[LargeData GetRewardGameAsset(int)]]></sys:String>
+											<sys:String><![CDATA[void SetRewardGameAsset(LargeData, int)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -1578,7 +1582,7 @@
 				<node id="n2::n9">
 					<data key="d0">11</data>
 					<data key="d5">
-						<y:RectD X="174" Y="860.25" Width="250" Height="182"/>
+						<y:RectD X="210.18453366187146" Y="873.5" Width="354.1309326762571" Height="182"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
@@ -1589,11 +1593,11 @@
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String>SubmitParticipation()</sys:String>
-											<sys:String>DeleteParticipation()</sys:String>
-											<sys:String>GetParticipation()</sys:String>
-											<sys:String>GetPlayerParticipations()</sys:String>
-											<sys:String>GetLeaderboard()</sys:String>
+											<sys:String><![CDATA[void SubmitParticipation(int pID, int compID, int score);]]></sys:String>
+											<sys:String><![CDATA[void DeleteParticipation(int pID, int compID);]]></sys:String>
+											<sys:String><![CDATA[PlayerParticipation GetParticipation(int pID, int compID)]]></sys:String>
+											<sys:String><![CDATA[PlayerParticipation[] GetPlayerParticipations(int, DataLimiter)]]></sys:String>
+											<sys:String><![CDATA[PlayerParticipation[] GetLeaderboard(int, DataLimiter)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -1617,7 +1621,7 @@
 				<node id="n2::n10">
 					<data key="d0">12</data>
 					<data key="d5">
-						<y:RectD X="-426" Y="858" Width="250" Height="150"/>
+						<y:RectD X="-514.5037948145057" Y="860.8257648625945" Width="306.75758962901136" Height="150"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
@@ -1628,9 +1632,9 @@
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String>GrantRewardToPlayer()</sys:String>
-											<sys:String>DeleteReward()</sys:String>
-											<sys:String>GetAllRewardsOf()</sys:String>
+											<sys:String><![CDATA[void GrantRewardToPlayer(int p, int descr)]]></sys:String>
+											<sys:String><![CDATA[void DeleteReward(int)]]></sys:String>
+											<sys:String><![CDATA[PlayerReward[] GetAllRewardsOf(int p, DataLimiter)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -1660,9 +1664,9 @@
 					<port name="p4"/>
 				</node>
 				<node id="n2::n11">
-					<data key="d0">13</data>
+					<data key="d0">63</data>
 					<data key="d5">
-						<y:RectD X="1083" Y="882" Width="250" Height="166"/>
+						<y:RectD X="1165.7097180540732" Y="888.8159346539392" Width="258.1127542575539" Height="182"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
@@ -1673,10 +1677,10 @@
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String>GetPlayerProfile()</sys:String>
-											<sys:String>UpdatePlayerProfile()</sys:String>
-											<sys:String>GetPlayerProfileImage()</sys:String>
-											<sys:String>SetPlayerProfileImage()</sys:String>
+											<sys:String><![CDATA[PlayerProfile GetPlayerProfile(int)]]></sys:String>
+											<sys:String><![CDATA[void UpdatePlayerProfile(PlayerProfile)]]></sys:String>
+											<sys:String><![CDATA[LargeData GetPlayerProfileImage(int)]]></sys:String>
+											<sys:String><![CDATA[void SetPlayerProfileImage(int, LargeData)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -1694,7 +1698,7 @@
 				<node id="n2::n12">
 					<data key="d0">14</data>
 					<data key="d5">
-						<y:RectD X="505" Y="823" Width="250" Height="214"/>
+						<y:RectD X="580.2052854272558" Y="828.744693922542" Width="276.08942914548834" Height="214"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
@@ -1705,13 +1709,13 @@
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String>GetAllCompetitions()</sys:String>
-											<sys:String>GetActiveCompetitions()</sys:String>
-											<sys:String>CreateCompetition()</sys:String>
-											<sys:String>UpdateCompetition()</sys:String>
-											<sys:String>GetCompetition()</sys:String>
-											<sys:String>GetCompetitionLevel()</sys:String>
-											<sys:String>SetCompetitionLevel()</sys:String>
+											<sys:String><![CDATA[Competition[] GetAllCompetitions(DataLimiter)]]></sys:String>
+											<sys:String><![CDATA[Competition[] GetActiveCompetitions()]]></sys:String>
+											<sys:String><![CDATA[void CreateCompetition(Competition)]]></sys:String>
+											<sys:String><![CDATA[void UpdateCompetition(int id, <...>)]]></sys:String>
+											<sys:String><![CDATA[Competition GetCompetition(int)]]></sys:String>
+											<sys:String><![CDATA[LargeData GetCompetitionLevel(int)]]></sys:String>
+											<sys:String><![CDATA[void SetCompetitionLevel(int, LargeData)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -1744,7 +1748,7 @@
 				<node id="n2::n13">
 					<data key="d0">15</data>
 					<data key="d5">
-						<y:RectD X="1773" Y="896" Width="250" Height="150"/>
+						<y:RectD X="1824.178768028959" Y="894.5370147376775" Width="324.14246394208226" Height="150"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
@@ -1755,9 +1759,9 @@
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String>LogIn()</sys:String>
-											<sys:String>Register()</sys:String>
-											<sys:String>GetSessionToken()</sys:String>
+											<sys:String><![CDATA[AuthSuccessResult LogIn(string login, string password)]]></sys:String>
+											<sys:String><![CDATA[void Register(Account, string password)]]></sys:String>
+											<sys:String><![CDATA[SessionToken GetSessionToken(string token)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -1791,7 +1795,7 @@
 				<node id="n2::n14">
 					<data key="d0">16</data>
 					<data key="d5">
-						<y:RectD X="-125" Y="905" Width="250" Height="230"/>
+						<y:RectD X="-173.06666002393695" Y="905" Width="344.1054793733706" Height="230"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
@@ -1802,14 +1806,14 @@
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String>CreateRewardDescription()</sys:String>
-											<sys:String>UpdateRewardDescription()</sys:String>
-											<sys:String>GetRewardDescription()</sys:String>
-											<sys:String>GetAllRewardDescriptions()</sys:String>
-											<sys:String>GetRewardIcon()</sys:String>
-											<sys:String>SetRewardIcon()</sys:String>
-											<sys:String>GetRewardGameAsset()</sys:String>
-											<sys:String>SetRewardGameAsset()</sys:String>
+											<sys:String><![CDATA[void CreateRewardDescription(RewardDescription)]]></sys:String>
+											<sys:String><![CDATA[void UpdateRewardDescription(int)]]></sys:String>
+											<sys:String><![CDATA[RewardDescription GetRewardDescription(int)]]></sys:String>
+											<sys:String><![CDATA[RewardDescription GetAllRewardDescriptions(DataLimiter)]]></sys:String>
+											<sys:String><![CDATA[LargeData GetRewardIcon(int)]]></sys:String>
+											<sys:String><![CDATA[void SetRewardIcon(int, LargeData)]]></sys:String>
+											<sys:String><![CDATA[LargeData GetRewardGameAsset(int)]]></sys:String>
+											<sys:String><![CDATA[void SetRewardGameAsset(LargeData, int)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -1846,7 +1850,7 @@
 				<node id="n2::n15">
 					<data key="d0">17</data>
 					<data key="d5">
-						<y:RectD X="1443" Y="650" Width="250" Height="166"/>
+						<y:RectD X="1511.19742911501" Y="658" Width="290.1051417699796" Height="166"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
@@ -1857,10 +1861,10 @@
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String>GetCompetitionRewards()</sys:String>
-											<sys:String>CreateCompetitionReward()</sys:String>
-											<sys:String>UpdateCompetitionReward()</sys:String>
-											<sys:String>RemoveCompetitionReward()</sys:String>
+											<sys:String><![CDATA[CompetitionReward GetCompetitionRewards(int)]]></sys:String>
+											<sys:String>CreateCompetitionReward(CompetitionReward)</sys:String>
+											<sys:String><![CDATA[UpdateCompetitionReward(int id, <...>)]]></sys:String>
+											<sys:String><![CDATA[RemoveCompetitionReward(int id)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -1873,7 +1877,7 @@
 				<node id="n2::n16">
 					<data key="d0">18</data>
 					<data key="d5">
-						<y:RectD X="1443" Y="896" Width="250" Height="166"/>
+						<y:RectD X="1511.19742911501" Y="896.8159346539392" Width="290.1051417699796" Height="166"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
@@ -1884,10 +1888,10 @@
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String>GetCompetitionRewards()</sys:String>
-											<sys:String>CreateCompetitionReward()</sys:String>
-											<sys:String>UpdateCompetitionReward()</sys:String>
-											<sys:String>RemoveCompetitionReward()</sys:String>
+											<sys:String><![CDATA[CompetitionReward GetCompetitionRewards(int)]]></sys:String>
+											<sys:String>CreateCompetitionReward(CompetitionReward)</sys:String>
+											<sys:String><![CDATA[UpdateCompetitionReward(int id, <...>)]]></sys:String>
+											<sys:String><![CDATA[RemoveCompetitionReward(int id)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -1908,10 +1912,10 @@
 				<node id="n2::n17">
 					<data key="d0">19</data>
 					<data key="d5">
-						<y:RectD X="794" Y="788.5" Width="250" Height="134"/>
+						<y:RectD X="882.25" Y="863" Width="250" Height="134"/>
 					</data>
 					<data key="d7">
-						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 74}">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 75}">
 							<uml:UMLNodeStyle.model>
 								<uml:UMLClassModel stereotype="interface" constraint="" className="ICompetitionRewardScheduler" attributesOpen="true" operationsOpen="true">
 									<uml:UMLClassModel.attributes>
@@ -1957,7 +1961,7 @@
 						</x:List>
 					</data>
 					<data key="d5">
-						<y:RectD X="2976.25" Y="573.75" Width="47.5" Height="52.5"/>
+						<y:RectD X="3064.5" Y="573.75" Width="47.5" Height="52.5"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNoteStyle fill="{y:GraphMLReference 26}" stroke="BLACK"/>
@@ -1966,7 +1970,7 @@
 				<node id="n2::n19">
 					<data key="d0">27</data>
 					<data key="d5">
-						<y:RectD X="794" Y="953" Width="250" Height="134"/>
+						<y:RectD X="882.25" Y="1027.5" Width="250" Height="134"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
@@ -2014,7 +2018,7 @@
 				<node id="n2::n20">
 					<data key="d0">34</data>
 					<data key="d5">
-						<y:RectD X="1081.75" Y="1380.625" Width="250" Height="166"/>
+						<y:RectD X="1170" Y="1380.625" Width="283.17168128833214" Height="166"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
@@ -2025,10 +2029,10 @@
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String>GetPlayerProfile()</sys:String>
-											<sys:String>UpdatePlayerProfile()</sys:String>
-											<sys:String>GetPlayerProfileImage()</sys:String>
-											<sys:String>UpdatePlayerProfileImage()</sys:String>
+											<sys:String><![CDATA[PlayerProfile GetPlayerProfile(int)]]></sys:String>
+											<sys:String><![CDATA[void UpdatePlayerProfile(PlayerProfile)]]></sys:String>
+											<sys:String><![CDATA[LargeData GetPlayerProfileImage(int)]]></sys:String>
+											<sys:String><![CDATA[void UpdatePlayerProfileImage(int, LargeData)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -2037,12 +2041,12 @@
 					</data>
 					<port name="p0">
 						<data key="d16">
-							<y:GraphMLReference ResourceKey="62"/>
+							<y:GraphMLReference ResourceKey="63"/>
 						</data>
 					</port>
 					<port name="p1">
 						<data key="d16">
-							<y:GraphMLReference ResourceKey="63"/>
+							<y:GraphMLReference ResourceKey="64"/>
 						</data>
 					</port>
 					<port name="p2">
@@ -2059,7 +2063,7 @@
 				<node id="n2::n21">
 					<data key="d0">35</data>
 					<data key="d5">
-						<y:RectD X="505" Y="1333" Width="250" Height="214"/>
+						<y:RectD X="578.4404663381285" Y="1333.6678114426345" Width="283.1716812883321" Height="214"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
@@ -2070,13 +2074,13 @@
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String>GetAllCompetitions()</sys:String>
-											<sys:String>GetActiveCompetitions()</sys:String>
-											<sys:String>CreateCompetition()</sys:String>
-											<sys:String>UpdateCompetition()</sys:String>
-											<sys:String>GetCompetition()</sys:String>
-											<sys:String>GetCompetitionLevel()</sys:String>
-											<sys:String>SetCompetitionLevel()</sys:String>
+											<sys:String><![CDATA[Competition[] GetAllCompetitions(DataLimiter)]]></sys:String>
+											<sys:String><![CDATA[Competition[] GetActiveCompetitions()]]></sys:String>
+											<sys:String><![CDATA[void CreateCompetition(Competition)]]></sys:String>
+											<sys:String><![CDATA[void UpdateCompetition(Competition)]]></sys:String>
+											<sys:String><![CDATA[Competition GetCompetition(int)]]></sys:String>
+											<sys:String><![CDATA[LargeData GetCompetitionLevel(int)]]></sys:String>
+											<sys:String><![CDATA[void SetCompetitionLevel(int, LargeData)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -2085,12 +2089,12 @@
 					</data>
 					<port name="p0">
 						<data key="d16">
-							<y:GraphMLReference ResourceKey="64"/>
+							<y:GraphMLReference ResourceKey="65"/>
 						</data>
 					</port>
 					<port name="p1">
 						<data key="d16">
-							<y:GraphMLReference ResourceKey="65"/>
+							<y:GraphMLReference ResourceKey="66"/>
 						</data>
 					</port>
 					<port name="p2">
@@ -2102,25 +2106,25 @@
 				<node id="n2::n22">
 					<data key="d0">36</data>
 					<data key="d5">
-						<y:RectD X="-148.0555193465499" Y="1355" Width="296.1110386930998" Height="230"/>
+						<y:RectD X="-173.61880072953932" Y="1355.8257648625945" Width="350.7734898109421" Height="230"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
 							<uml:UMLNodeStyle.model>
-								<uml:UMLClassModel stereotype="interface" constraint="" className="IRewardDescriptionRepository" attributesOpen="false" operationsOpen="true">
+								<uml:UMLClassModel stereotype="interface" constraint="" className="IRewardDescriptionRepository" attributesOpen="true" operationsOpen="true">
 									<uml:UMLClassModel.attributes>
 										<x:Array/>
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String>CreateRewardDescription()</sys:String>
-											<sys:String>UpdateRewardDescription()</sys:String>
-											<sys:String>GetRewardDescription()</sys:String>
-											<sys:String>GetAllRewardDescriptions()</sys:String>
-											<sys:String>GetRewardIcon()</sys:String>
-											<sys:String>SetRewardIcon()</sys:String>
-											<sys:String>GetRewardGameAsset()</sys:String>
-											<sys:String>SetRewardGameAsset()</sys:String>
+											<sys:String><![CDATA[void CreateRewardDescription(RewardDescription)]]></sys:String>
+											<sys:String><![CDATA[void UpdateRewardDescription(RewardDescription)]]></sys:String>
+											<sys:String><![CDATA[RewardDescription GetRewardDescription(int)]]></sys:String>
+											<sys:String><![CDATA[RewardDescription[] GetAllRewardDescriptions(DataLimiter)]]></sys:String>
+											<sys:String><![CDATA[LargeData GetRewardIcon(int)]]></sys:String>
+											<sys:String><![CDATA[void SetRewardIcon(int, LargeData)]]></sys:String>
+											<sys:String><![CDATA[LargeData GetRewardGameAsset(int)]]></sys:String>
+											<sys:String><![CDATA[void SetRewardGameAsset(int, LargeData)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -2129,17 +2133,17 @@
 					</data>
 					<port name="p0">
 						<data key="d16">
-							<y:GraphMLReference ResourceKey="66"/>
+							<y:GraphMLReference ResourceKey="67"/>
 						</data>
 					</port>
 					<port name="p1">
 						<data key="d16">
-							<y:GraphMLReference ResourceKey="67"/>
+							<y:GraphMLReference ResourceKey="68"/>
 						</data>
 					</port>
 					<port name="p2">
 						<data key="d16">
-							<y:GraphMLReference ResourceKey="68"/>
+							<y:GraphMLReference ResourceKey="69"/>
 						</data>
 					</port>
 					<port name="p3">
@@ -2151,7 +2155,7 @@
 				<node id="n2::n23">
 					<data key="d0">37</data>
 					<data key="d5">
-						<y:RectD X="-427.25" Y="1388.625" Width="250" Height="182"/>
+						<y:RectD X="-512.1706047115601" Y="1387.8257648625945" Width="296.7497145610218" Height="166"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
@@ -2162,10 +2166,10 @@
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String>CreateReward()</sys:String>
-											<sys:String>DeleteReward()</sys:String>
-											<sys:String>GetAllRewardsOf()</sys:String>
-											<sys:String>GrantRewardsForCompetition()</sys:String>
+											<sys:String><![CDATA[void CreateReward(PlayerReward)]]></sys:String>
+											<sys:String><![CDATA[void DeleteReward(int)]]></sys:String>
+											<sys:String><![CDATA[PlayerReward[] GetAllRewardsOf(int, DataLimiter)]]></sys:String>
+											<sys:String><![CDATA[void GrantRewardsFor(int)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -2174,7 +2178,7 @@
 					</data>
 					<port name="p0">
 						<data key="d16">
-							<y:GraphMLReference ResourceKey="69"/>
+							<y:GraphMLReference ResourceKey="70"/>
 						</data>
 					</port>
 					<port name="p1">
@@ -2196,7 +2200,7 @@
 				<node id="n2::n24">
 					<data key="d0">38</data>
 					<data key="d5">
-						<y:RectD X="172.75" Y="1372.625" Width="250" Height="198"/>
+						<y:RectD X="210.18453366187146" Y="1371.8257648625945" Width="354.1309326762571" Height="198"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
@@ -2207,12 +2211,12 @@
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String>CreateParticipation()</sys:String>
-											<sys:String>UpdateParticipation()</sys:String>
-											<sys:String>DeleteParticipation()</sys:String>
-											<sys:String>GetParticipation()</sys:String>
-											<sys:String>GetPlayerParticipations()</sys:String>
-											<sys:String>GetLeaderboard()</sys:String>
+											<sys:String><![CDATA[void CreateParticipation(PlayerParticipation)]]></sys:String>
+											<sys:String><![CDATA[void UpdateParticipation(PlayerParticipation)]]></sys:String>
+											<sys:String><![CDATA[void DeleteParticipation(int)]]></sys:String>
+											<sys:String><![CDATA[PlayerParticipation GetParticipation(int, int)]]></sys:String>
+											<sys:String><![CDATA[PlayerParticipation[] GetPlayerParticipations(int, DataLimiter)]]></sys:String>
+											<sys:String><![CDATA[PlayerParticipation[] GetLeaderboard(int, DataLimiter)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -2221,7 +2225,7 @@
 					</data>
 					<port name="p0">
 						<data key="d16">
-							<y:GraphMLReference ResourceKey="70"/>
+							<y:GraphMLReference ResourceKey="71"/>
 						</data>
 					</port>
 					<port name="p1">
@@ -2238,7 +2242,7 @@
 				<node id="n2::n25">
 					<data key="d0">39</data>
 					<data key="d5">
-						<y:RectD X="1771.75" Y="1388.625" Width="250" Height="134"/>
+						<y:RectD X="1860" Y="1388.625" Width="250" Height="166"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
@@ -2249,8 +2253,9 @@
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String>GetAccount()</sys:String>
-											<sys:String>CreateAccount()</sys:String>
+											<sys:String><![CDATA[Account GetAccount(string)]]></sys:String>
+											<sys:String><![CDATA[Account GetAccount(int)]]></sys:String>
+											<sys:String><![CDATA[void CreateAccount(Account, Role)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -2286,7 +2291,7 @@
 				<node id="n2::n26">
 					<data key="d0">40</data>
 					<data key="d5">
-						<y:RectD X="1441.75" Y="1372.625" Width="250" Height="166"/>
+						<y:RectD X="1499.8506784890374" Y="1373.130310974895" Width="312.79864302192544" Height="182"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
@@ -2297,10 +2302,11 @@
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String>CreateCompetitionReward()</sys:String>
-											<sys:String>UpdateCompetitionReward()</sys:String>
-											<sys:String>GetAllCompetitionRewards()</sys:String>
-											<sys:String>RemoveCompetitionReward()</sys:String>
+											<sys:String><![CDATA[void CreateCompetitionReward(CompetitionReward)]]></sys:String>
+											<sys:String><![CDATA[void UpdateCompetitionReward(CompetitionReward)]]></sys:String>
+											<sys:String><![CDATA[CompetitionReward[] GetCompetitionRewards(int)]]></sys:String>
+											<sys:String><![CDATA[void RemoveCompetitionReward(int)]]></sys:String>
+											<sys:String><![CDATA[CompetitionReward GetCompetitionReward(int)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -2309,7 +2315,7 @@
 					</data>
 					<port name="p0">
 						<data key="d16">
-							<y:GraphMLReference ResourceKey="71"/>
+							<y:GraphMLReference ResourceKey="72"/>
 						</data>
 					</port>
 					<port name="p1">
@@ -2326,7 +2332,7 @@
 				<node id="n2::n27">
 					<data key="d0">41</data>
 					<data key="d5">
-						<y:RectD X="2125" Y="1388.625" Width="250" Height="134"/>
+						<y:RectD X="2197.0148357934613" Y="1388.3412852621686" Width="282.4703284130765" Height="134"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 19}">
@@ -2337,8 +2343,8 @@
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String>CreateSessionFor()</sys:String>
-											<sys:String>GetSessionToken()</sys:String>
+											<sys:String><![CDATA[string CreateSessionFor(int accountID)]]></sys:String>
+											<sys:String><![CDATA[SessionToken GetSessionToken(string token)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -2391,7 +2397,7 @@
 				<node id="n2::n28">
 					<data key="d0">42</data>
 					<data key="d5">
-						<y:RectD X="1765" Y="457" Width="250" Height="166"/>
+						<y:RectD X="1861.25" Y="438" Width="250" Height="166"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
@@ -2414,14 +2420,14 @@
 					</data>
 					<port name="p0">
 						<data key="d16">
-							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.9940476190476191"/>
+							<y:GraphMLReference ResourceKey="52"/>
 						</data>
 					</port>
 				</node>
 				<node id="n2::n29">
 					<data key="d0">43</data>
 					<data key="d5">
-						<y:RectD X="505" Y="359" Width="250" Height="182"/>
+						<y:RectD X="593.25" Y="359" Width="250" Height="182"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
@@ -2452,7 +2458,7 @@
 				<node id="n2::n30">
 					<data key="d0">44</data>
 					<data key="d5">
-						<y:RectD X="1083" Y="473" Width="250" Height="150"/>
+						<y:RectD X="1171.25" Y="473" Width="250" Height="150"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
@@ -2460,7 +2466,7 @@
 								<uml:UMLClassModel stereotype="" constraint="" className="PlayerProfile" attributesOpen="true" operationsOpen="false">
 									<uml:UMLClassModel.attributes>
 										<x:Array>
-											<sys:String><![CDATA[int identifier]]></sys:String>
+											<sys:String><![CDATA[int accountId]]></sys:String>
 											<sys:String><![CDATA[string? description]]></sys:String>
 											<sys:String><![CDATA[string name]]></sys:String>
 										</x:Array>
@@ -2481,7 +2487,7 @@
 				<node id="n2::n31">
 					<data key="d0">45</data>
 					<data key="d5">
-						<y:RectD X="175" Y="465" Width="250" Height="150"/>
+						<y:RectD X="263.25" Y="465" Width="250" Height="150"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
@@ -2510,7 +2516,7 @@
 				<node id="n2::n32">
 					<data key="d0">46</data>
 					<data key="d5">
-						<y:RectD X="-425" Y="385" Width="250" Height="230"/>
+						<y:RectD X="-486.125" Y="385.8257648625945" Width="250" Height="230"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
@@ -2576,7 +2582,7 @@
 				<node id="n2::n34">
 					<data key="d0">48</data>
 					<data key="d5">
-						<y:RectD X="1448" Y="403" Width="240" Height="214"/>
+						<y:RectD X="1536.25" Y="403" Width="240" Height="214"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
@@ -2614,7 +2620,7 @@
 				<node id="n2::n35">
 					<data key="d0">49</data>
 					<data key="d5">
-						<y:RectD X="2605" Y="708.25" Width="250" Height="150"/>
+						<y:RectD X="2693.25" Y="708.25" Width="250" Height="150"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 33}" highlightFill="{y:GraphMLReference 34}">
@@ -2681,7 +2687,7 @@
 				<node id="n2::n36">
 					<data key="d0">50</data>
 					<data key="d5">
-						<y:RectD X="2915" Y="885" Width="250" Height="150"/>
+						<y:RectD X="3003.25" Y="885" Width="250" Height="150"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
@@ -2715,7 +2721,7 @@
 				<node id="n2::n37">
 					<data key="d0">51</data>
 					<data key="d5">
-						<y:RectD X="2605" Y="885" Width="250" Height="150"/>
+						<y:RectD X="2693.25" Y="885" Width="250" Height="150"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
@@ -2754,7 +2760,7 @@
 				<node id="n2::n38">
 					<data key="d0">52</data>
 					<data key="d5">
-						<y:RectD X="2305" Y="885" Width="250" Height="150"/>
+						<y:RectD X="2393.25" Y="885" Width="250" Height="150"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
@@ -2798,7 +2804,7 @@
 				<node id="n2::n39">
 					<data key="d0">53</data>
 					<data key="d5">
-						<y:RectD X="2605" Y="421" Width="250" Height="118"/>
+						<y:RectD X="2693.25" Y="421" Width="250" Height="118"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 44}">
@@ -2826,7 +2832,7 @@
 				<node id="n2::n40">
 					<data key="d0">54</data>
 					<data key="d5">
-						<y:RectD X="805" Y="1261" Width="250" Height="118"/>
+						<y:RectD X="893.25" Y="1261" Width="250" Height="118"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 44}">
@@ -2837,7 +2843,7 @@
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String><![CDATA[LargeData Process(LargeData d)]]></sys:String>
+											<sys:String><![CDATA[LargeData Process(LargeData)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -2959,7 +2965,7 @@
 				<node id="n2::n44">
 					<data key="d0">58</data>
 					<data key="d5">
-						<y:RectD X="805" Y="1411" Width="250" Height="118"/>
+						<y:RectD X="893.25" Y="1411" Width="250" Height="118"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
@@ -2970,7 +2976,7 @@
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String><![CDATA[LargeData Process(LargeData d)]]></sys:String>
+											<sys:String><![CDATA[LargeData Process(LargeData)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -3023,219 +3029,276 @@
 						</x:List>
 					</data>
 					<data key="d5">
-						<y:RectD X="1056.25" Y="1154.75" Width="47.5" Height="52.5"/>
+						<y:RectD X="1144.5" Y="1154.75" Width="47.5" Height="52.5"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNoteStyle fill="{y:GraphMLReference 26}" stroke="BLACK"/>
 					</data>
 				</node>
+				<node id="n2::n46">
+					<data key="d0">60</data>
+					<data key="d5">
+						<y:RectD X="-126" Y="211" Width="250" Height="134"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 19}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="DataLimiter" attributesOpen="true" operationsOpen="false">
+									<uml:UMLClassModel.attributes>
+										<x:Array>
+											<sys:String><![CDATA[int partitionIdx;]]></sys:String>
+											<sys:String><![CDATA[int partitionSize]]></sys:String>
+										</x:Array>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array/>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+				</node>
+				<node id="n2::n47">
+					<data key="d0">61</data>
+					<data key="d5">
+						<y:RectD X="2204.25" Y="366.75" Width="250" Height="150"/>
+					</data>
+					<data key="d7">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
+							<uml:UMLNodeStyle.model>
+								<uml:UMLClassModel stereotype="" constraint="" className="AuthSuccessResult" attributesOpen="true" operationsOpen="false">
+									<uml:UMLClassModel.attributes>
+										<x:Array>
+											<sys:String><![CDATA[int userID]]></sys:String>
+											<sys:String><![CDATA[string role]]></sys:String>
+											<sys:String><![CDATA[string token]]></sys:String>
+										</x:Array>
+									</uml:UMLClassModel.attributes>
+									<uml:UMLClassModel.operations>
+										<x:Array/>
+									</uml:UMLClassModel.operations>
+								</uml:UMLClassModel>
+							</uml:UMLNodeStyle.model>
+						</uml:UMLNodeStyle>
+					</data>
+					<port name="p0">
+						<data key="d16">
+							<y:GraphMLReference ResourceKey="52"/>
+						</data>
+					</port>
+					<port name="p1">
+						<data key="d16">
+							<y:FreeNodePortLocationModelParameter Ratio="0.5,0.993421052631579"/>
+						</data>
+					</port>
+				</node>
 				<edge id="n2::e0" source="n2::n1" target="n2::n2" sourceport="p1" targetport="p1">
 					<data key="d12">
 						<x:List>
-							<y:Bend Location="2718.7736222466,1361.5"/>
-							<y:Bend Location="2850,1363"/>
+							<y:Bend Location="2807.0236222466,1361.5"/>
+							<y:Bend Location="2938.25,1363"/>
 						</x:List>
 					</data>
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="52"/>
+						<y:GraphMLReference ResourceKey="53"/>
 					</data>
 				</edge>
 				<edge id="n2::e1" source="n2::n1" target="n2::n3" sourceport="p2" targetport="p1">
 					<data key="d12">
 						<x:List>
-							<y:Bend Location="2719,1362"/>
-							<y:Bend Location="2580,1360.5"/>
+							<y:Bend Location="2807.25,1362"/>
+							<y:Bend Location="2668.25,1360.5"/>
 						</x:List>
 					</data>
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="52"/>
+						<y:GraphMLReference ResourceKey="53"/>
 					</data>
 				</edge>
 				<edge id="n2::e2" source="n2::n4" target="n2::n10" sourceport="p0" targetport="p0">
 					<data key="d12">
 						<x:List>
-							<y:Bend Location="-301,829"/>
-							<y:Bend Location="-301,829"/>
+							<y:Bend Location="-362.125,829.8257648625945"/>
+							<y:Bend Location="-362.125,829.8257648625945"/>
 						</x:List>
 					</data>
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="52"/>
+						<y:GraphMLReference ResourceKey="53"/>
 					</data>
 				</edge>
 				<edge id="n2::e3" source="n2::n5" target="n2::n9" sourceport="p0" targetport="p0">
 					<data key="d12">
 						<x:List>
-							<y:Bend Location="299,829"/>
-							<y:Bend Location="299,829"/>
-							<y:Bend Location="299,859"/>
+							<y:Bend Location="387.25,829"/>
+							<y:Bend Location="387.25,829"/>
+							<y:Bend Location="387.25,859"/>
 						</x:List>
 					</data>
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="52"/>
+						<y:GraphMLReference ResourceKey="53"/>
 					</data>
 				</edge>
 				<edge id="n2::e4" source="n2::n6" target="n2::n11" sourceport="p0" targetport="p0">
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="52"/>
+						<y:GraphMLReference ResourceKey="53"/>
 					</data>
 				</edge>
 				<edge id="n2::e5" source="n2::n7" target="n2::n12" sourceport="p0" targetport="p0">
 					<data key="d12">
 						<x:List>
-							<y:Bend Location="629,829"/>
-							<y:Bend Location="629,829"/>
+							<y:Bend Location="717.25,829"/>
+							<y:Bend Location="717.25,829"/>
 						</x:List>
 					</data>
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="52"/>
+						<y:GraphMLReference ResourceKey="53"/>
 					</data>
 				</edge>
 				<edge id="n2::e6" source="n2::n0" target="n2::n13" sourceport="p6" targetport="p0">
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="52"/>
+						<y:GraphMLReference ResourceKey="53"/>
 					</data>
 				</edge>
 				<edge id="n2::e7" source="n2::n8" target="n2::n14" sourceport="p1" targetport="p4">
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="52"/>
+						<y:GraphMLReference ResourceKey="53"/>
 					</data>
 				</edge>
 				<edge id="n2::e8" source="n2::n15" target="n2::n16" sourceport="p0" targetport="p0">
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="52"/>
+						<y:GraphMLReference ResourceKey="53"/>
 					</data>
 				</edge>
 				<edge id="n2::e9" source="n2::n12" target="n2::n17" sourceport="p5" targetport="p3">
 					<data key="d13">
-						<yjs:PolylineEdgeStyle stroke="{y:GraphMLReference 54}" targetArrow="{y:GraphMLReference 55}" sourceArrow="{y:GraphMLReference 53}"/>
+						<yjs:PolylineEdgeStyle stroke="{y:GraphMLReference 55}" targetArrow="{y:GraphMLReference 56}" sourceArrow="{y:GraphMLReference 54}"/>
 					</data>
 				</edge>
 				<edge id="n2::e10" source="n2::n17" target="n2::n19" sourceport="p4" targetport="p6">
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="76"/>
+						<y:GraphMLReference ResourceKey="77"/>
 					</data>
 				</edge>
 				<edge id="n2::e11" source="n2::n13" target="n2::n25" sourceport="p1" targetport="p1">
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="56"/>
+						<y:GraphMLReference ResourceKey="57"/>
 					</data>
 				</edge>
 				<edge id="n2::e12" source="n2::n10" target="n2::n23" sourceport="p2" targetport="p0">
 					<data key="d12">
 						<x:List>
-							<y:Bend Location="-301,1159"/>
-							<y:Bend Location="-301,1159"/>
+							<y:Bend Location="-362.125,1159.8257648625945"/>
+							<y:Bend Location="-362.125,1159.8257648625945"/>
 						</x:List>
 					</data>
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="56"/>
+						<y:GraphMLReference ResourceKey="57"/>
 					</data>
 				</edge>
 				<edge id="n2::e13" source="n2::n14" target="n2::n22" sourceport="p5" targetport="p1">
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="56"/>
+						<y:GraphMLReference ResourceKey="57"/>
 					</data>
 				</edge>
 				<edge id="n2::e14" source="n2::n10" target="n2::n22" sourceport="p4" targetport="p2">
 					<data key="d12">
 						<x:List>
-							<y:Bend Location="-300,1170"/>
+							<y:Bend Location="-361.125,1170.8257648625945"/>
 							<y:Bend Location="0,1170"/>
 						</x:List>
 					</data>
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="56"/>
+						<y:GraphMLReference ResourceKey="57"/>
 					</data>
 				</edge>
 				<edge id="n2::e15" source="n2::n9" target="n2::n24" sourceport="p2" targetport="p0">
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="56"/>
+						<y:GraphMLReference ResourceKey="57"/>
 					</data>
 				</edge>
 				<edge id="n2::e16" source="n2::n9" target="n2::n21" sourceport="p3" targetport="p0">
 					<data key="d12">
 						<x:List>
-							<y:Bend Location="299,1099"/>
-							<y:Bend Location="629,1099"/>
+							<y:Bend Location="387.25,1099"/>
+							<y:Bend Location="717.25,1099"/>
 						</x:List>
 					</data>
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="56"/>
+						<y:GraphMLReference ResourceKey="57"/>
 					</data>
 				</edge>
 				<edge id="n2::e17" source="n2::n12" target="n2::n21" sourceport="p3" targetport="p1">
 					<data key="d12">
 						<x:List>
-							<y:Bend Location="629,1069"/>
-							<y:Bend Location="629,1069"/>
+							<y:Bend Location="717.25,1069"/>
+							<y:Bend Location="717.25,1069"/>
 						</x:List>
 					</data>
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="56"/>
+						<y:GraphMLReference ResourceKey="57"/>
 					</data>
 				</edge>
 				<edge id="n2::e18" source="n2::n11" target="n2::n20" sourceport="p1" targetport="p1">
 					<data key="d12">
 						<x:List>
-							<y:Bend Location="1208,1099"/>
-							<y:Bend Location="1208,1099"/>
+							<y:Bend Location="1296.25,1099"/>
+							<y:Bend Location="1296.25,1099"/>
 						</x:List>
 					</data>
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="56"/>
+						<y:GraphMLReference ResourceKey="57"/>
 					</data>
 				</edge>
 				<edge id="n2::e19" source="n2::n16" target="n2::n26" sourceport="p1" targetport="p0">
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="56"/>
+						<y:GraphMLReference ResourceKey="57"/>
 					</data>
 				</edge>
 				<edge id="n2::e20" source="n2::n19" target="n2::n23" sourceport="p8" targetport="p3">
 					<data key="d12">
 						<x:List>
-							<y:Bend Location="919,1209.5"/>
-							<y:Bend Location="-300,1209.5"/>
+							<y:Bend Location="1007.25,1209.5"/>
+							<y:Bend Location="-361.125,1210.3257648625945"/>
 						</x:List>
 					</data>
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="57"/>
+						<y:GraphMLReference ResourceKey="58"/>
 					</data>
 				</edge>
 				<edge id="n2::e21" source="n2::n13" target="n2::n27" sourceport="p5" targetport="p6">
 					<data key="d12">
 						<x:List>
-							<y:Bend Location="1898,1230.75"/>
-							<y:Bend Location="2250,1230.75"/>
+							<y:Bend Location="1986.25,1230.75"/>
+							<y:Bend Location="2338.25,1230.75"/>
 						</x:List>
 					</data>
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="57"/>
+						<y:GraphMLReference ResourceKey="58"/>
 					</data>
 				</edge>
 				<edge id="n2::e22" source="n2::n27" target="n2::n1" sourceport="p7" targetport="p5">
 					<data key="d12">
 						<x:List>
-							<y:Bend Location="2340,1230"/>
-							<y:Bend Location="2550,1230"/>
+							<y:Bend Location="2428.25,1230"/>
+							<y:Bend Location="2638.25,1230"/>
 						</x:List>
 					</data>
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="57"/>
+						<y:GraphMLReference ResourceKey="58"/>
 					</data>
 				</edge>
 				<edge id="n2::e23" source="n2::n35" target="n2::n38" sourceport="p6" targetport="p3">
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="60"/>
+						<y:GraphMLReference ResourceKey="61"/>
 					</data>
 				</edge>
 				<edge id="n2::e24" source="n2::n35" target="n2::n37" sourceport="p7" targetport="p2">
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="60"/>
+						<y:GraphMLReference ResourceKey="61"/>
 					</data>
 				</edge>
 				<edge id="n2::e25" source="n2::n35" target="n2::n36" sourceport="p8" targetport="p1">
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="60"/>
+						<y:GraphMLReference ResourceKey="61"/>
 					</data>
 				</edge>
 				<edge id="n2::e26" source="n2::n1" target="n2::n35" sourceport="p6" targetport="p9">
@@ -3246,27 +3309,27 @@
 						</x:List>
 					</data>
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="57"/>
+						<y:GraphMLReference ResourceKey="58"/>
 					</data>
 				</edge>
 				<edge id="n2::e27" source="n2::n39" target="n2::n35" sourceport="p0" targetport="p10">
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="61"/>
+						<y:GraphMLReference ResourceKey="62"/>
 					</data>
 				</edge>
 				<edge id="n2::e28" source="n2::n13" target="n2::n39" sourceport="p6" targetport="p1">
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="61"/>
+						<y:GraphMLReference ResourceKey="62"/>
 					</data>
 				</edge>
 				<edge id="n2::e29" source="n2::n8" target="n2::n33" sourceport="p2" targetport="p0">
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="57"/>
+						<y:GraphMLReference ResourceKey="58"/>
 					</data>
 				</edge>
 				<edge id="n2::e30" source="n2::n4" target="n2::n32" sourceport="p1" targetport="p0">
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="57"/>
+						<y:GraphMLReference ResourceKey="58"/>
 					</data>
 				</edge>
 				<edge id="n2::e31" source="n2::n8" target="n2::n41" sourceport="p3" targetport="p1">
@@ -3277,65 +3340,70 @@
 						</x:List>
 					</data>
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="57"/>
+						<y:GraphMLReference ResourceKey="58"/>
 					</data>
 				</edge>
 				<edge id="n2::e32" source="n2::n7" target="n2::n41" sourceport="p1" targetport="p3">
 					<data key="d12">
 						<x:List>
-							<y:Bend Location="477,684"/>
-							<y:Bend Location="480,373.75"/>
+							<y:Bend Location="565.25,684"/>
+							<y:Bend Location="565.25,375.5"/>
 							<y:Bend Location="360,375.5"/>
 						</x:List>
 					</data>
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="57"/>
+						<y:GraphMLReference ResourceKey="58"/>
 					</data>
 				</edge>
 				<edge id="n2::e33" source="n2::n5" target="n2::n31" sourceport="p1" targetport="p0">
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="57"/>
+						<y:GraphMLReference ResourceKey="58"/>
 					</data>
 				</edge>
 				<edge id="n2::e34" source="n2::n7" target="n2::n29" sourceport="p2" targetport="p0">
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="57"/>
+						<y:GraphMLReference ResourceKey="58"/>
 					</data>
 				</edge>
 				<edge id="n2::e35" source="n2::n15" target="n2::n34" sourceport="p1" targetport="p1">
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="57"/>
+						<y:GraphMLReference ResourceKey="58"/>
 					</data>
 				</edge>
 				<edge id="n2::e36" source="n2::n6" target="n2::n30" sourceport="p1" targetport="p0">
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="57"/>
+						<y:GraphMLReference ResourceKey="58"/>
 					</data>
 				</edge>
 				<edge id="n2::e37" source="n2::n6" target="n2::n41" sourceport="p3" targetport="p5">
 					<data key="d12">
 						<x:List>
-							<y:Bend Location="968.5,742"/>
+							<y:Bend Location="1056.75,742"/>
 							<y:Bend Location="960,270"/>
 						</x:List>
 					</data>
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="57"/>
+						<y:GraphMLReference ResourceKey="58"/>
 					</data>
 				</edge>
 				<edge id="n2::e38" source="n2::n0" target="n2::n28" sourceport="p8" targetport="p0">
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="57"/>
+						<y:GraphMLReference ResourceKey="58"/>
 					</data>
 				</edge>
 				<edge id="n2::e39" source="n2::n40" target="n2::n44" sourceport="p1" targetport="p10">
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="60"/>
+						<y:GraphMLReference ResourceKey="61"/>
 					</data>
 				</edge>
 				<edge id="n2::e40" source="n2::n11" target="n2::n40" sourceport="p2" targetport="p2">
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="57"/>
+						<y:GraphMLReference ResourceKey="58"/>
+					</data>
+				</edge>
+				<edge id="n2::e41" source="n2::n0" target="n2::n47" sourceport="p9" targetport="p1">
+					<data key="d13">
+						<yjs:PolylineEdgeStyle stroke="{y:GraphMLReference 55}" targetArrow="{y:GraphMLReference 56}" sourceArrow="{y:GraphMLReference 54}"/>
 					</data>
 				</edge>
 			</graph>
@@ -3363,7 +3431,7 @@
 				</x:List>
 			</data>
 			<data key="d5">
-				<y:RectD X="-690" Y="1720" Width="3300" Height="707.0625"/>
+				<y:RectD X="-690" Y="1720" Width="3300" Height="707.888264862595"/>
 			</data>
 			<data key="d7">
 				<yjs:GroupNodeStyle tabWidth="30" tabHeight="20" tabPadding="3" tabPosition="TOP_TRAILING" groupIcon="MINUS" iconForegroundFill="{y:GraphMLReference 7}" iconOffset="2" minimumContentAreaSize="0,0" hitTransparentContentArea="true" tabBackgroundFill="{y:GraphMLReference 8}" contentAreaFill="{y:GraphMLReference 9}" tabFill="{y:GraphMLReference 10}" stroke="{y:GraphMLReference 11}" cssClass="y-group-node"/>
@@ -3372,7 +3440,7 @@
 				<node id="n3::n0">
 					<data key="d0">8</data>
 					<data key="d5">
-						<y:RectD X="1085.5" Y="1836.875" Width="250" Height="166"/>
+						<y:RectD X="1173.75" Y="1836.875" Width="279.42168128833214" Height="166"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 19}">
@@ -3383,10 +3451,10 @@
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String>GetPlayerProfile()</sys:String>
-											<sys:String>UpdatePlayerProfile()</sys:String>
-											<sys:String>GetPlayerProfileImage()</sys:String>
-											<sys:String>UpdatePlayerProfileImage()</sys:String>
+											<sys:String><![CDATA[PlayerProfile GetPlayerProfile(int)]]></sys:String>
+											<sys:String><![CDATA[void UpdatePlayerProfile(PlayerProfile)]]></sys:String>
+											<sys:String><![CDATA[LargeData GetPlayerProfileImage(int)]]></sys:String>
+											<sys:String><![CDATA[void UpdatePlayerProfileImage(int, LargeData)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -3400,7 +3468,7 @@
 					</data>
 					<port name="p0">
 						<data key="d16">
-							<y:GraphMLReference ResourceKey="62"/>
+							<y:GraphMLReference ResourceKey="63"/>
 						</data>
 						<data key="d18">
 							<y:ViewState>
@@ -3410,7 +3478,7 @@
 					</port>
 					<port name="p1">
 						<data key="d16">
-							<y:GraphMLReference ResourceKey="63"/>
+							<y:GraphMLReference ResourceKey="64"/>
 						</data>
 						<data key="d18">
 							<y:ViewState>
@@ -3432,7 +3500,7 @@
 				<node id="n3::n1">
 					<data key="d0">9</data>
 					<data key="d5">
-						<y:RectD X="505" Y="1807" Width="250" Height="214"/>
+						<y:RectD X="578.4404663381285" Y="1795.3125" Width="283.1716812883321" Height="214"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 19}">
@@ -3443,13 +3511,13 @@
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String>GetAllCompetitions()</sys:String>
-											<sys:String>GetActiveCompetitions()</sys:String>
-											<sys:String>CreateCompetition()</sys:String>
-											<sys:String>UpdateCompetition()</sys:String>
-											<sys:String>GetCompetition()</sys:String>
-											<sys:String>GetCompetitionLevel()</sys:String>
-											<sys:String>SetCompetitionLevel()</sys:String>
+											<sys:String><![CDATA[Competition[] GetAllCompetitions(DataLimiter)]]></sys:String>
+											<sys:String><![CDATA[Competition[] GetActiveCompetitions()]]></sys:String>
+											<sys:String><![CDATA[void CreateCompetition(Competition)]]></sys:String>
+											<sys:String><![CDATA[void UpdateCompetition(Competition)]]></sys:String>
+											<sys:String><![CDATA[Competition GetCompetition(int)]]></sys:String>
+											<sys:String><![CDATA[LargeData GetCompetitionLevel(int)]]></sys:String>
+											<sys:String><![CDATA[void SetCompetitionLevel(int, LargeData)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -3463,7 +3531,7 @@
 					</data>
 					<port name="p0">
 						<data key="d16">
-							<y:GraphMLReference ResourceKey="64"/>
+							<y:GraphMLReference ResourceKey="65"/>
 						</data>
 						<data key="d18">
 							<y:ViewState>
@@ -3473,7 +3541,7 @@
 					</port>
 					<port name="p1">
 						<data key="d16">
-							<y:GraphMLReference ResourceKey="65"/>
+							<y:GraphMLReference ResourceKey="66"/>
 						</data>
 						<data key="d18">
 							<y:ViewState>
@@ -3483,7 +3551,7 @@
 					</port>
 					<port name="p2">
 						<data key="d16">
-							<y:GraphMLReference ResourceKey="72"/>
+							<y:GraphMLReference ResourceKey="73"/>
 						</data>
 						<data key="d18">
 							<y:ViewState>
@@ -3495,7 +3563,7 @@
 				<node id="n3::n2">
 					<data key="d0">10</data>
 					<data key="d5">
-						<y:RectD X="-125" Y="1807" Width="250" Height="230"/>
+						<y:RectD X="-173.61880072953932" Y="1806.651529725189" Width="350.7734898109421" Height="230"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 19}">
@@ -3506,14 +3574,14 @@
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String>CreateRewardDescription()</sys:String>
-											<sys:String>UpdateRewardDescription()</sys:String>
-											<sys:String>GetRewardDescription()</sys:String>
-											<sys:String>GetAllRewardDescriptions()</sys:String>
-											<sys:String>GetRewardIcon()</sys:String>
-											<sys:String>SetRewardIcon()</sys:String>
-											<sys:String>GetRewardGameAsset()</sys:String>
-											<sys:String>SetRewardGameAsset()</sys:String>
+											<sys:String><![CDATA[void CreateRewardDescription(RewardDescription)]]></sys:String>
+											<sys:String><![CDATA[void UpdateRewardDescription(RewardDescription)]]></sys:String>
+											<sys:String><![CDATA[RewardDescription GetRewardDescription(int)]]></sys:String>
+											<sys:String><![CDATA[RewardDescription[] GetAllRewardDescriptions(DataLimiter)]]></sys:String>
+											<sys:String><![CDATA[LargeData GetRewardIcon(int)]]></sys:String>
+											<sys:String><![CDATA[void SetRewardIcon(int, LargeData)]]></sys:String>
+											<sys:String><![CDATA[LargeData GetRewardGameAsset(int)]]></sys:String>
+											<sys:String><![CDATA[void SetRewardGameAsset(int, LargeData)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -3527,7 +3595,7 @@
 					</data>
 					<port name="p0">
 						<data key="d16">
-							<y:GraphMLReference ResourceKey="66"/>
+							<y:GraphMLReference ResourceKey="67"/>
 						</data>
 						<data key="d18">
 							<y:ViewState>
@@ -3537,7 +3605,7 @@
 					</port>
 					<port name="p1">
 						<data key="d16">
-							<y:GraphMLReference ResourceKey="67"/>
+							<y:GraphMLReference ResourceKey="68"/>
 						</data>
 						<data key="d18">
 							<y:ViewState>
@@ -3547,7 +3615,7 @@
 					</port>
 					<port name="p2">
 						<data key="d16">
-							<y:GraphMLReference ResourceKey="68"/>
+							<y:GraphMLReference ResourceKey="69"/>
 						</data>
 						<data key="d18">
 							<y:ViewState>
@@ -3569,7 +3637,7 @@
 				<node id="n3::n3">
 					<data key="d0">11</data>
 					<data key="d5">
-						<y:RectD X="-425" Y="1807" Width="250" Height="182"/>
+						<y:RectD X="-509.4998572805109" Y="1807.8257648625945" Width="296.7497145610218" Height="182"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 19}">
@@ -3580,10 +3648,10 @@
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String>CreateReward()</sys:String>
-											<sys:String>DeleteReward()</sys:String>
-											<sys:String>GetAllRewardsOf()</sys:String>
-											<sys:String>GrantRewardsForCompetition()</sys:String>
+											<sys:String><![CDATA[void CreateReward(PlayerReward)]]></sys:String>
+											<sys:String><![CDATA[void DeleteReward(int)]]></sys:String>
+											<sys:String><![CDATA[PlayerReward[] GetAllRewardsOf(int, DataLimiter)]]></sys:String>
+											<sys:String><![CDATA[void GrantRewardsFor(int)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -3597,7 +3665,7 @@
 					</data>
 					<port name="p0">
 						<data key="d16">
-							<y:GraphMLReference ResourceKey="69"/>
+							<y:GraphMLReference ResourceKey="70"/>
 						</data>
 						<data key="d18">
 							<y:ViewState>
@@ -3626,7 +3694,7 @@
 				<node id="n3::n4">
 					<data key="d0">12</data>
 					<data key="d5">
-						<y:RectD X="175" Y="1786.3125" Width="250" Height="198"/>
+						<y:RectD X="211.18453366187146" Y="1795.3125" Width="354.1309326762571" Height="198"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 19}">
@@ -3637,12 +3705,12 @@
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String>CreateParticipation()</sys:String>
-											<sys:String>UpdateParticipation()</sys:String>
-											<sys:String>DeleteParticipation()</sys:String>
-											<sys:String>GetParticipation()</sys:String>
-											<sys:String>GetPlayerParticipations()</sys:String>
-											<sys:String>GetLeaderboard()</sys:String>
+											<sys:String><![CDATA[void CreateParticipation(PlayerParticipation)]]></sys:String>
+											<sys:String><![CDATA[void UpdateParticipation(PlayerParticipation)]]></sys:String>
+											<sys:String><![CDATA[void DeleteParticipation(int)]]></sys:String>
+											<sys:String><![CDATA[PlayerParticipation GetParticipation(int, int)]]></sys:String>
+											<sys:String><![CDATA[PlayerParticipation[] GetPlayerParticipations(int, DataLimiter)]]></sys:String>
+											<sys:String><![CDATA[PlayerParticipation[] GetLeaderboard(int, DataLimiter)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -3656,7 +3724,7 @@
 					</data>
 					<port name="p0">
 						<data key="d16">
-							<y:GraphMLReference ResourceKey="70"/>
+							<y:GraphMLReference ResourceKey="71"/>
 						</data>
 						<data key="d18">
 							<y:ViewState>
@@ -3698,7 +3766,7 @@
 				<node id="n3::n5">
 					<data key="d0">13</data>
 					<data key="d5">
-						<y:RectD X="1775.5" Y="1844.875" Width="250" Height="134"/>
+						<y:RectD X="1863.75" Y="1844.875" Width="250" Height="150"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 19}">
@@ -3709,8 +3777,9 @@
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String>GetAccount()</sys:String>
-											<sys:String>CreateAccount()</sys:String>
+											<sys:String><![CDATA[Account GetAccount(string)]]></sys:String>
+											<sys:String><![CDATA[Account GetAccount(int)]]></sys:String>
+											<sys:String><![CDATA[void CreateAccount(Account, Role)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -3744,7 +3813,7 @@
 					</port>
 					<port name="p2">
 						<data key="d16">
-							<y:GraphMLReference ResourceKey="75"/>
+							<y:GraphMLReference ResourceKey="76"/>
 						</data>
 						<data key="d18">
 							<y:ViewState>
@@ -3756,7 +3825,7 @@
 				<node id="n3::n6">
 					<data key="d0">14</data>
 					<data key="d5">
-						<y:RectD X="1445.5" Y="1828.875" Width="250" Height="166"/>
+						<y:RectD X="1499.8506784890374" Y="1830.134015088432" Width="312.79864302192544" Height="182"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 19}">
@@ -3767,10 +3836,11 @@
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String>CreateCompetitionReward()</sys:String>
-											<sys:String>UpdateCompetitionReward()</sys:String>
-											<sys:String>GetAllCompetitionRewards()</sys:String>
-											<sys:String>RemoveCompetitionReward()</sys:String>
+											<sys:String><![CDATA[void CreateCompetitionReward(CompetitionReward)]]></sys:String>
+											<sys:String><![CDATA[void UpdateCompetitionReward(CompetitionReward)]]></sys:String>
+											<sys:String><![CDATA[CompetitionReward[] GetCompetitionRewards(int)]]></sys:String>
+											<sys:String><![CDATA[void RemoveCompetitionReward(int)]]></sys:String>
+											<sys:String><![CDATA[CompetitionReward GetCompetitionReward(int)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -3784,7 +3854,7 @@
 					</data>
 					<port name="p0">
 						<data key="d16">
-							<y:GraphMLReference ResourceKey="71"/>
+							<y:GraphMLReference ResourceKey="72"/>
 						</data>
 						<data key="d18">
 							<y:ViewState>
@@ -3816,7 +3886,7 @@
 						</x:List>
 					</data>
 					<data key="d5">
-						<y:RectD X="276.25" Y="2013.75" Width="47.5" Height="52.5"/>
+						<y:RectD X="364.5" Y="2013.75" Width="47.5" Height="52.5"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNoteStyle fill="{y:GraphMLReference 26}" stroke="BLACK"/>
@@ -3825,7 +3895,7 @@
 				<node id="n3::n8">
 					<data key="d0">21</data>
 					<data key="d5">
-						<y:RectD X="-305" Y="2221" Width="250" Height="118"/>
+						<y:RectD X="-366.125" Y="2221.825764862595" Width="250" Height="118"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 19}">
@@ -3870,7 +3940,7 @@
 					</data>
 					<port name="p0">
 						<data key="d16">
-							<y:GraphMLReference ResourceKey="64"/>
+							<y:GraphMLReference ResourceKey="65"/>
 						</data>
 						<data key="d18">
 							<y:ViewState>
@@ -3884,7 +3954,7 @@
 					</port>
 					<port name="p1">
 						<data key="d16">
-							<y:GraphMLReference ResourceKey="65"/>
+							<y:GraphMLReference ResourceKey="66"/>
 						</data>
 						<data key="d18">
 							<y:ViewState>
@@ -3898,7 +3968,7 @@
 					</port>
 					<port name="p2">
 						<data key="d16">
-							<y:GraphMLReference ResourceKey="72"/>
+							<y:GraphMLReference ResourceKey="73"/>
 						</data>
 						<data key="d18">
 							<y:ViewState>
@@ -3938,7 +4008,7 @@
 							<y:Label>
 								<y:Label.Text><![CDATA[Использование хранимой процедуры БД]]></y:Label.Text>
 								<y:Label.LayoutParameter>
-									<yx:CompositeLabelModelParameter Model="{y:GraphMLReference 73}">
+									<yx:CompositeLabelModelParameter Model="{y:GraphMLReference 74}">
 										<yx:CompositeLabelModelParameter.Parameter>
 											<yx:ExteriorNodeLabelModelParameter Position="Top" Model="{y:GraphMLReference 3}"/>
 										</yx:CompositeLabelModelParameter.Parameter>
@@ -3951,7 +4021,7 @@
 						</x:List>
 					</data>
 					<data key="d5">
-						<y:RectD X="-198.875" Y="2379.9375" Width="37.75" Height="40.125"/>
+						<y:RectD X="-260" Y="2380.763264862595" Width="37.75" Height="40.125"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNoteStyle fill="{y:GraphMLReference 26}" stroke="BLACK"/>
@@ -3960,7 +4030,7 @@
 				<node id="n3::n10">
 					<data key="d0">23</data>
 					<data key="d5">
-						<y:RectD X="-575" Y="2221" Width="250" Height="118"/>
+						<y:RectD X="-636.125" Y="2221.825764862595" Width="250" Height="118"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 2}">
@@ -4010,10 +4080,10 @@
 				<node id="n3::n11">
 					<data key="d0">24</data>
 					<data key="d5">
-						<y:RectD X="-425" Y="2041" Width="250" Height="118"/>
+						<y:RectD X="-486.125" Y="2041.8257648625945" Width="250" Height="118"/>
 					</data>
 					<data key="d7">
-						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 74}">
+						<uml:UMLNodeStyle fill="{y:GraphMLReference 18}" highlightFill="{y:GraphMLReference 75}">
 							<uml:UMLNodeStyle.model>
 								<uml:UMLClassModel stereotype="interface" constraint="" className="IRewardConverter" attributesOpen="false" operationsOpen="true">
 									<uml:UMLClassModel.attributes>
@@ -4054,7 +4124,7 @@
 						<x:List>
 							<y:Label Text="Запросы к БД для выдачи наград">
 								<y:Label.LayoutParameter>
-									<yx:CompositeLabelModelParameter Model="{y:GraphMLReference 73}">
+									<yx:CompositeLabelModelParameter Model="{y:GraphMLReference 74}">
 										<yx:CompositeLabelModelParameter.Parameter>
 											<yx:ExteriorNodeLabelModelParameter Position="Top" Model="{y:GraphMLReference 3}"/>
 										</yx:CompositeLabelModelParameter.Parameter>
@@ -4067,7 +4137,7 @@
 						</x:List>
 					</data>
 					<data key="d5">
-						<y:RectD X="-468.875" Y="2379.9375" Width="37.75" Height="40.125"/>
+						<y:RectD X="-530" Y="2380.763264862595" Width="37.75" Height="40.125"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNoteStyle fill="{y:GraphMLReference 26}" stroke="BLACK"/>
@@ -4076,7 +4146,7 @@
 				<node id="n3::n13">
 					<data key="d0">26</data>
 					<data key="d5">
-						<y:RectD X="2125" Y="1853" Width="250" Height="134"/>
+						<y:RectD X="2202.185766558977" Y="1852.875" Width="272.12846688204513" Height="134"/>
 					</data>
 					<data key="d7">
 						<uml:UMLNodeStyle fill="{y:GraphMLReference 1}" highlightFill="{y:GraphMLReference 19}">
@@ -4087,8 +4157,8 @@
 									</uml:UMLClassModel.attributes>
 									<uml:UMLClassModel.operations>
 										<x:Array>
-											<sys:String>GetAccount()</sys:String>
-											<sys:String>CreateAccount()</sys:String>
+											<sys:String><![CDATA[string CreateSessionFor(int accountID)]]></sys:String>
+											<sys:String><![CDATA[SessionToken GetSessionToken(string token)]]></sys:String>
 										</x:Array>
 									</uml:UMLClassModel.operations>
 								</uml:UMLClassModel>
@@ -4148,7 +4218,7 @@
 					</port>
 					<port name="p2">
 						<data key="d16">
-							<y:GraphMLReference ResourceKey="75"/>
+							<y:GraphMLReference ResourceKey="76"/>
 						</data>
 						<data key="d18">
 							<y:ViewState>
@@ -4180,70 +4250,70 @@
 				</node>
 				<edge id="n3::e0" source="n3::n11" target="n3::n8" sourceport="p4" targetport="p4">
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="76"/>
+						<y:GraphMLReference ResourceKey="77"/>
 					</data>
 				</edge>
 				<edge id="n3::e1" source="n3::n3" target="n3::n11" sourceport="p2" targetport="p5">
 					<data key="d12">
 						<x:List>
-							<y:Bend Location="-300,2070"/>
+							<y:Bend Location="-361.125,2070.8257648625945"/>
 						</x:List>
 					</data>
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="57"/>
+						<y:GraphMLReference ResourceKey="58"/>
 					</data>
 				</edge>
 				<edge id="n3::e2" source="n3::n11" target="n3::n10" sourceport="p6" targetport="p7">
 					<data key="d13">
-						<y:GraphMLReference ResourceKey="60"/>
+						<y:GraphMLReference ResourceKey="61"/>
 					</data>
 				</edge>
 			</graph>
 		</node>
 		<edge id="e0" source="n2::n25" target="n3::n5" sourceport="p2" targetport="p2">
 			<data key="d13">
-				<y:GraphMLReference ResourceKey="52"/>
+				<y:GraphMLReference ResourceKey="53"/>
 			</data>
 		</edge>
 		<edge id="e1" source="n2::n23" target="n3::n3" sourceport="p1" targetport="p1">
 			<data key="d13">
-				<y:GraphMLReference ResourceKey="52"/>
+				<y:GraphMLReference ResourceKey="53"/>
 			</data>
 		</edge>
 		<edge id="e2" source="n2::n22" target="n3::n2" sourceport="p3" targetport="p3">
 			<data key="d13">
-				<y:GraphMLReference ResourceKey="52"/>
+				<y:GraphMLReference ResourceKey="53"/>
 			</data>
 		</edge>
 		<edge id="e3" source="n2::n21" target="n3::n1" sourceport="p2" targetport="p2">
 			<data key="d13">
-				<y:GraphMLReference ResourceKey="52"/>
+				<y:GraphMLReference ResourceKey="53"/>
 			</data>
 		</edge>
 		<edge id="e4" source="n2::n20" target="n3::n0" sourceport="p2" targetport="p2">
 			<data key="d13">
-				<y:GraphMLReference ResourceKey="52"/>
+				<y:GraphMLReference ResourceKey="53"/>
 			</data>
 		</edge>
 		<edge id="e5" source="n2::n26" target="n3::n6" sourceport="p1" targetport="p1">
 			<data key="d13">
-				<y:GraphMLReference ResourceKey="52"/>
+				<y:GraphMLReference ResourceKey="53"/>
 			</data>
 		</edge>
 		<edge id="e6" source="n2::n24" target="n3::n4" sourceport="p2" targetport="p2">
 			<data key="d12">
 				<x:List>
-					<y:Bend Location="300,1760.375"/>
-					<y:Bend Location="300,1760.375"/>
+					<y:Bend Location="388.25,1760.375"/>
+					<y:Bend Location="388.25,1760.375"/>
 				</x:List>
 			</data>
 			<data key="d13">
-				<y:GraphMLReference ResourceKey="52"/>
+				<y:GraphMLReference ResourceKey="53"/>
 			</data>
 		</edge>
 		<edge id="e7" source="n2::n27" target="n3::n13" sourceport="p9" targetport="p4">
 			<data key="d13">
-				<y:GraphMLReference ResourceKey="60"/>
+				<y:GraphMLReference ResourceKey="61"/>
 			</data>
 		</edge>
 	</graph>
