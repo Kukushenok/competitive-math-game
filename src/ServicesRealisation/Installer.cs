@@ -7,7 +7,6 @@ using CompetitiveBackend.Services.PlayerParticipationService;
 using CompetitiveBackend.Services.PlayerProfileService;
 using CompetitiveBackend.Services.PlayerRewardService;
 using Microsoft.Extensions.DependencyInjection;
-using ServicesRealisation.ServicesRealisation;
 
 namespace ServicesRealisation
 {

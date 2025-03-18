@@ -33,10 +33,10 @@ namespace CompetitiveBackend.Services.CompetitionRewardService
             CompetitionReward rwd = new CompetitionReward(
                 rewardDescriptionID ?? curr.RewardDescriptionID,
                 curr.CompetitionID,
-                null!,
-                null!,
+                curr.Name,
+                curr.Description,
                 condition ?? curr.ConditionName,
-                condition ?? curr.ConditionDescription,
+                conditionDescription ?? curr.ConditionDescription,
                 curr.Id
                 );
             await repository.UpdateCompetitionReward(rwd);

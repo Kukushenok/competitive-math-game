@@ -1,6 +1,7 @@
 ﻿using CompetitiveBackend.Core;
 using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
+using CompetitiveBackend.Services.Exceptions;
 using Microsoft.Extensions.Logging;
 
 namespace CompetitiveBackend.Services.CompetitionService
@@ -15,6 +16,8 @@ namespace CompetitiveBackend.Services.CompetitionService
 
         public Task CreateCompetition(Competition c)
         {
+            if (c.StartDate >= c.EndDate) throw new InvalidArgumentsException("Start cannot be after end");
+            if (c.StartDate < DateTime.Now) throw new InvalidArgumentsException("Competition should be started in the future");
             return _competitionRepository.CreateCompetition(c);
         }
 
@@ -46,11 +49,17 @@ namespace CompetitiveBackend.Services.CompetitionService
         public async Task UpdateCompetition(int id, string? name, string? description, DateTime? startDate, DateTime? endDate)
         {
             Competition c = await _competitionRepository.GetCompetition(id);
+            DateTime dt = DateTime.Now;
+            bool isStarted = c.StartDate < dt;
+            bool isEnded = c.EndDate < dt;
             c = new Competition(name ?? c.Name,
                 description ?? c.Description,
                 startDate ?? c.StartDate,
                 endDate ?? c.EndDate,
                 c.Id);
+            if (c.StartDate >= c.EndDate) throw new InvalidArgumentsException("Start cannot be after end");
+            if (isStarted && c.StartDate >= dt) throw new InvalidArgumentsException("Competition cannot be delayed after its start.");
+            if (isEnded && c.EndDate >= dt) throw new InvalidArgumentsException("Competition cannot be prolonged after its end. Create a new one!");
             await _competitionRepository.UpdateCompetition(c);
         }
     }

@@ -9,7 +9,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServicesRealisation.ServicesRealisation
+namespace CompetitiveBackend.Services.AuthService
 {
     class SHA256HashAlgorithm : IHashAlgorithm
     {
@@ -25,14 +25,6 @@ namespace ServicesRealisation.ServicesRealisation
         public bool Verify(string input, string hash)
         {
             return Hash(input) == hash;
-        }
-    }
-    class BasicRoleCreator : IRoleCreator
-    {
-        public Role Create(Account c)
-        {
-            if (c.Login == "root") return new AdminRole();
-            return new PlayerRole();
         }
     }
 }

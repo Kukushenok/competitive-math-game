@@ -5,6 +5,7 @@
         public readonly int CompetitionId;
         public readonly int PlayerProfileId;
         public int Score;
+        // string PlayerDescription?
         public PlayerParticipation(int competitionId, int playerProfileId, int score)
         {
             CompetitionId = competitionId;

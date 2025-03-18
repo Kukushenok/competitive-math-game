@@ -47,7 +47,7 @@ namespace UnitTests
             await _service.UpdatePlayerProfile(etalon);
         }
         [Fact]
-        public async Task PlayerProfileService_Update()
+        public async Task PlayerProfileService_UpdatePlayerProfileImage()
         {
             _profileRepo.Setup(x => x.UpdatePlayerProfileImage(0, It.IsAny<LargeData>())).Callback((int a, LargeData d) =>
             {
@@ -57,6 +57,14 @@ namespace UnitTests
             });
             _fileProcessor.Setup(x => x.Process(It.IsAny<LargeData>())).ReturnsAsync(new LargeData([42]));
             await _service.SetPlayerProfileImage(0, new LargeData([1,2,3]));
+        }
+        [Fact]
+        public async Task PlayerProfileService_GetPlayerProfileImage()
+        {
+            _profileRepo.Setup(x => x.GetPlayerProfileImage(0)).ReturnsAsync(new LargeData([42]));
+            LargeData d = await _service.GetPlayerProfileImage(0);
+            Assert.Single(d.Data);
+            Assert.Equal(42, d.Data[0]);
         }
     }
 }

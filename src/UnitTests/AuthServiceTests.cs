@@ -29,7 +29,7 @@ namespace Tests.ServiceTests
         {
             _algo.Setup(algo => algo.Hash(It.IsAny<string>())).Returns<string>(gt => $"|{gt}|");
             _algo.Setup(algo => algo.Verify(It.IsAny<string>(), It.IsAny<string>())).Returns<string, string>((a, b) => $"|{a}|" == b);
-            _service = new AuthService(new NullLogger<AuthService>(), _accountRepo.Object, _sessionRepo.Object, _algo.Object, _creator.Object);
+            _service = new AuthService(_accountRepo.Object, _sessionRepo.Object, _algo.Object, _creator.Object);
         }
         [Fact]
         public async Task AuthService_LogIn_Success()

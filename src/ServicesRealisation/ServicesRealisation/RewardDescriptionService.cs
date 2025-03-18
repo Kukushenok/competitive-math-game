@@ -28,22 +28,22 @@ namespace CompetitiveBackend.Services.RewardDescriptionService
 
         public async Task<RewardDescription> GetRewardDescription(int rewardID)
         {
-            return await GetRewardDescription(rewardID);
+            return await _repository.GetRewardDescription(rewardID);
         }
 
         public async Task<LargeData> GetRewardGameAsset(int rewardID)
         {
-            return await GetRewardGameAsset(rewardID);
+            return await _repository.GetRewardGameAsset(rewardID);
         }
 
         public async Task<LargeData> GetRewardIcon(int rewardID)
         {
-            return await GetRewardIcon(rewardID);
+            return await _repository.GetRewardIcon(rewardID);
         }
 
         public async Task SetRewardGameAsset(int rewardID, LargeData data)
         {
-            await SetRewardGameAsset(rewardID, data);
+            await _repository.SetRewardGameAsset(rewardID, data);
         }
 
         public async Task SetRewardIcon(int rewardID, LargeData data)

@@ -36,17 +36,19 @@ namespace CompetitiveBackend.Services.PlayerParticipationService
 
         public async Task SubmitParticipation(int userID, int competitionID, int score)
         {
-            PlayerParticipation participation;
+            PlayerParticipation? participation = null;
             try
             {
                 participation = await _playerParticipationRepository.GetParticipation(userID, competitionID);
             }
             catch(MissingDataException)
             {
-                participation = new PlayerParticipation(competitionID, userID, score);
+                await _playerParticipationRepository.CreateParticipation(new PlayerParticipation(competitionID, userID, score));
             }
-            if (participation.Score < score) participation.Score = score;
-            await _playerParticipationRepository.UpdateParticipation(participation);
+            if (participation != null && participation.Score < score)
+            {
+                await _playerParticipationRepository.UpdateParticipation(new PlayerParticipation(competitionID, userID, score));
+            }
         }
     }
 
