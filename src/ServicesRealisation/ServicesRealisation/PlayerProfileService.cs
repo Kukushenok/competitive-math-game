@@ -1,8 +1,6 @@
-﻿using CompetitiveBackend.Core;
-using CompetitiveBackend.Core.Objects;
+﻿using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Services.Objects;
-using Microsoft.Extensions.Logging;
 
 namespace CompetitiveBackend.Services.PlayerProfileService
 {

@@ -1,5 +1,4 @@
 ﻿using CompetitiveBackend.Core.Auth;
-using CompetitiveBackend.Core.Objects;
 namespace CompetitiveBackend.Repositories
 {
     public interface ISessionRepository

@@ -1,6 +1,6 @@
 ﻿namespace CompetitiveBackend.Core.Objects
 {
-    public sealed class PlayerProfile: IntIdentifiable
+    public sealed class PlayerProfile : IntIdentifiable
     {
         public string Name;
         public string? Description;

@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography;
-
-namespace CompetitiveBackend.Services.Objects
+﻿namespace CompetitiveBackend.Services.Objects
 {
     public interface IHashAlgorithm
     {
@@ -16,6 +14,6 @@ namespace CompetitiveBackend.Services.Objects
         /// </summary>
         /// <param name="input">Входная строка (например, пароль)</param>
         /// <returns>Хэш строки</returns>
-        public string Hash( string input );
+        public string Hash(string input);
     }
 }

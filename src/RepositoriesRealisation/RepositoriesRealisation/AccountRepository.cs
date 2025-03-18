@@ -3,11 +3,6 @@ using CompetitiveBackend.Core.Objects;
 using Microsoft.EntityFrameworkCore;
 using RepositoriesRealisation;
 using RepositoriesRealisation.DatabaseObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CompetitiveBackend.Repositories
 {
@@ -23,7 +18,7 @@ namespace CompetitiveBackend.Repositories
                 await context.Accounts.AddAsync(new AccountModel(acc, accountRole));
                 await context.SaveChangesAsync();
             }
-            catch(OperationCanceledException ex)
+            catch (OperationCanceledException ex)
             {
                 throw new Exceptions.FailedOperationException(ex.Message);
             }

@@ -1,6 +1,5 @@
 ﻿using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
-using Microsoft.Extensions.Logging;
 
 namespace CompetitiveBackend.Services.CompetitionRewardService
 {

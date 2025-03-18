@@ -1,6 +1,6 @@
 ﻿namespace CompetitiveBackend.Core.Auth
 {
-    public class UnauthenticatedSessionToken: SessionToken
+    public class UnauthenticatedSessionToken : SessionToken
     {
         public UnauthenticatedSessionToken() : base(new GuestRole()) { }
 

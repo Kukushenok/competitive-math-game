@@ -1,6 +1,4 @@
-﻿using CompetitiveBackend.Core.Objects;
-
-namespace CompetitiveBackend.Core.Auth
+﻿namespace CompetitiveBackend.Core.Auth
 {
     public abstract class SessionToken
     {

@@ -1,7 +1,5 @@
-﻿using CompetitiveBackend.Core;
-using CompetitiveBackend.Core.Objects;
+﻿using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
-using Microsoft.Extensions.Logging;
 
 namespace CompetitiveBackend.Services.PlayerRewardService
 {

@@ -1,32 +1,27 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.Extensions.Options;
-using System.Text.Encodings.Web;
+﻿using CompetitiveBackend.Core.Auth;
 using CompetitiveBackend.Services;
-using CompetitiveBackend.Core.Auth;
-using Microsoft.AspNetCore.Http;
-using CompetitiveBackend.Services.AuthService;
-using System.Net.Http;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Options;
+using System.Security.Claims;
 using System.Security.Principal;
+using System.Text.Encodings.Web;
 
 namespace CompetitiveBackend.Controllers
 {
-    public abstract class SessionTokenRequirement: IAuthorizationRequirement
+    public abstract class SessionTokenRequirement : IAuthorizationRequirement
     {
         public abstract bool Check(SessionToken s);
     }
-    public class AdminTokenRequirement: SessionTokenRequirement
+    public class AdminTokenRequirement : SessionTokenRequirement
     {
         public override bool Check(SessionToken s) => s.IsAuthenticated() && s.Role.IsAdmin();
     }
-    public class PlayerTokenRequirement: SessionTokenRequirement
+    public class PlayerTokenRequirement : SessionTokenRequirement
     {
         public override bool Check(SessionToken s) => s.IsAuthenticated() && s.Role.IsPlayer();
     }
-    public class AuthOptions: AuthenticationSchemeOptions { }
+    public class AuthOptions : AuthenticationSchemeOptions { }
     public class SessionTokenAuthenticationHandler : AuthenticationHandler<AuthOptions>
     {
         IAuthService authService;

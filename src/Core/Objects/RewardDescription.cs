@@ -1,6 +1,6 @@
 ﻿namespace CompetitiveBackend.Core.Objects
 {
-    public class RewardDescription: IntIdentifiable
+    public class RewardDescription : IntIdentifiable
     {
         public string Name;
         public string Description;

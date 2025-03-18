@@ -1,7 +1,6 @@
 
 using CompetitiveBackend.Controllers;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
 using RepositoriesRealisation;
@@ -77,7 +76,7 @@ namespace CompetitiveBackend
             //app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
-            
+
             app.MapControllers();
 
             app.Run();

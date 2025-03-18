@@ -1,10 +1,8 @@
 ﻿using CompetitiveBackend.Core.Auth;
 using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
-using CompetitiveBackend.Repositories.Exceptions;
 using CompetitiveBackend.Services.Exceptions;
 using CompetitiveBackend.Services.Objects;
-using Microsoft.Extensions.Logging;
 namespace CompetitiveBackend.Services.AuthService
 {
     public class AuthService : IAuthService

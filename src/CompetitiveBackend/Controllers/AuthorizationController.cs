@@ -3,9 +3,7 @@ using CompetitiveBackend.Services;
 using CompetitiveBackend.Services.Exceptions;
 using CompetitiveBackend.Services.Objects;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 
 namespace CompetitiveBackend.Controllers
 {
@@ -39,11 +37,11 @@ namespace CompetitiveBackend.Controllers
                 AuthSuccessResult result = await Service.LogIn(login, password);
                 return Ok(result);
             }
-            catch(MissingDataException)
+            catch (MissingDataException)
             {
                 return NotFound();
             }
-            catch(IncorrectPasswordException)
+            catch (IncorrectPasswordException)
             {
                 return Forbid();
             }

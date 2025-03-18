@@ -1,8 +1,6 @@
-﻿using System.Runtime.Serialization;
-
-namespace CompetitiveBackend.Repositories.Exceptions
+﻿namespace CompetitiveBackend.Repositories.Exceptions
 {
-    public class FailedOperationException:RepositoryException
+    public class FailedOperationException : RepositoryException
     {
         public FailedOperationException() { }
         public FailedOperationException(string message) : base(message) { }

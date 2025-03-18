@@ -1,8 +1,6 @@
-﻿using System.Runtime.Serialization;
-
-namespace CompetitiveBackend.Repositories.Exceptions
+﻿namespace CompetitiveBackend.Repositories.Exceptions
 {
-    public class IncorrectOperationException: RepositoryException
+    public class IncorrectOperationException : RepositoryException
     {
         public IncorrectOperationException() { }
         public IncorrectOperationException(string message) : base(message) { }

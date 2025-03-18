@@ -1,6 +1,6 @@
 ﻿namespace CompetitiveBackend.Core.Objects
 {
-    public sealed class Account: IntIdentifiable
+    public sealed class Account : IntIdentifiable
     {
         public readonly string Login;
         public readonly string? Email;

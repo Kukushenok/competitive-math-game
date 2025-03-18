@@ -1,8 +1,5 @@
 ﻿using CompetitiveBackend.Core.Auth;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using RepositoriesRealisation;
@@ -58,7 +55,7 @@ namespace CompetitiveBackend.Repositories
         public async Task<SessionToken> GetSessionToken(string token)
         {
             TokenValidationResult tkn = await _handler.ValidateTokenAsync(token, GetValidationParameters());
-            if(tkn.Exception != null)
+            if (tkn.Exception != null)
             {
                 return new UnauthenticatedSessionToken();
             }
@@ -77,9 +74,9 @@ namespace CompetitiveBackend.Repositories
         {
             return new TokenValidationParameters()
             {
-                ValidateAudience = false, 
-                ValidateIssuer = false, 
-                IssuerSigningKey = _configuration.Key 
+                ValidateAudience = false,
+                ValidateIssuer = false,
+                IssuerSigningKey = _configuration.Key
             };
         }
     }

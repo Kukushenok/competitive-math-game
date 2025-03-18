@@ -1,10 +1,8 @@
-﻿using System.Runtime.Serialization;
-
-namespace CompetitiveBackend.Repositories.Exceptions
+﻿namespace CompetitiveBackend.Repositories.Exceptions
 {
-    public class RepositoryException: Exception
+    public class RepositoryException : Exception
     {
-        public RepositoryException() {}
+        public RepositoryException() { }
         public RepositoryException(string message) : base(message) { }
         public RepositoryException(string message, Exception? innerException) : base(message, innerException) { }
     }

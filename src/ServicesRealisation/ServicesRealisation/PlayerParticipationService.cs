@@ -1,7 +1,5 @@
 ﻿using CompetitiveBackend.Core.Objects;
-using CompetitiveBackend.Core;
 using CompetitiveBackend.Repositories;
-using Microsoft.Extensions.Logging;
 using CompetitiveBackend.Repositories.Exceptions;
 
 namespace CompetitiveBackend.Services.PlayerParticipationService
@@ -41,7 +39,7 @@ namespace CompetitiveBackend.Services.PlayerParticipationService
             {
                 participation = await _playerParticipationRepository.GetParticipation(userID, competitionID);
             }
-            catch(MissingDataException)
+            catch (MissingDataException)
             {
                 await _playerParticipationRepository.CreateParticipation(new PlayerParticipation(competitionID, userID, score));
             }

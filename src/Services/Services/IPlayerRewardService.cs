@@ -1,5 +1,4 @@
 ﻿using CompetitiveBackend.Core.Objects;
-using CompetitiveBackend.Core;
 
 namespace CompetitiveBackend.Services
 {

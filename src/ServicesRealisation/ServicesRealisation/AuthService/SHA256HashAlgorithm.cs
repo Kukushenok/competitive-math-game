@@ -1,13 +1,6 @@
-﻿using CompetitiveBackend.Core.Auth;
-using CompetitiveBackend.Core.Objects;
-using CompetitiveBackend.Services.Objects;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using CompetitiveBackend.Services.Objects;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace CompetitiveBackend.Services.AuthService
 {

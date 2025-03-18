@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using RepositoriesRealisation.DatabaseObjects;
 
 namespace RepositoriesRealisation
 {
-    public class BaseDbContext: DbContext
+    public class BaseDbContext : DbContext
     {
         public BaseDbContext(DbContextOptions options) : base(options)
         {

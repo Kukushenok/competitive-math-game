@@ -1,13 +1,12 @@
 ﻿using CompetitiveBackend.Core.Auth;
 using Microsoft.Extensions.Primitives;
-using System.Diagnostics;
 using System.Security.Claims;
 
 namespace CompetitiveBackend.Controllers
 {
     public static class AuthUtilite
     {
-        private static readonly Role[] REGISTERED_ROLES = new Role[] { new PlayerRole(), new AdminRole(), new GuestRole()};
+        private static readonly Role[] REGISTERED_ROLES = new Role[] { new PlayerRole(), new AdminRole(), new GuestRole() };
         public static IEnumerable<string> GetAllRoles()
         {
             foreach (var r in REGISTERED_ROLES) yield return r.ToString();

@@ -1,8 +1,6 @@
-﻿using System.Xml.Linq;
-
-namespace CompetitiveBackend.Core.Objects
+﻿namespace CompetitiveBackend.Core.Objects
 {
-    public class PlayerReward: RewardDescription
+    public class PlayerReward : RewardDescription
     {
         public readonly int PlayerID;
         public readonly int RewardDescriptionID;
