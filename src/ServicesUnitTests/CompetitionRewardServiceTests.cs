@@ -1,15 +1,9 @@
 ﻿using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Services.CompetitionRewardService;
-using CompetitiveBackend.Services.PlayerRewardService;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace UnitTests
+namespace ServiceUnitTests
 {
     public class CompetitionRewardServiceTests
     {

@@ -3,13 +3,8 @@ using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Services.Objects;
 using CompetitiveBackend.Services.PlayerProfileService;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace UnitTests
+namespace ServiceUnitTests
 {
     public class PlayerProfileServiceTests
     {
@@ -56,7 +51,7 @@ namespace UnitTests
                 Assert.Equal(42, d.Data[0]);
             });
             _fileProcessor.Setup(x => x.Process(It.IsAny<LargeData>())).ReturnsAsync(new LargeData([42]));
-            await _service.SetPlayerProfileImage(0, new LargeData([1,2,3]));
+            await _service.SetPlayerProfileImage(0, new LargeData([1, 2, 3]));
         }
         [Fact]
         public async Task PlayerProfileService_GetPlayerProfileImage()

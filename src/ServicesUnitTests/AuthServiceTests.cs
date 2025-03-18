@@ -5,13 +5,11 @@ using CompetitiveBackend.Repositories.Exceptions;
 using CompetitiveBackend.Services.AuthService;
 using CompetitiveBackend.Services.Exceptions;
 using CompetitiveBackend.Services.Objects;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 
-namespace Tests.ServiceTests
+namespace ServiceUnitTests
 {
-    public class TestRole: Role
+    public class TestRole : Role
     {
         public const string NAME = "TestRoleName";
         public override bool IsAdmin() => false;
@@ -38,7 +36,7 @@ namespace Tests.ServiceTests
             _sessionRepo.Setup(x => x.CreateSessionFor(0)).ReturnsAsync("hi");
             _sessionRepo.Setup(x => x.GetSessionToken("hi")).ReturnsAsync(new AuthenticatedSessionToken(new TestRole(), 0));
             AuthSuccessResult rw = await _service.LogIn("abcd", "12345");
-            Assert.Equal("hi",rw.Token);
+            Assert.Equal("hi", rw.Token);
             Assert.Equal(0, rw.AccountID);
             Assert.Equal(TestRole.NAME, rw.RoleName);
         }
@@ -59,10 +57,11 @@ namespace Tests.ServiceTests
         {
             Account c = new Account("hi", "X");
             _accountRepo.Setup(x => x.CreateAccount(It.IsAny<Account>(), It.IsAny<Role>()))
-                .Callback<Account, Role>((a, r) => {
+                .Callback<Account, Role>((a, r) =>
+                {
                     Assert.Equal("|1234|", a.PasswordHash);
                     Assert.Equal(TestRole.NAME, r.ToString());
-                    });
+                });
             _creator.Setup(x => x.Create(It.IsAny<Account>())).Returns(new TestRole());
             await _service.Register(c, "1234");
         }

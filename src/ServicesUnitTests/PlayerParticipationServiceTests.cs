@@ -1,15 +1,10 @@
 ﻿using CompetitiveBackend.Core.Objects;
-using CompetitiveBackend.Repositories.Exceptions;
 using CompetitiveBackend.Repositories;
+using CompetitiveBackend.Repositories.Exceptions;
 using CompetitiveBackend.Services.PlayerParticipationService;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace UnitTests
+namespace ServiceUnitTests
 {
     public class PlayerParticipationServiceTests
     {

@@ -1,17 +1,10 @@
 ﻿using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Repositories.Exceptions;
-using CompetitiveBackend.Services.Objects;
-using CompetitiveBackend.Services.PlayerProfileService;
 using CompetitiveBackend.Services.PlayerRewardService;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace UnitTests
+namespace ServiceUnitTests
 {
     public class PlayerRewardServiceTests
     {
@@ -28,7 +21,7 @@ namespace UnitTests
         public async Task PlayerRewardServiceTest_GetAllRewardsOf()
         {
             DataLimiter etalon = new DataLimiter(10, 10);
-            List<PlayerReward> data = new List<PlayerReward>() { new PlayerReward(0, 11,"a", "b", 0, null, 0) };
+            List<PlayerReward> data = new List<PlayerReward>() { new PlayerReward(0, 11, "a", "b", 0, null, 0) };
             _rewardRepo.Setup(x => x.GetAllRewardsOf(0, It.IsAny<DataLimiter>())).Callback<int, DataLimiter>
                 ((idx, limiter) =>
                 {
@@ -57,7 +50,7 @@ namespace UnitTests
                 {
                     Assert.Equal("AAA", a.Name);
                     Assert.Equal("BBB", a.Description);
-                    Assert.Equal(0, a.RewardDescriptionID); 
+                    Assert.Equal(0, a.RewardDescriptionID);
                 });
             await _service.GrantRewardToPlayer(0, 0);
         }

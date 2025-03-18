@@ -5,7 +5,7 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompetitiveBackend", "CompetitiveBackend\CompetitiveBackend.csproj", "{FB806204-0E0F-4291-8323-56325A0D995A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{DBFF1291-6DEF-43A8-BE80-E9F475B14BBA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServicesUnitTests", "ServicesUnitTests\ServicesUnitTests.csproj", "{DBFF1291-6DEF-43A8-BE80-E9F475B14BBA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{E47FA2CD-B70A-41B3-8CCF-1922E4891002}"
 EndProject

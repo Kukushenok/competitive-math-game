@@ -3,13 +3,8 @@ using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Services.CompetitionService;
 using CompetitiveBackend.Services.Exceptions;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace UnitTests
+namespace ServiceUnitTests
 {
     public class CompetitionServiceTests
     {
@@ -50,7 +45,7 @@ namespace UnitTests
         public async Task CompetitionServiceTest_UpdateCompetition_OK()
         {
             DateTime dt = DateTime.Now;
-            Competition etalon = new Competition("Hello", "World", dt + TimeSpan.FromSeconds(5), dt + TimeSpan.FromSeconds(10),0);
+            Competition etalon = new Competition("Hello", "World", dt + TimeSpan.FromSeconds(5), dt + TimeSpan.FromSeconds(10), 0);
             Competition pending = new Competition("a", "b", dt + TimeSpan.FromSeconds(5), dt + TimeSpan.FromSeconds(10));
             _repository.Setup(x => x.GetCompetition(0)).ReturnsAsync(etalon);
             _repository.Setup(x => x.CreateCompetition(It.IsAny<Competition>())).Callback<Competition>((c) => Assert.Equal(pending, c));
