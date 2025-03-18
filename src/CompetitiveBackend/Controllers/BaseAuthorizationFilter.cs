@@ -8,6 +8,9 @@ using System.Text.Encodings.Web;
 using CompetitiveBackend.Services;
 using CompetitiveBackend.Core.Auth;
 using Microsoft.AspNetCore.Http;
+using CompetitiveBackend.Services.AuthService;
+using System.Net.Http;
+using System.Security.Principal;
 
 namespace CompetitiveBackend.Controllers
 {
@@ -23,6 +26,38 @@ namespace CompetitiveBackend.Controllers
     {
         public override bool Check(SessionToken s) => s.IsAuthenticated() && s.Role.IsPlayer();
     }
+    public class AuthOptions: AuthenticationSchemeOptions { }
+    public class SessionTokenAuthenticationHandler : AuthenticationHandler<AuthOptions>
+    {
+        IAuthService authService;
+        public SessionTokenAuthenticationHandler(IAuthService service, IOptionsMonitor<AuthOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock) : base(options, logger, encoder, clock)
+        {
+            authService = service;
+        }
+
+        protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
+        {
+            if (Request?.TryGetTokenValue(out string token) ?? false)
+            {
+                SessionToken s = await authService.GetSessionToken(token);
+                if (s.TryGetAccountIdentifier(out int id))
+                {
+                    var claims = new List<Claim>()
+                        {
+                            new Claim(ClaimTypes.Name, token),
+                            new Claim(ClaimTypes.NameIdentifier, id.ToString()),
+                            new Claim(ClaimTypes.Role, s.Role.ToString())
+                        };
+                    var identity = new ClaimsIdentity(claims, Scheme.Name);
+                    var principal = new GenericPrincipal(identity, AuthUtilite.GetAllRoles().ToArray());
+                    var ticket = new AuthenticationTicket(principal, Scheme.Name);
+                    return AuthenticateResult.Success(ticket);
+                }
+            }
+            return AuthenticateResult.NoResult();
+
+        }
+    }
     public class SessionTokenAuthorizationHandler : AuthorizationHandler<SessionTokenRequirement>
     {
         IAuthService authService;
@@ -31,19 +66,12 @@ namespace CompetitiveBackend.Controllers
             authService = serv;
         }
 
-        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, SessionTokenRequirement requirement)
+        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, SessionTokenRequirement requirement)
         {
-            var httpContext = context.Resource as HttpContext;
-            if (httpContext?.TryGetTokenValue(out string token) ?? false)
-            {
-                SessionToken s = await authService.GetSessionToken(token);
-                if (requirement.Check(s)) context.Succeed(requirement);
-                else context.Fail();
-            }
-            else
-            {
-                context.Fail();
-            }
+            var s = context.User.GetSessionToken();
+            if (requirement.Check(s)) context.Succeed(requirement);
+            else context.Fail();
+            return Task.CompletedTask;
         }
     }
 }

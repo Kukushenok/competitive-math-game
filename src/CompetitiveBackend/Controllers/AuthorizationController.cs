@@ -47,19 +47,18 @@ namespace CompetitiveBackend.Controllers
             {
                 return Forbid();
             }
-            //try
-            //{
-            //}
-            //catch
-            //{
-            //    return BadRequest(":(");
-            //}
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="login"></param>
+        /// <param name="password"></param>
+        /// <response code=200>Account's registered successfully</response>
+        /// <response code=403>Could not register account</response>
+        /// <returns></returns>
         [HttpPost(Name = "register")]
         public async Task<IActionResult> Register(string login, string password)
         {
-            //try
-            //{
             try
             {
                 await Service.Register(new Core.Objects.Account(login, null, null, null), password);
@@ -69,12 +68,6 @@ namespace CompetitiveBackend.Controllers
             {
                 return BadRequest(exp.Message);
             }
-
-            //}
-            //catch
-            //{
-            //    return BadRequest();
-            //}
         }
     }
 }

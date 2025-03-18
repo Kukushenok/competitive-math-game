@@ -1,5 +1,6 @@
 
 using CompetitiveBackend.Controllers;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
@@ -15,14 +16,18 @@ namespace CompetitiveBackend
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            //builder.Services.AddScoped<IAuthenticationHandler, SessionTokenAuthenticationHandler>();
             builder.Services.AddScoped<IAuthorizationHandler, SessionTokenAuthorizationHandler>();
+            builder.Services.AddScoped<IAuthenticationHandler, SessionTokenAuthenticationHandler>();
+            builder.Services.AddAuthentication("SessionToken")
+                .AddScheme<AuthOptions, SessionTokenAuthenticationHandler>("SessionToken", null);
             builder.Services.AddAuthorization((options) =>
             {
                 options.AddPolicy("Player", (pol) => pol.Requirements.Add(new PlayerTokenRequirement()));
                 options.AddPolicy("Admin", (pol) => pol.Requirements.Add(new AdminTokenRequirement()));
             });
-            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme);//,
+            //builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            //                    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme);//,
             //options =>
             //{
             //    options.LoginPath = new PathString("/auth/login");
@@ -70,9 +75,8 @@ namespace CompetitiveBackend
             }
 
             //app.UseHttpsRedirection();
-
+            app.UseAuthentication();
             app.UseAuthorization();
-
             
             app.MapControllers();
 

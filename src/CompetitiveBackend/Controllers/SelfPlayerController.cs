@@ -7,17 +7,17 @@ namespace CompetitiveBackend.Controllers
 {
     public record PlayerProfileDto(string Name, string? Description, string ProfileImageLink);
     [Route("api/self/[action]")]
-    public class SelfPlayerController : BaseAuthController
+    public class SelfPlayerController : ControllerBase
     {
         private IPlayerProfileRepository _profileRepo;
-        public SelfPlayerController(ISessionRepository s, IPlayerProfileRepository repository): base(s)
+        public SelfPlayerController(IPlayerProfileRepository repository)
         {
             _profileRepo = repository;
         }
         [HttpGet("profile")]
         public async Task<IActionResult> GetPlayerProfile()
         {
-            SessionToken tok = await GetToken();
+            SessionToken tok = User.GetSessionToken();
             if (tok.TryGetAccountIdentifier(out int identifier) && tok.Role.IsPlayer())
             {
                 PlayerProfile p = await _profileRepo.GetPlayerProfile(identifier);
@@ -28,7 +28,7 @@ namespace CompetitiveBackend.Controllers
         [HttpPost("profile")]
         public async Task<IActionResult> SetPlayerProfile(string name, string? description)
         {
-            SessionToken tok = await GetToken();
+            SessionToken tok = User.GetSessionToken();
             if (tok.TryGetAccountIdentifier(out int identifier) && tok.Role.IsPlayer())
             {
                 try
@@ -46,7 +46,7 @@ namespace CompetitiveBackend.Controllers
         [HttpGet("pic")]
         public async Task<IActionResult> GetPlayerImage()
         {
-            SessionToken tok = await GetToken();
+            SessionToken tok = User.GetSessionToken();
             if (tok.TryGetAccountIdentifier(out int identifier) && tok.Role.IsPlayer())
             {
                 try
@@ -67,7 +67,7 @@ namespace CompetitiveBackend.Controllers
             if (file == null || file.Length == 0)
                 return BadRequest("No file uploaded.");
 
-            SessionToken tok = await GetToken();
+            SessionToken tok = User.GetSessionToken();
             if (tok.TryGetAccountIdentifier(out int identifier) && tok.Role.IsPlayer())
             {
                 using var memoryStream = new MemoryStream();
