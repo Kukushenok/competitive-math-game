@@ -1,6 +1,8 @@
 ﻿using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Services.Objects;
+using ServicesRealisation.ServicesRealisation.Validator;
+using System.ComponentModel.DataAnnotations;
 
 namespace CompetitiveBackend.Services.PlayerProfileService
 {
@@ -8,10 +10,12 @@ namespace CompetitiveBackend.Services.PlayerProfileService
     {
         private readonly IPlayerProfileRepository _profileRepository;
         private readonly ILargeFileProcessor _imageProcessor;
-        public PlayerProfileService(IPlayerProfileRepository profileRepository, ILargeFileProcessor processor)
+        private readonly IValidator<PlayerProfile> _validator;
+        public PlayerProfileService(IPlayerProfileRepository profileRepository, ILargeFileProcessor processor, IValidator<PlayerProfile> validator)
         {
             _profileRepository = profileRepository;
             _imageProcessor = processor;
+            _validator = validator;
         }
 
         public Task<PlayerProfile> GetPlayerProfile(int playerProfileId)
@@ -32,6 +36,7 @@ namespace CompetitiveBackend.Services.PlayerProfileService
 
         public Task UpdatePlayerProfile(PlayerProfile p)
         {
+            if (!_validator.IsValid(p, out string? msg)) throw new Exceptions.InvalidArgumentsException(msg!);
             return _profileRepository.UpdatePlayerProfile(p);
         }
     }

@@ -3,6 +3,8 @@ using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Services.Exceptions;
 using CompetitiveBackend.Services.Objects;
+using ServicesRealisation.Objects;
+using ServicesRealisation.ServicesRealisation.Validator;
 namespace CompetitiveBackend.Services.AuthService
 {
     public class AuthService : IAuthService
@@ -11,16 +13,19 @@ namespace CompetitiveBackend.Services.AuthService
         private readonly ISessionRepository _sessionRepository;
         private readonly IHashAlgorithm _hashAlgorithm;
         private readonly IRoleCreator _roleCreator;
+        private readonly IValidator<AccountCreationData> _validator;
         public AuthService(
             IAccountRepository accountRepository,
             ISessionRepository sessionRepository,
             IHashAlgorithm hashAlgo,
-            IRoleCreator roleCreator)
+            IRoleCreator roleCreator,
+            IValidator<AccountCreationData> validator)
         {
             _accountRepository = accountRepository;
             _hashAlgorithm = hashAlgo;
             _sessionRepository = sessionRepository;
             _roleCreator = roleCreator;
+            _validator = validator;
         }
 
         public Task<SessionToken> GetSessionToken(string token)
@@ -43,6 +48,8 @@ namespace CompetitiveBackend.Services.AuthService
 
         public async Task Register(Account data, string password)
         {
+            if (!_validator.IsValid(new AccountCreationData(data, password), out string? msg))
+                throw new InvalidArgumentsException(msg!);
             string passwordHash = _hashAlgorithm.Hash(password);
             await _accountRepository.CreateAccount(new Account(data.Login, passwordHash, data.Email, data.Id), _roleCreator.Create(data));
         }

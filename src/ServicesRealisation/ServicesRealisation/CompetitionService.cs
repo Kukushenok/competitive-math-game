@@ -1,21 +1,25 @@
 ﻿using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Services.Exceptions;
+using ServicesRealisation.ServicesRealisation.Validator;
 
 namespace CompetitiveBackend.Services.CompetitionService
 {
     public class CompetitionService : ICompetitionService
     {
         private readonly ICompetitionRepository _competitionRepository;
-        public CompetitionService(ICompetitionRepository competitionRepository)
+        private readonly IValidator<Competition> _validator;
+        public CompetitionService(ICompetitionRepository competitionRepository, IValidator<Competition> validator)
         {
             _competitionRepository = competitionRepository;
+            _validator = validator;
+
         }
 
         public Task CreateCompetition(Competition c)
         {
-            if (c.StartDate >= c.EndDate) throw new InvalidArgumentsException("Start cannot be after end");
-            if (c.StartDate < DateTime.Now) throw new InvalidArgumentsException("Competition should be started in the future");
+            if (!_validator.IsValid(c, out string? msg)) throw new InvalidArgumentsException(msg!);
+            if (c.StartDate < DateTime.Now) throw new InvalidArgumentsException("Competition should be in the future");
             return _competitionRepository.CreateCompetition(c);
         }
 
@@ -55,7 +59,7 @@ namespace CompetitiveBackend.Services.CompetitionService
                 startDate ?? c.StartDate,
                 endDate ?? c.EndDate,
                 c.Id);
-            if (c.StartDate >= c.EndDate) throw new InvalidArgumentsException("Start cannot be after end");
+            if (!_validator.IsValid(c, out string? msg)) throw new InvalidArgumentsException(msg!);
             if (isStarted && c.StartDate >= dt) throw new InvalidArgumentsException("Competition cannot be delayed after its start.");
             if (isEnded && c.EndDate >= dt) throw new InvalidArgumentsException("Competition cannot be prolonged after its end. Create a new one!");
             await _competitionRepository.UpdateCompetition(c);

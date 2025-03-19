@@ -3,17 +3,22 @@ using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Services.CompetitionService;
 using CompetitiveBackend.Services.Exceptions;
 using Moq;
+using ServicesRealisation.ServicesRealisation.Validator;
+using System.ComponentModel.DataAnnotations;
 
 namespace ServiceUnitTests
 {
     public class CompetitionServiceTests
     {
         private Mock<ICompetitionRepository> _repository;
+        private Mock<IValidator<Competition>> _validator;
         private CompetitionService _service;
         public CompetitionServiceTests()
         {
             _repository = new Mock<ICompetitionRepository>();
-            _service = new CompetitionService(_repository.Object);
+            _validator = new Mock<IValidator<Competition>>();
+            _validator.Setup(x => x.IsValid(It.IsAny<Competition>(), out It.Ref<string?>.IsAny)).Returns(true);
+            _service = new CompetitionService(_repository.Object, _validator.Object);
             //_service.GetAllCompetitions();
             //_service.GetActiveCompetitions();
         }
@@ -36,6 +41,8 @@ namespace ServiceUnitTests
         [Fact]
         public async Task CompetitionServiceTests_CreateCompetition_Bad2()
         {
+            _validator.Reset();
+            _validator.Setup(x => x.IsValid(It.IsAny<Competition>(), out It.Ref<string?>.IsAny)).Returns(false);
             DateTime dt = DateTime.Now;
             Competition etalon = new Competition("Hello", "World", dt + TimeSpan.FromSeconds(20), dt + TimeSpan.FromSeconds(10));
             _repository.Setup(x => x.CreateCompetition(It.IsAny<Competition>())).Callback<Competition>((c) => Assert.Equal(etalon, c));
@@ -66,6 +73,8 @@ namespace ServiceUnitTests
         [Fact]
         public async Task CompetitionServiceTest_UpdateCompetition_Bad1()
         {
+            _validator.Reset();
+            _validator.Setup(x => x.IsValid(It.IsAny<Competition>(), out It.Ref<string?>.IsAny)).Returns(false);
             DateTime dt = DateTime.Now;
             Competition etalon = new Competition("Hello", "World", dt + TimeSpan.FromSeconds(5), dt + TimeSpan.FromSeconds(10), 0);
             Competition pending = new Competition("Hello", "World", dt + TimeSpan.FromSeconds(5), dt - TimeSpan.FromSeconds(10));

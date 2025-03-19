@@ -2,6 +2,7 @@
 using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Services.Objects;
 using CompetitiveBackend.Services.PlayerProfileService;
+using ServicesRealisation.ServicesRealisation.Validator;
 using Moq;
 
 namespace ServiceUnitTests
@@ -15,7 +16,7 @@ namespace ServiceUnitTests
         {
             _profileRepo = new Mock<IPlayerProfileRepository>();
             _fileProcessor = new Mock<ILargeFileProcessor>();
-            _service = new PlayerProfileService(_profileRepo.Object, _fileProcessor.Object);
+            _service = new PlayerProfileService(_profileRepo.Object, _fileProcessor.Object, new DummyValidator<PlayerProfile>());
 
         }
         [Fact]

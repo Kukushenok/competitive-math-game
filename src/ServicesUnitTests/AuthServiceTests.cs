@@ -6,6 +6,8 @@ using CompetitiveBackend.Services.AuthService;
 using CompetitiveBackend.Services.Exceptions;
 using CompetitiveBackend.Services.Objects;
 using Moq;
+using ServicesRealisation.Objects;
+using ServicesRealisation.ServicesRealisation.Validator;
 
 namespace ServiceUnitTests
 {
@@ -22,12 +24,14 @@ namespace ServiceUnitTests
         Mock<IHashAlgorithm> _algo = new Mock<IHashAlgorithm>();
         Mock<IRoleCreator> _creator = new Mock<IRoleCreator>();
         Mock<ISessionRepository> _sessionRepo = new Mock<ISessionRepository>();
+        Mock<IValidator<AccountCreationData>> _validator = new Mock<IValidator<AccountCreationData>>();
         private readonly AuthService _service;
         public AuthServiceTests()
         {
             _algo.Setup(algo => algo.Hash(It.IsAny<string>())).Returns<string>(gt => $"|{gt}|");
             _algo.Setup(algo => algo.Verify(It.IsAny<string>(), It.IsAny<string>())).Returns<string, string>((a, b) => $"|{a}|" == b);
-            _service = new AuthService(_accountRepo.Object, _sessionRepo.Object, _algo.Object, _creator.Object);
+            _validator.Setup(x=>x.IsValid(It.IsAny<AccountCreationData>(), out It.Ref<string?>.IsAny)).Returns(true);
+            _service = new AuthService(_accountRepo.Object, _sessionRepo.Object, _algo.Object, _creator.Object, _validator.Object);
         }
         [Fact]
         public async Task AuthService_LogIn_Success()
@@ -64,6 +68,21 @@ namespace ServiceUnitTests
                 });
             _creator.Setup(x => x.Create(It.IsAny<Account>())).Returns(new TestRole());
             await _service.Register(c, "1234");
+        }
+        [Fact]
+        public async Task AuthService_CreateAccount_Failure()
+        {
+            _validator.Reset();
+            _validator.Setup(x => x.IsValid(It.IsAny<AccountCreationData>(), out It.Ref<string?>.IsAny)).Returns(false);
+            Account c = new Account("hi", "X");
+            _accountRepo.Setup(x => x.CreateAccount(It.IsAny<Account>(), It.IsAny<Role>()))
+                .Callback<Account, Role>((a, r) =>
+                {
+                    Assert.Equal("|1234|", a.PasswordHash);
+                    Assert.Equal(TestRole.NAME, r.ToString());
+                });
+            _creator.Setup(x => x.Create(It.IsAny<Account>())).Returns(new TestRole());
+            await Assert.ThrowsAsync<InvalidArgumentsException>(async () => await _service.Register(c, "1234"));
         }
         [Fact]
         public async Task AuthService_GetSessionToken()
