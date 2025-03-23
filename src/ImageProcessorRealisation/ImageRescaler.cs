@@ -3,14 +3,15 @@ using ImageMagick;
 using Microsoft.Extensions.Logging;
 using CompetitiveBackend.Services.ExtraTools;
 using CompetitiveBackend.Services.Exceptions;
+using System.Drawing;
 
 namespace ImageProcessorRealisation
 {
     class ImageRescaler : IImageProcessor
     {
-        private ILogger<ImageRescaler> _logger;
+        private ILogger _logger;
         private IImageConfig _config;
-        public ImageRescaler(ILogger<ImageRescaler> logger, IImageConfig config)
+        public ImageRescaler(ILogger logger, IImageConfig config)
         {
             _logger = logger;
             _config = config;
@@ -21,20 +22,23 @@ namespace ImageProcessorRealisation
             {
                 LargeData result;
                 using (_logger.BeginScope("Image processing..."))
-                // Step 1: Validate that the bytes represent an image
                 using (var image = new MagickImage(data.Data))
                 {
                     if(image.Width < _config.MinWidth || image.Height < _config.MaxWidth)
                     {
+                        _logger.LogWarning("Provided image is too small, exiting");
                         throw new BadImageException("Provided image is too small");
                     }
-                    // Step 2: Rescale the image to an appropriate size
-                    uint newWidth = Math.Min(image.Width, _config.MaxWidth);  // Desired width
-                    uint newHeight = Math.Min(image.Height, _config.MaxHeight); // Desired height
+                    if (image.HasAlpha)
+                    {
+                        image.BackgroundColor = MagickColor.FromRgb(0, 0, 0);
+                        image.Alpha(AlphaOption.Remove);
+                    }
+
+                    uint newWidth = Math.Min(image.Width, _config.MaxWidth);
+                    uint newHeight = Math.Min(image.Height, _config.MaxHeight);
 
                     image.Resize(newWidth, newHeight);
-
-                    // Step 3: Save the rescaled image as a byte array
                     result = new LargeData(image.ToByteArray());
                     _logger.LogInformation("Image resized successfully");
                 }
@@ -42,7 +46,7 @@ namespace ImageProcessorRealisation
             }
             catch (MagickException ex)
             {
-                _logger.LogWarning("The provided bytes are not a valid image: " + ex.Message);
+                _logger.LogWarning("The provided bytes was not a valid image: " + ex.Message);
                 throw new BadImageException("The provided bytes are not a valid image: " + ex.Message, ex);
             }
         }

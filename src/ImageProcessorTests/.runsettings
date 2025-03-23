@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<RunSettings>
+  <RunConfiguration>
+    <EnvironmentVariables>
+      <!-- List of environment variables we want to set-->
+      <resultsDir>./Results/</resultsDir>
+      <testsDir>./Tests/</testsDir>
+		<MinWidth>32</MinWidth>
+		<MaxWidth>128</MaxWidth>
+		<MinHeight>32</MinHeight>
+		<MaxHeight>128</MaxHeight>
+    </EnvironmentVariables>
+  </RunConfiguration>
+</RunSettings>

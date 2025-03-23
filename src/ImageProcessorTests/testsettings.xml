@@ -1,0 +1,12 @@
+<Settings>
+    <Dimensions>
+        <MinWidth>32</MinWidth>
+        <MaxWidth>128</MaxWidth>
+        <MinHeight>32</MinHeight>
+        <MaxHeight>128</MaxHeight>
+    </Dimensions>
+	<Paths>
+		<ResultsDir>Results</ResultsDir>
+		<TestsDir>Tests</TestsDir>
+	</Paths>
+</Settings>
