@@ -13,22 +13,28 @@ namespace ChronoServiceRealisation
             public async Task Execute(IJobExecutionContext context)
             {
                 QuartzTimeScheduler sc = (context.Scheduler.Context[nameof(QuartzTimeScheduler)] as QuartzTimeScheduler)!;
-                TimeScheduledTaskData task = (TimeScheduledTaskData)context.Get(nameof(TimeScheduledTaskData))!;
+                TimeScheduledTaskData task = (TimeScheduledTaskData)context.JobDetail.JobDataMap.Get(nameof(TimeScheduledTaskData))!;
                 await sc?.FireEvent(task)!;
             }
         }
         private List<ITimeScheduledTaskSubscriber> _subscribers;
         ILogger logger;
-        IScheduler CoreScheduler;
-        public QuartzTimeScheduler(IScheduler sched, ILogger<QuartzTimeScheduler> logger)
+        ISchedulerFactory _schedFactory;
+        public QuartzTimeScheduler(ISchedulerFactory sched, ILogger logger)
         {
-            CoreScheduler = sched;
+            _schedFactory = sched;
             this.logger = logger;
             _subscribers = new List<ITimeScheduledTaskSubscriber>();
-            CoreScheduler.Context.Add(nameof(QuartzTimeScheduler), this);
+
         }
         public async Task AddOrUpdateScheduledTask(TimeScheduledTaskData task)
         {
+            IScheduler sched = await _schedFactory.GetScheduler();
+            if (!sched.IsStarted)
+            {
+                await sched.Start();
+                sched.Context.TryAdd(nameof(QuartzTimeScheduler), this);
+            }
             Dictionary<string, object> data = new Dictionary<string, object>
             {
                 {nameof(TimeScheduledTaskData), task}
@@ -37,29 +43,21 @@ namespace ChronoServiceRealisation
                 .WithIdentity(GetJobKey(task))
                 .SetJobData(new JobDataMap((IDictionary)data))
                 .Build();
-            await CoreScheduler.AddJob(mt, true);
             ITrigger trigger = TriggerBuilder.Create()
                 .WithIdentity(GetTriggerKey(task))
                 .ForJob(GetJobKey(task))
                 .StartAt(task.FireTime)
                 .Build();
-            if (await CoreScheduler.RescheduleJob(GetTriggerKey(task), trigger) == null)
-            {
-                logger.LogInformation($"Created job for task with ID {task} at time {task.FireTime}", task);
-                await CoreScheduler.ScheduleJob(trigger);
-            }
-            else
-            {
-                logger.LogInformation($"Rescheduled job for task with ID {task} at time {task.FireTime}", task);
-            }
+            await sched.ScheduleJob(mt, [trigger], true);
+            logger.LogInformation($"Added job for task with ID {task.Identifier} at time {task.FireTime}", task);
         }
         private TriggerKey GetTriggerKey(TimeScheduledTaskData task)
         {
-            return new TriggerKey($"{task.Identifier}", task.Category + "_Task");
+            return new TriggerKey($"{task.Identifier}_{task.Category}", task.Category + "_Task");
         }
         private JobKey GetJobKey(TimeScheduledTaskData task)
         {
-            return new JobKey($"{task.Identifier}", task.Category + "_Job");
+            return new JobKey($"{task.Identifier}_{task.Category}", task.Category + "_Job");
         }
         protected async Task FireEvent(TimeScheduledTaskData task)
         {
@@ -69,7 +67,8 @@ namespace ChronoServiceRealisation
 
         async Task ITimeScheduler.RemoveScheduledTask(TimeScheduledTaskData task)
         {
-            await CoreScheduler.DeleteJob(GetJobKey(task));
+            IScheduler sched = await _schedFactory.GetScheduler();
+            await sched.DeleteJob(GetJobKey(task));
         }
 
         public void AddSubscriber(ITimeScheduledTaskSubscriber subscriber)

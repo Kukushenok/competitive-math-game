@@ -12,15 +12,27 @@ namespace ChronoServiceRealisation
 {
     public static class Installer
     {
-        public static IServiceCollection AddTimeScheduler(this IServiceCollection collection)
+        public static IServiceCollection AddTimeScheduler(this IServiceCollection collection, Action<Options>? setup = null)
         {
+            Options opt = new Options(collection);
+            setup?.Invoke(opt);
             collection.AddQuartz((config) =>
             {
                 config.UseDedicatedThreadPool(x => x.MaxConcurrency = 5);
-                config.UsePersistentStore((options) =>
+                if (opt.InMemory)
+                    config.UseInMemoryStore();
+                else
                 {
-                    options.UseSQLite("quartz-time.sqlite");
-                });
+                    config.UsePersistentStore((options) =>
+                    {
+                        if (opt.SqliteConnectionString != null)
+                            options.UseSQLite(opt.SqliteConnectionString);
+                        else if (opt.PostgresConnectionString != null)
+                            options.UsePostgres(opt.PostgresConnectionString);
+                        else
+                            options.UseBinarySerializer();
+                    });
+                }
             });
             collection.AddSingleton<ITimeScheduler, QuartzTimeScheduler>();
             return collection;
