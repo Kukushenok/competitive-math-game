@@ -1,5 +1,6 @@
 
 using CompetitiveBackend.Controllers;
+using ImageProcessorRealisation;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
@@ -14,8 +15,6 @@ namespace CompetitiveBackend
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            //builder.Services.AddScoped<IAuthenticationHandler, SessionTokenAuthenticationHandler>();
             builder.Services.AddScoped<IAuthorizationHandler, SessionTokenAuthorizationHandler>();
             builder.Services.AddScoped<IAuthenticationHandler, SessionTokenAuthenticationHandler>();
             builder.Services.AddAuthentication("SessionToken")
@@ -25,16 +24,12 @@ namespace CompetitiveBackend
                 options.AddPolicy("Player", (pol) => pol.Requirements.Add(new PlayerTokenRequirement()));
                 options.AddPolicy("Admin", (pol) => pol.Requirements.Add(new AdminTokenRequirement()));
             });
-            //builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            //                    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme);//,
-            //options =>
-            //{
-            //    options.LoginPath = new PathString("/auth/login");
-            //    options.AccessDeniedPath = new PathString("/auth/denied");
-            //});
             // The SIN of us. Pray for it to work blud.
             builder.Services.AddRepositories();
-            builder.Services.AddAuthService();
+
+            builder.Services.AddServicesWhichAreDone(); // some of them are not done.
+
+            builder.Services.AddMajickImageRescaler();
             //
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -78,7 +73,6 @@ namespace CompetitiveBackend
             app.UseAuthorization();
 
             app.MapControllers();
-
             app.Run();
         }
     }

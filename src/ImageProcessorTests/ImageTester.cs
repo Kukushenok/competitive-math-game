@@ -42,8 +42,8 @@ namespace ImageProcessorTests
             });
             coll.UseXUnitLogging(helper);
             ServiceProvider s = coll.BuildServiceProvider();
-            processor = s.GetService<IImageProcessor>()!;
-            logger = s.GetService<ILogger>()!;
+            processor = s.GetRequiredService<IImageProcessor>()!;
+            logger = s.GetRequiredService<ILoggerProvider>().CreateLogger("Base");
         }
         [Theory(DisplayName = "FuncTestExecution")]
         [ClassData(typeof(ImageTestingDataManager))]

@@ -4,7 +4,7 @@ using CompetitiveBackend.Repositories.Exceptions;
 using CompetitiveBackend.Services.PlayerParticipationService;
 using Moq;
 
-namespace ServiceUnitTests
+namespace ServicesUnitTests.ServiceTests
 {
     public class PlayerParticipationServiceTests
     {

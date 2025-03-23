@@ -1,21 +1,27 @@
 ﻿using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
+using CompetitiveBackend.Services.ExtraTools;
 using CompetitiveBackend.Services.Objects;
+using ServicesRealisation.ServicesRealisation.Validator;
 
 namespace CompetitiveBackend.Services.RewardDescriptionService
 {
     public class RewardDescriptionService : IRewardDescriptionService
     {
         private readonly IRewardDescriptionRepository _repository;
-        private readonly ILargeFileProcessor _imageProcessor;
-        public RewardDescriptionService(IRewardDescriptionRepository repository, ILargeFileProcessor imageProcessor)
+        private readonly IImageProcessor _imageProcessor;
+        private readonly IValidator<RewardDescription> _rewardDescriptionValidator;
+        public RewardDescriptionService(IRewardDescriptionRepository repository, IImageProcessor imageProcessor, IValidator<RewardDescription> rewardDescriptionValidator)
         {
+            _rewardDescriptionValidator = rewardDescriptionValidator;
             _repository = repository;
             _imageProcessor = imageProcessor;
         }
 
         public async Task CreateRewardDescription(RewardDescription description)
         {
+            if(!_rewardDescriptionValidator.IsValid(description, out string? msg))
+                throw new Exceptions.InvalidArgumentsException(msg!);
             await _repository.CreateRewardDescription(description);
         }
 
@@ -54,7 +60,9 @@ namespace CompetitiveBackend.Services.RewardDescriptionService
         {
             RewardDescription d = await _repository.GetRewardDescription(rewardDescrID);
             RewardDescription nw = new RewardDescription(name ?? d.Name, description ?? d.Description, rewardDescrID);
-            await _repository.UpdateRewardDescription(d);
+            if (!_rewardDescriptionValidator.IsValid(nw, out string? msg))
+                throw new Exceptions.InvalidArgumentsException(msg!);
+            await _repository.UpdateRewardDescription(nw);
         }
     }
 }

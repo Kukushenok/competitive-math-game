@@ -15,7 +15,7 @@ namespace ServicesRealisation.ServicesRealisation.Validator
         private MinMaxIntConstraint descriptionLength;
         private MinMaxIntConstraint nameLength;
         private PasswordConstraint password;
-        public PlayerAccountValidator(IConfiguration configuration) : base(configuration)
+        public PlayerAccountValidator(IConfiguration configuration) : base(configuration, "Player")
         {
             descriptionLength = Read(new MinMaxIntConstraint(0, 64), nameof(descriptionLength));
             nameLength = Read(new MinMaxIntConstraint(4, 32), "NameLength");
@@ -24,13 +24,13 @@ namespace ServicesRealisation.ServicesRealisation.Validator
 
         public override bool IsValid(PlayerProfile value, out string? msg)
         {
-            return descriptionLength.IsValid(value.Description?.Length, out msg)
-                && nameLength.IsValid(value.Name?.Length, out msg);
+            return descriptionLength.IsValid(value.Description?.Length ?? 0, out msg)
+                && nameLength.IsValid(value.Name?.Length ?? 0, out msg);
         }
 
         public bool IsValid(Account value, out string? msg)
         {
-            return nameLength.IsValid(value.Login.Length, out msg);
+            return nameLength.IsValid(value.Login?.Length ?? 0, out msg);
         }
 
         public bool IsValid(AccountCreationData value, out string? msg)

@@ -13,6 +13,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ImageProcessorRealisation\ImageProcessorRealisation.csproj" />
     <ProjectReference Include="..\RepositoriesRealisation\RepositoriesRealisation.csproj" />
     <ProjectReference Include="..\ServicesRealisation\ServicesRealisation.csproj" />
   </ItemGroup>

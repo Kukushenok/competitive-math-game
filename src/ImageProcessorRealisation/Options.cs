@@ -28,7 +28,7 @@ namespace ImageProcessorRealisation
         }
         public Options UseDefaultConstraints()
         {
-            AddConstraints(16, 16, 256, 256);
+            AddConstraints(16, 256, 16, 256);
             return this;
         }
     }

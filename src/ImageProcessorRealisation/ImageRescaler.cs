@@ -7,11 +7,11 @@ using System.Drawing;
 
 namespace ImageProcessorRealisation
 {
-    class ImageRescaler : IImageProcessor
+    internal class ImageRescaler : IImageProcessor
     {
-        private ILogger _logger;
+        private ILogger<ImageRescaler> _logger;
         private IImageConfig _config;
-        public ImageRescaler(ILogger logger, IImageConfig config)
+        public ImageRescaler(ILogger<ImageRescaler> logger, IImageConfig config)
         {
             _logger = logger;
             _config = config;

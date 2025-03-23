@@ -20,7 +20,7 @@ namespace ServicesRealisation.ServicesRealisation.Validator.Constraints
         public bool IsValid(string value, out string? msg)
         {
             msg = null;
-            if (value.Length <= MinLength) { msg = $"Password should be at least {MinLength} symbols long"; return false; }
+            if (value.Length < MinLength) { msg = $"Password should be at least {MinLength} symbols long"; return false; }
             string upper = value.ToUpper();
             string lower = value.ToLower();
             if (RequiresLetters && upper == lower) { msg = "There should be letters in password"; return false; }

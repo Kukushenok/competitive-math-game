@@ -3,7 +3,7 @@ using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Services.CompetitionRewardService;
 using Moq;
 
-namespace ServiceUnitTests
+namespace ServicesUnitTests.ServiceTests
 {
     public class CompetitionRewardServiceTests
     {

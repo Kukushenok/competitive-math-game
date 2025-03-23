@@ -1,6 +1,6 @@
 ﻿namespace CompetitiveBackend.Core.Objects
 {
-    public class RewardDescription : IntIdentifiable
+    public class RewardDescription : IntIdentifiable, IEquatable<RewardDescription>
     {
         public string Name;
         public string Description;
@@ -8,6 +8,11 @@
         {
             Name = name;
             Description = description;
+        }
+
+        public bool Equals(RewardDescription? other)
+        {
+            return other != null && Id == other.Id && Name == other.Name && Description == other.Description;
         }
     }
 }

@@ -18,9 +18,9 @@ namespace ChronoServiceRealisation
             }
         }
         private List<ITimeScheduledTaskSubscriber> _subscribers;
-        ILogger logger;
+        ILogger<QuartzTimeScheduler> logger;
         ISchedulerFactory _schedFactory;
-        public QuartzTimeScheduler(ISchedulerFactory sched, ILogger logger)
+        public QuartzTimeScheduler(ISchedulerFactory sched, ILogger<QuartzTimeScheduler> logger)
         {
             _schedFactory = sched;
             this.logger = logger;

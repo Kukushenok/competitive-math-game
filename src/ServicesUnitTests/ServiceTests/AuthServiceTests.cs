@@ -8,8 +8,9 @@ using CompetitiveBackend.Services.Objects;
 using Moq;
 using ServicesRealisation.Objects;
 using ServicesRealisation.ServicesRealisation.Validator;
+using System.ComponentModel.DataAnnotations;
 
-namespace ServiceUnitTests
+namespace ServicesUnitTests.ServiceTests
 {
     public class TestRole : Role
     {
@@ -24,18 +25,18 @@ namespace ServiceUnitTests
         Mock<IHashAlgorithm> _algo = new Mock<IHashAlgorithm>();
         Mock<IRoleCreator> _creator = new Mock<IRoleCreator>();
         Mock<ISessionRepository> _sessionRepo = new Mock<ISessionRepository>();
-        Mock<IValidator<AccountCreationData>> _validator = new Mock<IValidator<AccountCreationData>>();
+        MockValidator<AccountCreationData> _validator = new MockValidator<AccountCreationData>();
         private readonly AuthService _service;
         public AuthServiceTests()
         {
             _algo.Setup(algo => algo.Hash(It.IsAny<string>())).Returns<string>(gt => $"|{gt}|");
             _algo.Setup(algo => algo.Verify(It.IsAny<string>(), It.IsAny<string>())).Returns<string, string>((a, b) => $"|{a}|" == b);
-            _validator.Setup(x=>x.IsValid(It.IsAny<AccountCreationData>(), out It.Ref<string?>.IsAny)).Returns(true);
-            _service = new AuthService(_accountRepo.Object, _sessionRepo.Object, _algo.Object, _creator.Object, _validator.Object);
+            _service = new AuthService(_accountRepo.Object, _sessionRepo.Object, _algo.Object, _creator.Object, _validator);
         }
         [Fact]
         public async Task AuthService_LogIn_Success()
         {
+            _validator.Reset();
             _accountRepo.Setup(x => x.GetAccount("abcd")).ReturnsAsync(new Account("abcd", "|12345|", id: 0));
             _sessionRepo.Setup(x => x.CreateSessionFor(0)).ReturnsAsync("hi");
             _sessionRepo.Setup(x => x.GetSessionToken("hi")).ReturnsAsync(new AuthenticatedSessionToken(new TestRole(), 0));
@@ -47,19 +48,23 @@ namespace ServiceUnitTests
         [Fact]
         public async Task AuthService_LogIn_BadPassword()
         {
+            _validator.Reset();
             _accountRepo.Setup(x => x.GetAccount("abcd")).ReturnsAsync(new Account("abcd", "|1234|", id: 0));
             await Assert.ThrowsAnyAsync<IncorrectPasswordException>(async () => await _service.LogIn("abcd", "12345"));
         }
         [Fact]
         public async Task AuthService_LogIn_RepositoryException()
         {
+            _validator.Reset();
             _accountRepo.Setup(x => x.GetAccount("abcd")).ThrowsAsync(new RepositoryException());
             await Assert.ThrowsAnyAsync<RepositoryException>(async () => await _service.LogIn("abcd", "12345"));
         }
         [Fact]
         public async Task AuthService_CreateAccount_Success()
         {
+
             Account c = new Account("hi", "X");
+            _validator.Reset(new AccountCreationData(c, "1234"));
             _accountRepo.Setup(x => x.CreateAccount(It.IsAny<Account>(), It.IsAny<Role>()))
                 .Callback<Account, Role>((a, r) =>
                 {
@@ -68,13 +73,13 @@ namespace ServiceUnitTests
                 });
             _creator.Setup(x => x.Create(It.IsAny<Account>())).Returns(new TestRole());
             await _service.Register(c, "1234");
+            _validator.Check();
         }
         [Fact]
         public async Task AuthService_CreateAccount_Failure()
         {
-            _validator.Reset();
-            _validator.Setup(x => x.IsValid(It.IsAny<AccountCreationData>(), out It.Ref<string?>.IsAny)).Returns(false);
             Account c = new Account("hi", "X");
+            _validator.Reset(new AccountCreationData(c, "1234"), true);
             _accountRepo.Setup(x => x.CreateAccount(It.IsAny<Account>(), It.IsAny<Role>()))
                 .Callback<Account, Role>((a, r) =>
                 {

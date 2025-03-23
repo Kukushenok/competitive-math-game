@@ -18,7 +18,6 @@ namespace ServicesRealisation
         public static IServiceCollection AddServices(this IServiceCollection container)
         {
             container.AddAuthService();
-            container.AddValidators();
             container.AddScoped<ICompetitionService, CompetitionService>();
             container.AddScoped<ICompetitionRewardService, CompetitionRewardService>();
             container.AddScoped<IPlayerParticipationService, PlayerParticipationService>();
@@ -31,6 +30,19 @@ namespace ServicesRealisation
             container.AddScoped<IHashAlgorithm, SHA256HashAlgorithm>();
             container.AddScoped<IRoleCreator, BasicRoleCreator>();
             container.AddScoped<IAuthService, AuthService>();
+            container.AddValidators();
+            return container;
+        }
+        public static IServiceCollection AddPlayerProfileService(this IServiceCollection container)
+        {
+            container.AddScoped<IPlayerProfileService, PlayerProfileService>();
+            return container;
+        }
+        public static IServiceCollection AddServicesWhichAreDone(this IServiceCollection container)
+        {
+            container.AddValidators();
+            container.AddAuthService();
+            container.AddPlayerProfileService();
             return container;
         }
         public static IServiceCollection AddValidators(this IServiceCollection container)

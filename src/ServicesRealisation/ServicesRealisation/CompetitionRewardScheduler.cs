@@ -7,8 +7,8 @@ namespace CompetitiveBackend.Services.CompetitionService
 {
     public interface ICompetitionRewardScheduler
     {
-        public void OnCompetitionCreated(Competition c);
-        public void OnCompetitionUpdated(Competition c);
+        public Task OnCompetitionCreated(Competition c);
+        public Task OnCompetitionUpdated(Competition c);
     }
     public class CompetitionRewardScheduler : ICompetitionRewardScheduler, ITimeScheduledTaskSubscriber
     {
@@ -26,14 +26,14 @@ namespace CompetitiveBackend.Services.CompetitionService
             _timeScheduler.RemoveSubscriber(this);
         }
         
-        public void OnCompetitionCreated(Competition c)
+        public async Task OnCompetitionCreated(Competition c)
         {
-            _timeScheduler.AddOrUpdateScheduledTask(GetSchedTask(c));
+            await _timeScheduler.AddOrUpdateScheduledTask(GetSchedTask(c));
         }
 
-        public void OnCompetitionUpdated(Competition c)
+        public async Task OnCompetitionUpdated(Competition c)
         {
-            _timeScheduler.AddOrUpdateScheduledTask(GetSchedTask(c));
+            await _timeScheduler.AddOrUpdateScheduledTask(GetSchedTask(c));
         }
 
         public async Task OnRecievedMessage(TimeScheduledTaskData data)
@@ -43,7 +43,7 @@ namespace CompetitiveBackend.Services.CompetitionService
         }
         private TimeScheduledTaskData GetSchedTask(Competition c)
         {
-            return new TimeScheduledTaskData(c.Id!.Value, "Competition", c.EndDate, c.Name);
+            return new TimeScheduledTaskData(c.Id!.Value, "Competition", new DateTimeOffset(c.EndDate), c.Name);
         }
     }
 }

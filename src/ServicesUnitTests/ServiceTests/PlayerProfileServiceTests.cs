@@ -4,24 +4,30 @@ using CompetitiveBackend.Services.Objects;
 using CompetitiveBackend.Services.PlayerProfileService;
 using ServicesRealisation.ServicesRealisation.Validator;
 using Moq;
+using System.ComponentModel.DataAnnotations;
+using CompetitiveBackend.Services.Exceptions;
+using CompetitiveBackend.Services.ExtraTools;
 
-namespace ServiceUnitTests
+namespace ServicesUnitTests.ServiceTests
 {
     public class PlayerProfileServiceTests
     {
         private PlayerProfileService _service;
         private Mock<IPlayerProfileRepository> _profileRepo;
-        private Mock<ILargeFileProcessor> _fileProcessor;
+        private Mock<IImageProcessor> _fileProcessor;
+        private MockValidator<PlayerProfile> _validator;
         public PlayerProfileServiceTests()
         {
             _profileRepo = new Mock<IPlayerProfileRepository>();
-            _fileProcessor = new Mock<ILargeFileProcessor>();
-            _service = new PlayerProfileService(_profileRepo.Object, _fileProcessor.Object, new DummyValidator<PlayerProfile>());
+            _fileProcessor = new Mock<IImageProcessor>();
+            _validator = new MockValidator<PlayerProfile>();
+            _service = new PlayerProfileService(_profileRepo.Object, _fileProcessor.Object, _validator);
 
         }
         [Fact]
         public async Task PlayerProfileService_GetPlayerProfile()
         {
+            _validator.Reset();
             PlayerProfile etalon = new PlayerProfile("P", null, 1);
             _profileRepo.Setup(x => x.GetPlayerProfile(0)).ReturnsAsync(etalon);
             PlayerProfile curr = await _service.GetPlayerProfile(0);
@@ -33,6 +39,7 @@ namespace ServiceUnitTests
         public async Task PlayerProfileService_UpdatePlayerProfile()
         {
             PlayerProfile etalon = new PlayerProfile("P", null, 1);
+            _validator.Reset(etalon);
             _profileRepo.Setup(x => x.UpdatePlayerProfile(It.IsAny<PlayerProfile>())).Callback<PlayerProfile>(
                 (curr) =>
                 {
@@ -41,6 +48,20 @@ namespace ServiceUnitTests
                     Assert.Equal(etalon.Id, curr.Id);
                 });
             await _service.UpdatePlayerProfile(etalon);
+            _validator.Check();
+        }
+        [Fact]
+        public async Task PlayerProfileService_UpdatePlayerProfile_Failure()
+        {
+            PlayerProfile etalon = new PlayerProfile("P", null, 1);
+            _validator.Reset(etalon, true);
+            _profileRepo.Setup(x => x.UpdatePlayerProfile(It.IsAny<PlayerProfile>())).Callback<PlayerProfile>(
+                (curr) =>
+                {
+                    Assert.Fail("Please do not update DB with incorrect data");
+                });
+            await Assert.ThrowsAnyAsync<ServiceException>(async () => await _service.UpdatePlayerProfile(etalon));
+            _validator.Check();
         }
         [Fact]
         public async Task PlayerProfileService_UpdatePlayerProfileImage()

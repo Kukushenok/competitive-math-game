@@ -4,7 +4,7 @@ using CompetitiveBackend.Repositories.Exceptions;
 using CompetitiveBackend.Services.PlayerRewardService;
 using Moq;
 
-namespace ServiceUnitTests
+namespace ServicesUnitTests.ServiceTests
 {
     public class PlayerRewardServiceTests
     {
@@ -55,7 +55,7 @@ namespace ServiceUnitTests
             await _service.GrantRewardToPlayer(0, 0);
         }
         [Fact]
-        public async Task PlayerRewardServiceTEst_GrantRewardToPlayer_Failure()
+        public async Task PlayerRewardServiceTest_GrantRewardToPlayer_Failure()
         {
             _descriptionRepo.Setup(x => x.GetRewardDescription(0)).Throws(new MissingDataException());
             await Assert.ThrowsAsync<MissingDataException>(async () => await _service.GrantRewardToPlayer(0, 0));

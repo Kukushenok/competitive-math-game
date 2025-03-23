@@ -10,18 +10,22 @@ namespace CompetitiveBackend.Services.CompetitionService
     {
         private readonly ICompetitionRepository _competitionRepository;
         private readonly IValidator<Competition> _validator;
-        public CompetitionService(ICompetitionRepository competitionRepository, IValidator<Competition> validator)
+        private readonly ICompetitionRewardScheduler _scheduler;
+        public CompetitionService(ICompetitionRepository competitionRepository,
+                                  IValidator<Competition> validator,
+                                  ICompetitionRewardScheduler scheduler)
         {
             _competitionRepository = competitionRepository;
             _validator = validator;
-
+            _scheduler = scheduler;
         }
 
-        public Task CreateCompetition(Competition c)
+        public async Task CreateCompetition(Competition c)
         {
             if (!_validator.IsValid(c, out string? msg)) throw new InvalidArgumentsException(msg!);
             if (c.StartDate < DateTime.Now) throw new InvalidArgumentsException("Competition should be in the future");
-            return _competitionRepository.CreateCompetition(c);
+            await _competitionRepository.CreateCompetition(c);
+            await _scheduler.OnCompetitionCreated(c);
         }
 
         public async Task<IEnumerable<Competition>> GetActiveCompetitions()
@@ -64,6 +68,7 @@ namespace CompetitiveBackend.Services.CompetitionService
             if (isStarted && c.StartDate >= dt) throw new InvalidArgumentsException("Competition cannot be delayed after its start.");
             if (isEnded && c.EndDate >= dt) throw new InvalidArgumentsException("Competition cannot be prolonged after its end. Create a new one!");
             await _competitionRepository.UpdateCompetition(c);
+            await _scheduler.OnCompetitionUpdated(c);
         }
     }
 }
