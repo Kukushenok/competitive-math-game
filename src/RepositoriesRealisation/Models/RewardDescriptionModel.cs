@@ -19,7 +19,7 @@ namespace RepositoriesRealisation.Models
         public int Id { get; set; }
         [Column("reward_name", TypeName = "varchar(64)")]
         public string Name { get; set; }
-        [Column("reward_name", TypeName = "varchar(64)")]
+        [Column("description", TypeName = "varchar(64)")]
         public string? Description { get; set; }
 
         [Column("icon_image", TypeName = "bytea")]

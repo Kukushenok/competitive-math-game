@@ -35,4 +35,13 @@ create table if not exists player_participation(
 create table if not exists competition_reward(
 	id serial primary key,
 	reward_description_id int references reward_description(id) not null,
+	condition_name varchar(32),
+	condition_description varchar(32),
+)
+create table if not exists player_reward(
+	id serial primary key,
+	reward_description_id int references reward_description(id) not null,
+	player_id int references account(id) not null,
+	competition_id int references competition(id),
+	creation_date timestamp default(now())
 )
