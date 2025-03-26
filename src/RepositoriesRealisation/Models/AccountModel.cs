@@ -12,9 +12,8 @@ namespace RepositoriesRealisation.DatabaseObjects
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("id")]
         public int Id { get; set; }
-
+        
         [Column("login", TypeName = "varchar(32)")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Name { get; set; }
 
         [Column("email", TypeName = "varchar(32)")]

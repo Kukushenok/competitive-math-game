@@ -1,5 +1,6 @@
 ﻿using CompetitiveBackend.Repositories;
 using Microsoft.Extensions.DependencyInjection;
+using RepositoriesRealisation.RepositoriesRealisation;
 
 namespace RepositoriesRealisation
 {
@@ -10,6 +11,7 @@ namespace RepositoriesRealisation
             container.AddScoped<IAccountRepository, AccountRepository>();
             container.AddScoped<ISessionRepository, SessionRepository>();
             container.AddScoped<IPlayerProfileRepository, PlayerProfileRepository>();
+            container.AddScoped<IRewardDescriptionRepository, RewardDescriptionRepository>();
             container.AddScoped<SessionRepositoryConfiguration>();
             container.AddDbContextFactory<BaseDbContext, BaseContextFactory>();
             return container;

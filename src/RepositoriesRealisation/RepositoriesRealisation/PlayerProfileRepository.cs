@@ -1,13 +1,14 @@
 ﻿using CompetitiveBackend.Core.Objects;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using RepositoriesRealisation;
 using RepositoriesRealisation.DatabaseObjects;
 
 namespace CompetitiveBackend.Repositories
 {
-    class PlayerProfileRepository : BaseRepository, IPlayerProfileRepository
+    class PlayerProfileRepository : BaseRepository<PlayerProfileRepository>, IPlayerProfileRepository
     {
-        public PlayerProfileRepository(IDbContextFactory<BaseDbContext> contextFactory) : base(contextFactory)
+        public PlayerProfileRepository(IDbContextFactory<BaseDbContext> contextFactory, ILogger<PlayerProfileRepository> logger) : base(contextFactory, logger)
         {
         }
 

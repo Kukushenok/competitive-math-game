@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RepositoriesRealisation.DatabaseObjects;
+using RepositoriesRealisation.Models;
 
 namespace RepositoriesRealisation
 {
@@ -9,6 +10,7 @@ namespace RepositoriesRealisation
         {
         }
         public DbSet<AccountModel> Accounts { get; set; }
+        public DbSet<RewardDescriptionModel> RewardDescription { get; set; }
         protected BaseDbContext()
         {
         }
