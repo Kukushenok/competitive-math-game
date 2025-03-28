@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CompetitiveBackend.Core.Objects;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -24,6 +25,8 @@ namespace RepositoriesRealisation.Models
         public DateTime StartTime { get; set; }
         [Column("end_time")]
         public DateTime EndTime { get; set; }
+        [Column("level_data")]
+        public byte[] LevelData { get; set; }
         public CompetitionModel(int id, string name, string? description, DateTime startTime, DateTime endTime)
         {
             Id = id;
@@ -31,6 +34,7 @@ namespace RepositoriesRealisation.Models
             Description = description;
             StartTime = startTime;
             EndTime = endTime;
+            LevelData = Array.Empty<byte>();
         }
         public CompetitionModel(string name, string? description, DateTime startTime, DateTime endTime)
         {
@@ -38,10 +42,14 @@ namespace RepositoriesRealisation.Models
             Description = description;
             StartTime = startTime;
             EndTime = endTime;
+            LevelData = Array.Empty<byte>();
         }
         public CompetitionModel()
         {
             Name = "";
+            LevelData = Array.Empty<byte>();
         }
+        public bool IsActive(DateTime dt) => StartTime <= dt && EndTime <= dt;
+        public Competition ToCoreModel() => new Competition(Name, Description ?? "", StartTime, EndTime, Id);
     }
 }

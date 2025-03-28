@@ -4,7 +4,7 @@ using RepositoriesRealisation;
 
 namespace CompetitiveBackend.Repositories
 {
-    class BaseRepository<T>
+    public class BaseRepository<T>
     {
         private IDbContextFactory<BaseDbContext> contextFactory;
         protected ILogger<T> _logger;

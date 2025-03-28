@@ -11,6 +11,7 @@ namespace RepositoriesRealisation
         }
         public DbSet<AccountModel> Accounts { get; set; }
         public DbSet<RewardDescriptionModel> RewardDescription { get; set; }
+        public DbSet<CompetitionModel> Competition { get; set; }
         protected BaseDbContext()
         {
         }

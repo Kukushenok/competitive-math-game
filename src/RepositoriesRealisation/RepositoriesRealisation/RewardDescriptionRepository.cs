@@ -28,12 +28,7 @@ namespace RepositoriesRealisation.RepositoriesRealisation
                 await context.SaveChangesAsync();
                 _logger.LogInformation("RewardDescription created successfully");
             }
-            catch(DbUpdateException ex)
-            {
-                _logger.LogError(ex, "Could not create reward description");
-                throw new FailedOperationException(ex.Message);
-            }
-            catch(OperationCanceledException ex)
+            catch(Exception ex) when (ex is DbUpdateException || ex is OperationCanceledException)
             {
                 _logger.LogError(ex, "Could not create reward description");
                 throw new FailedOperationException(ex.Message);
