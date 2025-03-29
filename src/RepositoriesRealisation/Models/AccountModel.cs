@@ -51,19 +51,4 @@ namespace RepositoriesRealisation.DatabaseObjects
             return new PlayerProfile(Name, Description, Id);
         }
     }
-    public class PrivilegyRoleResolver
-    {
-        public static int Resolve(Role rl)
-        {
-            if (rl.IsPlayer()) return 0;
-            if (rl.IsAdmin()) return 1;
-            throw new Exception();
-        }
-        public static Role Resolve(int rl)
-        {
-            if (rl == 0) return new PlayerRole();
-            if (rl == 1) return new AdminRole();
-            throw new Exception();
-        }
-    }
 }

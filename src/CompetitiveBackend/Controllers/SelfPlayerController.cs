@@ -7,27 +7,42 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CompetitiveBackend.Controllers
 {
-    public record PlayerProfileDto(string Name, string? Description, string ProfileImageLink);
-    [Route("api/self/[action]")]
+    public record PlayerProfileDto(int id, string Name, string? Description, string ProfileImageLink);
+    [ApiController]
+    [Produces("application/json")]
+    [Route("api/player/")]
     public class SelfPlayerController : ControllerBase
     {
         private IPlayerProfileService _profileService;
-        public SelfPlayerController(IPlayerProfileService service, IConfiguration conf)
+        private LinkGenerator _linkGenerator;
+        public SelfPlayerController(LinkGenerator generator, IPlayerProfileService service)
         {
             _profileService = service;
+            _linkGenerator = generator;
         }
-        [HttpGet("profile")]
+        /// <summary>
+        /// Получить данные своего профиля
+        /// </summary>
+        /// <returns>Данные профиля</returns>
+        [HttpGet("self/profile")]
         public async Task<IActionResult> GetPlayerProfile()
         {
             SessionToken tok = User.GetSessionToken();
             if (tok.TryGetAccountIdentifier(out int identifier) && tok.Role.IsPlayer())
             {
                 PlayerProfile p = await _profileService.GetPlayerProfile(identifier);
-                return new ObjectResult(new PlayerProfileDto(p.Name, p.Description, "idk sorry :3"));
+                string? pic = _linkGenerator.GetUriByAction(HttpContext,nameof(GetPlayerImage), "SelfPlayer");
+                return new ObjectResult(new PlayerProfileDto(p.Id!.Value, p.Name, p.Description, pic!));
             }
             return Forbid();
         }
-        [HttpPost("profile")]
+        /// <summary>
+        /// Обновить данные своего профиля
+        /// </summary>
+        /// <param name="name">Имя</param>
+        /// <param name="description">Описание профиля</param>
+        /// <returns></returns>
+        [HttpPost("self/profile")]
         public async Task<IActionResult> SetPlayerProfile(string name, string? description)
         {
             SessionToken tok = User.GetSessionToken();
@@ -45,7 +60,11 @@ namespace CompetitiveBackend.Controllers
             }
             return Forbid();
         }
-        [HttpGet("pic")]
+        /// <summary>
+        /// Получить изображение своего профиля
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("self/pic")]
         public async Task<IActionResult> GetPlayerImage()
         {
             SessionToken tok = User.GetSessionToken();
@@ -63,7 +82,12 @@ namespace CompetitiveBackend.Controllers
             }
             return Forbid();
         }
-        [HttpPost("pic")]
+        /// <summary>
+        /// Обновить изображение своего профиля
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        [HttpPost("self/pic")]
         public async Task<IActionResult> SetPlayerImage(IFormFile file)
         {
             if (file == null || file.Length == 0)

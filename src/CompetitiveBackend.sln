@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageProcessorTests", "Imag
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitLoggingProvider", "XUnitLoggingProvider\XUnitLoggingProvider.csproj", "{72402079-D58B-4A74-83C0-519AC98F1CE0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositoriesTests", "RepositoriesTests\RepositoriesTests.csproj", "{4D7E9C4C-CB95-4CEE-B291-609BC9D8896F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,10 @@ Global
 		{72402079-D58B-4A74-83C0-519AC98F1CE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72402079-D58B-4A74-83C0-519AC98F1CE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72402079-D58B-4A74-83C0-519AC98F1CE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D7E9C4C-CB95-4CEE-B291-609BC9D8896F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D7E9C4C-CB95-4CEE-B291-609BC9D8896F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D7E9C4C-CB95-4CEE-B291-609BC9D8896F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D7E9C4C-CB95-4CEE-B291-609BC9D8896F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -113,6 +119,7 @@ Global
 		{250A7277-37EA-42DD-B1D8-F82EB33B20EE} = {36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}
 		{DB1A8C2D-ADE3-4CE8-88D1-D70AA01817FB} = {24E3B766-8288-4D75-8EFD-7279D6E890B7}
 		{72402079-D58B-4A74-83C0-519AC98F1CE0} = {4F8C684C-8A5F-4193-AEAF-1416413E9A69}
+		{4D7E9C4C-CB95-4CEE-B291-609BC9D8896F} = {8D3BD898-2439-4FC2-87D1-4390B07F2772}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A7EFF7A1-7D80-4BCC-8E4F-C0FC9FD3C830}

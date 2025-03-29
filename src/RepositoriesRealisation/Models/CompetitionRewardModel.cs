@@ -16,22 +16,32 @@ namespace RepositoriesRealisation.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("id")]
         public int Id { get; set; }
+        public CompetitionModel Competition { get; }
+        public RewardDescriptionModel RewardDescription { get; }
+
+        [ForeignKey("competition_id"), Column("competition_id")]
+        public int CompetitionId { get; set; }
         [ForeignKey("reward_description_id"), Column("reward_description_id")]
         public int RewardDescriptionId { get; set; }
         [Column("condition_name")]
         public string Condition { get; set; }
         [Column("condition_description")]
         public string ConditionDescription { get; set; }
-        public CompetitionRewardModel(int RewardDescriptionID, string Condition, string ConditionDescription)
+        public CompetitionRewardModel(int RewardDescriptionID, int CompetitionID, string Condition, string ConditionDescription)
         {
             this.RewardDescriptionId = RewardDescriptionId;
             this.Condition = Condition;
             this.ConditionDescription = ConditionDescription;
+            this.CompetitionId = CompetitionID;
         }
         public CompetitionRewardModel()
         {
             Condition = "";
             ConditionDescription = "";
+        }
+        public CompetitionReward ToCoreModel()
+        {
+            return new CompetitionReward(RewardDescriptionId, CompetitionId, RewardDescription.Name, RewardDescription.Description, Condition, ConditionDescription, Id);
         }
     }
 }

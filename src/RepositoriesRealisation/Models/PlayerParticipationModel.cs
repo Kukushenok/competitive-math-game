@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 namespace RepositoriesRealisation.Models
 {
     [Table("player_participation")]
+    // СОСТАВНОЙ КЛЮЧ ОПРЕДЕЛЁН В BaseDbContext
     public class PlayerParticipationModel
     {
         public CompetitionModel Competition { get; set; }
