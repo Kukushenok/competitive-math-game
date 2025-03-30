@@ -15,7 +15,7 @@ namespace CompetitiveBackend.Repositories
         public SessionRepositoryConfiguration(IConfiguration conf)
         {
             configuration = conf;
-            Key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(conf["Secrets:SessionKey"] ?? "INV3P"));
+            Key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(conf["Secrets:SessionKey"] ?? new string('N', 128)));
             Credentials = new SigningCredentials(Key, conf["Secrets:Algo"] ?? SecurityAlgorithms.HmacSha256);
         }
         public SymmetricSecurityKey Key { get; private set; }

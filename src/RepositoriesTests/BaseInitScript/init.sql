@@ -23,6 +23,7 @@ create table if not exists competition(
 	description varchar(128),
 	start_time timestamp not null,
 	end_time timestamp not null,
+	level_data bytea,
 	check(end_time > start_time)
 );
 

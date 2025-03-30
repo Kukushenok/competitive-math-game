@@ -11,6 +11,7 @@ namespace RepositoriesRealisation.RepositoriesRealisation
     {
         public static Range ToRange(this DataLimiter limiter)
         {
+            if (limiter.HasNoLimit) return Range.All;
             int idx = limiter.PartitionIndex * limiter.Partition;
             return new Range(idx,
                 idx + limiter.Partition);

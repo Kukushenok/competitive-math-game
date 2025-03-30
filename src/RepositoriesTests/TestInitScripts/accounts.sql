@@ -1,7 +1,8 @@
 
 COPY public.account (id, login, email, password_hash, privilegy_level, description, profile_image) FROM stdin;
-1	amongus	\N	1234567	1	\N	\N
+1	amongus	\N	1234567	1	\N	\\x000102
 2	trollface	\N	1234567	0	\N	\N
+3	munny	email@email.com	1234567	0	munny_description	\N
 \.
 
 

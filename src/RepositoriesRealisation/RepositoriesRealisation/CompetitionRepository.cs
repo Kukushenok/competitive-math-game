@@ -12,6 +12,14 @@ using System.Threading.Tasks;
 
 namespace CompetitiveBackend.Repositories
 {
+    internal static class DateTimeExtensions
+    {
+        public static DateTime EnsureUTC(this DateTime dateTime)
+        {
+            if (dateTime.Kind == DateTimeKind.Utc) { return dateTime; }
+            return dateTime.ToUniversalTime();
+        }
+    }
     public class CompetitionRepository : BaseRepository<CompetitionRepository>, ICompetitionRepository
     {
         public CompetitionRepository(IDbContextFactory<BaseDbContext> contextFactory, ILogger<CompetitionRepository> logger) : base(contextFactory, logger)
@@ -23,7 +31,7 @@ namespace CompetitiveBackend.Repositories
             using BaseDbContext context = await GetDbContext();
             try
             {
-                await context.Competition.AddAsync(new RepositoriesRealisation.Models.CompetitionModel(c.Name, c.Description, c.StartDate, c.EndDate));
+                await context.Competition.AddAsync(new RepositoriesRealisation.Models.CompetitionModel(c.Name, c.Description, c.StartDate.EnsureUTC(), c.EndDate.EnsureUTC()));
                 await context.SaveChangesAsync();
             }
             catch (Exception ex) when (ex is OperationCanceledException ||
@@ -41,8 +49,9 @@ namespace CompetitiveBackend.Repositories
             using BaseDbContext context = await GetDbContext();
             try
             {
-                DateTime dt = DateTime.Now;
-                var q = await context.Competition.Where(x=>x.IsActive(dt))
+                DateTime dt = DateTime.UtcNow;
+                var q = await context.Competition.Where(x => (x.StartTime <= dt && dt <= x.EndTime))
+                                                 .OrderByDescending(x => x.StartTime)
                                                  .Select(x=>x.ToCoreModel())
                                                  .ToListAsync();
                 return q;
@@ -59,10 +68,13 @@ namespace CompetitiveBackend.Repositories
             using BaseDbContext context = await GetDbContext();
             try
             {
-                var models = await context.Competition.OrderBy((x)=>x.StartTime)
-                                                      .Take(dataLimiter.ToRange())
-                                                      .Select(x=>x.ToCoreModel())
-                                                      .ToListAsync();
+                IQueryable<CompetitionModel> md = context.Competition.OrderByDescending((x) => x.StartTime);
+                if (!dataLimiter.HasNoLimit)
+                {
+                    //_logger.LogInformation($"Skipping {dataLimiter.FirstIndex} and taking {dataLimiter.Partition}");
+                    md = md.Skip(dataLimiter.FirstIndex).Take(dataLimiter.Partition);
+                }
+                var models = await md.Select(x=>x.ToCoreModel()).ToListAsync();
                 return models;
             }
             catch(OperationCanceledException ex)
@@ -130,8 +142,8 @@ namespace CompetitiveBackend.Repositories
                 _logger.LogError($"Could not find competition with ID {c.Id}");
                 throw new Exceptions.MissingDataException($"Could not find competition with ID {c.Id}");
             }
-            comp.StartTime = c.StartDate;
-            comp.EndTime = c.EndDate;
+            comp.StartTime = c.StartDate.EnsureUTC();
+            comp.EndTime = c.EndDate.EnsureUTC();
             comp.Description = c.Description;
             comp.Name = c.Name;
             try

@@ -50,7 +50,7 @@ namespace RepositoriesTests
         {
             List<string> commands = new List<string>() { "/bin/bash", "-c", $"PGPASSWORD={PASSWORD} pg_dump --username {USERNAME} {DATABASE}" };
             var result = await Container.ExecAsync(commands);
-            await testDumper.Dump($"{typeof(T).ToString()}_{dumpName}", result.Stdout);
+            await testDumper.Dump($"{typeof(T).Name}_{dumpName}", result.Stdout);
         }
     }
 }

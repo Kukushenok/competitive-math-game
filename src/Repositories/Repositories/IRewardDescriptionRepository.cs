@@ -8,7 +8,6 @@ namespace CompetitiveBackend.Repositories
         /// Добавить описание награды
         /// </summary>
         /// <param name="description">Описание награды. ID может быть null</param>
-        /// <exception cref="CompetitiveBackend.Repositories.Exceptions.IncorrectOperationException">Описание уже есть</exception>
         public Task CreateRewardDescription(RewardDescription description);
         /// <summary>
         /// Обновить описание награды

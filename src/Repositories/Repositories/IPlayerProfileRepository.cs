@@ -37,7 +37,7 @@ namespace CompetitiveBackend.Repositories
         /// <param name="accountId">Идентификатор аккаунта</param>
         /// <param name="data">Изображение</param>
         /// <returns></returns>
-        /// <exception cref="CompetitiveBackend.Repositories.Exceptions.IncorrectOperationException">Соответствующего игрока не существует</exception>
+        /// <exception cref="CompetitiveBackend.Repositories.Exceptions.MissingDataException">Соответствующего игрока не существует</exception>
         public Task UpdatePlayerProfileImage(int accountId, LargeData data);
     }
 }
