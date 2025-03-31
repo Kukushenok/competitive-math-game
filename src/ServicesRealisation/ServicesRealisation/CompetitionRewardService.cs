@@ -1,5 +1,6 @@
 ﻿using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
+using Core.RewardCondition;
 
 namespace CompetitiveBackend.Services.CompetitionRewardService
 {
@@ -25,7 +26,7 @@ namespace CompetitiveBackend.Services.CompetitionRewardService
         {
             await repository.RemoveCompetitionReward(rewardID);
         }
-        public async Task UpdateCompetitionReward(int competitionRewardID, int? rewardDescriptionID, string? condition, string? conditionDescription)
+        public async Task UpdateCompetitionReward(int competitionRewardID, int? rewardDescriptionID, GrantCondition? condition)
         {
             CompetitionReward curr = await repository.GetCompetitionReward(competitionRewardID);
 
@@ -34,8 +35,7 @@ namespace CompetitiveBackend.Services.CompetitionRewardService
                 curr.CompetitionID,
                 curr.Name,
                 curr.Description,
-                condition ?? curr.ConditionName,
-                conditionDescription ?? curr.ConditionDescription,
+                condition ?? curr.Condition,
                 curr.Id
                 );
             await repository.UpdateCompetitionReward(rwd);

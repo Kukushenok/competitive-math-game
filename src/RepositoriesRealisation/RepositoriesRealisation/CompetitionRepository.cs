@@ -20,7 +20,7 @@ namespace CompetitiveBackend.Repositories
             return dateTime.ToUniversalTime();
         }
     }
-    public class CompetitionRepository : BaseRepository<CompetitionRepository>, ICompetitionRepository
+    internal class CompetitionRepository : BaseRepository<CompetitionRepository>, ICompetitionRepository
     {
         public CompetitionRepository(IDbContextFactory<BaseDbContext> contextFactory, ILogger<CompetitionRepository> logger) : base(contextFactory, logger)
         {

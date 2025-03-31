@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace RepositoriesRealisation.RepositoriesRealisation
 {
-    class RewardDescriptionRepository : BaseRepository<RewardDescriptionRepository>, IRewardDescriptionRepository
+    internal class RewardDescriptionRepository : BaseRepository<RewardDescriptionRepository>, IRewardDescriptionRepository
     {
         public RewardDescriptionRepository(IDbContextFactory<BaseDbContext> contextFactory, ILogger<RewardDescriptionRepository> logger) : base(contextFactory, logger)
         {

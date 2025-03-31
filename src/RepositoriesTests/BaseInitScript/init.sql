@@ -39,8 +39,7 @@ create table if not exists competition_reward(
 	id int generated always as identity primary key,
 	reward_description_id int references reward_description(id) not null,
 	competition_id int references competition(id) not null,
-	condition_name varchar(32),
-	condition_description varchar(32)
+	condition jsonb
 );
 
 create table if not exists player_reward(

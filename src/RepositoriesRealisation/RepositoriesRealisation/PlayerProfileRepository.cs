@@ -6,7 +6,7 @@ using RepositoriesRealisation.DatabaseObjects;
 
 namespace CompetitiveBackend.Repositories
 {
-    class PlayerProfileRepository : BaseRepository<PlayerProfileRepository>, IPlayerProfileRepository
+    internal class PlayerProfileRepository : BaseRepository<PlayerProfileRepository>, IPlayerProfileRepository
     {
         public PlayerProfileRepository(IDbContextFactory<BaseDbContext> contextFactory, ILogger<PlayerProfileRepository> logger) : base(contextFactory, logger)
         {

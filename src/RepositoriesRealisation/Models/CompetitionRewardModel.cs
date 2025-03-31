@@ -1,10 +1,12 @@
 ﻿using CompetitiveBackend.Core.Objects;
+using Core.RewardCondition;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace RepositoriesRealisation.Models
@@ -23,25 +25,22 @@ namespace RepositoriesRealisation.Models
         public int CompetitionId { get; set; }
         [ForeignKey("reward_description_id"), Column("reward_description_id")]
         public int RewardDescriptionId { get; set; }
-        [Column("condition_name")]
-        public string Condition { get; set; }
-        [Column("condition_description")]
-        public string ConditionDescription { get; set; }
-        public CompetitionRewardModel(int RewardDescriptionID, int CompetitionID, string Condition, string ConditionDescription)
+        [Column("condition")]
+        public JsonDocument Condition { get; set; }
+        public CompetitionRewardModel(int RewardDescriptionID, int CompetitionID, JsonDocument condition)
         {
             this.RewardDescriptionId = RewardDescriptionId;
-            this.Condition = Condition;
-            this.ConditionDescription = ConditionDescription;
+            this.Condition = condition;
             this.CompetitionId = CompetitionID;
         }
         public CompetitionRewardModel()
         {
-            Condition = "";
-            ConditionDescription = "";
+
         }
         public CompetitionReward ToCoreModel()
         {
-            return new CompetitionReward(RewardDescriptionId, CompetitionId, RewardDescription.Name, RewardDescription.Description, Condition, ConditionDescription, Id);
+            if (!GrantConditionConverter.FromJSON(Condition, out GrantCondition cond)) return null!;
+            return new CompetitionReward(RewardDescriptionId, CompetitionId, RewardDescription.Name, RewardDescription.Description ?? "", cond, Id);
         }
     }
 }

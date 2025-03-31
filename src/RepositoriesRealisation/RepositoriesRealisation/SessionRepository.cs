@@ -22,7 +22,7 @@ namespace CompetitiveBackend.Repositories
         public SigningCredentials Credentials { get; private set; }
         public DateTime? Expires { get => DateTime.Now.AddHours(int.Parse(configuration["SessionTimeHrs"] ?? "24")); }
     }
-    public class SessionRepository : ISessionRepository
+    internal class SessionRepository : ISessionRepository
     {
         private IDbContextFactory<BaseDbContext> contextFactory;
         private JwtSecurityTokenHandler _handler;

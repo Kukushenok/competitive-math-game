@@ -1,6 +1,7 @@
 ﻿using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Services.CompetitionRewardService;
+using Core.RewardCondition;
 using Moq;
 
 namespace ServicesUnitTests.ServiceTests
@@ -17,13 +18,12 @@ namespace ServicesUnitTests.ServiceTests
         [Fact]
         public async Task CompetitionRewardServiceTests_CreateCompetitionReward()
         {
-            CompetitionReward etalon = new CompetitionReward(1, 2, "3", "4", "5", "6");
+            CompetitionReward etalon = new CompetitionReward(1, 2, "3", "4", new RankGrantCondition(0, 1));
             _rewardRepo.Setup(x => x.CreateCompetitionReward(It.IsAny<CompetitionReward>())).Callback<CompetitionReward>(
                 (reward) =>
                 {
                     Assert.Equal(etalon.Name, reward.Name);
-                    Assert.Equal(etalon.ConditionName, reward.ConditionName);
-                    Assert.Equal(etalon.ConditionDescription, reward.ConditionDescription);
+                    Assert.Equal(etalon.Condition, reward.Condition);
                     Assert.Equal(etalon.Description, reward.Description);
                     Assert.Equal(etalon.CompetitionID, reward.CompetitionID);
                     Assert.Equal(etalon.RewardDescriptionID, reward.RewardDescriptionID);
@@ -33,19 +33,19 @@ namespace ServicesUnitTests.ServiceTests
         [Fact]
         public async Task CompetitionRewardServiceTests_UpdateCompetitionReward()
         {
-            CompetitionReward etalon = new CompetitionReward(1, 2, "3", "4", "5", "6", 0);
+            CompetitionReward etalon = new CompetitionReward(1, 2, "3", "4", new RankGrantCondition(0, 1), 0);
+            var placeGrant = new PlaceGrantCondition(1, 1);
             _rewardRepo.Setup(x => x.GetCompetitionReward(0)).ReturnsAsync(etalon);
             _rewardRepo.Setup(x => x.UpdateCompetitionReward(It.IsAny<CompetitionReward>())).Callback<CompetitionReward>(
                 (reward) =>
                 {
                     Assert.Equal(etalon.Name, reward.Name);
-                    Assert.Equal("CondName", reward.ConditionName);
-                    Assert.Equal("CondDescr", reward.ConditionDescription);
+                    Assert.Equal(placeGrant, reward.Condition);
                     Assert.Equal(etalon.Description, reward.Description);
                     Assert.Equal(etalon.CompetitionID, reward.CompetitionID);
                     Assert.Equal(etalon.RewardDescriptionID, reward.RewardDescriptionID);
                 });
-            await _service.UpdateCompetitionReward(0, null, "CondName", "CondDescr");
+            await _service.UpdateCompetitionReward(0, null, placeGrant);
         }
         [Theory]
         [InlineData(1)]
@@ -62,7 +62,7 @@ namespace ServicesUnitTests.ServiceTests
         [InlineData(5)]
         public async Task CompetitionRewardServiceTests_GetCompetitionRewards(int etalon)
         {
-            List<CompetitionReward> rewards = new List<CompetitionReward>() { new CompetitionReward(1, 2, "3", "4", "5", "6", 0) };
+            List<CompetitionReward> rewards = new List<CompetitionReward>() { new CompetitionReward(1, 2, "3", "4", new RankGrantCondition(0, 1), 0) };
             _rewardRepo.Setup(x => x.GetCompetitionRewards(It.IsAny<int>()))
                 .Callback<int>((idx) => Assert.Equal(etalon, idx))
                 .Returns(Task.FromResult<IEnumerable<CompetitionReward>>(rewards));

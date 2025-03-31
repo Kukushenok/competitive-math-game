@@ -1,4 +1,5 @@
 ﻿using CompetitiveBackend.Core.Objects;
+using Core.RewardCondition;
 
 namespace CompetitiveBackend.Services
 {
@@ -21,10 +22,9 @@ namespace CompetitiveBackend.Services
         /// </summary>
         /// <param name="compRewardID">Идентификатор награды соревнования</param>
         /// <param name="rewardDescriptionID">Описание награды (null, если менять не нужно)</param>
-        /// <param name="condition">Название свойства, за что выдаётся награда</param>
-        /// <param name="conditionDescription">Параметры свойства, за что выдаётся награда</param>
+        /// <param name="condition">Свойство, за что выдаётся награда</param>
         /// <returns></returns>
-        public Task UpdateCompetitionReward(int compRewardID, int? rewardDescriptionID = null, string? condition = null, string? conditionDescription = null);
+        public Task UpdateCompetitionReward(int compRewardID, int? rewardDescriptionID = null, GrantCondition? condition = null);
         /// <summary>
         /// Удалить награду у соревнования
         /// </summary>
