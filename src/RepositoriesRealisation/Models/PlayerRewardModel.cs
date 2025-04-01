@@ -30,12 +30,16 @@ namespace RepositoriesRealisation.Models
         public int RewardDescriptionID { get; set; }
         [Column("creation_date")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public TimeSpan CreationDate { get; set; }
+        public DateTime CreationDate { get; set; }
         public PlayerRewardModel(int playerID, int RewardDescription, int? CompetitionID = null)
         {
             PlayerID = playerID;
             RewardDescriptionID = RewardDescription;
             this.CompetitionID = CompetitionID;
+        }
+        public PlayerRewardModel()
+        {
+
         }
     }
 }

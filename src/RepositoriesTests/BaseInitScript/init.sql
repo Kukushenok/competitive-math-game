@@ -98,6 +98,7 @@ LANGUAGE plpgsql
 AS $$
 DECLARE
     creward competition_reward%rowtype;
+    comp_valid_id int := null;
     is_granted bool := false;
     reward_type text;
     place_cursor REFCURSOR := 'place_cursor';
@@ -109,9 +110,13 @@ DECLARE
     max_place int;
 BEGIN
     -- Check if rewards already granted
-    SELECT true FROM competition c WHERE c.id = comp_id AND c.has_ended INTO is_granted;
-    
-    IF is_granted THEN
+    SELECT c.id, c.has_ended 
+    INTO comp_valid_id, is_granted
+    FROM competition c
+    WHERE c.id = comp_id;
+    IF comp_valid_id is null THEN
+    	RAISE EXCEPTION 'There is no such competition' USING HINT = 'No competition with ID';
+    ELSIF is_granted THEN
         RAISE EXCEPTION 'Rewards have already been granted' USING HINT = 'Rewards already granted.';
     ELSE
         -- Open the base cursor for place-based ordering
@@ -127,24 +132,24 @@ BEGIN
             BEGIN
 	            CASE 
 	                WHEN reward_type = 'rank' THEN
-						IF creward.condition ?& array['MinRank', 'MaxRank'] THEN
+						IF NOT (creward.condition ?& array['minRank', 'maxRank']) THEN
 							RAISE WARNING 'Processing rank-based reward %: Missing fields MinRank or MaxRank, skipping', creward.id;
 							CONTINUE;
 						END IF;
-	                    min_condition := (creward.condition->>'MinRank')::float;
-	                    max_condition := (creward.condition->>'MaxRank')::float;
+	                    min_condition := (creward.condition->>'minRank')::float;
+	                    max_condition := (creward.condition->>'maxRank')::float;
 	                    
 	                    -- Open cursor for rank-based rewards
 	                    OPEN reward_cursor FOR 
 	                        SELECT * FROM grant_rank_rewards(place_cursor, min_condition, max_condition);
 	                    
 	                WHEN reward_type = 'place' THEN
-						IF creward.condition ?& array['MinPlace', 'MaxPlace'] THEN
+						IF NOT (creward.condition ?& array['minPlace', 'maxPlace']) THEN
 							RAISE WARNING 'Processing rank-based reward %: Missing fields MinPlace or MaxPlace, skipping', creward.id;
 							CONTINUE;
 						END IF;
-	                    min_place := (creward.condition->>'MinPlace')::int;
-	                    max_place := (creward.condition->>'MaxPlace')::int;
+	                    min_place := (creward.condition->>'minPlace')::int;
+	                    max_place := (creward.condition->>'maxPlace')::int;
 	                    
 	                    -- Open cursor for place-based rewards
 	                    OPEN reward_cursor FOR 
@@ -164,7 +169,7 @@ BEGIN
                 EXIT WHEN NOT FOUND;
                 
                 INSERT INTO player_reward(reward_description_id, player_id, competition_id)
-                VALUES (creward.id, player_rec.player_id, comp_id);
+                VALUES (creward.id, player_rec.account_id, comp_id);
             END LOOP;
             
             -- Clean up and reset for next iteration
@@ -174,6 +179,7 @@ BEGIN
         
         -- Final clean up
         CLOSE place_cursor;
+        UPDATE competition c SET has_ended = true WHERE c.id = comp_id;
     END IF;
 END;
 $$;

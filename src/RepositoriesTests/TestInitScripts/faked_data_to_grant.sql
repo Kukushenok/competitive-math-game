@@ -856,16 +856,6 @@ COPY public.player_participation (competition_id, account_id, score) FROM stdin;
 3	4	6768
 \.
 
-
---
--- Data for Name: player_reward; Type: TABLE DATA; Schema: public; Owner: tester
---
-
-COPY public.player_reward (id, reward_description_id, player_id, competition_id, creation_date) FROM stdin;
-1	19	93	4	2025-04-01 18:43:26.531288
-\.
-
-
 --
 -- Data for Name: reward_description; Type: TABLE DATA; Schema: public; Owner: tester
 --
@@ -892,3 +882,13 @@ COPY public.reward_description (id, reward_name, description, icon_image, ingame
 19	Object-based multi-state secured line	Admit network soon add defense. Manager mother house less.\nClose information within owner standard.	\N	\N
 20	Extended optimizing frame	Court order strategy make join keep western. Current blue third marriage size must wear. Public similar spring box between kid.	\N	\N
 \.
+
+
+--
+-- Data for Name: player_reward; Type: TABLE DATA; Schema: public; Owner: tester
+--
+
+--COPY public.player_reward (id, reward_description_id, player_id, competition_id, creation_date) FROM stdin;
+--1	19	93	4	2025-04-01 18:43:26.531288
+--\.
+

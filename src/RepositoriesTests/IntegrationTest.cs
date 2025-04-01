@@ -15,7 +15,7 @@ using XUnitLoggingProvider;
 
 namespace RepositoriesTests
 {
-    public class IntegrationTest<T>(ITestOutputHelper helper) : ContainerInitializer where T: class
+    public class IntegrationTest<T>(ITestOutputHelper helper) : ContainerInitializer where T : class
     {
         protected override async Task AfterDockerInit()
         {
@@ -24,16 +24,17 @@ namespace RepositoriesTests
             {
                {"ConnectionStrings:postgres", ConnectionString }
             };
-            testDumper = new FileDumper(Path.Combine(CORE_PATH,"ResultDumps"));
+            testDumper = new FileDumper(Path.Combine(CORE_PATH, "ResultDumps"));
             var conf = new ConfigurationBuilder().AddInMemoryCollection(Dict).Build();
             coll.AddSingleton<IConfiguration>(conf);
             coll.UseXUnitLogging(helper);
-            coll.AddRepositories();
+            AddMyRepositories(coll);
             ServiceProvider p = coll.BuildServiceProvider();
             Testing = p.GetService<T>()!;
             contextFactory = p.GetService<IDbContextFactory<BaseDbContext>>()!;
             Logger = p.GetService<ILogger<IntegrationTest<T>>>()!;
             Logger.LogInformation("Using connection string: " + ConnectionString);
+            PostConfiguring(p);
         }
         protected T Testing;
         protected ILogger<IntegrationTest<T>> Logger;
@@ -57,5 +58,7 @@ namespace RepositoriesTests
             var result = await Container.ExecAsync(commands);
             await testDumper.Dump($"{typeof(T).Name}_{dumpName}", result.Stdout);
         }
+        protected virtual void AddMyRepositories(IServiceCollection coll) => coll.AddRepositories();
+        protected virtual void PostConfiguring(ServiceProvider p) { }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Core.RewardCondition;
+using CompetitiveBackend.Repositories.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RepositoriesRealisation.Models;
@@ -21,28 +22,37 @@ namespace RepositoriesRealisation.RewardGranters
 
         public async Task GrantRewards(BaseDbContext context, int competitionID)
         {
+            CompetitionModel? competition = await context.Competition.FindAsync(competitionID);
+            if(competition == null)
+            {
+                throw new MissingDataException($"No competition with ID {competitionID}");
+            }
+            else if (competition.HasEnded)
+            {
+                throw new FailedOperationException($"Rewards have already been granted for competition {competitionID}");
+            }
             PlayerParticipationModel[] participations = await context.PlayerParticipation.Where(x => x.CompetitionID == competitionID)
-                                                                                             .OrderByDescending(x=>x.Score)
-                                                                                             .ToArrayAsync();
+                                                                                                 .OrderByDescending(x => x.Score)
+                                                                                                 .ToArrayAsync();
             List<CompetitionRewardModel> rewards = await context.CompetitionReward.Where(x => x.CompetitionId == competitionID)
                                                                                    .ToListAsync();
-            foreach(CompetitionRewardModel model in rewards)
+            foreach(CompetitionRewardModel reward in rewards)
             {
-                GrantCondition? cond = GrantConditionConverter.FromJSON(model.Condition);
+                GrantCondition? cond = GrantConditionConverter.FromJSON(reward.Condition);
                 if(cond == null)
                 {
-                    _logger.LogWarning($"Processing {model.Id}: Could not read the reward condition; skipping");
+                    _logger.LogWarning($"Processing {reward.Id}: Could not read the reward condition; skipping");
                 }
                 else if(cond is RankGrantCondition rankCondition)
                 {
-                    await GrantByCondition(context, model, participations, rankCondition);
+                    await GrantByCondition(context, reward, participations, rankCondition);
                 }
                 else if(cond is PlaceGrantCondition placeCondition)
                 {
-                    await GrantByCondition(context, model, participations, placeCondition);
+                    await GrantByCondition(context, reward, participations, placeCondition);
                 }
             }
-
+            context.Competition.Where(x => x.Id == competitionID).ExecuteUpdate(x => x.SetProperty(x => x.HasEnded, true));
             await context.SaveChangesAsync();
         }
         private async Task GrantByCondition(BaseDbContext context, CompetitionRewardModel model, PlayerParticipationModel[] participations, PlaceGrantCondition rankCondition)
@@ -50,7 +60,7 @@ namespace RepositoriesRealisation.RewardGranters
             if (participations.Length == 0)
                 return;
             int competitionID = participations[0].CompetitionID;
-            for (int i = rankCondition.minPlace - 1; i <= rankCondition.maxPlace && i < participations.Length; i++)
+            for (int i = rankCondition.minPlace - 1; i < rankCondition.maxPlace && i < participations.Length; i++)
             {
                 await context.PlayerReward.AddAsync(new PlayerRewardModel(participations[i].AccountID, model.RewardDescriptionId, competitionID));
             }
