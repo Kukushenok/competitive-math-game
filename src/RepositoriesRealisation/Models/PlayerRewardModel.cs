@@ -12,20 +12,30 @@ namespace RepositoriesRealisation.Models
     [Table("player_reward")]
     public class PlayerRewardModel
     {
-        public RewardDescriptionModel RewardDescription { get; set; }
-        public AccountModel Player { get; set; }
+        [ForeignKey(nameof(RewardDescriptionID))]
+        public RewardDescriptionModel RewardDescription { get; set; } = null!;
+        [ForeignKey(nameof(PlayerID))]
+        public AccountModel Player { get; set; } = null!;
+        [ForeignKey(nameof(CompetitionID))]
         public CompetitionModel? Competition { get; set; }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("id")]
         public int Id { get; set; }
-        [ForeignKey("player_id"), Column("player_id")]
-        public int PlayerID;
+        [Column("player_id")]
+        public int PlayerID { get; set; }
         [ForeignKey("competition_id"), Column("competition_id")]
-        public int? CompetitionID;
+        public int? CompetitionID { get; set; }
         [ForeignKey("reward_description_id"), Column("reward_description_id")]
-        public int RewardDescriptionID;
+        public int RewardDescriptionID { get; set; }
         [Column("creation_date")]
-        public TimeSpan CreationDate;
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public TimeSpan CreationDate { get; set; }
+        public PlayerRewardModel(int playerID, int RewardDescription, int? CompetitionID = null)
+        {
+            PlayerID = playerID;
+            RewardDescriptionID = RewardDescription;
+            this.CompetitionID = CompetitionID;
+        }
     }
 }

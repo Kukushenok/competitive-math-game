@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using RepositoriesRealisation;
 using System;
 using System.Collections.Generic;
@@ -31,10 +32,14 @@ namespace RepositoriesTests
             ServiceProvider p = coll.BuildServiceProvider();
             Testing = p.GetService<T>()!;
             contextFactory = p.GetService<IDbContextFactory<BaseDbContext>>()!;
+            Logger = p.GetService<ILogger<IntegrationTest<T>>>()!;
+            Logger.LogInformation("Using connection string: " + ConnectionString);
         }
         protected T Testing;
+        protected ILogger<IntegrationTest<T>> Logger;
         private FileDumper testDumper;
         private IDbContextFactory<BaseDbContext> contextFactory;
+
         public async Task<BaseDbContext> GetContext() => await contextFactory.CreateDbContextAsync();
         protected async Task ExecSQL(string sql)
         {

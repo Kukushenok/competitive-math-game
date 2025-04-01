@@ -56,5 +56,12 @@ namespace RepositoriesTests.RepositoriesTests
             token.TryGetAccountIdentifier(out int _).Should().BeFalse();
         }
 
+        //[Fact]
+        //public async Task Dump()
+        //{
+        //    await Task.Delay(1000);
+        //    await DoDumpings("beloved_dump");
+        //}
+
     }
 }

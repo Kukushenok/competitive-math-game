@@ -99,7 +99,7 @@ namespace CompetitiveBackend.Repositories
         public async Task<LargeData> GetCompetitionLevel(int competitionID)
         {
             using BaseDbContext context = await GetDbContext();
-            CompetitionModel? comp = await context.Competition.FindAsync(competitionID);
+            CompetitionModelLevelData? comp = await context.CompetitionLevelData.FindAsync(competitionID);
             if (comp == null)
             {
                 _logger.LogError($"Could not find competition with ID {competitionID}");
@@ -111,7 +111,7 @@ namespace CompetitiveBackend.Repositories
         public async Task SetCompetitionLevel(int competitionID, LargeData levelData)
         {
             using BaseDbContext context = await GetDbContext();
-            CompetitionModel? comp = await context.Competition.FindAsync(competitionID);
+            CompetitionModelLevelData? comp = await context.CompetitionLevelData.FindAsync(competitionID);
             if(comp == null)
             {
                 _logger.LogError($"Could not find competition with ID {competitionID}");

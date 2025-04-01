@@ -1,7 +1,8 @@
-﻿using Core.RewardCondition;
+﻿using CompetitiveBackend.Core.RewardCondition;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -43,8 +44,8 @@ namespace RepositoriesRealisation.Models
             document = null!;
             if (cond is PlaceGrantCondition place)
             {
-                obj.Add(new KeyValuePair<string, JsonNode?>(nameof(place.minPlace), (JsonNode)place.minPlace));
                 obj.Add(new KeyValuePair<string, JsonNode?>(nameof(place.maxPlace), (JsonNode)place.maxPlace));
+                obj.Add(new KeyValuePair<string, JsonNode?>(nameof(place.minPlace), (JsonNode)place.minPlace));
             }
             else if (cond is RankGrantCondition rank)
             {
@@ -58,6 +59,14 @@ namespace RepositoriesRealisation.Models
             document = JsonDocument.Parse(obj.ToJsonString());
             return true;
         }
+        public static GrantCondition? FromJSON(JsonDocument document)
+        {
+            return FromJSON(document, out GrantCondition cond) ? cond : null;
+        }
+        public static JsonDocument? ToJSON(GrantCondition cond)
+        {
+            return ToJSON(cond, out JsonDocument doc) ? doc : null;
+        }
         private static JsonElement? HasProperty(this JsonElement elem, string key)
         {
             return elem.TryGetProperty(key, out JsonElement value) ? value : null;
@@ -70,6 +79,15 @@ namespace RepositoriesRealisation.Models
         private static int? IntValue(this JsonElement elem)
         {
             return elem.TryGetInt32(out int value) ? value : null;
+        }
+        public static string Save(this JsonDocument doc)
+        {
+            using var stream = new MemoryStream();
+            using (var writer = new Utf8JsonWriter(stream, new JsonWriterOptions { Indented = true }))
+            {
+                doc.WriteTo(writer);
+            }
+            return Encoding.UTF8.GetString(stream.ToArray());
         }
     }
 }

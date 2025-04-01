@@ -84,8 +84,8 @@ namespace RepositoriesTests.RepositoriesTests
             await Testing.SetRewardIcon(2, dt);
 
             using var context = await GetContext();
-            context.RewardDescription.Find(2).Should().NotBeNull().And.Satisfy(
-                (RewardDescriptionModel md) =>
+            context.RewardDescriptionIconImages.Find(2).Should().NotBeNull().And.Satisfy(
+                (RewardDescriptionModelIconImage md) =>
                 {
                     md.IconImage.Should().BeEquivalentTo(dt.Data);
                 });
@@ -121,15 +121,15 @@ namespace RepositoriesTests.RepositoriesTests
             await Assert.ThrowsAsync<MissingDataException>(async () => await Testing.SetRewardGameAsset(5, dt));
         }
         [Fact]
-        public async Task SetGameAsseet_Success()
+        public async Task SetGameAsset_Success()
         {
             LargeData dt = new LargeData([4, 8, 6]);
             await ExecSQLFile("reward_descriptions.sql");
             await Testing.SetRewardGameAsset(2, dt);
 
             using var context = await GetContext();
-            context.RewardDescription.Find(2).Should().NotBeNull().And.Satisfy(
-                (RewardDescriptionModel md) =>
+            context.RewardDescriptionInGameData.Find(2).Should().NotBeNull().And.Satisfy(
+                (RewardDescriptionModelInGameData md) =>
                 {
                     md.InGameData.Should().BeEquivalentTo(dt.Data);
                 });

@@ -1,4 +1,4 @@
-﻿using Core.RewardCondition;
+﻿using CompetitiveBackend.Core.RewardCondition;
 
 namespace CompetitiveBackend.Core.Objects
 {

@@ -1,5 +1,5 @@
 ﻿using CompetitiveBackend.Core.Objects;
-using Core.RewardCondition;
+using CompetitiveBackend.Core.RewardCondition;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -18,18 +18,20 @@ namespace RepositoriesRealisation.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("id")]
         public int Id { get; set; }
-        public CompetitionModel Competition { get; }
-        public RewardDescriptionModel RewardDescription { get; }
+        [ForeignKey(nameof(CompetitionId))]
+        public virtual CompetitionModel Competition { get; set; }
+        [ForeignKey(nameof(RewardDescriptionId))]
+        public virtual RewardDescriptionModel RewardDescription { get; set; }
 
-        [ForeignKey("competition_id"), Column("competition_id")]
+        [Column("competition_id")]
         public int CompetitionId { get; set; }
-        [ForeignKey("reward_description_id"), Column("reward_description_id")]
+        [Column("reward_description_id")]
         public int RewardDescriptionId { get; set; }
         [Column("condition")]
         public JsonDocument Condition { get; set; }
         public CompetitionRewardModel(int RewardDescriptionID, int CompetitionID, JsonDocument condition)
         {
-            this.RewardDescriptionId = RewardDescriptionId;
+            this.RewardDescriptionId = RewardDescriptionID;
             this.Condition = condition;
             this.CompetitionId = CompetitionID;
         }

@@ -1,6 +1,6 @@
 ﻿using CompetitiveBackend.Core.Objects;
+using CompetitiveBackend.Core.RewardCondition;
 using CompetitiveBackend.Repositories;
-using Core.RewardCondition;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RepositoriesRealisation;
@@ -45,7 +45,7 @@ namespace CompetitiveBackend.Repositories
         public async Task<CompetitionReward> GetCompetitionReward(int competitionRewardID)
         {
             using var context = await GetDbContext();
-            CompetitionRewardModel model = await Find(context, competitionRewardID);
+            CompetitionRewardModel model = await FindWithRewardDescriptionInfo(context, competitionRewardID);
             return ToCore(model);
         }
 
@@ -54,7 +54,7 @@ namespace CompetitiveBackend.Repositories
             using var context = await GetDbContext();
             try
             {
-                var selectResult = await context.CompetitionReward.Where(x => x.CompetitionId == competitionID).Select(x => ToCore(x)).ToListAsync();
+                var selectResult = await context.CompetitionReward.Include(x=>x.RewardDescription).Where(x => x.CompetitionId == competitionID).Select(x => ToCore(x)).ToListAsync();
                 return selectResult;
             }
             catch(Exception ex) when (ex.IsDBException())
@@ -105,11 +105,10 @@ namespace CompetitiveBackend.Repositories
                 throw new Exceptions.FailedOperationException($"Could not update the reward");
             }
         }
-        private CompetitionReward ToCore(CompetitionRewardModel model)
+        private static CompetitionReward ToCore(CompetitionRewardModel model)
         {
             if (!GrantConditionConverter.FromJSON(model.Condition, out GrantCondition cond))
             {
-                _logger.LogError($"Internal damage of GrantCondition field of reward {model.Id}");
                 throw new Exceptions.FailedOperationException($"Internal damage of GrantCondition field of reward {model.Id}");
             }
             return new CompetitionReward(model.RewardDescriptionId,
@@ -122,6 +121,16 @@ namespace CompetitiveBackend.Repositories
         private async Task<CompetitionRewardModel> Find(BaseDbContext context, int id)
         {
             CompetitionRewardModel? model = await context.CompetitionReward.FindAsync(id);
+            if (model == null)
+            {
+                _logger.LogError($"Could not find competition reward with ID {id}");
+                throw new Exceptions.MissingDataException($"Could not find competition reward with ID {id}");
+            }
+            return model;
+        }
+        private  async Task<CompetitionRewardModel> FindWithRewardDescriptionInfo(BaseDbContext context, int id)
+        {
+            CompetitionRewardModel? model = await context.CompetitionReward.Include(x => x.RewardDescription).SingleOrDefaultAsync(x=>x.Id == id);
             if (model == null)
             {
                 _logger.LogError($"Could not find competition reward with ID {id}");

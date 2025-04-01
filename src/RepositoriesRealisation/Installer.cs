@@ -13,6 +13,7 @@ namespace RepositoriesRealisation
             container.AddScoped<IPlayerProfileRepository, PlayerProfileRepository>();
             container.AddScoped<IRewardDescriptionRepository, RewardDescriptionRepository>();
             container.AddScoped<ICompetitionRepository, CompetitionRepository>();
+            container.AddScoped<ICompetitionRewardRepository, CompetitionRewardRepository>();
             container.AddScoped<SessionRepositoryConfiguration>();
             container.AddDbContextFactory<BaseDbContext, BaseContextFactory>();
             return container;

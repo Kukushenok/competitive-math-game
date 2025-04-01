@@ -1,5 +1,6 @@
 ﻿using CompetitiveBackend.Core.Auth;
 using CompetitiveBackend.Core.Objects;
+using RepositoriesRealisation.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -26,9 +27,7 @@ namespace RepositoriesRealisation.DatabaseObjects
         public int AccountPrivilegyLevel { get; set; }
         [Column("description", TypeName = "varchar(128)")]
         public string? Description { get; set; }
-
-        [Column("profile_image", TypeName = "blob")]
-        public byte[]? ProfileImage { get; set; }
+        public AccountModelProfileImage ProfileImage { get; set; }
         public AccountModel()
         {
 
@@ -50,5 +49,11 @@ namespace RepositoriesRealisation.DatabaseObjects
         {
             return new PlayerProfile(Name, Description, Id);
         }
+    }
+    [Table("account")]
+    public class AccountModelProfileImage: OneToOneEntity<AccountModel>
+    {
+        [Column("profile_image", TypeName = "bytea")]
+        public byte[]? ProfileImage { get; set; }
     }
 }

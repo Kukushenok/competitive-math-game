@@ -21,33 +21,38 @@ namespace RepositoriesRealisation.Models
         public string Name { get; set; }
         [Column("description", TypeName = "varchar(64)")]
         public string? Description { get; set; }
-
-        [Column("icon_image", TypeName = "bytea")]
-        public byte[]? IconImage { get; set; }
-        [Column("ingame_data", TypeName ="bytea")]
-        public byte[]? InGameData { get; set; }
+        public RewardDescriptionModelIconImage IconImage { get; set; } = null!;
+        public RewardDescriptionModelInGameData InGameData { get; set; } = null!;
         public RewardDescriptionModel()
         {
 
         }
-        public RewardDescriptionModel(string name, string? description = null, byte[]? iconImage = null, byte[]? inGameData = null)
+        public RewardDescriptionModel(string name, string? description = null)
         {
             Name = name;
             Description = description;
-            IconImage = iconImage;
-            InGameData = inGameData;
         }
-        public RewardDescriptionModel(int id, string name, string? description = null, byte[]? iconImage = null, byte[]? inGameData = null)
+        public RewardDescriptionModel(int id, string name, string? description = null)
         {
             Id = id;
             Name = name;
             Description = description;
-            IconImage = iconImage;
-            InGameData = inGameData;
         }
         public RewardDescription ToCoreRewardDescription()
         {
             return new RewardDescription(Name, Description ?? "", Id);
         }
+    }
+    [Table("reward_description")]
+    public class RewardDescriptionModelIconImage: OneToOneEntity<RewardDescriptionModel>
+    {
+        [Column("icon_image", TypeName = "bytea")]
+        public byte[]? IconImage { get; set; }
+    }
+    [Table("reward_description")]
+    public class RewardDescriptionModelInGameData : OneToOneEntity<RewardDescriptionModel>
+    {
+        [Column("ingame_data", TypeName = "bytea")]
+        public byte[]? InGameData { get; set; }
     }
 }

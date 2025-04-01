@@ -89,8 +89,8 @@ namespace RepositoriesTests.RepositoriesTests
             await Testing.UpdatePlayerProfileImage(2, dt);
 
             using var context = await GetContext();
-            context.Accounts.Find(2).Should().NotBeNull().And.Satisfy(
-                (AccountModel md) =>
+            context.AccountsProfileImages.Find(2).Should().NotBeNull().And.Satisfy(
+                (AccountModelProfileImage md) =>
                 {
                     md.ProfileImage.Should().BeEquivalentTo(dt.Data);
                 });

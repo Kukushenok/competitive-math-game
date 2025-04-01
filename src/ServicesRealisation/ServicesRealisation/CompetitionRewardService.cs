@@ -1,6 +1,6 @@
 ﻿using CompetitiveBackend.Core.Objects;
+using CompetitiveBackend.Core.RewardCondition;
 using CompetitiveBackend.Repositories;
-using Core.RewardCondition;
 
 namespace CompetitiveBackend.Services.CompetitionRewardService
 {

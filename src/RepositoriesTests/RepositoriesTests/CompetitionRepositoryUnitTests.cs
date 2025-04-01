@@ -143,7 +143,7 @@ namespace RepositoriesTests.RepositoriesTests
             LargeData dt = new LargeData([5, 6, 7]);
             await Testing.SetCompetitionLevel(1, dt);
             using BaseDbContext context = await GetContext();
-            context.Competition.Find(1)!.LevelData.Should().BeEquivalentTo(dt.Data);
+            context.CompetitionLevelData.Find(1)!.LevelData.Should().BeEquivalentTo(dt.Data);
         }
 
     }

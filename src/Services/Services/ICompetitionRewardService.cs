@@ -1,5 +1,5 @@
 ﻿using CompetitiveBackend.Core.Objects;
-using Core.RewardCondition;
+using CompetitiveBackend.Core.RewardCondition;
 
 namespace CompetitiveBackend.Services
 {

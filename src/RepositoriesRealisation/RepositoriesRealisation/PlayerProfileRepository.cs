@@ -23,7 +23,7 @@ namespace CompetitiveBackend.Repositories
         public async Task<LargeData> GetPlayerProfileImage(int accountId)
         {
             using BaseDbContext context = await GetDbContext();
-            AccountModel? p = await context.Accounts.FindAsync(accountId);
+            AccountModelProfileImage? p = await context.AccountsProfileImages.FindAsync(accountId);
             if (p == null) throw new Exceptions.MissingDataException();
             if (p.ProfileImage == null) return new LargeData(Array.Empty<byte>());
             return new LargeData(p.ProfileImage);
@@ -43,10 +43,10 @@ namespace CompetitiveBackend.Repositories
         public async Task UpdatePlayerProfileImage(int accountId, LargeData data)
         {
             using BaseDbContext context = await GetDbContext();
-            AccountModel? p = await context.Accounts.FindAsync(accountId);
+            AccountModelProfileImage? p = await context.AccountsProfileImages.FindAsync(accountId);
             if (p == null) throw new Exceptions.MissingDataException();
             p.ProfileImage = data.Data;
-            context.Accounts.Update(p);
+            context.AccountsProfileImages.Update(p);
             await context.SaveChangesAsync();
         }
     }

@@ -64,6 +64,20 @@ namespace RepositoriesRealisation.RepositoriesRealisation
             }
             return rd!;
         }
+        private async Task<T> FetchRewardDescription<T>(int rewardID, DbSet<T> set) where T: class
+        {
+            T? rd = await set.FindAsync(rewardID);
+            if (rd == null)
+            {
+                _logger.LogError($"Attempted to get {rewardID}: failure - no reward description found");
+                throw new MissingDataException("No reward description found ");
+            }
+            else
+            {
+                _logger.LogInformation($"Attemptet to get {rewardID} - success");
+            }
+            return rd!;
+        }
         public async Task<RewardDescription> GetRewardDescription(int rewardID)
         {
             using BaseDbContext context = await GetDbContext();
@@ -74,25 +88,25 @@ namespace RepositoriesRealisation.RepositoriesRealisation
         public async Task<LargeData> GetRewardGameAsset(int rewardID)
         {
             using BaseDbContext context = await GetDbContext();
-            var rd = await FetchRewardDescription(rewardID, context);
+            var rd = await FetchRewardDescription(rewardID, context.RewardDescriptionInGameData);
             return new LargeData(rd.InGameData ?? Array.Empty<byte>());
         }
 
         public async Task<LargeData> GetRewardIcon(int rewardID)
         {
             using BaseDbContext context = await GetDbContext();
-            var rd = await FetchRewardDescription(rewardID, context);
+            var rd = await FetchRewardDescription(rewardID, context.RewardDescriptionIconImages);
             return new LargeData(rd.IconImage ?? Array.Empty<byte>());
         }
 
         public async Task SetRewardGameAsset(int rewardID, LargeData data)
         {
             using BaseDbContext context = await GetDbContext();
-            var rd = await FetchRewardDescription(rewardID, context);
+            var rd = await FetchRewardDescription(rewardID, context.RewardDescriptionInGameData);
             rd.InGameData = data.Data;
             try
             {
-                context.RewardDescription.Update(rd);
+                context.RewardDescriptionInGameData.Update(rd);
                 await context.SaveChangesAsync();
             }
             catch(DbUpdateException exception)
@@ -105,11 +119,11 @@ namespace RepositoriesRealisation.RepositoriesRealisation
         public async Task SetRewardIcon(int rewardID, LargeData data)
         {
             using BaseDbContext context = await GetDbContext();
-            var rd = await FetchRewardDescription(rewardID, context);
+            var rd = await FetchRewardDescription(rewardID, context.RewardDescriptionIconImages);
             rd.IconImage = data.Data;
             try
             {
-                context.RewardDescription.Update(rd);
+                context.RewardDescriptionIconImages.Update(rd);
                 await context.SaveChangesAsync();
             }
             catch (DbUpdateException exception)
