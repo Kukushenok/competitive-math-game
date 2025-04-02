@@ -31,12 +31,10 @@ namespace CompetitiveBackend.Repositories
             using BaseDbContext context = await GetDbContext();
             try
             {
-                await context.Competition.AddAsync(new RepositoriesRealisation.Models.CompetitionModel(c.Name, c.Description, c.StartDate.EnsureUTC(), c.EndDate.EnsureUTC()));
+                await context.Competition.AddAsync(new CompetitionModel(c.Name, c.Description, c.StartDate.EnsureUTC(), c.EndDate.EnsureUTC()));
                 await context.SaveChangesAsync();
             }
-            catch (Exception ex) when (ex is OperationCanceledException ||
-                                       ex is DbUpdateException ||
-                                       ex is DbUpdateConcurrencyException)
+            catch (Exception ex) when (ex.IsDBException())
             {
                 _logger.LogError(ex, "Could not create Competition");
                 throw new Exceptions.FailedOperationException("Could not create Competition",ex);
@@ -122,9 +120,7 @@ namespace CompetitiveBackend.Repositories
             {
                 await context.SaveChangesAsync();
             }
-            catch (Exception ex) when (ex is OperationCanceledException ||
-                                       ex is DbUpdateException ||
-                                       ex is DbUpdateConcurrencyException)
+            catch (Exception ex) when (ex.IsDBException())
             {
                 _logger.LogError("Could not update Competition");
                 throw new Exceptions.FailedOperationException("Could not update Competition",ex);
@@ -151,9 +147,7 @@ namespace CompetitiveBackend.Repositories
                 context.Update(comp);
                 await context.SaveChangesAsync();
             }
-            catch(Exception ex) when (ex is OperationCanceledException ||
-                                       ex is DbUpdateException ||
-                                       ex is DbUpdateConcurrencyException)
+            catch(Exception ex) when (ex.IsDBException())
             {
                 _logger.LogError("Could not update Competition");
                 throw new Exceptions.FailedOperationException("Could not update Competition", ex);

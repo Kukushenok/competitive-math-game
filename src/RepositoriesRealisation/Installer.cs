@@ -20,6 +20,7 @@ namespace RepositoriesRealisation
             container.AddDbContextFactory<BaseDbContext, BaseContextFactory>();
             opt?.Invoke(myOptions);
             if (!myOptions.SetUpRewardGranter) myOptions.GrantRewardsWithDefaultCalls();
+            if (!myOptions.SetUpConnectionStringGetter) myOptions.UseDefaultConnectionString();
             return container;
         }
     }

@@ -1,21 +1,22 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Repositories.Repositories;
 
 namespace RepositoriesRealisation
 {
     public class BaseContextFactory : IDbContextFactory<BaseDbContext>
     {
-        private IConfiguration _configuration;
+        private IConnectionStringGetter _stringGetter;
         private ILoggerFactory _factory;
-        public BaseContextFactory(IConfiguration configuration, ILoggerFactory factory)
+        public BaseContextFactory(IConnectionStringGetter configuration, ILoggerFactory factory)
         {
-            _configuration = configuration;
+            _stringGetter = configuration;
             _factory = factory;
         }
         public BaseDbContext CreateDbContext()
         {
-            string curPerms = _configuration.GetConnectionString("postgres")!;
+            string curPerms = _stringGetter.GetConnectionString();
             var builder = new DbContextOptionsBuilder<BaseDbContext>();
             builder.UseNpgsql(curPerms);
             builder.UseLoggerFactory(_factory);
