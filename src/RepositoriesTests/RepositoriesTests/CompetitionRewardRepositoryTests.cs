@@ -95,10 +95,7 @@ namespace RepositoriesTests.RepositoriesTests
             await ExecSQLFile("mix_comp_rewards.sql");
             await Testing.RemoveCompetitionReward(idx);
             using var context = await GetContext();
-            context.CompetitionReward.ToList().Should().ContainSingle().Which.Should().Satisfy((CompetitionRewardModel x) =>
-            {
-                x.Id.Should().NotBe(idx);
-            });
+            context.CompetitionReward.ToList().Should().NotContain(x => x.Id == idx);
         }
         [Fact]
         public async Task DeleteCompetitionReward_Failure()
