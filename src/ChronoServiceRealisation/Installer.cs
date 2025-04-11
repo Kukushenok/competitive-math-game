@@ -12,7 +12,7 @@ namespace ChronoServiceRealisation
 {
     public static class Installer
     {
-        public static IServiceCollection AddTimeScheduler(this IServiceCollection collection, Action<Options>? setup = null)
+        public static IServiceCollection AddQuartzTimeScheduler(this IServiceCollection collection, Action<Options>? setup = null)
         {
             Options opt = new Options(collection);
             setup?.Invoke(opt);

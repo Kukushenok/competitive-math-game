@@ -63,7 +63,7 @@ namespace ChronoServiceTests
         public TimeMarkTests(ITestOutputHelper helper)
         {
             IServiceCollection coll = new ServiceCollection();
-            coll.AddTimeScheduler();
+            coll.AddQuartzTimeScheduler();
             coll.UseXUnitLogging(helper);
             ServiceProvider provider = coll.BuildServiceProvider(true);
             sc = provider.GetService<ITimeScheduler>()!;

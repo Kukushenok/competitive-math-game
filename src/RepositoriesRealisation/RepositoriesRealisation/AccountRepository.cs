@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RepositoriesRealisation;
 using RepositoriesRealisation.DatabaseObjects;
+using RepositoriesRealisation.RepositoriesRealisation;
 
 namespace CompetitiveBackend.Repositories
 {
@@ -20,7 +21,7 @@ namespace CompetitiveBackend.Repositories
                 await context.SaveChangesAsync();
                 _logger.LogInformation($"Account \"{acc.Login}\" created successfully");
             }
-            catch (OperationCanceledException ex)
+            catch (Exception ex) when(ex.IsDBException())
             {
                 _logger.LogError(ex, "Could not create account");
                 throw new Exceptions.FailedOperationException(ex.Message);

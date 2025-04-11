@@ -1,7 +1,7 @@
 ﻿using CompetitiveBackend.Core.Objects;
+using CompetitiveBackend.Core.RewardCondition;
 using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Services.CompetitionRewardService;
-using Core.RewardCondition;
 using Moq;
 
 namespace ServicesUnitTests.ServiceTests
