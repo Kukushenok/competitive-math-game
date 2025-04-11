@@ -1,4 +1,5 @@
-﻿using CompetitiveBackend.Core.Auth;
+﻿using CompetitiveBackend.BackendUsage;
+using CompetitiveBackend.Core.Auth;
 using Microsoft.Extensions.Primitives;
 using System.Security.Claims;
 
@@ -6,11 +7,6 @@ namespace CompetitiveBackend.Controllers
 {
     public static class AuthUtilite
     {
-        private static readonly Role[] REGISTERED_ROLES = new Role[] { new PlayerRole(), new AdminRole(), new GuestRole() };
-        public static IEnumerable<string> GetAllRoles()
-        {
-            foreach (var r in REGISTERED_ROLES) yield return r.ToString();
-        }
         public static bool TryGetTokenValue(this HttpRequest request, out string value)
         {
             StringValues q;
@@ -22,20 +18,17 @@ namespace CompetitiveBackend.Controllers
             }
             return false;
         }
-        public static bool TryGetTokenValue(this HttpContext context, out string value)
+        public static async Task<T> Auth<T>(this T useCase, HttpRequest request) where T: IAuthableUseCase<T>
         {
-            value = null!;
-            return context?.Request.TryGetTokenValue(out value) ?? false;
-        }
-        public static SessionToken GetSessionToken(this ClaimsPrincipal user)
-        {
-            if (!user.Identity?.IsAuthenticated ?? true) return new UnauthenticatedSessionToken();
-            int id = int.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier) ?? "0");
-            foreach (Role rl in REGISTERED_ROLES)
+            if(TryGetTokenValue(request, out string value))
             {
-                if (user.IsInRole(rl.ToString())) return new AuthenticatedSessionToken(rl, id);
+                return await useCase.Auth(value);
             }
-            return new UnauthenticatedSessionToken();
+            return await useCase.Auth(string.Empty);
+        }
+        public static async Task<T> Auth<T>(this T useCase, HttpContext request) where T : IAuthableUseCase<T>
+        {
+            return await useCase.Auth(request.Request);
         }
     }
 }

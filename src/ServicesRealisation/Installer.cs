@@ -23,6 +23,7 @@ namespace ServicesRealisation
             container.AddScoped<IPlayerParticipationService, PlayerParticipationService>();
             container.AddScoped<IPlayerProfileService, PlayerProfileService>();
             container.AddScoped<IPlayerRewardService, PlayerRewardService>();
+            container.AddScoped<ICompetitionRewardScheduler, CompetitionRewardScheduler>();
             return container;
         }
         public static IServiceCollection AddAuthService(this IServiceCollection container)

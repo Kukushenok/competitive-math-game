@@ -1,4 +1,6 @@
-﻿using CompetitiveBackend.Repositories.Exceptions;
+﻿using CompetitiveBackend.BackendUsage;
+using CompetitiveBackend.BackendUsage.Objects;
+using CompetitiveBackend.Repositories.Exceptions;
 using CompetitiveBackend.Services;
 using CompetitiveBackend.Services.Exceptions;
 using CompetitiveBackend.Services.Objects;
@@ -11,40 +13,16 @@ namespace CompetitiveBackend.Controllers
     [ApiController]
     public class AuthorizationController : ControllerBase
     {
-        private IAuthService Service;
-        public AuthorizationController(IAuthService service)
+        private IAuthUseCase AuthUseCase;
+        public AuthorizationController(IAuthUseCase service)
         {
-            Service = service;
-        }
-        [HttpGet(Name = "admin")]
-        [Authorize(Policy = "Admin")]
-        public string AdminSecrets()
-        {
-            return ":3";
-        }
-
-        [HttpGet(Name = "player")]
-        [Authorize(Policy = "Player")]
-        public string PlayerSecrets()
-        {
-            return ":3";
+            AuthUseCase = service;
         }
         [HttpPost(Name = "login")]
         public async Task<IActionResult> Login(string login, string password)
         {
-            try
-            {
-                AuthSuccessResult result = await Service.LogIn(login, password);
-                return Ok(result);
-            }
-            catch (MissingDataException)
-            {
-                return NotFound();
-            }
-            catch (IncorrectPasswordException)
-            {
-                return Forbid();
-            }
+            AuthSuccessResultDTO result = await AuthUseCase.Login(login, password);
+            return Ok(result);
         }
         /// <summary>
         /// 
@@ -55,17 +33,10 @@ namespace CompetitiveBackend.Controllers
         /// <response code=403>Could not register account</response>
         /// <returns></returns>
         [HttpPost(Name = "register")]
-        public async Task<IActionResult> Register(string login, string password)
+        public async Task<ActionResult<AuthSuccessResultDTO>> Register(string login, string password, string? email = null)
         {
-            try
-            {
-                await Service.Register(new Core.Objects.Account(login, null, null, null), password);
-                return Ok();
-            }
-            catch (RepositoryException exp)
-            {
-                return BadRequest(exp.Message);
-            }
+            AuthSuccessResultDTO dto = await AuthUseCase.Register(new AccountCreationDTO(login, password, email));
+            return Ok(dto);
         }
     }
 }

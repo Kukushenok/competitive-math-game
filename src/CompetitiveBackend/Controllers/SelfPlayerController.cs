@@ -1,4 +1,5 @@
-﻿using CompetitiveBackend.Core.Auth;
+﻿using CompetitiveBackend.BackendUsage;
+using CompetitiveBackend.Core.Auth;
 using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Services;
@@ -13,11 +14,11 @@ namespace CompetitiveBackend.Controllers
     [Route("api/player/")]
     public class SelfPlayerController : ControllerBase
     {
-        private IPlayerProfileService _profileService;
+        private ISelfUseCase _selfUseCase;
         private LinkGenerator _linkGenerator;
-        public SelfPlayerController(LinkGenerator generator, IPlayerProfileService service)
+        public SelfPlayerController(LinkGenerator generator, ISelfUseCase service)
         {
-            _profileService = service;
+            _selfUseCase = service;
             _linkGenerator = generator;
         }
         /// <summary>
@@ -25,16 +26,12 @@ namespace CompetitiveBackend.Controllers
         /// </summary>
         /// <returns>Данные профиля</returns>
         [HttpGet("self/profile")]
-        public async Task<IActionResult> GetPlayerProfile()
+        public async Task<ActionResult<PlayerProfileDto>> GetPlayerProfile()
         {
-            SessionToken tok = User.GetSessionToken();
-            if (tok.TryGetAccountIdentifier(out int identifier) && tok.Role.IsPlayer())
-            {
-                PlayerProfile p = await _profileService.GetPlayerProfile(identifier);
-                string? pic = _linkGenerator.GetUriByAction(HttpContext,nameof(GetPlayerImage), "SelfPlayer");
-                return new ObjectResult(new PlayerProfileDto(p.Id!.Value, p.Name, p.Description, pic!));
-            }
-            return Forbid();
+            using var self = await _selfUseCase.Auth(HttpContext);
+            PlayerProfile p = await self.GetMyProfile();
+            string? pic = _linkGenerator.GetUriByAction(HttpContext, nameof(GetPlayerImage), "SelfPlayer");
+            return new ObjectResult(new PlayerProfileDto(p.Id!.Value, p.Name, p.Description, pic!));
         }
         /// <summary>
         /// Обновить данные своего профиля
@@ -42,45 +39,23 @@ namespace CompetitiveBackend.Controllers
         /// <param name="name">Имя</param>
         /// <param name="description">Описание профиля</param>
         /// <returns></returns>
-        [HttpPost("self/profile")]
-        public async Task<IActionResult> SetPlayerProfile(string name, string? description)
+        [HttpPatch("self/profile")]
+        public async Task<ActionResult> SetPlayerProfile(string name, string? description)
         {
-            SessionToken tok = User.GetSessionToken();
-            if (tok.TryGetAccountIdentifier(out int identifier) && tok.Role.IsPlayer())
-            {
-                try
-                {
-                    await _profileService.UpdatePlayerProfile(new PlayerProfile(name, description, identifier));
-                }
-                catch (ServiceException e)
-                {
-                    return BadRequest(e.Message);
-                }
-                return Ok();
-            }
-            return Forbid();
+            using var self = await _selfUseCase.Auth(HttpContext);
+            await self.UpdateMyPlayerProfile(new PlayerProfile(name, description));
+            return NoContent();
         }
         /// <summary>
         /// Получить изображение своего профиля
         /// </summary>
         /// <returns></returns>
         [HttpGet("self/pic")]
-        public async Task<IActionResult> GetPlayerImage()
+        public async Task<FileResult> GetPlayerImage()
         {
-            SessionToken tok = User.GetSessionToken();
-            if (tok.TryGetAccountIdentifier(out int identifier) && tok.Role.IsPlayer())
-            {
-                try
-                {
-                    LargeData data = await _profileService.GetPlayerProfileImage(identifier);
-                    return File(data.Data, "application/octet-stream", "Image");
-                }
-                catch (ServiceException e)
-                {
-                    return BadRequest(e.Message);
-                }
-            }
-            return Forbid();
+            using var self = await _selfUseCase.Auth(HttpContext);
+            LargeData data = await self.GetMyImage();
+            return File(data.Data, "application/octet-stream", "Image");
         }
         /// <summary>
         /// Обновить изображение своего профиля
@@ -88,27 +63,16 @@ namespace CompetitiveBackend.Controllers
         /// <param name="file"></param>
         /// <returns></returns>
         [HttpPost("self/pic")]
-        public async Task<IActionResult> SetPlayerImage(IFormFile file)
+        public async Task<ActionResult> SetPlayerImage(IFormFile file)
         {
             if (file == null || file.Length == 0)
                 return BadRequest("No file uploaded.");
-            SessionToken tok = User.GetSessionToken();
-            if (tok.TryGetAccountIdentifier(out int identifier) && tok.Role.IsPlayer())
-            {
-                using var memoryStream = new MemoryStream();
-                await file.CopyToAsync(memoryStream);
-                LargeData data = new LargeData(memoryStream.ToArray());
-                try
-                {
-                    await _profileService.SetPlayerProfileImage(identifier, data);
-                    return Ok();
-                }
-                catch (ServiceException e)
-                {
-                    return BadRequest(e.Message);
-                }
-            }
-            return Forbid();
+            using var self = await _selfUseCase.Auth(HttpContext);
+            using var memoryStream = new MemoryStream();
+            await file.CopyToAsync(memoryStream);
+            LargeData data = new LargeData(memoryStream.ToArray());
+            await self.UpdateMyImage(data);
+            return NoContent();
         }
     }
 }

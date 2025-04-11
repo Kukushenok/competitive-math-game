@@ -1,8 +1,11 @@
 
 using CompetitiveBackend.Controllers;
+using CompetitiveBackend.SolutionInstaller;
 using ImageProcessorRealisation;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.OpenApi.Models;
 using RepositoriesRealisation;
 using ServicesRealisation;
@@ -14,26 +17,13 @@ namespace CompetitiveBackend
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
-            builder.Services.AddScoped<IAuthorizationHandler, SessionTokenAuthorizationHandler>();
-            builder.Services.AddScoped<IAuthenticationHandler, SessionTokenAuthenticationHandler>();
-            builder.Services.AddAuthentication("SessionToken")
-                .AddScheme<AuthOptions, SessionTokenAuthenticationHandler>("SessionToken", null);
-            builder.Services.AddAuthorization((options) =>
-            {
-                options.AddPolicy("Player", (pol) => pol.Requirements.Add(new PlayerTokenRequirement()));
-                options.AddPolicy("Admin", (pol) => pol.Requirements.Add(new AdminTokenRequirement()));
-            });
             // The SIN of us. Pray for it to work blud.
-            builder.Services.AddRepositories();
-
-            builder.Services.AddServicesWhichAreDone(); // some of them are not done.
-
-            builder.Services.AddMajickImageRescaler();
-            //
-            builder.Services.AddControllers();
+            builder.Services.AddCompetitiveBackendSolution();
+            builder.Services.AddExceptionHandler<BaseControllerErrorHandler>();
+            builder.Services.AddProblemDetails();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddControllers();
             builder.Services.AddSwaggerGen(setup =>
             {
                 var jwtSecurityScheme = new OpenApiSecurityScheme
@@ -69,9 +59,9 @@ namespace CompetitiveBackend
             }
 
             //app.UseHttpsRedirection();
-            app.UseAuthentication();
-            app.UseAuthorization();
-
+            //app.UseAuthentication();
+            //app.UseAuthorization();
+            app.UseExceptionHandler();
             app.MapControllers();
             app.Run();
         }

@@ -16,6 +16,7 @@ namespace RepositoriesRealisation
             container.AddScoped<ICompetitionRepository, CompetitionRepository>();
             container.AddScoped<ICompetitionRewardRepository, CompetitionRewardRepository>();
             container.AddScoped<IPlayerRewardRepository, PlayerRewardRepository>();
+            container.AddScoped<IPlayerParticipationRepository, PlayerParticipationRepository>();
             container.AddScoped<SessionRepositoryConfiguration>();
             container.AddDbContextFactory<BaseDbContext, BaseContextFactory>();
             opt?.Invoke(myOptions);
