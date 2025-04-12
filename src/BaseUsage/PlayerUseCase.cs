@@ -1,5 +1,6 @@
 ﻿using CompetitiveBackend.BackendUsage.Objects;
 using CompetitiveBackend.BackendUsage.UseCases;
+using CompetitiveBackend.BaseUsage.Converters;
 using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Services;
 

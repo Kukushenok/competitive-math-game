@@ -41,7 +41,12 @@ namespace RepositoriesRealisation.RepositoriesRealisation
             IEnumerable<RewardDescriptionModel> models;
             try
             {
-                models = await context.RewardDescription.OrderBy((x) => x.Name).Take(limiter.ToRange()).ToListAsync();
+                IQueryable<RewardDescriptionModel> queryable = context.RewardDescription.OrderBy((x) => x.Name);
+                if (!limiter.HasNoLimit)
+                {
+                    queryable = queryable.Skip(limiter.FirstIndex).Take(limiter.Partition);
+                }
+                models = await queryable.ToListAsync();
                 return (from m in models select m.ToCoreRewardDescription());
             }
             catch(OperationCanceledException ex)

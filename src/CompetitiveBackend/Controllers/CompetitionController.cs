@@ -1,11 +1,12 @@
 ﻿using CompetitiveBackend.BackendUsage.Objects;
 using CompetitiveBackend.BackendUsage.UseCases;
+using CompetitiveBackend.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CompetitiveBackend.Controllers
 {
-    [Route($"{APIConsts.ROOTV1}/")]
+    [Route($"{APIConsts.ROOTV1}/competitions/")]
     [ApiController]
     public class CompetitionController : ControllerBase
     {
@@ -16,44 +17,44 @@ namespace CompetitiveBackend.Controllers
             this.editUseCase = editUseCase;
             this.watchUseCase = watchUseCase;
         }
-        [HttpGet("competitions/{id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<CompetitionDTO>> GetCompetition(int id)
         {
             return await watchUseCase.GetCompetition(id);
         }
 
-        [HttpGet("competitions")]
+        [HttpGet("")]
         public async Task<ActionResult<CompetitionDTO[]>> GetAllCompetitions(int page, int count)
         {
             return (await watchUseCase.GetAllCompetitions(new DataLimiterDTO(page, count))).ToArray();
         }
-        [HttpGet("competitions/active")]
+        [HttpGet("active")]
         public async Task<ActionResult<CompetitionDTO[]>> GetActiveCompetitions()
         {
             return (await watchUseCase.GetActiveCompetitions()).ToArray();
         }
-        [HttpPut("competitions")]
+        [HttpPut("")]
         public async Task<ActionResult> CreateCompetition(CompetitionDTO dto)
         {
             using var self = await editUseCase.Auth(HttpContext);
             await self.CreateCompetition(dto);
             return NoContent();
         }
-        [HttpPatch("competitions/{id}")]
+        [HttpPatch("{id}")]
         public async Task<ActionResult> UpdateCompetition(int id, CompetitionUpdateRequestDTO dto)
         {
             using var self = await editUseCase.Auth(HttpContext);
             await self.UpdateCompetition(new CompetitionUpdateRequestDTO(id, dto));
             return NoContent();
         }
-        [HttpPatch("competitions/{id}/level")]
+        [HttpPatch("{id}/level")]
         public async Task<ActionResult> SetCompetitionLevel(int id, IFormFile file)
         {
             using var self = await editUseCase.Auth(HttpContext);
             await self.SetCompetitionLevel(id, await file.ToLargeData());
             return NoContent();
         }
-        [HttpGet("competitions/{id}/level")]
+        [HttpGet("{id}/level")]
         public async Task<FileContentResult> GetCompetitionLevel(int id)
         {
             return (await watchUseCase.GetCompetitionLevel(id)).ToFileResult($"level_{id}.bytes");

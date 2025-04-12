@@ -1,5 +1,6 @@
 ﻿using CompetitiveBackend.BackendUsage.Objects;
 using CompetitiveBackend.BackendUsage.UseCases;
+using CompetitiveBackend.BaseUsage.Converters;
 using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Services;
 using System;
@@ -13,21 +14,21 @@ namespace CompetitiveBackend.BaseUsage
     public class CompetitionWatchUseCase : ICompetitionWatchUseCase
     {
         private ICompetitionService _service;
-        public CompetitionWatchUseCase(ICompetitionService service)
+        private ICompetitionRewardService _rewardService;
+        public CompetitionWatchUseCase(ICompetitionService service, ICompetitionRewardService rewardService)
         {
             _service = service;
+            _rewardService = rewardService;
         }
 
         public async Task<IEnumerable<CompetitionDTO>> GetActiveCompetitions()
         {
-            var Q = await _service.GetActiveCompetitions();
-            return UseCaseDTOConverter.Convert(Q, x => x.Convert());
+            return from n in (await _service.GetActiveCompetitions()) select n.Convert();
         }
 
         public async Task<IEnumerable<CompetitionDTO>> GetAllCompetitions(DataLimiterDTO limiter)
         {
-            var Q = await _service.GetAllCompetitions(limiter.Convert());
-            return UseCaseDTOConverter.Convert(Q, x => x.Convert());
+            return from n in (await _service.GetAllCompetitions(limiter.Convert())) select n.Convert();
         }
 
         public async Task<CompetitionDTO> GetCompetition(int competitionID)
@@ -39,5 +40,11 @@ namespace CompetitiveBackend.BaseUsage
         {
             return (await _service.GetCompetitionLevel(competitionID)).Convert();
         }
+
+        public async Task<IEnumerable<CompetitionRewardDTO>> GetRewardsFor(int competitionID)
+        {
+            return from n in (await _rewardService.GetCompetitionRewards(competitionID)) select n.Convert();
+        }
+
     }
 }

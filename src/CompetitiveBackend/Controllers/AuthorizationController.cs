@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CompetitiveBackend.Controllers
 {
-    [Route($"{APIConsts.ROOTV1}/auth/[action]")]
+    [Route($"{APIConsts.ROOTV1}/auth/")]
     [ApiController]
     public class AuthorizationController : ControllerBase
     {
@@ -18,12 +18,12 @@ namespace CompetitiveBackend.Controllers
         {
             AuthUseCase = service;
         }
-        [HttpPost(Name = "login")]
+        [HttpPost("login")]
         public async Task<IActionResult> Login(AccountLoginDTO dto)
         {
             return Ok(await AuthUseCase.Login(dto));
         }
-        [HttpPost(Name = "register")]
+        [HttpPost("register")]
         public async Task<ActionResult<AuthSuccessResultDTO>> Register(AccountCreationDTO dto)
         {
             return Ok(await AuthUseCase.Register(dto));

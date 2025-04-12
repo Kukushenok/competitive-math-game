@@ -13,5 +13,6 @@ namespace CompetitiveBackend.BackendUsage.UseCases
         public Task<IEnumerable<CompetitionDTO>> GetAllCompetitions(DataLimiterDTO limiter);
         public Task<CompetitionDTO> GetCompetition(int competitionID);
         public Task<LargeDataDTO> GetCompetitionLevel(int competitionID);
+        public Task<IEnumerable<CompetitionRewardDTO>> GetRewardsFor(int competitionID);
     }
 }

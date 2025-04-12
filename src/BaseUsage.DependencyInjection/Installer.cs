@@ -13,6 +13,12 @@ namespace CompetitiveBackend.BaseUsage.DependencyInjection
             coll.AddScoped<IPlayerProfileUseCase, PlayerUseCase>();
             coll.AddScoped<ICompetitionWatchUseCase, CompetitionWatchUseCase>();
             coll.AddScoped<ICompetitionEditUseCase, CompetitionEditUseCase>();
+            coll.AddScoped<IRewardDescriptionEditUseCase, RewardDescriptionEditUseCase>();
+            coll.AddScoped<IRewardDescriptionWatchUseCase, RewardDescriptionWatchUseCase>();
+            coll.AddScoped<IPlayerParticipationUseCase, PlayerParticipationUseCase>();
+            coll.AddScoped<IPlayerParticipationWatchUseCase, PlayerParticipationWatchUseCase>();
+            coll.AddScoped<ICompetitionRewardEditUseCase, CompetitionRewardEditUseCase>();
+            coll.AddScoped<IPlayerRewardUseCase, PlayerRewardUseCase>();
             return coll;
         }
     }

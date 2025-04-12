@@ -14,7 +14,7 @@ namespace CompetitiveBackend.Controllers
 {
     [ApiController]
     [Produces("application/json")]
-    [Route($"{APIConsts.ROOTV1}/players/")]
+    [Route($"{APIConsts.ROOTV1}/player/")]
     public class SelfPlayerController : ControllerBase
     {
         private ISelfUseCase _selfUseCase;

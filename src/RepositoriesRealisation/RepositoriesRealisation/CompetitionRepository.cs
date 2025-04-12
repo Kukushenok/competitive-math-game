@@ -107,7 +107,7 @@ namespace CompetitiveBackend.Repositories
                 _logger.LogError($"Could not find competition with ID {competitionID}");
                 throw new Exceptions.MissingDataException($"Could not find competition with ID {competitionID}");
             }
-            return new LargeData(comp.LevelData);
+            return new LargeData(comp.LevelData ?? Array.Empty<byte>());
         }
         
         public async Task SetCompetitionLevel(int competitionID, LargeData levelData)
