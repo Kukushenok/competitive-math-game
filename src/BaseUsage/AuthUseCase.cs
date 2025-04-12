@@ -1,5 +1,5 @@
-﻿using CompetitiveBackend.BackendUsage;
-using CompetitiveBackend.BackendUsage.Objects;
+﻿using CompetitiveBackend.BackendUsage.Objects;
+using CompetitiveBackend.BackendUsage.UseCases;
 using CompetitiveBackend.Services;
 
 namespace CompetitiveBackend.BaseUsage
@@ -12,16 +12,16 @@ namespace CompetitiveBackend.BaseUsage
             this.authService = authService;
         }
 
-        public async Task<AuthSuccessResultDTO> Login(string login, string password)
+        public async Task<AuthSuccessResultDTO> Login(AccountLoginDTO loginRequest)
         {
-            var result = await authService.LogIn(login, password);
+            var result = await authService.LogIn(loginRequest.Login, loginRequest.Password);
             return new AuthSuccessResultDTO(result.Token, result.RoleName, result.AccountID);
         }
 
         public async Task<AuthSuccessResultDTO> Register(AccountCreationDTO creationDTO)
         {
             await authService.Register(new Core.Objects.Account(creationDTO.Login, null!, creationDTO.Email), creationDTO.Password);
-            return await Login(creationDTO.Login, creationDTO.Password);
+            return await Login(creationDTO);
         }
     }
 }

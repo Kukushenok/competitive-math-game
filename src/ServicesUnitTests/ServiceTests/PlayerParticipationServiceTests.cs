@@ -1,6 +1,7 @@
 ﻿using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Repositories.Exceptions;
+using CompetitiveBackend.Services.Exceptions;
 using CompetitiveBackend.Services.PlayerParticipationService;
 using Moq;
 
@@ -9,15 +10,23 @@ namespace ServicesUnitTests.ServiceTests
     public class PlayerParticipationServiceTests
     {
         private Mock<IPlayerParticipationRepository> _repository;
+        private Mock<ICompetitionRepository> _competitionRepo;
         private PlayerParticipationService _service;
         public PlayerParticipationServiceTests()
         {
             _repository = new Mock<IPlayerParticipationRepository>();
-            _service = new PlayerParticipationService(_repository.Object);
+            _competitionRepo = new Mock<ICompetitionRepository>();
+            _service = new PlayerParticipationService(_repository.Object, _competitionRepo.Object);
+        }
+        private Competition GetCompetition(int deltaStart, int deltaEnd, int id = 1)
+        {
+            DateTime now = DateTime.UtcNow;
+            return new Competition("a", "b", DateTime.UtcNow + TimeSpan.FromSeconds(deltaStart), DateTime.UtcNow + TimeSpan.FromSeconds(deltaEnd), 1);
         }
         [Fact]
         public async Task PlayerParticipationServiceTests_SubmitParticipation_UPDATE()
         {
+            _competitionRepo.Setup(x => x.GetCompetition(1)).ReturnsAsync(GetCompetition(-5,10));
             _repository.Setup(x => x.GetParticipation(0, 1)).ReturnsAsync(new PlayerParticipation(1, 0, 10));
             _repository.Setup(x => x.UpdateParticipation(It.IsAny<PlayerParticipation>()))
                 .Callback<PlayerParticipation>((p) =>
@@ -29,8 +38,34 @@ namespace ServicesUnitTests.ServiceTests
             await _service.SubmitParticipation(0, 1, 20);
         }
         [Fact]
+        public async Task PlayerParticipationServiceTests_SubmitParticipation_TOO_EARLY()
+        {
+            _competitionRepo.Setup(x => x.GetCompetition(1)).ReturnsAsync(GetCompetition(5, 10));
+            _repository.Setup(x => x.GetParticipation(0, 1)).Throws(new MissingDataException());
+            _repository.Setup(x => x.CreateParticipation(It.IsAny<PlayerParticipation>()))
+                .Callback<PlayerParticipation>((p) =>
+                {
+                    Assert.Fail("No no no!");
+                });
+            await Assert.ThrowsAsync<ChronologicalException>(async () => await _service.SubmitParticipation(0, 1, 20));
+        }
+        [Fact]
+        public async Task PlayerParticipationServiceTests_SubmitParticipation_TOO_LATE()
+        {
+            _competitionRepo.Setup(x => x.GetCompetition(1)).ReturnsAsync(GetCompetition(-10, -5));
+            _repository.Setup(x => x.GetParticipation(0, 1)).Throws(new MissingDataException());
+            _repository.Setup(x => x.CreateParticipation(It.IsAny<PlayerParticipation>()))
+                .Callback<PlayerParticipation>((p) =>
+                {
+                    Assert.Fail("No no no!");
+                });
+            await Assert.ThrowsAsync<ChronologicalException>(async () => await _service.SubmitParticipation(0, 1, 20));
+        }
+        [Fact]
         public async Task PlayerParticipationServiceTests_SubmitParticipation_DISCARD()
         {
+
+            _competitionRepo.Setup(x => x.GetCompetition(1)).ReturnsAsync(GetCompetition(-5, 10));
             _repository.Setup(x => x.GetParticipation(0, 1)).ReturnsAsync(new PlayerParticipation(1, 0, 10));
             _repository.Setup(x => x.UpdateParticipation(It.IsAny<PlayerParticipation>()))
                 .Callback<PlayerParticipation>((p) =>
@@ -42,6 +77,8 @@ namespace ServicesUnitTests.ServiceTests
         [Fact]
         public async Task PlayerParticipationServiceTests_SubmitParticipation_CREATE()
         {
+
+            _competitionRepo.Setup(x => x.GetCompetition(1)).ReturnsAsync(GetCompetition(-5, 10));
             _repository.Setup(x => x.GetParticipation(0, 1)).Throws(new MissingDataException());
             _repository.Setup(x => x.CreateParticipation(It.IsAny<PlayerParticipation>()))
                 .Callback<PlayerParticipation>((p) =>

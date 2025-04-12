@@ -55,6 +55,6 @@ namespace RepositoriesRealisation.Models
     public class CompetitionModelLevelData: OneToOneEntity<CompetitionModel>
     {
         [Column("level_data", TypeName = "bytea")]
-        public byte[] LevelData { get; set; }
+        public byte[]? LevelData { get; set; }
     }
 }

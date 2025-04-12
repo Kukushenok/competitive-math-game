@@ -1,5 +1,6 @@
 ﻿using CompetitiveBackend.Core.Objects;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Logging;
 using RepositoriesRealisation;
 using RepositoriesRealisation.Models;
@@ -26,13 +27,14 @@ namespace CompetitiveBackend.Repositories
         {
         }
 
-        public async Task CreateCompetition(Competition c)
+        public async Task<int> CreateCompetition(Competition c)
         {
             using BaseDbContext context = await GetDbContext();
             try
             {
-                await context.Competition.AddAsync(new RepositoriesRealisation.Models.CompetitionModel(c.Name, c.Description, c.StartDate.EnsureUTC(), c.EndDate.EnsureUTC()));
+                EntityEntry<CompetitionModel> md = await context.Competition.AddAsync(new RepositoriesRealisation.Models.CompetitionModel(c.Name, c.Description, c.StartDate.EnsureUTC(), c.EndDate.EnsureUTC()));
                 await context.SaveChangesAsync();
+                return md.Entity.Id;
             }
             catch (Exception ex) when (ex is OperationCanceledException ||
                                        ex is DbUpdateException ||

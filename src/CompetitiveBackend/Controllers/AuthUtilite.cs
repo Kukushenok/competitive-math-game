@@ -1,4 +1,4 @@
-﻿using CompetitiveBackend.BackendUsage;
+﻿using CompetitiveBackend.BackendUsage.UseCases;
 using CompetitiveBackend.Core.Auth;
 using Microsoft.Extensions.Primitives;
 using System.Security.Claims;

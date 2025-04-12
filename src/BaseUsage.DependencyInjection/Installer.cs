@@ -1,4 +1,4 @@
-﻿using CompetitiveBackend.BackendUsage;
+﻿using CompetitiveBackend.BackendUsage.UseCases;
 using CompetitiveBackend.BaseUsage;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,6 +11,8 @@ namespace CompetitiveBackend.BaseUsage.DependencyInjection
             coll.AddScoped<IAuthUseCase, AuthUseCase>();
             coll.AddScoped<ISelfUseCase, SelfPlayerProfileUseCase>();
             coll.AddScoped<IPlayerProfileUseCase, PlayerUseCase>();
+            coll.AddScoped<ICompetitionWatchUseCase, CompetitionWatchUseCase>();
+            coll.AddScoped<ICompetitionEditUseCase, CompetitionEditUseCase>();
             return coll;
         }
     }

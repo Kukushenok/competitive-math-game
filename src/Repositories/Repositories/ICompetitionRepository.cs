@@ -20,7 +20,7 @@ namespace CompetitiveBackend.Repositories
         /// </summary>
         /// <param name="c">Соревнование. ID задан в null</param>
         /// <returns></returns>
-        public Task CreateCompetition(Competition c);
+        public Task<int> CreateCompetition(Competition c);
         /// <summary>
         /// Обновить данные о соревновании
         /// </summary>

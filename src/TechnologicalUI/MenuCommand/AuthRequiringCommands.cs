@@ -1,4 +1,4 @@
-﻿using CompetitiveBackend.BackendUsage;
+﻿using CompetitiveBackend.BackendUsage.UseCases;
 using TechnologicalUI.Command;
 
 namespace TechnologicalUI.MenuCommand

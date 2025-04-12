@@ -1,4 +1,4 @@
 ﻿namespace CompetitiveBackend.BackendUsage.Objects
 {
-    public record AccountCreationDTO(string Login, string Password, string? Email);
+    public record AccountCreationDTO(string Login, string Password, string? Email): AccountLoginDTO(Login, Password);
 }

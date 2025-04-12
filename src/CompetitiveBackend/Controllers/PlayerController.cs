@@ -1,4 +1,5 @@
-﻿using CompetitiveBackend.BackendUsage;
+﻿using CompetitiveBackend.BackendUsage.Objects;
+using CompetitiveBackend.BackendUsage.UseCases;
 using CompetitiveBackend.Core.Auth;
 using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
@@ -12,14 +13,12 @@ namespace CompetitiveBackend.Controllers
 {
     [ApiController]
     [Produces("application/json")]
-    [Route($"{APIConsts.ROOTV}/player/")]
+    [Route($"{APIConsts.ROOTV1}/player/")]
     public class PlayerController : ControllerBase
     {
         private IPlayerProfileUseCase _profileUseCase;
-        private LinkGenerator _linkGenerator;
-        public PlayerController(LinkGenerator generator, IPlayerProfileUseCase useCase)
+        public PlayerController(IPlayerProfileUseCase useCase)
         {
-            _linkGenerator = generator;
             _profileUseCase = useCase;
         }
         /// <summary>
@@ -27,23 +26,21 @@ namespace CompetitiveBackend.Controllers
         /// </summary>
         /// <param name="profileID">Идентификатор игрока</param>
         /// <returns>Данные о профиле</returns>
-        [HttpGet("{profileID}/profile")]
-        public async Task<ActionResult<PlayerProfileDto>> GetPlayerProfile(int profileID)
+        [HttpGet("{profileID}")]
+        public async Task<ActionResult<PlayerProfileDTO>> GetPlayerProfile(int profileID)
         {
-            PlayerProfile p = await _profileUseCase.GetProfile(profileID);
-            string? pic = _linkGenerator.GetUriByAction(HttpContext, nameof(GetPlayerImage), "Player", new { profileID });
-            return new ObjectResult(new PlayerProfileDto(p.Id!.Value, p.Name, p.Description, pic!));
+            return await _profileUseCase.GetProfile(profileID);
         }
         /// <summary>
         /// Получить информацию о изображении
         /// </summary>
         /// <param name="profileID">Идентификатор игрока</param>
         /// <returns></returns>
-        [HttpGet("{profileID}/pic")]
+        [HttpGet("{profileID}/image")]
         public async Task<FileResult> GetPlayerImage(int profileID)
         {
-            LargeData data = await _profileUseCase.GetProfileImage(profileID);
-            return File(data.Data, "application/octet-stream", "Image.jpg");
+            var data = await _profileUseCase.GetProfileImage(profileID);
+            return data.ToFileResult($"player_{profileID}.jpg");
         }
     }
 }

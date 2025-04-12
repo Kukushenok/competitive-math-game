@@ -1,15 +1,18 @@
 ﻿using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Repositories.Exceptions;
+using CompetitiveBackend.Services.Exceptions;
 
 namespace CompetitiveBackend.Services.PlayerParticipationService
 {
     public class PlayerParticipationService : IPlayerParticipationService
     {
         private readonly IPlayerParticipationRepository _playerParticipationRepository;
-        public PlayerParticipationService(IPlayerParticipationRepository playerParticipationRepository)
+        private readonly ICompetitionRepository _competitionRepository;
+        public PlayerParticipationService(IPlayerParticipationRepository playerParticipationRepository, ICompetitionRepository competitionRepository)
         {
             _playerParticipationRepository = playerParticipationRepository;
+            _competitionRepository = competitionRepository;
         }
 
         public async Task DeleteParticipation(int playerID, int competitionID)
@@ -35,6 +38,12 @@ namespace CompetitiveBackend.Services.PlayerParticipationService
         public async Task SubmitParticipation(int userID, int competitionID, int score)
         {
             PlayerParticipation? participation = null;
+            Competition c = await _competitionRepository.GetCompetition(competitionID);
+            DateTime current = DateTime.UtcNow;
+            if (current < c.StartDate || current > c.EndDate)
+            {
+                throw new ChronologicalException("Could not participate; competition " + (current > c.EndDate ? "has ended" : "is not started yet"));
+            }
             try
             {
                 participation = await _playerParticipationRepository.GetParticipation(userID, competitionID);

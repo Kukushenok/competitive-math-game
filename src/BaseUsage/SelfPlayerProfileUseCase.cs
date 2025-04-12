@@ -1,4 +1,5 @@
-﻿using CompetitiveBackend.BackendUsage;
+﻿using CompetitiveBackend.BackendUsage.Objects;
+using CompetitiveBackend.BackendUsage.UseCases;
 using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Services;
 
@@ -12,28 +13,28 @@ namespace CompetitiveBackend.BaseUsage
             this._playerProfileService = playerProfileService;
         }
 
-        public async Task<LargeData> GetMyImage()
+        public async Task<LargeDataDTO> GetMyImage()
         {
             PlayerAuthCheck(out int id);
-            return await _playerProfileService.GetPlayerProfileImage(id);
+            return (await _playerProfileService.GetPlayerProfileImage(id)).Convert();
         }
 
-        public async Task<PlayerProfile> GetMyProfile()
+        public async Task<PlayerProfileDTO> GetMyProfile()
         {
             PlayerAuthCheck(out int id);
-            return await _playerProfileService.GetPlayerProfile(id);
+            return (await _playerProfileService.GetPlayerProfile(id)).Convert();
         }
 
-        public async Task UpdateMyImage(LargeData data)
+        public async Task UpdateMyImage(LargeDataDTO data)
         {
             PlayerAuthCheck(out int id);
-            await _playerProfileService.SetPlayerProfileImage(id, data);
+            await _playerProfileService.SetPlayerProfileImage(id, data.Convert());
         }
 
-        public async Task UpdateMyPlayerProfile(PlayerProfile p)
+        public async Task UpdateMyPlayerProfile(PlayerProfileDTO p)
         {
             PlayerAuthCheck(out int id);
-            PlayerProfile updating = new PlayerProfile(p.Name, p.Description, id);
+            PlayerProfile updating = new PlayerProfile(p.Name ?? string.Empty, p.Description, id);
             await _playerProfileService.UpdatePlayerProfile(updating);
         }
 

@@ -1,5 +1,5 @@
-﻿using CompetitiveBackend.BackendUsage;
-using CompetitiveBackend.BackendUsage.Objects;
+﻿using CompetitiveBackend.BackendUsage.Objects;
+using CompetitiveBackend.BackendUsage.UseCases;
 using TechnologicalUI.Command;
 using TechnologicalUI.MenuCommand;
 

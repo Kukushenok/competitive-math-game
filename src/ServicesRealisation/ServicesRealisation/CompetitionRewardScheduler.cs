@@ -12,6 +12,7 @@ namespace CompetitiveBackend.Services.CompetitionService
     }
     public class CompetitionRewardScheduler : ICompetitionRewardScheduler, ITimeScheduledTaskSubscriber
     {
+        private const string SCHED_CATEGORY = "Competition";
         protected IPlayerRewardRepository _rewardRepository;
         protected ITimeScheduler _timeScheduler;
         public CompetitionRewardScheduler(IPlayerRewardRepository rewardRepository, ITimeScheduler scheduler)
@@ -38,12 +39,12 @@ namespace CompetitiveBackend.Services.CompetitionService
 
         public async Task OnRecievedMessage(TimeScheduledTaskData data)
         {
-            if(data.Category == "Competition")
+            if(data.Category == SCHED_CATEGORY)
                 await _rewardRepository.GrantRewardsFor(data.Identifier);
         }
         private TimeScheduledTaskData GetSchedTask(Competition c)
         {
-            return new TimeScheduledTaskData(c.Id!.Value, "Competition", new DateTimeOffset(c.EndDate), c.Name);
+            return new TimeScheduledTaskData(c.Id!.Value, SCHED_CATEGORY, new DateTimeOffset(c.EndDate), c.Name);
         }
     }
 }

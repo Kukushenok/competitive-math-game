@@ -1,4 +1,4 @@
-﻿using CompetitiveBackend.BackendUsage;
+﻿using CompetitiveBackend.BackendUsage.UseCases;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -23,9 +23,9 @@ namespace CompetitiveBackend.Services.CompetitionService
         public async Task CreateCompetition(Competition c)
         {
             if (!_validator.IsValid(c, out string? msg)) throw new InvalidArgumentsException(msg!);
-            if (c.StartDate < DateTime.Now) throw new InvalidArgumentsException("Competition should be in the future");
-            await _competitionRepository.CreateCompetition(c);
-            await _scheduler.OnCompetitionCreated(c);
+            if (c.StartDate < DateTime.Now) throw new ChronologicalException("Competition should be started in the future");
+            int idx = await _competitionRepository.CreateCompetition(c);
+            await _scheduler.OnCompetitionCreated(new Competition(c.Name, c.Description, c.StartDate, c.EndDate, idx));
         }
 
         public async Task<IEnumerable<Competition>> GetActiveCompetitions()
@@ -65,8 +65,8 @@ namespace CompetitiveBackend.Services.CompetitionService
                 endDate ?? c.EndDate,
                 c.Id);
             if (!_validator.IsValid(c, out string? msg)) throw new InvalidArgumentsException(msg!);
-            if (isStarted && c.StartDate >= dt) throw new InvalidArgumentsException("Competition cannot be delayed after its start.");
-            if (isEnded && c.EndDate >= dt) throw new InvalidArgumentsException("Competition cannot be prolonged after its end. Create a new one!");
+            if (isStarted && c.StartDate >= dt) throw new ChronologicalException("Competition cannot be delayed after its start.");
+            if (isEnded && c.EndDate >= dt) throw new ChronologicalException("Competition cannot be prolonged after its end.");
             await _competitionRepository.UpdateCompetition(c);
             await _scheduler.OnCompetitionUpdated(c);
         }

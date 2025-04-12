@@ -1,4 +1,5 @@
-﻿using CompetitiveBackend.BackendUsage;
+﻿using CompetitiveBackend.BackendUsage.Objects;
+using CompetitiveBackend.BackendUsage.UseCases;
 using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Services;
 
@@ -12,14 +13,14 @@ namespace CompetitiveBackend.BaseUsage
             _playerProfileService = playerProfileService;
         }
 
-        public async Task<PlayerProfile> GetProfile(int id)
+        public async Task<PlayerProfileDTO> GetProfile(int id)
         {
-            return await _playerProfileService.GetPlayerProfile(id);
+            return (await _playerProfileService.GetPlayerProfile(id)).Convert();
         }
 
-        public async Task<LargeData> GetProfileImage(int id)
+        public async Task<LargeDataDTO> GetProfileImage(int id)
         {
-            return await _playerProfileService.GetPlayerProfileImage(id);
+            return (await _playerProfileService.GetPlayerProfileImage(id)).Convert();
         }
     }
 }

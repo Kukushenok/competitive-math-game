@@ -1,4 +1,5 @@
-﻿using CompetitiveBackend.Core.Auth;
+﻿using CompetitiveBackend.BackendUsage.UseCases;
+using CompetitiveBackend.Core.Auth;
 
 namespace CompetitiveBackend.BackendUsage
 {

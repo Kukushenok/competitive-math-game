@@ -1,4 +1,4 @@
-﻿using CompetitiveBackend.BackendUsage;
+﻿using CompetitiveBackend.BackendUsage.UseCases;
 using CompetitiveBackend.Core.Objects;
 using TechnologicalUI.Command;
 

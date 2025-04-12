@@ -1,4 +1,4 @@
-﻿namespace CompetitiveBackend.BackendUsage
+﻿namespace CompetitiveBackend.BackendUsage.UseCases
 {
     public interface IAuthableUseCase<T>: IDisposable where T: IAuthableUseCase<T>
     {
