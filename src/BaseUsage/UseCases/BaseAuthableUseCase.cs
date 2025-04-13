@@ -1,9 +1,8 @@
-﻿using CompetitiveBackend.BackendUsage;
-using CompetitiveBackend.BackendUsage.Exceptions;
+﻿using CompetitiveBackend.BackendUsage.Exceptions;
 using CompetitiveBackend.Core.Auth;
 using CompetitiveBackend.Services;
 
-namespace CompetitiveBackend.BaseUsage
+namespace CompetitiveBackend.BaseUsage.UseCases
 {
     public class BaseAuthableUseCase<T> : AuthableUseCase<T> where T : BaseAuthableUseCase<T>
     {

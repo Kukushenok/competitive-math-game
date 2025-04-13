@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CompetitiveBackend.BaseUsage
+namespace CompetitiveBackend.BaseUsage.UseCases
 {
     public class RewardDescriptionEditUseCase : BaseAuthableUseCase<RewardDescriptionEditUseCase>, IRewardDescriptionEditUseCase
     {

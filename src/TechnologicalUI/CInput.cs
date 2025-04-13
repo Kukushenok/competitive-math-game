@@ -1,4 +1,5 @@
-﻿using CompetitiveBackend.Core.Objects;
+﻿using CompetitiveBackend.BackendUsage.Objects;
+using CompetitiveBackend.Core.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,40 +8,58 @@ using System.Threading.Tasks;
 
 namespace TechnologicalUI
 {
-    public static class CInput
+    public interface IConsoleInput
     {
-        public static string PromtInput(string promt)
+        public string PromtInput(string promt = "> ");
+        public byte[] ReadData(string promt = "> ");
+    }
+    public interface IConsoleOutput
+    {
+        public void PromtOutput(string promt);
+        public void SaveData(byte[] largeData, string promt = "");
+    }
+    public interface IConsole : IConsoleInput, IConsoleOutput { }
+    public class ConsoleInOut : IConsole
+    { 
+        public string PromtInput(string promt = "> ")
         {
             Console.Write(promt);
             return Console.ReadLine()!;
         }
-        public static int ReadInt(string promt = "> ")
+
+        public void PromtOutput(string promt)
         {
-            return Convert.ToInt32(PromtInput(promt));
+            Console.WriteLine(promt);
         }
-        public static string ReadStr(string promt = "> ")
+
+        public byte[] ReadData(string promt = "> ")
         {
-            return PromtInput(promt);
-        }
-        public static LargeData ReadLD(string promt = "> ")
-        {
-            return LoadFileDialog(promt);
-        }
-        public static float ReadFloat(string promt = "> ")
-        {
-            return (float)Convert.ToDouble(PromtInput(promt));
-        }
-        public static LargeData LoadFileDialog(string promt)
-        {
-            string frmt = PromtInput($"{promt}. Введите дирекорию: \n> ");
+            Console.Write(promt);
+            Console.Write("[Введите путь к файлу] ");
+            string path = Console.ReadLine()!;
             try
             {
-                byte[] data = File.ReadAllBytes(frmt);
-                return new LargeData(data);
+                byte[] data = File.ReadAllBytes(path);
+                return data;
             }
             catch(Exception ex)
             {
-                throw new FormatException("Could not load file", ex);
+                throw new FormatException(ex.Message);
+            }
+        }
+
+        public void SaveData(byte[] largeData, string promt = "")
+        {
+            Console.Write(promt);
+            Console.Write("[Введите путь к файлу] ");
+            string path = Console.ReadLine()!;
+            try
+            {
+                File.WriteAllBytes(path, largeData);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Ошибка при сохранении файла: {ex.Message}");
             }
         }
     }

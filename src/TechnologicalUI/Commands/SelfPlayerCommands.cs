@@ -1,5 +1,6 @@
-﻿using CompetitiveBackend.BackendUsage.UseCases;
-using CompetitiveBackend.Core.Objects;
+﻿using CompetitiveBackend.BackendUsage.Objects;
+using CompetitiveBackend.BackendUsage.UseCases;
+using System;
 using TechnologicalUI.Command;
 using TechnologicalUI.MenuCommand;
 
@@ -12,38 +13,35 @@ namespace TechnologicalUI.Commands
         {
             selfUseCase = useCase;
         }
-        private async Task GetMyProfile()
+        private async Task GetMyProfile(IConsole console)
         {
             using(var self = await Auth(selfUseCase))
             {
                 var p = self.GetMyProfile().GetAwaiter().GetResult();
-                Console.WriteLine($"Описание: {p.Description}");
-                Console.WriteLine($"Логин: {p.Name}");
-                Console.WriteLine($"ID: {p.Id}");
+                console.Print(p);
             }
         }
-        private async Task GetMyImage()
+        private async Task GetMyImage(IConsole console)
         {
             using (var self = await Auth(selfUseCase))
             {
                 var p = self.GetMyImage().GetAwaiter().GetResult();
-                string path = CInput.PromtInput("Сохранить в файл: ");
-                await File.WriteAllBytesAsync(path, p.Data);
+                console.Print(p);
             }
         }
-        private async Task UpdateMyProfile()
+        private async Task UpdateMyProfile(IConsole console)
         {
             using (var self = await Auth(selfUseCase))
             {
-                PlayerProfile p = new PlayerProfile(CInput.ReadStr("Логин: "), CInput.ReadStr("Описание: "));
+                PlayerProfileDTO p = console.ReadPlayerProfileDTO();
                 await self.UpdateMyPlayerProfile(p);
             }
         }
-        private async Task UpdateMyImage()
+        private async Task UpdateMyImage(IConsole console)
         {
             using(var self = await Auth(selfUseCase))
             {
-                await self.UpdateMyImage(CInput.ReadLD("Изображение профиля: "));
+                await self.UpdateMyImage(console.ReadLargeDataDTO());
             }
         }
         protected override IEnumerable<IConsoleMenuCommand> GetCommands()
@@ -53,6 +51,5 @@ namespace TechnologicalUI.Commands
             yield return new CallbackConsoleMenuCommand("Обновить мой профиль", TaskDecorator.Sync(UpdateMyProfile), IsAuthed);
             yield return new CallbackConsoleMenuCommand("Обновить мою картинку", TaskDecorator.Sync(UpdateMyImage), IsAuthed);
         }
-        public override bool Enabled { get => IsAuthed(); }
     }
 }

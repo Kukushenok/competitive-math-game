@@ -8,7 +8,7 @@
             Name = name;
         }
 
-        public abstract Task Execute();
+        public abstract Task Execute(IConsole console);
 
         public string GetLabel() => Name;
         public virtual bool Enabled { get => true; }

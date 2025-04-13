@@ -17,7 +17,7 @@ namespace TechnologicalUI.MenuCommand
         {
             return something.Auth(GetToken());
         }
-
+        public override bool Enabled { get => IsAuthed(); }
     }
     
 }

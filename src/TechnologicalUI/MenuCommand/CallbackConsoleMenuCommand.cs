@@ -9,7 +9,7 @@ namespace TechnologicalUI.Command
 {
     public class CallbackConsoleMenuCommand : NamedConsoleCommand
     {
-        private Action action;
+        private Action<IConsole> action;
         private Func<bool>? enabled;
         public override bool Enabled 
         {
@@ -19,15 +19,15 @@ namespace TechnologicalUI.Command
                 return enabled();
             }
         }
-        public CallbackConsoleMenuCommand(string name, Action action, Func<bool>? Enabled = null) : base(name)
+        public CallbackConsoleMenuCommand(string name, Action<IConsole> action, Func<bool>? Enabled = null) : base(name)
         {
             this.action = action;
             this.enabled = Enabled;
         }
 
-        public override async Task Execute()
+        public override async Task Execute(IConsole console)
         {
-            await Task.Run(action);
+            await Task.Run(() => action(console));
         }
 
     }

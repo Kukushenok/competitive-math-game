@@ -14,18 +14,18 @@ namespace TechnologicalUI.Commands
             authCache = cache;
             this.useCase = useCase;
         }
-        private async Task Register()
+        private async Task Register(IConsole console)
         {
-            AccountCreationDTO dto = new(CInput.ReadStr("Логин: "), CInput.ReadStr("Пароль: "), CInput.ReadStr("Электронная почта: "));
+            AccountCreationDTO dto = console.ReadAccountCreation();
             var res = await useCase.Register(dto);
             authCache.Login(res);
         }
-        private async Task Login()
+        private async Task Login(IConsole console)
         {
-            var res = await useCase.Login(CInput.ReadStr("Логин: "), CInput.ReadStr("Пароль: "));
+            var res = await useCase.Login(console.ReadAccountLogin());
             authCache.Login(res);
         }
-        private Task Logoff()
+        private Task Logoff(IConsole console)
         {
             authCache.LogOff();
             return Task.CompletedTask;
@@ -39,9 +39,9 @@ namespace TechnologicalUI.Commands
     }
     public static class TaskDecorator
     {
-        public static Action Sync(this Func<Task> tsk)
+        public static Action<IConsole> Sync(this Func<IConsole, Task> tsk)
         {
-            return () => tsk().GetAwaiter().GetResult();
+            return (IConsole c) => tsk(c).GetAwaiter().GetResult();
         }
     }
 }

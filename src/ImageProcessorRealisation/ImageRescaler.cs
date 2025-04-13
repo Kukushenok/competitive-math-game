@@ -18,6 +18,7 @@ namespace ImageProcessorRealisation
         }
         public async Task<LargeData> Process(LargeData data)
         {
+            if (data.Data == null || data.Data.Length == 0) throw new BadImageException("Empty image");
             try
             {
                 LargeData result;

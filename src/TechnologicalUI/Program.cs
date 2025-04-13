@@ -26,7 +26,7 @@ namespace TechnologicalUI
         public async Task StartAsync(CancellationToken cancellationToken = default)
         {
             RootCommand cmd = Services.GetService<RootCommand>()!;
-            await cmd.Execute();
+            await cmd.Execute(new ConsoleInOut());
             await StopAsync();
             Environment.Exit(0);
         }

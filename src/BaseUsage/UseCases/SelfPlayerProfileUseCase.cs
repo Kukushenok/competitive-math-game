@@ -4,14 +4,14 @@ using CompetitiveBackend.BaseUsage.Converters;
 using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Services;
 
-namespace CompetitiveBackend.BaseUsage
+namespace CompetitiveBackend.BaseUsage.UseCases
 {
     public class SelfPlayerProfileUseCase : BaseAuthableUseCase<SelfPlayerProfileUseCase>, ISelfUseCase
     {
         private IPlayerProfileService _playerProfileService;
         public SelfPlayerProfileUseCase(IAuthService authService, IPlayerProfileService playerProfileService) : base(authService)
         {
-            this._playerProfileService = playerProfileService;
+            _playerProfileService = playerProfileService;
         }
 
         public async Task<LargeDataDTO> GetMyImage()

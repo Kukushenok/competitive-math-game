@@ -1,5 +1,5 @@
 ﻿using CompetitiveBackend.BackendUsage.UseCases;
-using CompetitiveBackend.BaseUsage;
+using CompetitiveBackend.BaseUsage.UseCases;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CompetitiveBackend.BaseUsage.DependencyInjection

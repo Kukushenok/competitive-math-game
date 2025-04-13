@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CompetitiveBackend.BaseUsage
+namespace CompetitiveBackend.BaseUsage.UseCases
 {
     public class PlayerParticipationWatchUseCase : IPlayerParticipationWatchUseCase
     {
@@ -21,7 +21,7 @@ namespace CompetitiveBackend.BaseUsage
 
         public async Task<IEnumerable<PlayerParticipationDTO>> GetLeaderboard(int competition, DataLimiterDTO limiter)
         {
-            return from n in (await _service.GetLeaderboard(competition, limiter.Convert())) select n.Convert();
+            return from n in await _service.GetLeaderboard(competition, limiter.Convert()) select n.Convert();
         }
 
         public async Task<PlayerParticipationDTO> GetParticipation(int competition, int accountID)

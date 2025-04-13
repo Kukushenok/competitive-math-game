@@ -4,7 +4,7 @@ using CompetitiveBackend.BaseUsage.Converters;
 using CompetitiveBackend.Services;
 using System.Text;
 
-namespace CompetitiveBackend.BaseUsage
+namespace CompetitiveBackend.BaseUsage.UseCases
 {
     public class RewardDescriptionWatchUseCase : IRewardDescriptionWatchUseCase
     {

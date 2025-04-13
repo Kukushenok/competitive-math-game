@@ -2,7 +2,7 @@
 using CompetitiveBackend.BackendUsage.UseCases;
 using CompetitiveBackend.Services;
 
-namespace CompetitiveBackend.BaseUsage
+namespace CompetitiveBackend.BaseUsage.UseCases
 {
     public class AuthUseCase : IAuthUseCase
     {

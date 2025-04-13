@@ -1,7 +1,7 @@
 ﻿using CompetitiveBackend.BackendUsage.UseCases;
 using CompetitiveBackend.Core.Auth;
 
-namespace CompetitiveBackend.BackendUsage
+namespace CompetitiveBackend.BaseUsage.UseCases
 {
     public abstract class AuthableUseCase<T> : IDisposable, IAuthableUseCase<T> where T : AuthableUseCase<T>
     {

@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CompetitiveBackend.BaseUsage
+namespace CompetitiveBackend.BaseUsage.UseCases
 {
     public class CompetitionWatchUseCase : ICompetitionWatchUseCase
     {
@@ -23,12 +23,12 @@ namespace CompetitiveBackend.BaseUsage
 
         public async Task<IEnumerable<CompetitionDTO>> GetActiveCompetitions()
         {
-            return from n in (await _service.GetActiveCompetitions()) select n.Convert();
+            return from n in await _service.GetActiveCompetitions() select n.Convert();
         }
 
         public async Task<IEnumerable<CompetitionDTO>> GetAllCompetitions(DataLimiterDTO limiter)
         {
-            return from n in (await _service.GetAllCompetitions(limiter.Convert())) select n.Convert();
+            return from n in await _service.GetAllCompetitions(limiter.Convert()) select n.Convert();
         }
 
         public async Task<CompetitionDTO> GetCompetition(int competitionID)
@@ -43,7 +43,7 @@ namespace CompetitiveBackend.BaseUsage
 
         public async Task<IEnumerable<CompetitionRewardDTO>> GetRewardsFor(int competitionID)
         {
-            return from n in (await _rewardService.GetCompetitionRewards(competitionID)) select n.Convert();
+            return from n in await _rewardService.GetCompetitionRewards(competitionID) select n.Convert();
         }
 
     }

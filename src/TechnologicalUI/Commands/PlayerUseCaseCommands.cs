@@ -1,5 +1,5 @@
-﻿using CompetitiveBackend.BackendUsage.UseCases;
-using CompetitiveBackend.Core.Objects;
+﻿using CompetitiveBackend.BackendUsage.Objects;
+using CompetitiveBackend.BackendUsage.UseCases;
 using TechnologicalUI.Command;
 
 namespace TechnologicalUI.Commands
@@ -11,18 +11,16 @@ namespace TechnologicalUI.Commands
         {
             _playerProfileUseCase = playerProfileUseCase;
         }
-        private async Task GetPlayerProfile()
+        private async Task GetPlayerProfile(IConsole console)
         {
-            PlayerProfile p = await _playerProfileUseCase.GetProfile(CInput.ReadInt("Введите ID профиля: "));
-            Console.WriteLine($"Описание: {p.Description}");
-            Console.WriteLine($"Логин: {p.Name}");
-            Console.WriteLine($"ID: {p.Id}");
+            PlayerProfileDTO p = await _playerProfileUseCase.GetProfile(console.ReadInt("Введите ID профиля: "));
+            console.Print(p);
         }
-        private async Task GetPlayerProfileImage()
+        private Task GetPlayerProfileImage(IConsole console)
         {
-            var p = _playerProfileUseCase.GetProfileImage(CInput.ReadInt("Введите ID профиля: ")).GetAwaiter().GetResult();
-            string path = CInput.PromtInput("Сохранить в файл: ");
-            await File.WriteAllBytesAsync(path, p.Data);
+            var p = _playerProfileUseCase.GetProfileImage(console.ReadInt("Введите ID профиля: ")).GetAwaiter().GetResult();
+            console.Print(p);
+            return Task.CompletedTask;
         }
         protected override IEnumerable<IConsoleMenuCommand> GetCommands()
         {

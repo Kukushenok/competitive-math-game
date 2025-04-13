@@ -3,7 +3,7 @@ using CompetitiveBackend.BackendUsage.UseCases;
 using CompetitiveBackend.BaseUsage.Converters;
 using CompetitiveBackend.Services;
 
-namespace CompetitiveBackend.BaseUsage
+namespace CompetitiveBackend.BaseUsage.UseCases
 {
     public class CompetitionEditUseCase : BaseAuthableUseCase<CompetitionEditUseCase>, ICompetitionEditUseCase
     {

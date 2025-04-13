@@ -4,7 +4,7 @@ using CompetitiveBackend.BaseUsage.Converters;
 using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Services;
 
-namespace CompetitiveBackend.BaseUsage
+namespace CompetitiveBackend.BaseUsage.UseCases
 {
     public class PlayerUseCase : IPlayerProfileUseCase
     {
