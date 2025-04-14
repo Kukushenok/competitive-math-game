@@ -15,7 +15,8 @@ namespace RepositoriesRealisation.Models
     public class PlayerParticipationModel
     {
         public CompetitionModel Competition { get; set; } = null!;
-        public AccountModel Account { get; set; } = null!;
+        
+        public PlayerProfileModel Account { get; set; } = null!;
         [ForeignKey("competition_id"), Column("competition_id", TypeName ="int")]
         public int CompetitionID { get; set; }
         [ForeignKey("account_id"), Column("account_id", TypeName = "int")]

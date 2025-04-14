@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CompetitiveBackend.Controllers
 {
-    [Route($"{APIConsts.ROOTV1}/competitions/")]
+    [Route($"{APIConsts.ROOTV1}/{APIConsts.COMPETITION}/")]
     [ApiController]
     public class CompetitionController : ControllerBase
     {

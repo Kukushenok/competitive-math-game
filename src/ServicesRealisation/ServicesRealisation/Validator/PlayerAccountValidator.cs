@@ -30,7 +30,9 @@ namespace ServicesRealisation.ServicesRealisation.Validator
 
         public bool IsValid(Account value, out string? msg)
         {
-            return nameLength.IsValid(value.Login?.Length ?? 0, out msg);
+            msg = null;
+            if (value.Login?.Contains(' ') ?? false) msg = "Login should not have spaces";
+            return msg == null && nameLength.IsValid(value.Login?.Length ?? 0, out msg);
         }
 
         public bool IsValid(AccountCreationData value, out string? msg)

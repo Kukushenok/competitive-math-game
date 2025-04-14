@@ -13,10 +13,8 @@ namespace RepositoriesRealisation.DatabaseObjects
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("id")]
         public int Id { get; set; }
-        
         [Column("login", TypeName = "varchar(32)")]
-        public string Name { get; set; }
-
+        public string Login { get; set; }
         [Column("email", TypeName = "varchar(32)")]
         public string? Email { get; set; }
 
@@ -25,9 +23,8 @@ namespace RepositoriesRealisation.DatabaseObjects
 
         [Column("privilegy_level")]
         public int AccountPrivilegyLevel { get; set; }
-        [Column("description", TypeName = "varchar(128)")]
-        public string? Description { get; set; }
-        public AccountModelProfileImage ProfileImage { get; set; }
+        public virtual AccountModelProfileImage ProfileImage { get; set; }
+        public virtual PlayerProfileModel Profile { get; set; }
         public AccountModel()
         {
 
@@ -36,16 +33,26 @@ namespace RepositoriesRealisation.DatabaseObjects
         public AccountModel(Account coreObject, Role role)
         {
             Id = coreObject.Id ?? 0;
-            Name = coreObject.Login;
+            Login = coreObject.Login;
+            Profile = new PlayerProfileModel() { Id = coreObject.Id ?? 0, Name = coreObject.Login };
             Email = coreObject.Email;
             PasswordHash = coreObject.PasswordHash;
             AccountPrivilegyLevel = PrivilegyRoleResolver.Resolve(role);
         }
-        public Account ToCoreAccount()
+        public Account ToCoreModel()
         {
-            return new Account(Name, PasswordHash, Email, Id);
+            return new Account(Login, PasswordHash, Email, Id);
         }
-        public PlayerProfile ToCoreProfile()
+
+    }
+    [Table("account")]
+    public class PlayerProfileModel: OneToOneEntity<AccountModel>
+    {
+        [Column("username", TypeName = "varchar(32)")]
+        public string Name { get; set; }
+        [Column("description", TypeName = "varchar(128)")]
+        public string? Description { get; set; }
+        public PlayerProfile ToCoreModel()
         {
             return new PlayerProfile(Name, Description, Id);
         }

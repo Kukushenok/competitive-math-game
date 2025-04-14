@@ -1,6 +1,7 @@
 create table if not exists account(
 	id int generated always as identity primary key,
 	login varchar(32) unique not null, 
+	username varchar(32) not null,
 	email varchar(32),
 	password_hash varchar,
 	privilegy_level int,

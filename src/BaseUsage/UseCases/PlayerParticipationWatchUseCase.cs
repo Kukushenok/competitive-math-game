@@ -26,7 +26,7 @@ namespace CompetitiveBackend.BaseUsage.UseCases
 
         public async Task<PlayerParticipationDTO> GetParticipation(int competition, int accountID)
         {
-            return (await _service.GetParticipation(competition, accountID)).Convert();
+            return (await _service.GetParticipation(accountID, competition)).Convert();
         }
     }
     public class PlayerParticipationUseCase : BaseAuthableUseCase<PlayerParticipationUseCase>, IPlayerParticipationUseCase

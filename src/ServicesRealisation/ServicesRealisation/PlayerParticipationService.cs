@@ -27,7 +27,7 @@ namespace CompetitiveBackend.Services.PlayerParticipationService
 
         public async Task<PlayerParticipation> GetParticipation(int userID, int competitionID)
         {
-            return await _playerParticipationRepository.GetParticipation(userID, competitionID);
+            return await _playerParticipationRepository.GetParticipation(userID, competitionID, true, true);
         }
 
         public async Task<IEnumerable<PlayerParticipation>> GetPlayerParticipations(int userID, DataLimiter limiter)

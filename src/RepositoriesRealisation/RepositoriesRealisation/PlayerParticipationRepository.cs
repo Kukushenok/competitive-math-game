@@ -92,7 +92,7 @@ namespace CompetitiveBackend.Repositories
         }
         private PlayerParticipation FromModel(PlayerParticipationModel model)
         {
-            return new PlayerParticipation(model.CompetitionID, model.AccountID, model.Score, model.Account?.ToCoreProfile(), model.Competition?.ToCoreModel());
+            return new PlayerParticipation(model.CompetitionID, model.AccountID, model.Score, model.Account?.ToCoreModel(), model.Competition?.ToCoreModel());
         }
 
         public async Task<IEnumerable<PlayerParticipation>> GetPlayerParticipations(int accountID, DataLimiter limiter, bool bindPlayer = false, bool bindCompetition = true)

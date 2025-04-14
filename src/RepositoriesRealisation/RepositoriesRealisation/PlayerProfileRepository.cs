@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RepositoriesRealisation;
 using RepositoriesRealisation.DatabaseObjects;
+using RepositoriesRealisation.RepositoriesRealisation;
 
 namespace CompetitiveBackend.Repositories
 {
@@ -15,9 +16,9 @@ namespace CompetitiveBackend.Repositories
         public async Task<PlayerProfile> GetPlayerProfile(int accountId)
         {
             using BaseDbContext context = await GetDbContext();
-            AccountModel? p = await context.Accounts.FindAsync(accountId);
+            PlayerProfileModel? p = await context.PlayerProfiles.FindAsync(accountId);
             if (p == null) throw new Exceptions.MissingDataException();
-            return p.ToCoreProfile();
+            return p.ToCoreModel();
         }
 
         public async Task<LargeData> GetPlayerProfileImage(int accountId)
@@ -32,12 +33,20 @@ namespace CompetitiveBackend.Repositories
         public async Task UpdatePlayerProfile(PlayerProfile profile)
         {
             using BaseDbContext context = await GetDbContext();
-            AccountModel? p = await context.Accounts.FindAsync(profile.Id);
+            PlayerProfileModel? p = await context.PlayerProfiles.FindAsync(profile.Id);
             if (p == null) throw new Exceptions.MissingDataException();
             p.Description = profile.Description;
             p.Name = profile.Name;
-            context.Accounts.Update(p);
-            await context.SaveChangesAsync();
+            try
+            {
+                context.PlayerProfiles.Update(p);
+                await context.SaveChangesAsync();
+            }
+            catch(Exception ex) when (ex.IsDBException())
+            {
+                _logger.LogError("Could not update player profile");
+                throw new Exceptions.FailedOperationException("Could not update player profile");
+            }
         }
 
         public async Task UpdatePlayerProfileImage(int accountId, LargeData data)
@@ -46,8 +55,16 @@ namespace CompetitiveBackend.Repositories
             AccountModelProfileImage? p = await context.AccountsProfileImages.FindAsync(accountId);
             if (p == null) throw new Exceptions.MissingDataException();
             p.ProfileImage = data.Data;
-            context.AccountsProfileImages.Update(p);
-            await context.SaveChangesAsync();
+            try
+            {
+                context.AccountsProfileImages.Update(p);
+                await context.SaveChangesAsync();
+            }
+            catch (Exception ex) when (ex.IsDBException())
+            {
+                _logger.LogError("Could not update player profile picture");
+                throw new Exceptions.FailedOperationException("Could not update player profile picture");
+            }
         }
     }
 }

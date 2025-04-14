@@ -31,7 +31,7 @@ namespace CompetitiveBackend.Repositories
         public async Task<Account> GetAccount(string login)
         {
             using BaseDbContext context = await GetDbContext();
-            AccountModel? Q = await context.Accounts.Where((x) => x.Name == login).FirstOrDefaultAsync();
+            AccountModel? Q = await context.Accounts.Where((x) => x.Login == login).FirstOrDefaultAsync();
             if (Q == null)
             {
                 _logger.LogInformation($"Attempted to get \"{login}\": failure - no account found");
@@ -41,7 +41,7 @@ namespace CompetitiveBackend.Repositories
             {
                 _logger.LogInformation($"Attempted to get \"{login}\": success");
             }
-            return Q.ToCoreAccount();
+            return Q.ToCoreModel();
         }
 
         public async Task<Account> GetAccount(int identifier)
@@ -57,7 +57,7 @@ namespace CompetitiveBackend.Repositories
             {
                 _logger.LogInformation($"Attempted to get {identifier}: success");
             }
-            return Q.ToCoreAccount();
+            return Q.ToCoreModel();
         }
     }
 }

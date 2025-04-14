@@ -13,7 +13,7 @@ namespace CompetitiveBackend.Controllers
 {
     [ApiController]
     [Produces("application/json")]
-    [Route($"{APIConsts.ROOTV1}/player/")]
+    [Route($"{APIConsts.ROOTV1}/{APIConsts.PLAYER}/")]
     public class PlayerController : ControllerBase
     {
         private IPlayerProfileUseCase _profileUseCase;
@@ -36,7 +36,7 @@ namespace CompetitiveBackend.Controllers
         /// </summary>
         /// <param name="profileID">Идентификатор игрока</param>
         /// <returns></returns>
-        [HttpGet("{profileID}/image")]
+        [HttpGet($"{{profileID}}/{APIConsts.IMAGE}")]
         public async Task<FileResult> GetPlayerImage(int profileID)
         {
             var data = await _profileUseCase.GetProfileImage(profileID);
