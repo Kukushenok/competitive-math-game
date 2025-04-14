@@ -14,8 +14,8 @@ namespace RepositoriesRealisation.Models
     // СОСТАВНОЙ КЛЮЧ ОПРЕДЕЛЁН В BaseDbContext
     public class PlayerParticipationModel
     {
-        public CompetitionModel Competition { get; set; }
-        public AccountModel Account { get; set; }
+        public CompetitionModel Competition { get; set; } = null!;
+        public AccountModel Account { get; set; } = null!;
         [ForeignKey("competition_id"), Column("competition_id", TypeName ="int")]
         public int CompetitionID { get; set; }
         [ForeignKey("account_id"), Column("account_id", TypeName = "int")]

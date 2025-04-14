@@ -29,7 +29,7 @@ namespace RepositoriesRealisation
         public Options UseDefaultConnectionString(string connectionString = "postgres")
         {
             SetUpConnectionStringGetter = true;
-            coll.AddScoped<IConnectionStringGetter>((IServiceProvider p) => new ConfigurationConnectionStringGetter(p.GetService<IConfiguration>()!, connectionString));
+            coll.AddSingleton<IConnectionStringGetter>((IServiceProvider p) => new ConfigurationConnectionStringGetter(p.GetService<IConfiguration>()!, connectionString));
             return this;
         }
         public Options UseCustomConnectionStringGetter(IConnectionStringGetter getter)

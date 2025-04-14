@@ -29,7 +29,7 @@ namespace CompetitiveBackend.Repositories
         /// <param name="accountID">Идентификатор аккаунта</param>
         /// <param name="competitionID">Идентификатор соревнования</param>
         /// <returns>Заявка игрока</returns>
-        public Task<PlayerParticipation> GetParticipation(int accountID, int competitionID);
+        public Task<PlayerParticipation> GetParticipation(int accountID, int competitionID, bool bindPlayer = false, bool bindCompetition = false);
         /// <summary>
         /// Получить список заявок игрока.
         /// </summary>
@@ -37,7 +37,7 @@ namespace CompetitiveBackend.Repositories
         /// <param name="limiter">Ограничитель данных</param>
         /// <returns>Заявки игрока</returns>
         /// <exception cref="CompetitiveBackend.Repositories.Exceptions.MissingDataException">Игрок с таким ID не найден</exception>
-        public Task<IEnumerable<PlayerParticipation>> GetPlayerParticipations(int accountID, DataLimiter limiter);
+        public Task<IEnumerable<PlayerParticipation>> GetPlayerParticipations(int accountID, DataLimiter limiter, bool bindPlayer = false, bool bindCompetition = true);
         /// <summary>
         /// Получить список лидеров соревнования
         /// </summary>
@@ -45,6 +45,6 @@ namespace CompetitiveBackend.Repositories
         /// <param name="limiter">Ограничитель данных</param>
         /// <returns>Заявки игрока, расположенные по убыванию</returns>
         /// <exception cref="CompetitiveBackend.Repositories.Exceptions.MissingDataException">Соревнование с таким ID не найдено</exception>
-        public Task<IEnumerable<PlayerParticipation>> GetLeaderboard(int competitionID, DataLimiter limiter);
+        public Task<IEnumerable<PlayerParticipation>> GetLeaderboard(int competitionID, DataLimiter limiter, bool bindPlayer = true, bool bindCompetition = false);
     }
 }

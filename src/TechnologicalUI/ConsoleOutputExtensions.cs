@@ -127,6 +127,8 @@ namespace TechnologicalUI
         public static void Print(this IConsoleOutput output, PlayerParticipationDTO participation)
         {
             output.PromtOutput($"Игрок\t{participation.AccountID,5}\tСорев.\t{participation.Competition,5}\tОчки\t{participation.Score,5}");
+            if (participation.ProfileInfo != null) output.Print(participation.ProfileInfo);
+            if (participation.CompetitionInfo != null) output.Print(participation.CompetitionInfo);
         }
         public static void PrintEnumerable<T>(this IConsoleOutput output, IEnumerable<T> result, Action<IConsoleOutput, T> printCmd)
         {

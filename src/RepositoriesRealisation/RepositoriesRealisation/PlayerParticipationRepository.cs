@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using RepositoriesRealisation.Models;
 using RepositoriesRealisation.RepositoriesRealisation;
 using CompetitiveBackend.Repositories.Exceptions;
+using Microsoft.EntityFrameworkCore.Query;
 namespace CompetitiveBackend.Repositories
 {
     class PlayerParticipationRepository : BaseRepository<PlayerParticipationRepository>, IPlayerParticipationRepository
@@ -52,18 +53,20 @@ namespace CompetitiveBackend.Repositories
             }
         }
 
-        public async Task<IEnumerable<PlayerParticipation>> GetLeaderboard(int competitionID, DataLimiter limiter)
+        public async Task<IEnumerable<PlayerParticipation>> GetLeaderboard(int competitionID, DataLimiter limiter, bool bindPlayer = true, bool bindCompetition = false)
         {
             using var context = await GetDbContext();
             try
             {
                 IQueryable<PlayerParticipationModel> md = context.PlayerParticipation.Where(x=>x.CompetitionID == competitionID).OrderByDescending((x) => x.Score);
+                if(bindCompetition) md = md.Include(x => x.Competition);
+                if (bindPlayer) md = md.Include(x => x.Account);
                 if (!limiter.HasNoLimit)
                 {
                     //_logger.LogInformation($"Skipping {dataLimiter.FirstIndex} and taking {dataLimiter.Partition}");
                     md = md.Skip(limiter.FirstIndex).Take(limiter.Partition);
                 }
-                var models = await md.Select(x => new PlayerParticipation(x.CompetitionID, x.AccountID, x.Score)).ToListAsync();
+                var models = from x in (await md.ToListAsync()) select FromModel(x);
                 return models;
             }
             catch (Exception ex) when (ex.IsDBException())
@@ -73,30 +76,39 @@ namespace CompetitiveBackend.Repositories
             }
         }
 
-        public async Task<PlayerParticipation> GetParticipation(int accountID, int competitionID)
+        public async Task<PlayerParticipation> GetParticipation(int accountID, int competitionID, bool bindPlayer = false, bool bindCompetition = false)
         {
             using var context = await GetDbContext();
-            PlayerParticipationModel? model = await context.PlayerParticipation.FindAsync(accountID, competitionID);
+            IQueryable<PlayerParticipationModel> p = context.PlayerParticipation.AsQueryable();
+            if (bindCompetition) p = p.Include(x => x.Competition);
+            if (bindPlayer) p = p.Include(x => x.Account);
+            PlayerParticipationModel? model = await p.FirstOrDefaultAsync(x => x.AccountID == accountID && x.CompetitionID == competitionID);
             if(model == null)
             {
                 _logger.LogError($"Could not find participation of player {accountID} with competition {competitionID}");
                 throw new MissingDataException($"Could not find participation of player {accountID} with competition {competitionID}");
             }
-            return new PlayerParticipation(model.CompetitionID, model.AccountID, model.Score);
+            return FromModel(model);
+        }
+        private PlayerParticipation FromModel(PlayerParticipationModel model)
+        {
+            return new PlayerParticipation(model.CompetitionID, model.AccountID, model.Score, model.Account?.ToCoreProfile(), model.Competition?.ToCoreModel());
         }
 
-        public async Task<IEnumerable<PlayerParticipation>> GetPlayerParticipations(int accountID, DataLimiter limiter)
+        public async Task<IEnumerable<PlayerParticipation>> GetPlayerParticipations(int accountID, DataLimiter limiter, bool bindPlayer = false, bool bindCompetition = true)
         {
             using var context = await GetDbContext();
             try
             {
                 IQueryable<PlayerParticipationModel> md = context.PlayerParticipation.Where(x => x.AccountID == accountID);
+                if (bindCompetition) md = md.Include(x => x.Competition);
+                if (bindPlayer) md = md.Include(x => x.Account);
                 if (!limiter.HasNoLimit)
                 {
                     //_logger.LogInformation($"Skipping {dataLimiter.FirstIndex} and taking {dataLimiter.Partition}");
                     md = md.Skip(limiter.FirstIndex).Take(limiter.Partition);
                 }
-                var models = await md.Select(x => new PlayerParticipation(x.CompetitionID, x.AccountID, x.Score)).ToListAsync();
+                var models = from x in (await md.ToListAsync()) select FromModel(x);
                 return models;
             }
             catch (Exception ex) when (ex.IsDBException())
