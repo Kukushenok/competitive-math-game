@@ -17,7 +17,7 @@ namespace RepositoriesTests
 {
     public class IntegrationTest<T>(ITestOutputHelper helper) : ContainerInitializer where T : class
     {
-        protected override async Task AfterDockerInit()
+        protected override Task AfterDockerInit()
         {
             IServiceCollection coll = new ServiceCollection();
             var Dict = new Dictionary<string, string?>
@@ -35,11 +35,12 @@ namespace RepositoriesTests
             Logger = p.GetService<ILogger<IntegrationTest<T>>>()!;
             Logger.LogInformation("Using connection string: " + ConnectionString);
             PostConfiguring(p);
+            return Task.CompletedTask;
         }
-        protected T Testing;
-        protected ILogger<IntegrationTest<T>> Logger;
-        private FileDumper testDumper;
-        private IDbContextFactory<BaseDbContext> contextFactory;
+        protected T Testing = null!;
+        protected ILogger<IntegrationTest<T>> Logger = null!;
+        private FileDumper testDumper = null!;
+        private IDbContextFactory<BaseDbContext> contextFactory = null!;
 
         public async Task<BaseDbContext> GetContext() => await contextFactory.CreateDbContextAsync();
         protected async Task ExecSQL(string sql)
