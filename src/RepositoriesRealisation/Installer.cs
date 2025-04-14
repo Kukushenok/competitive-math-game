@@ -6,7 +6,7 @@ namespace RepositoriesRealisation
 {
     public static class Installer
     {
-        public static IServiceCollection AddRepositories(this IServiceCollection container, Action<Options>? opt = null)
+        public static IServiceCollection AddCompetitiveRepositories(this IServiceCollection container, Action<Options>? opt = null)
         {
             Options myOptions = new Options(container);
             container.AddScoped<IAccountRepository, AccountRepository>();

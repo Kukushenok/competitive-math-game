@@ -59,7 +59,7 @@ namespace RepositoriesTests
             var result = await Container.ExecAsync(commands);
             await testDumper.Dump($"{typeof(T).Name}_{dumpName}", result.Stdout);
         }
-        protected virtual void AddMyRepositories(IServiceCollection coll) => coll.AddRepositories();
+        protected virtual void AddMyRepositories(IServiceCollection coll) => coll.AddCompetitiveRepositories();
         protected virtual void PostConfiguring(ServiceProvider p) { }
     }
 }

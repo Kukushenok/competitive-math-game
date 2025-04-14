@@ -16,7 +16,7 @@ namespace ServicesRealisation
 {
     public static class ServicesInstaller
     {
-        public static IServiceCollection AddServices(this IServiceCollection container)
+        public static IServiceCollection AddCompetitiveServices(this IServiceCollection container)
         {
             container.AddAuthService();
             container.AddScoped<ICompetitionService, CompetitionService>();

@@ -19,7 +19,7 @@ namespace RepositoriesTests.RepositoriesTests.GranterTests
 
         protected override void AddMyRepositories(IServiceCollection coll)
         {
-            coll.AddRepositories(options => options.GrantRewardsWithDefaultCalls());
+            coll.AddCompetitiveRepositories(options => options.GrantRewardsWithDefaultCalls());
         }
     }
 }

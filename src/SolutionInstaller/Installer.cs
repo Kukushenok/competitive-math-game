@@ -11,11 +11,11 @@ namespace CompetitiveBackend.SolutionInstaller
     {
         public static IServiceCollection AddCompetitiveBackendSolution(this IServiceCollection coll)
         {
-            coll.AddRepositories()
+            coll.AddCompetitiveRepositories()
                 .AddQuartzTimeScheduler()
                 .AddMajickImageRescaler()
-                .AddServices()
-                .AddBaseUseCases();
+                .AddCompetitiveServices()
+                .AddCompetitiveUseCases();
             return coll;
         }
     }
