@@ -17,34 +17,31 @@ namespace CompetitiveBackend.Controllers
             _editUseCase = useCase;
             _watchUseCase = watchUseCase;
         }
-        [HttpGet($"{APIConsts.COMPETITION}/{{competitionID}}/{APIConsts.LEADERBOARD}")]
+        [HttpGet($"{APIConsts.COMPETITIONS}/{{competitionID}}/{APIConsts.COMP_PARTICIPATIONS}")]
         public async Task<ActionResult<PlayerParticipationDTO[]>> GetLeaderboard(int competitionID, int page = 0, int count = 0)
         {
             return (await _watchUseCase.GetLeaderboard(competitionID, new DataLimiterDTO(page, count))).ToArray();
         }
-        [HttpGet($"{APIConsts.PLAYER}/{{profileID}}/{APIConsts.PARTICIPATIONS}/{{competitionID}}")]
-        [HttpGet($"{APIConsts.COMPETITION}/{{competitionID}}/{APIConsts.LEADERBOARD}/{{profileID}}")]
+        [HttpGet($"{APIConsts.COMPETITIONS}/{{competitionID}}/{APIConsts.COMP_PARTICIPATIONS}/{{profileID}}")]
         public async Task<ActionResult<PlayerParticipationDTO>> GetParticipationInfo(int profileID, int competitionID)
         {
             return (await _watchUseCase.GetParticipation(competitionID, profileID));
         }
-        [HttpDelete($"{APIConsts.PLAYER}/{{profileID}}/{APIConsts.PARTICIPATIONS}/{{competitionID}}")]
-        [HttpDelete($"{APIConsts.COMPETITION}/{{competitionID}}/{APIConsts.LEADERBOARD}/{{profileID}}")]
+        [HttpDelete($"{APIConsts.COMPETITIONS}/{{competitionID}}/{APIConsts.COMP_PARTICIPATIONS}/{{profileID}}")]
         public async Task<ActionResult> DeleteParticipation(int profileID, int competitionID)
         {
             using var self = await _editUseCase.Auth(HttpContext);
             await self.DeleteParticipation(competitionID, profileID);
             return NoContent(); 
         }
-        [HttpPut($"{APIConsts.COMPETITION}/{{competitionID}}/{APIConsts.LEADERBOARD}")]
-        [HttpPut($"{APIConsts.PLAYER}/{APIConsts.SELF}/{APIConsts.PARTICIPATIONS}/{{competitionID}}")]
+        [HttpPut($"{APIConsts.COMPETITIONS}/{{competitionID}}/{APIConsts.COMP_PARTICIPATIONS}")]
         public async Task<ActionResult> ApplyInCompetition(int competitionID, int score)
         {
             using var self = await _editUseCase.Auth(HttpContext);
             await self.SubmitScoreTo(competitionID, score);
             return NoContent();
         }
-        [HttpGet($"{APIConsts.PLAYER}/{APIConsts.SELF}/{APIConsts.PARTICIPATIONS}")]
+        [HttpGet($"{APIConsts.PLAYERS}/{APIConsts.SELF}/{APIConsts.PLAYER_PARTICIPATIONS}")]
         public async Task<ActionResult<PlayerParticipationDTO[]>> GetMyParticipations(int page = 0, int count = 0)
         {
             using var self = await _editUseCase.Auth(HttpContext);

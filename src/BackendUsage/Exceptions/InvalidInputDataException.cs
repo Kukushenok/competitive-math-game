@@ -1,4 +1,6 @@
-﻿namespace CompetitiveBackend.BackendUsage.Exceptions
+﻿using System;
+
+namespace CompetitiveBackend.BackendUsage.Exceptions
 {
     public class InvalidInputDataException: UseCaseException
     {

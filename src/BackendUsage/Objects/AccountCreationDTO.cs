@@ -1,4 +1,11 @@
 ﻿namespace CompetitiveBackend.BackendUsage.Objects
 {
-    public record AccountCreationDTO(string Login, string Password, string? Email): AccountLoginDTO(Login, Password);
+    public class AccountCreationDTO: AccountLoginDTO
+    {
+        public readonly string? Email;
+        public AccountCreationDTO(string Login, string Password, string? email): base(Login, Password)
+        {
+            Email = email;
+        }
+    }
 }

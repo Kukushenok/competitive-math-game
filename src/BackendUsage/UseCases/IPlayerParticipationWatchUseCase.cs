@@ -1,4 +1,6 @@
 ﻿using CompetitiveBackend.BackendUsage.Objects;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CompetitiveBackend.BackendUsage.UseCases
 {

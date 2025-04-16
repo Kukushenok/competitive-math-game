@@ -1,4 +1,13 @@
 ﻿namespace CompetitiveBackend.BackendUsage.Objects
 {
-    public record RewardDescriptionDTO(string Name, string Description, int? ID): IntIdentifiableDTO(ID);
+    public class RewardDescriptionDTO: IntIdentifiableDTO
+    {
+        public readonly string Name;
+        public readonly string Description;
+        public RewardDescriptionDTO(string name, string description, int? iD): base(iD)
+        {
+            Name = name;
+            Description = description;
+        }
+    }
 }

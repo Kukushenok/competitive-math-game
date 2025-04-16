@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CompetitiveBackend.Controllers
 {
-    [Route($"{APIConsts.ROOTV1}/{APIConsts.COMPETITION}/")]
+    [Route($"{APIConsts.ROOTV1}/{APIConsts.COMPETITIONS}/")]
     [ApiController]
     public class CompetitionRewardController: ControllerBase
     {
@@ -15,30 +15,30 @@ namespace CompetitiveBackend.Controllers
             _editRewards = editRewards;
             _watchRewards = service;
         }
-        [HttpGet($"{{compID}}/{APIConsts.REWARD}")]
+        [HttpGet($"{{compID}}/{APIConsts.REWARDS}")]
         public async Task<IEnumerable<CompetitionRewardDTO>> GetCompetitionRewards(int compID)
         {
             return await _watchRewards.GetRewardsFor(compID);
         }
-        [HttpPut($"{{compID}}/{APIConsts.REWARD}")]
+        [HttpPut($"{{compID}}/{APIConsts.REWARDS}")]
         public async Task<ActionResult> CreateCompetitionReward(int compID, UpdateCompetitionRewardDTO rewardDTO)
         {
-            CreateCompetitionRewardDTO creating = new CreateCompetitionRewardDTO(null, rewardDTO.RewardDescriptionID, compID) { ConditionByPlace = rewardDTO.ConditionByPlace, ConditionByRank = rewardDTO.ConditionByRank };
+            CreateCompetitionRewardDTO creating = new CreateCompetitionRewardDTO(null, rewardDTO.RewardDescriptionID, compID, rewardDTO.ConditionByRank, rewardDTO.ConditionByPlace);
             using var self = await _editRewards.Auth(HttpContext);
             await self.CreateCompetitionReward(creating);
             return NoContent();
         }
-        [HttpDelete($"{APIConsts.REWARD}/{{rewardID}}")]
+        [HttpDelete($"{APIConsts.REWARDS}/{{rewardID}}")]
         public async Task<ActionResult> DeleteCompetitionReward(int rewardID)
         {
             using var self = await _editRewards.Auth(HttpContext);
             await self.RemoveCompetitionReward(rewardID);
             return NoContent();
         }
-        [HttpPatch($"{APIConsts.REWARD}/{{rewardID}}")]
+        [HttpPatch($"{APIConsts.REWARDS}/{{rewardID}}")]
         public async Task<ActionResult> UpdateCompetitionReward(int rewardID, UpdateCompetitionRewardDTO rewardDTO)
         {
-            UpdateCompetitionRewardDTO dto = new UpdateCompetitionRewardDTO(rewardID, rewardDTO.RewardDescriptionID) { ConditionByPlace = rewardDTO.ConditionByPlace, ConditionByRank = rewardDTO.ConditionByRank };
+            UpdateCompetitionRewardDTO dto = new UpdateCompetitionRewardDTO(rewardID, rewardDTO.RewardDescriptionID, rewardDTO.ConditionByRank, rewardDTO.ConditionByPlace);
             using var self = await _editRewards.Auth(HttpContext);
             await self.UpdateCompetitionReward(dto);
             return NoContent();

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CompetitiveBackend.Controllers
 {
-    [Route($"{APIConsts.ROOTV1}/{APIConsts.COMPETITION}/")]
+    [Route($"{APIConsts.ROOTV1}/{APIConsts.COMPETITIONS}/")]
     [ApiController]
     public class CompetitionController : ControllerBase
     {
@@ -24,14 +24,12 @@ namespace CompetitiveBackend.Controllers
         }
 
         [HttpGet("")]
-        public async Task<ActionResult<CompetitionDTO[]>> GetAllCompetitions(int page, int count)
+        public async Task<ActionResult<CompetitionDTO[]>> GetAllCompetitions(int page, int count, string? filter = null)
         {
-            return (await watchUseCase.GetAllCompetitions(new DataLimiterDTO(page, count))).ToArray();
-        }
-        [HttpGet("active")]
-        public async Task<ActionResult<CompetitionDTO[]>> GetActiveCompetitions()
-        {
-            return (await watchUseCase.GetActiveCompetitions()).ToArray();
+            CompetitionDTO[] dtos;
+            if (filter == "active") dtos = (await watchUseCase.GetActiveCompetitions()).ToArray();
+            else dtos = (await watchUseCase.GetAllCompetitions(new DataLimiterDTO(page, count))).ToArray();
+            return dtos;
         }
         [HttpPut("")]
         public async Task<ActionResult> CreateCompetition(CompetitionDTO dto)

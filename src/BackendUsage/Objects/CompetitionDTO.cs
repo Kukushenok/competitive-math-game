@@ -1,11 +1,45 @@
-﻿namespace CompetitiveBackend.BackendUsage.Objects
+﻿using System;
+
+namespace CompetitiveBackend.BackendUsage.Objects
 {
-    public record CompetitionDTO(int? ID, string? Name, string? Description, DateTime StartDate, DateTime EndDate): IntIdentifiableDTO(ID);
-    public record CompetitionUpdateRequestDTO(int id, string? Name, string? Description, DateTime? StartDate, DateTime? EndDate) : IntIdentifiableDTO(id)
+    public class CompetitionDTO : IntIdentifiableDTO
     {
-        public CompetitionUpdateRequestDTO(int ID, CompetitionUpdateRequestDTO patch): this(patch)
+        public readonly string? Name;
+        public readonly string? Description;
+        public readonly DateTime StartDate;
+        public readonly DateTime EndDate;
+
+        public CompetitionDTO(int? ID, string? name, string? description,
+                             DateTime startDate, DateTime endDate)
+            : base(ID)
         {
-            this.ID = ID;
+            Name = name;
+            Description = description;
+            StartDate = startDate;
+            EndDate = endDate;
+        }
+    }
+
+    public class CompetitionUpdateRequestDTO : IntIdentifiableDTO
+    {
+        public readonly string? Name;
+        public readonly string? Description;
+        public readonly DateTime? StartDate;
+        public readonly DateTime? EndDate;
+
+        public CompetitionUpdateRequestDTO(int id, string? name, string? description,
+                                          DateTime? startDate, DateTime? endDate)
+            : base(id)
+        {
+            Name = name;
+            Description = description;
+            StartDate = startDate;
+            EndDate = endDate;
+        }
+
+        public CompetitionUpdateRequestDTO(int ID, CompetitionUpdateRequestDTO patch)
+            : this(ID, patch.Name, patch.Description, patch.StartDate, patch.EndDate)
+        {
         }
     }
 }

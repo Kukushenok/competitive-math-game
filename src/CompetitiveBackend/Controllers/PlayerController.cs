@@ -13,7 +13,7 @@ namespace CompetitiveBackend.Controllers
 {
     [ApiController]
     [Produces("application/json")]
-    [Route($"{APIConsts.ROOTV1}/{APIConsts.PLAYER}/")]
+    [Route($"{APIConsts.ROOTV1}/{APIConsts.PLAYERS}/")]
     public class PlayerController : ControllerBase
     {
         private IPlayerProfileUseCase _profileUseCase;

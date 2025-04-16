@@ -1,4 +1,11 @@
 ﻿namespace CompetitiveBackend.BackendUsage.Objects
 {
-    public record IntIdentifiableDTO(int? ID);
+    public class IntIdentifiableDTO
+    {
+        public readonly int? ID;
+        public IntIdentifiableDTO(int? ID)
+        {
+            this.ID = ID;
+        }
+    }
 }

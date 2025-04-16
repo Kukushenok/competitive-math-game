@@ -37,7 +37,7 @@ namespace CompetitiveBackend.BaseUsage.Converters
             RankRewardConditionDTO? rankDTO = null;
             if (reward.Condition is RankGrantCondition rankedCond) rankDTO = new RankRewardConditionDTO(rankedCond.minRank, rankedCond.maxRank);
             else if (reward.Condition is PlaceGrantCondition placedCond) placeDTO = new PlaceRewardConditionDTO(placedCond.minPlace, placedCond.maxPlace);
-            return new CompetitionRewardDTO(reward.Id, reward.RewardDescriptionID, reward.CompetitionID, reward.Name, reward.Description) { ConditionByPlace = placeDTO, ConditionByRank = rankDTO };
+            return new CompetitionRewardDTO(reward.Id, reward.RewardDescriptionID, reward.CompetitionID, reward.Name, reward.Description, rankDTO, placeDTO);
         }
         public static CompetitionRewardDTO Extend(this CreateCompetitionRewardDTO dto)
         {

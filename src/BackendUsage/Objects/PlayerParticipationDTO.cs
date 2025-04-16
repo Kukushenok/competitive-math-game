@@ -1,4 +1,19 @@
 ﻿namespace CompetitiveBackend.BackendUsage.Objects
 {
-    public record PlayerParticipationDTO(int AccountID, int Competition, int Score, PlayerProfileDTO? ProfileInfo = null, CompetitionDTO? CompetitionInfo = null);
+    public class PlayerParticipationDTO
+    {
+        public readonly int AccountID;
+        public readonly int Competition;
+        public readonly int Score;
+        public readonly PlayerProfileDTO? ProfileInfo = null;
+        public readonly CompetitionDTO? CompetitionInfo = null;
+        public PlayerParticipationDTO(int accountID, int competition, int score, PlayerProfileDTO? profileInfo, CompetitionDTO? competitionInfo)
+        {
+            AccountID = accountID;
+            Competition = competition;
+            Score = score;
+            ProfileInfo = profileInfo;
+            CompetitionInfo = competitionInfo;
+        }
+    }
 }

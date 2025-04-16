@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CompetitiveBackend.Controllers
 {
-    [Route($"{APIConsts.ROOTV1}/{APIConsts.REWARD_DESCRIPTION}/")]
+    [Route($"{APIConsts.ROOTV1}/{APIConsts.REWARD_DESCRIPTIONS}/")]
     [ApiController]
     public class RewardDescriptionController : ControllerBase
     {
