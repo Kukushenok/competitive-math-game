@@ -8,9 +8,9 @@ namespace CompetitiveBackend.BackendUsage.Objects
 {
     public class AuthSuccessResultDTO
     {
-        public readonly string Token;
-        public readonly string RoleName;
-        public readonly int AccountID;
+        public string Token { get; set; }
+        public string RoleName { get; set; }
+        public int AccountID { get; set; }
         public AuthSuccessResultDTO(string token, string roleName, int accountID)
         {
             Token = token;

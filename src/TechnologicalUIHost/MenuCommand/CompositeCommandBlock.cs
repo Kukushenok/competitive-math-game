@@ -1,8 +1,7 @@
 ﻿using CompetitiveBackend.BackendUsage.Exceptions;
-using CompetitiveBackend.Repositories.Exceptions;
-using CompetitiveBackend.Services.Exceptions;
 using System.Windows.Input;
-namespace TechnologicalUI.Command
+using TechnologicalUIHost.ConsoleAbstractions;
+namespace TechnologicalUIHost.Command
 {
     public abstract class CompositeCommandBlock: NamedConsoleCommand
     {
@@ -63,24 +62,20 @@ namespace TechnologicalUI.Command
                     }
                     if(commandIdx != 0)
                     {
-                        Console.WriteLine("Команда не найдена");
+                        console.PromtOutput("Команда не найдена");
                     }
                 }
                 catch(FormatException)
                 {
-                    Console.WriteLine("Неверный ввод данных");
-                }
-                catch (RepositoryException ex)
-                {
-                    Console.WriteLine($"Возникла ошибка на уровне репозитория: {ex.Message}");
-                }
-                catch (ServiceException ex)
-                {
-                    Console.WriteLine($"Возникла ошибка на уровне сервисов: {ex.Message}");
+                    console.PromtOutput("Неверный ввод данных");
                 }
                 catch(UseCaseException ex)
                 {
-                    Console.WriteLine($"Возникла ошибка на уровне пользовательских сценариев: {ex.Message}");
+                    console.PromtOutput($"Возникла ошибка на уровне пользовательских сценариев: {ex.Message}");
+                }
+                catch(Exception ex)
+                {
+                    console.PromtOutput($"Возникла ошибка при выполнении пользовательского сценария: {ex.Message}");
                 }
             }
         }

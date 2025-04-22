@@ -1,6 +1,6 @@
 ﻿using CompetitiveBackend.BackendUsage.Objects;
 
-namespace TechnologicalUI
+namespace TechnologicalUIHost.ConsoleAbstractions
 {
     internal static class ConsoleInputDTOExtensions
     {
@@ -45,11 +45,7 @@ namespace TechnologicalUI
         {
             int? id = input.ReadNullableInt($"ID (optional) {prompt}");
             int rewardDescriptionID = input.ReadInt($"Reward Description ID {prompt}");
-
-            Console.WriteLine("Выберите тип условия");
-            Console.WriteLine("1. По рангу");
-            Console.WriteLine("2. По месту");
-            int choice = input.ReadInt($"Ваш выбор {prompt}");
+            int choice = input.ReadInt($"Выберите тип условия\n1. По рангу\n2. По месту\nВаш выбор {prompt}");
 
             RankRewardConditionDTO? rankCondition = null;
             PlaceRewardConditionDTO? placeCondition = null;
@@ -82,7 +78,7 @@ namespace TechnologicalUI
         public static DataLimiterDTO ReadDataLimiterDTO(this IConsoleInput input, string prompt = "> ")
         {
             int page = (input.ReadNullableInt($"Номер страницы {prompt}") ?? 1) - 1;
-            int count = (input.ReadNullableInt($"Количество {prompt}") ?? 0);
+            int count = input.ReadNullableInt($"Количество {prompt}") ?? 0;
             return new DataLimiterDTO(page, count);
         }
 

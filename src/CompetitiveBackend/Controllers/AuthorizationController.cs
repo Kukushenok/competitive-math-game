@@ -19,7 +19,7 @@ namespace CompetitiveBackend.Controllers
             AuthUseCase = service;
         }
         [HttpPost(APIConsts.LOGIN)]
-        public async Task<IActionResult> Login(AccountLoginDTO dto)
+        public async Task<ActionResult<AuthSuccessResultDTO>> Login(AccountLoginDTO dto)
         {
             return Ok(await AuthUseCase.Login(dto));
         }

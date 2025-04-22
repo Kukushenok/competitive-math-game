@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TechnologicalUIHost.ConsoleAbstractions;
 
-namespace TechnologicalUI.MenuCommand
+namespace TechnologicalUIHost.MenuCommand
 {
     public interface IAuthCache
     {
@@ -17,9 +18,14 @@ namespace TechnologicalUI.MenuCommand
     public class AuthCache: IAuthCache
     {
         private AuthSuccessResultDTO? resultDTO = null;
+        private IConsole console;
+        public AuthCache(IConsole console)
+        {
+            this.console = console;
+        }
         public void Login(AuthSuccessResultDTO dto)
         {
-            Console.WriteLine($"Authenticated as {dto.RoleName}; playerID {dto.AccountID}");
+            console.PromtOutput($"Выполнен вход как {dto.RoleName}; ID игрока {dto.AccountID}");
             resultDTO = dto;
         }
         public bool IsAuthed() => resultDTO != null;

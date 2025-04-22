@@ -1,4 +1,4 @@
-﻿namespace TechnologicalUI
+﻿namespace TechnologicalUIHost.ConsoleAbstractions
 {
     public static class ConsoleInputExtensions
     {

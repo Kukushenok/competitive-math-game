@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TechnologicalUI.Command;
-using TechnologicalUI.MenuCommand;
+using TechnologicalUIHost.Command;
+using TechnologicalUIHost.MenuCommand;
+using TechnologicalUIHost.ConsoleAbstractions;
 
-namespace TechnologicalUI.Commands
+namespace TechnologicalUIHost.Commands
 {
     internal class CompetitionEditCommands : AuthRequiringCommands
     {

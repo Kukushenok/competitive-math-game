@@ -1,7 +1,8 @@
 ﻿using CompetitiveBackend.BackendUsage.UseCases;
-using TechnologicalUI.Command;
+using TechnologicalUIHost.Command;
+using TechnologicalUIHost.ConsoleAbstractions;
 
-namespace TechnologicalUI.Commands
+namespace TechnologicalUIHost.Commands
 {
     internal class CompetitionWatchCommands: CompositeCommandBlock
     {

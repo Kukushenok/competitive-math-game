@@ -1,4 +1,6 @@
-﻿namespace TechnologicalUI.Command
+﻿using TechnologicalUIHost.ConsoleAbstractions;
+
+namespace TechnologicalUIHost.Command
 {
     public interface IConsoleMenuCommand
     {

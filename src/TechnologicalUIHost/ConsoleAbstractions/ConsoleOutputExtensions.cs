@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TechnologicalUI
+namespace TechnologicalUIHost.ConsoleAbstractions
 {
     public static class ConsoleOutputExtensions
     {

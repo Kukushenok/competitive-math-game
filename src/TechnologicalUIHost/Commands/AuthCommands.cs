@@ -1,9 +1,10 @@
 ﻿using CompetitiveBackend.BackendUsage.Objects;
 using CompetitiveBackend.BackendUsage.UseCases;
-using TechnologicalUI.Command;
-using TechnologicalUI.MenuCommand;
+using TechnologicalUIHost.Command;
+using TechnologicalUIHost.MenuCommand;
+using TechnologicalUIHost.ConsoleAbstractions;
 
-namespace TechnologicalUI.Commands
+namespace TechnologicalUIHost.Commands
 {
     public class AuthCommands: CompositeCommandBlock
     {

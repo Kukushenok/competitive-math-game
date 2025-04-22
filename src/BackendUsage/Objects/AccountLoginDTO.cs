@@ -1,9 +1,12 @@
-﻿namespace CompetitiveBackend.BackendUsage.Objects
+﻿using System;
+
+namespace CompetitiveBackend.BackendUsage.Objects
 {
+    [Serializable]
     public class AccountLoginDTO
     {
-        public readonly string Login;
-        public readonly string Password;
+        public string Login { get; set; }
+        public string Password { get; set; }
         public AccountLoginDTO(string login, string password)
         {
             Login = login;

@@ -7,5 +7,9 @@
         {
             this.ID = ID;
         }
+        public IntIdentifiableDTO()
+        {
+            ID = null;
+        }
     }
 }

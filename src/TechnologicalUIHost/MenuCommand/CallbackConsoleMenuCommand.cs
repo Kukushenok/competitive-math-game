@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using TechnologicalUIHost.ConsoleAbstractions;
 
-namespace TechnologicalUI.Command
+namespace TechnologicalUIHost.Command
 {
     public class CallbackConsoleMenuCommand : NamedConsoleCommand
     {

@@ -3,6 +3,7 @@ using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Services.Exceptions;
 using CompetitiveBackend.Services.Objects;
+using Repositories.Objects;
 using ServicesRealisation.Objects;
 using ServicesRealisation.ServicesRealisation.Validator;
 namespace CompetitiveBackend.Services.AuthService
@@ -14,23 +15,28 @@ namespace CompetitiveBackend.Services.AuthService
         private readonly IHashAlgorithm _hashAlgorithm;
         private readonly IRoleCreator _roleCreator;
         private readonly IValidator<AccountCreationData> _validator;
+        private readonly IRepositoryPrivilegySetting _privilegySetting;
         public AuthService(
             IAccountRepository accountRepository,
             ISessionRepository sessionRepository,
             IHashAlgorithm hashAlgo,
             IRoleCreator roleCreator,
-            IValidator<AccountCreationData> validator)
+            IValidator<AccountCreationData> validator,
+            IRepositoryPrivilegySetting privilegySetting)
         {
             _accountRepository = accountRepository;
             _hashAlgorithm = hashAlgo;
             _sessionRepository = sessionRepository;
             _roleCreator = roleCreator;
             _validator = validator;
+            _privilegySetting = privilegySetting;
         }
 
-        public Task<SessionToken> GetSessionToken(string token)
+        public async Task<SessionToken> GetSessionToken(string token)
         {
-            return _sessionRepository.GetSessionToken(token);
+            SessionToken tkn = await _sessionRepository.GetSessionToken(token);
+            _privilegySetting.SetPrivilegies(tkn);
+            return tkn;
         }
 
         public async Task<AuthSuccessResult> LogIn(string login, string password)

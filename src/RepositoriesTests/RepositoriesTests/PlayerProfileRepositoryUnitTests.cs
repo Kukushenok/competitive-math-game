@@ -39,8 +39,8 @@ namespace RepositoriesTests.RepositoriesTests
             await Testing.UpdatePlayerProfile(result);
 
             using var context = await GetContext();
-            context.Accounts.Find(3).Should().NotBeNull().And.Satisfy(
-                (AccountModel md) =>
+            context.PlayerProfiles.Find(3).Should().NotBeNull().And.Satisfy(
+                (PlayerProfile md) =>
                 {
                     md.Description.Should().BeEquivalentTo("munny_new_description", "I updated it!");
                 });

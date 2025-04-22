@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Repositories.Objects;
 using Repositories.Repositories;
 using RepositoriesRealisation.RewardGranters;
 using System;
@@ -29,14 +31,27 @@ namespace RepositoriesRealisation
         public Options UseDefaultConnectionString(string connectionString = "postgres")
         {
             SetUpConnectionStringGetter = true;
+            coll.AddSingleton<DummyRepositorySettings>();
             coll.AddSingleton<IConnectionStringGetter>((IServiceProvider p) => new ConfigurationConnectionStringGetter(p.GetService<IConfiguration>()!, connectionString));
             return this;
         }
-        public Options UseCustomConnectionStringGetter(IConnectionStringGetter getter)
+
+        public Options UsePrivilegiedConnectionString(string connectionString = "postgres")
         {
             SetUpConnectionStringGetter = true;
-            coll.AddSingleton(getter);
+            coll.AddScoped(p => new PrivilegyConnectionStringGetter(p.GetService<IConfiguration>()!, 
+                connectionString, 
+                p.GetRequiredService<ILoggerFactory>().CreateLogger<PrivilegyConnectionStringGetter>()));
+            coll.AddScoped<IConnectionStringGetter>(provider => provider.GetRequiredService<PrivilegyConnectionStringGetter>());
+            coll.AddScoped<IRepositoryPrivilegySetting>(provider => provider.GetRequiredService<PrivilegyConnectionStringGetter>());
             return this;
+        }
+    }
+    public class DummyRepositorySettings : IRepositoryPrivilegySetting
+    {
+        public void SetPrivilegies(string privilegy)
+        {
+            
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using CompetitiveBackend.BackendUsage.UseCases;
-using TechnologicalUI.Command;
+using TechnologicalUIHost.Command;
 
-namespace TechnologicalUI.MenuCommand
+namespace TechnologicalUIHost.MenuCommand
 {
     abstract class AuthRequiringCommands : CompositeCommandBlock
     {

@@ -1,8 +1,9 @@
 ﻿using CompetitiveBackend.BackendUsage.Objects;
 using CompetitiveBackend.BackendUsage.UseCases;
-using TechnologicalUI.Command;
+using TechnologicalUIHost.Command;
+using TechnologicalUIHost.ConsoleAbstractions;
 
-namespace TechnologicalUI.Commands
+namespace TechnologicalUIHost.Commands
 {
     public class PlayerUseCaseCommands: CompositeCommandBlock
     {
