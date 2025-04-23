@@ -1,6 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CompetitiveBackend.Core.Objects;
+using CompetitiveBackend.Repositories.Exceptions;
+using Microsoft.EntityFrameworkCore;
 using RepositoriesRealisation.DatabaseObjects;
 using RepositoriesRealisation.Models;
+using System.Data.Common;
 using System.Xml;
 
 namespace RepositoriesRealisation
@@ -10,7 +13,7 @@ namespace RepositoriesRealisation
         public BaseDbContext(DbContextOptions options) : base(options)
         {
         }
-        public DbSet<AccountModel> Accounts { get; set; } = null!;
+        public DbSet<AccountModel> AccountsReadOnly { get; set; } = null!;
         public DbSet<PlayerProfileModel> PlayerProfiles { get; set; } = null!;
         public DbSet<AccountModelProfileImage> AccountsProfileImages { get; set; } = null!;
         public DbSet<RewardDescriptionModel> RewardDescription { get; set; } = null!;
@@ -27,6 +30,15 @@ namespace RepositoriesRealisation
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PlayerParticipationModel>().HasKey(table => new { table.AccountID, table.CompetitionID });
+            modelBuilder.Entity<AccountModel>(options =>
+            {
+                options.ToView("account_readonly");
+                options.Ignore(x => x.PasswordHash); // the forbidden knowledge
+            });
+            //modelBuilder.Entity<PlayerProfileModel>(options => options.ToView("account_readonly"));
+            //modelBuilder.Entity<AccountModelProfileImage>(options => options.ToView("account_readonly"));
+            modelBuilder.HasDbFunction(typeof(BaseDbContext).GetMethod(nameof(CheckPasswordHash), [typeof(string), typeof(string)])!
+                , x => x.HasName("check_password_hash"));
             ConnectOneToOne<AccountModel, PlayerProfileModel>(modelBuilder, nameof(AccountModel.Profile));
             ConnectOneToOne<CompetitionModel, CompetitionModelLevelData>(modelBuilder, nameof(CompetitionModel.LevelData));
             ConnectOneToOne<RewardDescriptionModel, RewardDescriptionModelIconImage>(modelBuilder, nameof(RewardDescriptionModel.IconImage));
@@ -41,6 +53,22 @@ namespace RepositoriesRealisation
                 .HasOne(typeof(Q), propertyName)
                 .WithOne(nameof(OneToOneEntity<T>.Model))
                 .HasForeignKey(typeof(Q), "Id");
+        }
+        public bool CheckPasswordHash(string login, string passwordHash) 
+            => throw new NotImplementedException("Should be carried out with DB"); 
+
+        public async Task DoCreateAccount(AccountModel c)
+        {
+            try
+            {
+                await Database.ExecuteSqlAsync(
+                    $"INSERT INTO account (login, username, email, password_hash, privilegy_level) VALUES ({c.Login}, {c.Login}, {c.Email}, {c.PasswordHash}, {c.AccountPrivilegyLevel})"
+                    );
+            }
+            catch(Npgsql.PostgresException ex)
+            {
+                throw new FailedOperationException(ex.Message);
+            }
         }
     }
 }

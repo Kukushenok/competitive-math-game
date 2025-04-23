@@ -24,6 +24,7 @@ namespace CompetitiveBackend.Repositories
         /// </summary>
         /// <param name="acc">Аккаунт</param>
         /// <exception cref="CompetitiveBackend.Repositories.Exceptions.IncorrectOperationException">Аккаунт с таким именем или ID уже существует</exception>
-        public Task CreateAccount(Account acc, Role accountRole);
+        public Task CreateAccount(Account acc, string passwordHash, Role accountRole);
+        public Task<bool> VerifyPassword(string accountLogin, string passwordHash);
     }
 }

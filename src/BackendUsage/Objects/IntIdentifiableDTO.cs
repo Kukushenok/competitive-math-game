@@ -1,8 +1,11 @@
-﻿namespace CompetitiveBackend.BackendUsage.Objects
+﻿using System;
+
+namespace CompetitiveBackend.BackendUsage.Objects
 {
+    [Serializable]
     public class IntIdentifiableDTO
     {
-        public readonly int? ID;
+        public int? ID { get; set; }
         public IntIdentifiableDTO(int? ID)
         {
             this.ID = ID;

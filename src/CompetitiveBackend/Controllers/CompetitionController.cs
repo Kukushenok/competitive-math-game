@@ -42,7 +42,8 @@ namespace CompetitiveBackend.Controllers
         public async Task<ActionResult> UpdateCompetition(int id, CompetitionUpdateRequestDTO dto)
         {
             using var self = await editUseCase.Auth(HttpContext);
-            await self.UpdateCompetition(new CompetitionUpdateRequestDTO(id, dto));
+            dto.ID = id;
+            await self.UpdateCompetition(dto);
             return NoContent();
         }
         [HttpPatch("{id}/level")]

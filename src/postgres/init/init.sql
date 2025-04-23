@@ -10,6 +10,10 @@ create table if not exists account(
 	check (login not like '% %')
 );
 
+create view account_readonly as
+select a.id, a.login, a.email, null, a.privilegy_level 
+from account a;
+
 create table if not exists reward_description(
 	id int generated always as identity primary key,
 	reward_name varchar(64) not null,
@@ -184,3 +188,57 @@ BEGIN
     END IF;
 END;
 $$;
+
+CREATE OR REPLACE FUNCTION public.check_password_hash(
+    p_login VARCHAR,
+    p_input_hash VARCHAR
+)
+RETURNS BOOLEAN AS $$
+DECLARE
+    v_stored_hash VARCHAR;
+    v_result BOOLEAN;
+BEGIN
+    SELECT password_hash FROM account WHERE login = p_login INTO v_stored_hash;
+    SELECT v_stored_hash = p_input_hash INTO v_result;
+    
+    RETURN v_result;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- GUEST
+
+REVOKE SELECT, UPDATE, DELETE ON account FROM PUBLIC;
+CREATE ROLE guest WITH LOGIN PASSWORD 'guest_password';
+GRANT SELECT ON account_readonly, competition, competition_reward, player_participation, reward_description TO guest;
+GRANT INSERT (login, username, email, password_hash, privilegy_level) ON account TO guest;
+GRANT EXECUTE ON FUNCTION check_password_hash(varchar, varchar) TO Guest;
+ALTER ROLE guest WITH INHERIT;
+
+-- PLAYER
+
+CREATE ROLE player WITH LOGIN PASSWORD 'player_password';
+GRANT guest TO player;
+GRANT SELECT, UPDATE (username, description, profile_image) ON account TO player;
+GRANT SELECT, INSERT, UPDATE ON player_participation TO player;
+GRANT SELECT ON player_reward TO player;
+ALTER ROLE player INHERIT;
+
+-- ADMIN
+
+CREATE ROLE admin WITH LOGIN PASSWORD 'admin_password';
+GRANT guest TO admin;
+GRANT DELETE ON player_participation TO admin;
+GRANT INSERT, UPDATE, DELETE ON player_reward TO admin;
+GRANT INSERT, UPDATE ON competition, competition_reward, reward_description TO admin;
+ALTER ROLE admin INHERIT;
+
+-- REWARD_GRANTER
+
+CREATE ROLE reward_granter WITH LOGIN PASSWORD 'reward_granter';
+GRANT EXECUTE ON PROCEDURE grant_rewards(integer) TO reward_granter;
+GRANT UPDATE, SELECT ON TABLE competition TO reward_granter;
+GRANT SELECT ON TABLE player_participation TO reward_granter;
+GRANT SELECT ON TABLE competition_reward TO reward_granter;
+GRANT INSERT ON TABLE player_reward TO reward_granter;
+
+

@@ -1,9 +1,12 @@
-﻿namespace CompetitiveBackend.BackendUsage.Objects
+﻿using System;
+
+namespace CompetitiveBackend.BackendUsage.Objects
 {
+    [Serializable]
     public class RewardDescriptionDTO: IntIdentifiableDTO
     {
-        public readonly string Name;
-        public readonly string Description;
+        public string Name { get; set; }
+        public string Description { get; set; }
         public RewardDescriptionDTO(string name, string description, int? iD): base(iD)
         {
             Name = name;

@@ -1,9 +1,12 @@
-﻿namespace CompetitiveBackend.BackendUsage.Objects
+﻿using System;
+
+namespace CompetitiveBackend.BackendUsage.Objects
 {
+    [Serializable]
     public class DataLimiterDTO
     {
-        public readonly int Page;
-        public readonly int Count;
+        public int Page { get; set; }
+        public int Count { get; set; }
         public DataLimiterDTO(int page, int count)
         {
             Page = page;

@@ -1,6 +1,8 @@
 ﻿using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
+using CompetitiveBackend.Repositories.Exceptions;
 using CompetitiveBackend.Services.ExtraTools;
+using Microsoft.Extensions.DependencyInjection;
 using Repositories.Objects;
 using System.Threading.Tasks;
 
@@ -14,14 +16,12 @@ namespace CompetitiveBackend.Services.CompetitionService
     public class CompetitionRewardScheduler : ICompetitionRewardScheduler, ITimeScheduledTaskSubscriber
     {
         private const string SCHED_CATEGORY = "Competition";
-        protected IPlayerRewardRepository _rewardRepository;
-        protected IRepositoryPrivilegySetting _repositoryPrivilegySetting;
+        private IServiceProvider provider;
         protected ITimeScheduler _timeScheduler;
-        public CompetitionRewardScheduler(IPlayerRewardRepository rewardRepository, ITimeScheduler scheduler, IRepositoryPrivilegySetting repositoryPrivilegySetting)
+        public CompetitionRewardScheduler(IServiceProvider provider, ITimeScheduler scheduler)
         {
-            _rewardRepository = rewardRepository;
+            this.provider = provider;
             _timeScheduler = scheduler;
-            _repositoryPrivilegySetting = repositoryPrivilegySetting;
             _timeScheduler.AddSubscriber(this);
         }
 
@@ -44,8 +44,13 @@ namespace CompetitiveBackend.Services.CompetitionService
         {
             if (data.Category == SCHED_CATEGORY)
             {
-                _repositoryPrivilegySetting.SetPrivilegies("RewardScheduler");
-                await _rewardRepository.GrantRewardsFor(data.Identifier);
+                using (var scope = provider.CreateScope())
+                {
+                    var _rewardRepository = scope.ServiceProvider.GetRequiredService<IPlayerRewardRepository>();
+                    var _repositoryPrivilegySetting = scope.ServiceProvider.GetRequiredService<IRepositoryPrivilegySetting>();
+                    _repositoryPrivilegySetting.SetPrivilegies("RewardScheduler");
+                    await _rewardRepository.GrantRewardsFor(data.Identifier);
+                }
             }
         }
         private TimeScheduledTaskData GetSchedTask(Competition c)

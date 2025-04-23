@@ -30,18 +30,18 @@ namespace RepositoriesRealisation.DatabaseObjects
 
         }
 
-        public AccountModel(Account coreObject, Role role)
+        public AccountModel(Account coreObject, string PasswordHash, Role role)
         {
             Id = coreObject.Id ?? 0;
             Login = coreObject.Login;
             Profile = new PlayerProfileModel() { Id = coreObject.Id ?? 0, Name = coreObject.Login };
             Email = coreObject.Email;
-            PasswordHash = coreObject.PasswordHash;
+            this.PasswordHash = PasswordHash;
             AccountPrivilegyLevel = PrivilegyRoleResolver.Resolve(role);
         }
         public Account ToCoreModel()
         {
-            return new Account(Login, PasswordHash, Email, Id);
+            return new Account(Login, Email, Id);
         }
 
     }

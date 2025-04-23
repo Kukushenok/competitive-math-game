@@ -36,7 +36,7 @@ namespace CompetitiveBackend.Repositories
         public async Task<string> CreateSessionFor(int accountID)
         {
             using BaseDbContext _context = await contextFactory.CreateDbContextAsync();
-            AccountModel? model = await _context.Accounts.FindAsync(accountID);
+            AccountModel? model = await _context.AccountsReadOnly.FindAsync(accountID);
             if (model == null) throw new Exceptions.MissingDataException();
             Role rl = PrivilegyRoleResolver.Resolve(model.AccountPrivilegyLevel);
             var token = new JwtSecurityToken(

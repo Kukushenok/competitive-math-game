@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace CompetitiveBackend.BackendUsage.Objects
 {
+    [Serializable]
     public class AuthSuccessResultDTO
     {
         public string Token { get; set; }

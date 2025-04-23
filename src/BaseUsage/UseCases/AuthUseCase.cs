@@ -20,7 +20,7 @@ namespace CompetitiveBackend.BaseUsage.UseCases
 
         public async Task<AuthSuccessResultDTO> Register(AccountCreationDTO creationDTO)
         {
-            await authService.Register(new Core.Objects.Account(creationDTO.Login, null!, creationDTO.Email), creationDTO.Password);
+            await authService.Register(new Core.Objects.Account(creationDTO.Login, creationDTO.Email), creationDTO.Password);
             return await Login(creationDTO);
         }
     }

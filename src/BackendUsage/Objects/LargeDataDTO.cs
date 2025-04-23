@@ -1,8 +1,11 @@
-﻿namespace CompetitiveBackend.BackendUsage.Objects
+﻿using System;
+
+namespace CompetitiveBackend.BackendUsage.Objects
 {
+    [Serializable]
     public struct LargeDataDTO
     {
-        public readonly byte[] Data;
+        public byte[] Data { get; set; }
         public LargeDataDTO(byte[] Data) => this.Data = Data;
     }
 }

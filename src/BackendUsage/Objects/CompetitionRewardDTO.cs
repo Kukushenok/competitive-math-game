@@ -1,9 +1,12 @@
-﻿namespace CompetitiveBackend.BackendUsage.Objects
+﻿using System;
+
+namespace CompetitiveBackend.BackendUsage.Objects
 {
+    [Serializable]
     public class RankRewardConditionDTO
     {
-        public readonly float MinRank;
-        public readonly float MaxRank;
+        public float MinRank { get; set; }
+        public float MaxRank { get; set; }
 
         public RankRewardConditionDTO(float minRank, float maxRank)
         {
@@ -11,11 +14,11 @@
             MaxRank = maxRank;
         }
     }
-
+    [Serializable]
     public class PlaceRewardConditionDTO
     {
-        public readonly int MinPlace;
-        public readonly int MaxPlace;
+        public int MinPlace { get; set; }
+        public int MaxPlace { get; set; }
 
         public PlaceRewardConditionDTO(int minPlace, int maxPlace)
         {
@@ -23,12 +26,12 @@
             MaxPlace = maxPlace;
         }
     }
-
+    [Serializable]
     public class UpdateCompetitionRewardDTO : IntIdentifiableDTO
     {
-        public readonly int RewardDescriptionID;
-        public readonly RankRewardConditionDTO? ConditionByRank;
-        public readonly PlaceRewardConditionDTO? ConditionByPlace;
+        public int RewardDescriptionID { get; set; }
+        public RankRewardConditionDTO? ConditionByRank { get; set; }
+        public PlaceRewardConditionDTO? ConditionByPlace { get; set; }
 
         public UpdateCompetitionRewardDTO(int? id, int rewardDescriptionID,
             RankRewardConditionDTO? conditionByRank = null,
@@ -40,10 +43,10 @@
             ConditionByPlace = conditionByPlace;
         }
     }
-
+    [Serializable]
     public class CreateCompetitionRewardDTO : UpdateCompetitionRewardDTO
     {
-        public readonly int CompetitionID;
+        public int CompetitionID { get; set; }
 
         public CreateCompetitionRewardDTO(int? id, int rewardDescriptionID, int competitionID,
             RankRewardConditionDTO? conditionByRank = null,
@@ -53,11 +56,11 @@
             CompetitionID = competitionID;
         }
     }
-
+    [Serializable]
     public class CompetitionRewardDTO : CreateCompetitionRewardDTO
     {
-        public readonly string? Name;
-        public readonly string? Description;
+        public string? Name { get; set; }
+        public string? Description { get; set; }
 
         public CompetitionRewardDTO(int? id, int rewardDescriptionID, int competitionID,
             string? name = null, string? description = null,

@@ -2,6 +2,7 @@
 
 namespace CompetitiveBackend.BackendUsage.Objects
 {
+    [Serializable]
     public class CompetitionDTO : IntIdentifiableDTO
     {
         public string? Name { get; set; }
@@ -19,7 +20,7 @@ namespace CompetitiveBackend.BackendUsage.Objects
             EndDate = endDate;
         }
     }
-
+    [Serializable]
     public class CompetitionUpdateRequestDTO : IntIdentifiableDTO
     {
         public string? Name { get; set; }
@@ -35,11 +36,6 @@ namespace CompetitiveBackend.BackendUsage.Objects
             Description = description;
             StartDate = startDate;
             EndDate = endDate;
-        }
-
-        public CompetitionUpdateRequestDTO(int ID, CompetitionUpdateRequestDTO patch)
-            : this(ID, patch.Name, patch.Description, patch.StartDate, patch.EndDate)
-        {
         }
     }
 }

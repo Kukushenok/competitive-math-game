@@ -41,12 +41,12 @@ namespace CompetitiveBackend.Services.AuthService
 
         public async Task<AuthSuccessResult> LogIn(string login, string password)
         {
-            Account acc = await _accountRepository.GetAccount(login);
-
-            if (!_hashAlgorithm.Verify(password, acc.PasswordHash))
+            string passwordHash = _hashAlgorithm.Hash(password);
+            if (!await _accountRepository.VerifyPassword(login, passwordHash))
             {
                 throw new IncorrectPasswordException();
             }
+            Account acc = await _accountRepository.GetAccount(login);
             string token = await _sessionRepository.CreateSessionFor(acc.Id!.Value);
             string roleName = (await _sessionRepository.GetSessionToken(token)).Role.ToString();
             return new AuthSuccessResult(token, roleName, acc.Id!.Value);
@@ -57,7 +57,7 @@ namespace CompetitiveBackend.Services.AuthService
             if (!_validator.IsValid(new AccountCreationData(data, password), out string? msg))
                 throw new InvalidArgumentsException(msg!);
             string passwordHash = _hashAlgorithm.Hash(password);
-            await _accountRepository.CreateAccount(new Account(data.Login, passwordHash, data.Email, data.Id), _roleCreator.Create(data));
+            await _accountRepository.CreateAccount(new Account(data.Login, data.Email, data.Id), passwordHash, _roleCreator.Create(data));
         }
     }
 }
