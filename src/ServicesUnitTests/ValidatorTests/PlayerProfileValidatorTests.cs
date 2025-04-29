@@ -86,7 +86,7 @@ namespace ServicesUnitTests.ValidatorTests
                 };
                 yield return new object[]
                 {
-                    new Account("", "", ""), false
+                    new Account("", ""), false
                 };
                 yield return new object[]
                 {
@@ -98,11 +98,11 @@ namespace ServicesUnitTests.ValidatorTests
                 };
                 yield return new object[]
                 {
-                    new Account("amogus", "", ""), true
+                    new Account("amogus", ""), true
                 };
                 yield return new object[]
                 {
-                    new Account(new string('*', 17), "", ""), false
+                    new Account(new string('*', 17), ""), false
                 };
             }
             IEnumerator IEnumerable.GetEnumerator()

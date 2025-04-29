@@ -11,13 +11,13 @@ namespace ServicesRealisation.ServicesRealisation.Validator
 {
     public class CompetitionValidator : ConfigurationValidator<Competition>
     {
-        private MinMaxIntConstraint descriptionLength;
-        private MinMaxIntConstraint nameLength;
+        private MinMaxIntConstraint DescriptionLength;
+        private MinMaxIntConstraint NameLength;
 
         public CompetitionValidator(IConfiguration configuration) : base(configuration)
         {
-            descriptionLength = Read(new MinMaxIntConstraint(0, 128), nameof(descriptionLength));
-            nameLength = Read(new MinMaxIntConstraint(4, 64), nameof(nameLength));
+            DescriptionLength = Read(new MinMaxIntConstraint(0, 128), nameof(DescriptionLength));
+            NameLength = Read(new MinMaxIntConstraint(4, 64), nameof(NameLength));
         }
 
         public override bool IsValid(Competition value, out string? msg)
@@ -27,8 +27,8 @@ namespace ServicesRealisation.ServicesRealisation.Validator
                 msg = "End date should be after start date";
                 return false;
             }
-            if (!nameLength.IsValid(value.Name.Length, out msg)) return false;
-            if (!descriptionLength.IsValid(value.Description?.Length ?? 0, out msg)) return false;
+            if (!NameLength.IsValid(value.Name.Length, out msg)) return false;
+            if (!DescriptionLength.IsValid(value.Description?.Length ?? 0, out msg)) return false;
             return true;
                 
         }

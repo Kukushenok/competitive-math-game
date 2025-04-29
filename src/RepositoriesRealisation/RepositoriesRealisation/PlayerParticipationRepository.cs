@@ -24,7 +24,7 @@ namespace CompetitiveBackend.Repositories
             using var context = await GetDbContext();
             try
             {
-                await context.PlayerParticipation.AddAsync(new PlayerParticipationModel(participation.CompetitionId, participation.PlayerProfileId, participation.Score));
+                await context.PlayerParticipation.AddAsync(new PlayerParticipationModel(participation.CompetitionId, participation.PlayerProfileId, participation.Score, participation.LastUpdateTime));
                 await context.SaveChangesAsync();
             }
             catch(Exception ex) when (ex.IsDBException())
@@ -92,7 +92,7 @@ namespace CompetitiveBackend.Repositories
         }
         private PlayerParticipation FromModel(PlayerParticipationModel model)
         {
-            return new PlayerParticipation(model.CompetitionID, model.AccountID, model.Score, model.Account?.ToCoreModel(), model.Competition?.ToCoreModel());
+            return new PlayerParticipation(model.CompetitionID, model.AccountID, model.Score, model.LastUpdateTime, model.Account?.ToCoreModel(), model.Competition?.ToCoreModel());
         }
 
         public async Task<IEnumerable<PlayerParticipation>> GetPlayerParticipations(int accountID, DataLimiter limiter, bool bindPlayer = false, bool bindCompetition = true)

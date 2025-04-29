@@ -33,6 +33,7 @@ namespace RepositoriesRealisation.RewardGranters
             }
             PlayerParticipationModel[] participations = await context.PlayerParticipation.Where(x => x.CompetitionID == competitionID)
                                                                                                  .OrderByDescending(x => x.Score)
+                                                                                                 .ThenBy(x=>x.LastUpdateTime)
                                                                                                  .ToArrayAsync();
             List<CompetitionRewardModel> rewards = await context.CompetitionReward.Where(x => x.CompetitionId == competitionID)
                                                                                    .ToListAsync();

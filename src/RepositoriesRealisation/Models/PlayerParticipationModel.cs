@@ -23,11 +23,15 @@ namespace RepositoriesRealisation.Models
         public int AccountID { get; set; }
         [Column("score", TypeName = "int")]
         public int Score { get; set; }
-        public PlayerParticipationModel(int CompetitionID, int AccountID, int Score)
+
+        [Column("last_update_time", TypeName = "timestamp")]
+        public DateTime LastUpdateTime { get; set; }
+        public PlayerParticipationModel(int CompetitionID, int AccountID, int Score, DateTime lastUpdateTime)
         {
             this.CompetitionID = CompetitionID;
             this.AccountID = AccountID;
             this.Score = Score;
+            LastUpdateTime = lastUpdateTime;
         }
         public PlayerParticipationModel()
         {

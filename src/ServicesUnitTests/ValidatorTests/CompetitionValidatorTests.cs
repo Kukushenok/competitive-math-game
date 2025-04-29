@@ -46,8 +46,8 @@ namespace ServicesUnitTests.ValidatorTests
         {
             var Dict = new Dictionary<string, string?>
             {
-               {"Constraints:Competition:descriptionLength:min", "10"},
-               {"Constraints:Competition:descriptionLength:max", "11"},
+               {"Constraints:Competition:DescriptionLength:min", "10"},
+               {"Constraints:Competition:DescriptionLength:max", "11"},
             };
             var conf = new ConfigurationBuilder().AddInMemoryCollection(Dict).Build();
             dt = new CompetitionValidator(conf);

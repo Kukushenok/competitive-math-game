@@ -6,6 +6,7 @@ using CompetitiveBackend.Services.AuthService;
 using CompetitiveBackend.Services.Exceptions;
 using CompetitiveBackend.Services.Objects;
 using Moq;
+using Repositories.Objects;
 using ServicesRealisation.Objects;
 using ServicesRealisation.ServicesRealisation.Validator;
 using System.ComponentModel.DataAnnotations;
@@ -24,6 +25,7 @@ namespace ServicesUnitTests.ServiceTests
         Mock<IAccountRepository> _accountRepo = new Mock<IAccountRepository>();
         Mock<IHashAlgorithm> _algo = new Mock<IHashAlgorithm>();
         Mock<IRoleCreator> _creator = new Mock<IRoleCreator>();
+        Mock<IRepositoryPrivilegySetting> _setting = new Mock<IRepositoryPrivilegySetting>();
         Mock<ISessionRepository> _sessionRepo = new Mock<ISessionRepository>();
         MockValidator<AccountCreationData> _validator = new MockValidator<AccountCreationData>();
         private readonly AuthService _service;
@@ -31,7 +33,7 @@ namespace ServicesUnitTests.ServiceTests
         {
             _algo.Setup(algo => algo.Hash(It.IsAny<string>())).Returns<string>(gt => $"|{gt}|");
             _algo.Setup(algo => algo.Verify(It.IsAny<string>(), It.IsAny<string>())).Returns<string, string>((a, b) => $"|{a}|" == b);
-            _service = new AuthService(_accountRepo.Object, _sessionRepo.Object, _algo.Object, _creator.Object, _validator);
+            _service = new AuthService(_accountRepo.Object, _sessionRepo.Object, _algo.Object, _creator.Object, _validator, _setting.Object);
         }
         [Fact]
         public async Task AuthService_LogIn_Success()
@@ -65,10 +67,9 @@ namespace ServicesUnitTests.ServiceTests
 
             Account c = new Account("hi", "X");
             _validator.Reset(new AccountCreationData(c, "1234"));
-            _accountRepo.Setup(x => x.CreateAccount(It.IsAny<Account>(), It.IsAny<Role>()))
+            _accountRepo.Setup(x => x.CreateAccount(It.IsAny<Account>(), "1234", It.IsAny<Role>()))
                 .Callback<Account, Role>((a, r) =>
                 {
-                    Assert.Equal("|1234|", a.PasswordHash);
                     Assert.Equal(TestRole.NAME, r.ToString());
                 });
             _creator.Setup(x => x.Create(It.IsAny<Account>())).Returns(new TestRole());
@@ -80,10 +81,9 @@ namespace ServicesUnitTests.ServiceTests
         {
             Account c = new Account("hi", "X");
             _validator.Reset(new AccountCreationData(c, "1234"), true);
-            _accountRepo.Setup(x => x.CreateAccount(It.IsAny<Account>(), It.IsAny<Role>()))
+            _accountRepo.Setup(x => x.CreateAccount(It.IsAny<Account>(), "1234", It.IsAny<Role>()))
                 .Callback<Account, Role>((a, r) =>
                 {
-                    Assert.Equal("|1234|", a.PasswordHash);
                     Assert.Equal(TestRole.NAME, r.ToString());
                 });
             _creator.Setup(x => x.Create(It.IsAny<Account>())).Returns(new TestRole());

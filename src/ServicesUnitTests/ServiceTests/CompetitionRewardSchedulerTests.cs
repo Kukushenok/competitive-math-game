@@ -2,7 +2,9 @@
 using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Services.CompetitionService;
 using CompetitiveBackend.Services.ExtraTools;
+using Microsoft.Extensions.DependencyInjection;
 using Moq;
+using Repositories.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +17,17 @@ namespace ServicesUnitTests.ServiceTests
     {
         private Mock<ITimeScheduler> _timeScheduler;
         private Mock<IPlayerRewardRepository> _rewardRepo;
+        private Mock<IRepositoryPrivilegySetting> _setting;
         private CompetitionRewardScheduler scheduler;
         public CompetitionRewardSchedulerTests()
         {
             _rewardRepo = new Mock<IPlayerRewardRepository>();
             _timeScheduler = new Mock<ITimeScheduler>();
-            scheduler = new CompetitionRewardScheduler(_rewardRepo.Object, _timeScheduler.Object);
+            _setting = new Mock<IRepositoryPrivilegySetting>();
+            ServiceCollection p = new ServiceCollection();
+            p.AddScoped((p) => _rewardRepo.Object);
+            p.AddScoped((p) => _setting.Object);
+            scheduler = new CompetitionRewardScheduler(p.BuildServiceProvider(), _timeScheduler.Object);
         }
         [Fact]
         public async Task CompetitionRewardSchedulerTests_OnCompetitionUpdated()

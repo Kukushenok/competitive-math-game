@@ -16,6 +16,7 @@ namespace CompetitiveBackend.Services.CompetitionService
     public class CompetitionRewardScheduler : ICompetitionRewardScheduler, ITimeScheduledTaskSubscriber
     {
         private const string SCHED_CATEGORY = "Competition";
+        private const string SCHED_PRIVILEGIES = "RewardScheduler";
         private IServiceProvider provider;
         protected ITimeScheduler _timeScheduler;
         public CompetitionRewardScheduler(IServiceProvider provider, ITimeScheduler scheduler)
@@ -48,7 +49,7 @@ namespace CompetitiveBackend.Services.CompetitionService
                 {
                     var _rewardRepository = scope.ServiceProvider.GetRequiredService<IPlayerRewardRepository>();
                     var _repositoryPrivilegySetting = scope.ServiceProvider.GetRequiredService<IRepositoryPrivilegySetting>();
-                    _repositoryPrivilegySetting.SetPrivilegies("RewardScheduler");
+                    _repositoryPrivilegySetting.SetPrivilegies(SCHED_PRIVILEGIES);
                     await _rewardRepository.GrantRewardsFor(data.Identifier);
                 }
             }

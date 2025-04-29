@@ -62,7 +62,7 @@ namespace RepositoriesRealisation
             try
             {
                 await Database.ExecuteSqlAsync(
-                    $"INSERT INTO account (login, username, email, password_hash, privilegy_level) VALUES ('{c.Login}', '{c.Login}', '{c.Email}', '{c.PasswordHash}', {c.AccountPrivilegyLevel})"
+                    $"INSERT INTO account (login, username, email, password_hash, privilegy_level) VALUES ({c.Login}, {c.Login}, {c.Email}, {c.PasswordHash}, {c.AccountPrivilegyLevel})"
                     );
             }
             catch(Npgsql.PostgresException ex)

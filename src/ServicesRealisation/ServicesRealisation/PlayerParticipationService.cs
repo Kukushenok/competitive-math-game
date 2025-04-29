@@ -50,11 +50,11 @@ namespace CompetitiveBackend.Services.PlayerParticipationService
             }
             catch (MissingDataException)
             {
-                await _playerParticipationRepository.CreateParticipation(new PlayerParticipation(competitionID, userID, score));
+                await _playerParticipationRepository.CreateParticipation(new PlayerParticipation(competitionID, userID, score, current));
             }
             if (participation != null && participation.Score < score)
             {
-                await _playerParticipationRepository.UpdateParticipation(new PlayerParticipation(competitionID, userID, score));
+                await _playerParticipationRepository.UpdateParticipation(new PlayerParticipation(competitionID, userID, score, current));
             }
         }
     }

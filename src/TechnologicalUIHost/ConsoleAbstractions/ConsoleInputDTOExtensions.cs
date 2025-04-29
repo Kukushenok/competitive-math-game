@@ -92,7 +92,7 @@ namespace TechnologicalUIHost.ConsoleAbstractions
             int accountID = input.ReadInt($"ID аккаунта {prompt}");
             int competitionID = input.ReadInt($"ID соревнования {prompt}");
             int score = input.ReadInt($"Очки {prompt}");
-            return new PlayerParticipationDTO(accountID, competitionID, score);
+            return new PlayerParticipationDTO(accountID, competitionID, score, DateTime.UtcNow);
         }
 
         public static PlayerProfileDTO ReadPlayerProfileDTO(this IConsoleInput input, string prompt = "> ")
