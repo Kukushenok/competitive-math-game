@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.WebRequestMethods;
 
 namespace BenchmarkMeasurerHost.TimeMeasurer
 {
@@ -23,10 +24,15 @@ namespace BenchmarkMeasurerHost.TimeMeasurer
 
         public async Task<Stopwatch> Measure(EnvironmentSettings settings)
         {
+            await environmentGenerator.GenerateEnvironment(settings);
+            return await Measure();
+        }
+
+        public async Task<Stopwatch> Measure()
+        {
             Stopwatch stp = new Stopwatch();
-            Competition c =await environmentGenerator.GenerateEnvironment(settings);
             stp.Start();
-            await repository.GrantRewardsFor(c.Id!.Value);
+            await repository.GrantRewardsFor(1);
             stp.Stop();
             return stp;
         }

@@ -9,7 +9,8 @@ using Xunit.Abstractions;
 
 namespace BenchmarkMeasurer.Tests
 {
-    public class DefaultCallsTests : BenchmarkTest
+    [Collection("Sequential")]
+    public class DefaultCallsTests : BenchmarkDumpReaderTest
     {
         public DefaultCallsTests(ITestOutputHelper helper) : base(helper)
         {

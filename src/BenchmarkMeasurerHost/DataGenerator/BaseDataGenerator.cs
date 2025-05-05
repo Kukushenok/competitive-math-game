@@ -75,10 +75,13 @@ namespace BenchmarkMeasurerHost.DataGenerator
         }
         private async Task CreateCompetitionRewards(EnvironmentSettings currDataSettings, Competition coreCompetition, List<RewardDescription> rewards)
         {
-            float supposedCount = (float)(currDataSettings.SupposedRewardCount) / (currDataSettings.ParticipantsCount);
-            float batchSuperstition = supposedCount / MathF.Ceiling(supposedCount) / 2;
-            int batchSize = (int)(currDataSettings.ParticipantsCount * batchSuperstition);
-            int batchCount = ((int)MathF.Ceiling(supposedCount)) * 2;
+            //float supposedCount = (float)(currDataSettings.SupposedRewardCount) / (currDataSettings.ParticipantsCount);
+            //float batchSuperstition = supposedCount / MathF.Ceiling(supposedCount) / 2;
+            //int batchSize = (int)(currDataSettings.ParticipantsCount * batchSuperstition);
+            //int batchCount = ((int)MathF.Ceiling(supposedCount)) * 2;
+            float batchSuperstition = 0.2f;
+            int batchSize = currDataSettings.SupposedRewardCount / 5;
+            int batchCount = 5;
             // Генерация CompetitionReward с разными условиями
             var competitionRewardFaker = new AutoFaker<CompetitionReward>(LOCALE)
                 .RuleFor(cr => cr.RewardDescriptionID, f => f.PickRandom(rewards).Id)
@@ -86,15 +89,15 @@ namespace BenchmarkMeasurerHost.DataGenerator
                 .RuleFor(cr => cr.Condition, f => {
                     if (f.Random.Bool())
                     {
-                        float offset = (float)f.Random.Double(0, 0.2);
+                        float offset = (float)f.Random.Double(0, 1.0f - batchSuperstition);
                         return new RankGrantCondition(
                             offset,
-                            offset + 0.8f
+                            offset + batchSuperstition
                         );
                     }
                     else
                     {
-                        int offset = f.Random.Int(0, currDataSettings.ParticipantsCount - batchSize);
+                        int offset = f.Random.Int(1, currDataSettings.ParticipantsCount - batchSize);
                         return new PlaceGrantCondition(
                             offset,
                             offset + batchSize

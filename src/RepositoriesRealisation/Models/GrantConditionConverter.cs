@@ -49,8 +49,8 @@ namespace RepositoriesRealisation.Models
             }
             else if (cond is RankGrantCondition rank)
             {
-                obj.Add(new KeyValuePair<string, JsonNode?>(nameof(rank.maxRank), (JsonNode)rank.minRank));
-                obj.Add(new KeyValuePair<string, JsonNode?>(nameof(rank.minRank), (JsonNode)rank.maxRank));
+                obj.Add(new KeyValuePair<string, JsonNode?>(nameof(rank.maxRank), (JsonNode)rank.maxRank));
+                obj.Add(new KeyValuePair<string, JsonNode?>(nameof(rank.minRank), (JsonNode)rank.minRank));
             }
             else
             {

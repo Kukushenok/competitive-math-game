@@ -31,6 +31,7 @@ namespace RepositoriesRealisation.RewardGranters
             {
                 throw new FailedOperationException($"Rewards have already been granted for competition {competitionID}");
             }
+            context.Competition.Where(x => x.Id == competitionID).ExecuteUpdate(x => x.SetProperty(x => x.HasEnded, true));
             PlayerParticipationModel[] participations = await context.PlayerParticipation.Where(x => x.CompetitionID == competitionID)
                                                                                                  .OrderByDescending(x => x.Score)
                                                                                                  .ThenBy(x=>x.LastUpdateTime)
@@ -53,7 +54,6 @@ namespace RepositoriesRealisation.RewardGranters
                     await GrantByCondition(context, reward, participations, placeCondition);
                 }
             }
-            context.Competition.Where(x => x.Id == competitionID).ExecuteUpdate(x => x.SetProperty(x => x.HasEnded, true));
             await context.SaveChangesAsync();
         }
         private async Task GrantByCondition(BaseDbContext context, CompetitionRewardModel model, PlayerParticipationModel[] participations, PlaceGrantCondition rankCondition)
@@ -61,7 +61,8 @@ namespace RepositoriesRealisation.RewardGranters
             if (participations.Length == 0)
                 return;
             int competitionID = participations[0].CompetitionID;
-            for (int i = rankCondition.minPlace - 1; i < rankCondition.maxPlace && i < participations.Length; i++)
+            int startIdx = rankCondition.minPlace <= 0 ? 0: rankCondition.minPlace - 1;
+            for (int i = startIdx; i < rankCondition.maxPlace && i < participations.Length; i++)
             {
                 await context.PlayerReward.AddAsync(new PlayerRewardModel(participations[i].AccountID, model.RewardDescriptionId, competitionID));
             }

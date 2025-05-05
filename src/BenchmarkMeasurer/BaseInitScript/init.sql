@@ -83,17 +83,20 @@ RETURNS SETOF player_participation
 LANGUAGE plpgsql
 AS $$
 DECLARE
-    row_count int := 0;
+    row_cnt int := 0;
 	min_val int := 0;
 	max_val int := 0;
 BEGIN
     -- Move to the end
-    MOVE LAST IN sortedtable;
+    MOVE ABSOLUTE 0 IN sortedtable;
+    MOVE FORWARD ALL FROM sortedtable;
     -- Get the current position (which is the count)
-    GET DIAGNOSTICS row_count = ROW_COUNT;
+    GET DIAGNOSTICS row_cnt = ROW_COUNT;
 	MOVE ABSOLUTE 0 IN sortedtable;
-	min_val := floor((1.0 - max_rank) * row_count);
-	max_val := floor((1.0 - min_rank) * row_count);
+	--RAISE NOTICE 'deepsec row count %', row_cnt;
+	min_val := floor((1.0 - max_rank) * row_cnt) + 1;
+	max_val := ceil((1.0 - min_rank) * row_cnt) + 1;
+	--RAISE NOTICE '% %', min_val, max_val;
 	RETURN QUERY (select * from grant_place_rewards(sortedtable, min_val, max_val));
 END;
 $$;
@@ -125,8 +128,9 @@ BEGIN
     ELSIF is_granted THEN
         RAISE EXCEPTION 'Rewards have already been granted' USING HINT = 'Rewards already granted.';
     ELSE
+        UPDATE competition c SET has_ended = true WHERE c.id = comp_id;
         -- Open the base cursor for place-based ordering
-        OPEN place_cursor FOR 
+        OPEN place_cursor SCROLL FOR 
             SELECT * FROM player_participation p 
             WHERE p.competition_id = comp_id
             ORDER BY p.score DESC, p.last_update_time ASC;
@@ -175,7 +179,7 @@ BEGIN
                 EXIT WHEN NOT FOUND;
                 
                 INSERT INTO player_reward(reward_description_id, player_id, competition_id)
-                VALUES (creward.id, player_rec.account_id, comp_id);
+                VALUES (creward.reward_description_id, player_rec.account_id, comp_id);
             END LOOP;
             
             -- Clean up and reset for next iteration
@@ -185,7 +189,6 @@ BEGIN
         
         -- Final clean up
         CLOSE place_cursor;
-        UPDATE competition c SET has_ended = true WHERE c.id = comp_id;
     END IF;
 END;
 $$;
@@ -212,7 +215,7 @@ REVOKE SELECT, UPDATE, DELETE ON account FROM PUBLIC;
 CREATE ROLE guest WITH LOGIN PASSWORD 'guest_password';
 GRANT SELECT ON account_readonly, competition, competition_reward, player_participation, reward_description TO guest;
 GRANT INSERT (login, username, email, password_hash, privilegy_level) ON account TO guest;
-GRANT EXECUTE ON FUNCTION check_password_hash(varchar, varchar) TO Guest;
+GRANT EXECUTE ON FUNCTION check_password_hash(varchar, varchar) TO guest;
 ALTER ROLE guest WITH INHERIT;
 
 -- PLAYER

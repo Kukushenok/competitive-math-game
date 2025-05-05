@@ -22,6 +22,7 @@ namespace BenchmarkMeasurer
 {
     public abstract class BenchmarkTest(ITestOutputHelper helper) : ContainerInitializer
     {
+        protected static string ResultPath => Path.Combine(CORE_PATH, "Results");
         protected override Task AfterDockerInit()
         {
             IServiceCollection coll = new ServiceCollection();
@@ -40,8 +41,8 @@ namespace BenchmarkMeasurer
             serviceProvider = p;
             return Task.CompletedTask;
         }
-        private ServiceProvider serviceProvider;
-        private FileDumper testDumper = new FileDumper(Path.Combine(CORE_PATH, "ResultDumps"));
+        protected ServiceProvider serviceProvider;
+        private FileDumper testDumper = new FileDumper(Path.Combine(CORE_PATH, "Results", "Dumps"));
         private IDbContextFactory<BaseDbContext> contextFactory = null!;
         
         public async Task<BaseDbContext> GetContext() => await contextFactory.CreateDbContextAsync();
@@ -51,26 +52,27 @@ namespace BenchmarkMeasurer
         }
         protected async Task ExecSQLFile(string fileName)
         {
-            string contents = await File.ReadAllTextAsync(Path.Combine(CORE_PATH, TEST_INIT_PATH, fileName));
+            string contents = await File.ReadAllTextAsync(fileName);
             await ExecSQL(contents);
         }
-        protected async Task DoDumpings(string dumpName)
+        protected async Task DoDumpings(string dumpName, FileDumper? dumper = null)
         {
+            dumper ??= testDumper;
             List<string> commands = new List<string>() { "/bin/bash", "-c", $"PGPASSWORD={PASSWORD} pg_dump --username {USERNAME} {DATABASE}" };
             var result = await Container.ExecAsync(commands);
-            await testDumper.Dump(GetName() + "_dump", result.Stdout);
+            await dumper.Dump(dumpName, result.Stdout);
         }
         protected virtual void AddMyRepositories(IServiceCollection coll) => coll.AddCompetitiveRepositories();
         protected abstract string GetName();
-        [Theory]
-        [MeasurementData(10)]
-        public async Task DoTest(EnvironmentSettings settings)
-        {
-            using var scope = serviceProvider.CreateScope();
-            ITimeMeasurerHost host = scope.ServiceProvider.GetRequiredService<ITimeMeasurerHost>();
-            var stopwatch = await host.Measure(settings);
-            FileDumper sampleDumper = new FileDumper(Path.Combine(CORE_PATH, "ResultDumps", GetName()));
-            await sampleDumper.Dump(settings.SupposedRewardCount.ToString(), $"{stopwatch.ElapsedMilliseconds}\n");
-        }
+        //[Theory]
+        //[MeasurementData(10)]
+        //public async Task DoTest(EnvironmentSettings settings)
+        //{
+        //    using var scope = serviceProvider.CreateScope();
+        //    ITimeMeasurerHost host = scope.ServiceProvider.GetRequiredService<ITimeMeasurerHost>();
+        //    var stopwatch = await host.Measure(settings);
+        //    FileDumper sampleDumper = new FileDumper(Path.Combine(CORE_PATH, "Results", GetName()));
+        //    await sampleDumper.Dump(settings.SupposedRewardCount.ToString(), $"{stopwatch.ElapsedMilliseconds}\n");
+        //}
     }
 }

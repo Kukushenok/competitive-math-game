@@ -6,5 +6,6 @@ namespace BenchmarkMeasurerHost.TimeMeasurer
     public interface ITimeMeasurerHost
     {
         public Task<Stopwatch> Measure(EnvironmentSettings settings);
+        public Task<Stopwatch> Measure();
     }
 }
