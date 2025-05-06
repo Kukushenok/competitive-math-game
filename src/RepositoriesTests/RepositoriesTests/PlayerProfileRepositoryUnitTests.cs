@@ -40,7 +40,7 @@ namespace RepositoriesTests.RepositoriesTests
 
             using var context = await GetContext();
             context.PlayerProfiles.Find(3).Should().NotBeNull().And.Satisfy(
-                (PlayerProfile md) =>
+                (PlayerProfileModel md) =>
                 {
                     md.Description.Should().BeEquivalentTo("munny_new_description", "I updated it!");
                 });

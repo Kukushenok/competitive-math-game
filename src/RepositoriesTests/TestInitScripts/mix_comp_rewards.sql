@@ -9,14 +9,14 @@ COPY public.reward_description (id, reward_name, description, icon_image, ingame
 2	Basic	Text	\\x000102	\\x030405
 \.
 
-COPY public.account (id, login, email, password_hash, privilegy_level, description, profile_image) FROM stdin;
-1	amongus	\N	1234567	1	\N	\\x000102
-2	trollface	\N	1234567	0	\N	\N
-3	munny	email@email.com	1234567	0	munny_description	\N
+COPY public.account (id, login, username, email, password_hash, privilegy_level, description, profile_image) FROM stdin;
+1	amongus	amongus	\N	1234567	1	\N	\\x000102
+2	trollface	trollface	\N	1234567	0	\N	\N
+3	munny	munny	email@email.com	1234567	0	munny_description	\N
 \.
 
-COPY public.competition_reward (id, reward_description_id, competition_id, condition) FROM stdin;
-1	1	1	{"Type": "place", "maxPlace": 1, "minPlace": 0}
-2	2	2	{"Type": "rank", "maxRank": 1.0, "minRank": 0.5}
-3	1	2	{"Type": "rank", "maxRank": 0.5, "minRank": 0.25}
+COPY public.competition_reward (id, reward_description_id, competition_id, condition_type, min_place, max_place, min_rank, max_rank) FROM stdin;
+1	1	1	place	1	2	\N	\N
+2	2	2	rank	\N	\N	0.5	1.0
+3	1	2	rank	\N	\N	0.25	0.5
 \.

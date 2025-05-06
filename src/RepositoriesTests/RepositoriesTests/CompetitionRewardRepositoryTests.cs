@@ -29,7 +29,7 @@ namespace RepositoriesTests.RepositoriesTests
             [new RankGrantCondition(0, 1), 0],
             [new RankGrantCondition(0.5f, 1), 1],
             [new RankGrantCondition(0f, 0.5f), 2],
-            [new PlaceGrantCondition(0, 1), 3],
+            [new PlaceGrantCondition(1, 2), 3],
             [new PlaceGrantCondition(2, 2), 4],
             [new PlaceGrantCondition(4, 50), 5]
             ];
@@ -40,7 +40,6 @@ namespace RepositoriesTests.RepositoriesTests
             await ExecSQLFile("mix_no_rewards.sql");
 
             var reward = new CompetitionReward(1, 1, "Hi", "Deo", cond);
-            string text1 = GrantConditionConverter.ToJSON(cond)?.Save()!;
             await Testing.CreateCompetitionReward(reward);
 
             using var context = await GetContext();
@@ -48,8 +47,7 @@ namespace RepositoriesTests.RepositoriesTests
             {
                 x.CompetitionId.Should().Be(1);
                 x.RewardDescriptionId.Should().Be(1);
-                string text2 = x.Condition.Save();
-                text2.Should().BeEquivalentTo(text1);
+                x.GetCondition().Should().BeEquivalentTo(cond);
             });
             await DoDumpings($"created_condition_{idx}");
         }
@@ -67,15 +65,13 @@ namespace RepositoriesTests.RepositoriesTests
         {
             await ExecSQLFile("mix_comp_rewards.sql");
             var reward = new CompetitionReward(2, 2, "Hi", "Deo", cond, idx % 2 + 1);
-            string text1 = GrantConditionConverter.ToJSON(cond)?.Save()!;
             await Testing.UpdateCompetitionReward(reward);
             using var context = await GetContext();
             context.CompetitionReward.Find(reward.Id).Should().Satisfy((CompetitionRewardModel x) =>
             {
                 x.CompetitionId.Should().Be(2);
                 x.RewardDescriptionId.Should().Be(2);
-                string text2 = x.Condition.Save();
-                text2.Should().BeEquivalentTo(text1);
+                x.GetCondition().Should().BeEquivalentTo(cond);
             });
             await DoDumpings($"updated_condition_{idx}");
         }

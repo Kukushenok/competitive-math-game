@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,7 +21,7 @@ namespace RepositoriesRealisation.RewardGranters
             // No possible injection: competitionID is integer.
             try
             {
-                await context.Database.ExecuteSqlAsync($"call grant_rewards({competitionID})");
+                await context.Database.ExecuteSqlAsync(FormattableStringFactory.Create($"call {_procedureName}({{0}})".ToString(), competitionID));
             }
             catch(Npgsql.PostgresException postgresException)
             {

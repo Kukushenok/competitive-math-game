@@ -18,6 +18,7 @@ namespace ChronoServiceRealisation
             setup?.Invoke(opt);
             collection.AddQuartz((config) =>
             {
+                
                 config.UseDedicatedThreadPool(x => x.MaxConcurrency = 5);
                 if (opt.InMemory)
                     config.UseInMemoryStore();
@@ -25,12 +26,14 @@ namespace ChronoServiceRealisation
                 {
                     config.UsePersistentStore((options) =>
                     {
+                        options.UseNewtonsoftJsonSerializer();
                         if (opt.SqliteConnectionString != null)
+                        {
+                            SQLiteEnsurance.Ensure(opt.SqliteConnectionString);
                             options.UseSQLite(opt.SqliteConnectionString);
+                        }
                         else if (opt.PostgresConnectionString != null)
                             options.UsePostgres(opt.PostgresConnectionString);
-                        else
-                            options.UseBinarySerializer();
                     });
                 }
             });

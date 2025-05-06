@@ -40,18 +40,18 @@ namespace RepositoriesRealisation.RewardGranters
                                                                                    .ToListAsync();
             foreach(CompetitionRewardModel reward in rewards)
             {
-                GrantCondition? cond = GrantConditionConverter.FromJSON(reward.Condition);
-                if(cond == null)
-                {
-                    _logger.LogWarning($"Processing {reward.Id}: Could not read the reward condition; skipping");
-                }
-                else if(cond is RankGrantCondition rankCondition)
+                GrantCondition cond = reward.GetCondition();
+                if(cond is RankGrantCondition rankCondition)
                 {
                     await GrantByCondition(context, reward, participations, rankCondition);
                 }
                 else if(cond is PlaceGrantCondition placeCondition)
                 {
                     await GrantByCondition(context, reward, participations, placeCondition);
+                }
+                else
+                {
+                    _logger.LogError($"Unspecified rank condition \"{cond.Type}\", skipping");
                 }
             }
             await context.SaveChangesAsync();

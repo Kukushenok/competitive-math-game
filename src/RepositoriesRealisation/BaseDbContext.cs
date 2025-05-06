@@ -35,10 +35,6 @@ namespace RepositoriesRealisation
                 options.ToView("account_readonly");
                 options.Ignore(x => x.PasswordHash); // the forbidden knowledge
             });
-            //modelBuilder.Entity<PlayerProfileModel>(options => options.ToView("account_readonly"));
-            //modelBuilder.Entity<AccountModelProfileImage>(options => options.ToView("account_readonly"));
-            modelBuilder.HasDbFunction(typeof(BaseDbContext).GetMethod(nameof(CheckPasswordHash), [typeof(string), typeof(string)])!
-                , x => x.HasName("check_password_hash"));
             ConnectOneToOne<AccountModel, PlayerProfileModel>(modelBuilder, nameof(AccountModel.Profile));
             ConnectOneToOne<CompetitionModel, CompetitionModelLevelData>(modelBuilder, nameof(CompetitionModel.LevelData));
             ConnectOneToOne<RewardDescriptionModel, RewardDescriptionModelIconImage>(modelBuilder, nameof(RewardDescriptionModel.IconImage));
@@ -54,8 +50,6 @@ namespace RepositoriesRealisation
                 .WithOne(nameof(OneToOneEntity<T>.Model))
                 .HasForeignKey(typeof(Q), "Id");
         }
-        public bool CheckPasswordHash(string login, string passwordHash) 
-            => throw new NotImplementedException("Should be carried out with DB"); 
 
         public async Task DoCreateAccount(AccountModel c)
         {

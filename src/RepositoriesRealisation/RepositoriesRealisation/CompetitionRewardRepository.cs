@@ -24,12 +24,7 @@ namespace CompetitiveBackend.Repositories
         public async Task CreateCompetitionReward(CompetitionReward description)
         {
             using var context = await GetDbContext();
-            if(!GrantConditionConverter.ToJSON(description.Condition, out JsonDocument d))
-            {
-                _logger.LogError($"There is no such condition supported: {description.Condition.Type}");
-                throw new Exceptions.IncorrectOperationException($"There is no such condition supported: {description.Condition.Type}");
-            }
-            CompetitionRewardModel model = new CompetitionRewardModel(description.RewardDescriptionID, description.CompetitionID, d);
+            CompetitionRewardModel model = new CompetitionRewardModel(description.RewardDescriptionID, description.CompetitionID, description.Condition);
             try
             {
                 await context.CompetitionReward.AddAsync(model);
@@ -84,15 +79,10 @@ namespace CompetitiveBackend.Repositories
         public async Task UpdateCompetitionReward(CompetitionReward description)
         {
             if (description.Id == null) throw new Exceptions.IncorrectOperationException("ID is null");
-            if (!GrantConditionConverter.ToJSON(description.Condition, out JsonDocument d))
-            {
-                _logger.LogError($"There is no such condition supported: {description.Condition.Type}");
-                throw new Exceptions.IncorrectOperationException($"There is no such condition supported: {description.Condition.Type}");
-            }
             using var context = await GetDbContext();
             CompetitionRewardModel model = await Find(context, description.Id!.Value);
             model.RewardDescriptionId = description.RewardDescriptionID;
-            model.Condition = d;
+            model.SetCondition(description.Condition);
             model.CompetitionId = description.CompetitionID;
             try
             {
@@ -107,16 +97,7 @@ namespace CompetitiveBackend.Repositories
         }
         private static CompetitionReward ToCore(CompetitionRewardModel model)
         {
-            if (!GrantConditionConverter.FromJSON(model.Condition, out GrantCondition cond))
-            {
-                throw new Exceptions.FailedOperationException($"Internal damage of GrantCondition field of reward {model.Id}");
-            }
-            return new CompetitionReward(model.RewardDescriptionId,
-                model.CompetitionId,
-                model.RewardDescription.Name,
-                model.RewardDescription.Description ?? string.Empty,
-                cond,
-                model.Id);
+            return model.ToCoreModel();
         }
         private async Task<CompetitionRewardModel> Find(BaseDbContext context, int id)
         {

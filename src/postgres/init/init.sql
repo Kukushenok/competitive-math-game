@@ -42,11 +42,34 @@ create table if not exists player_participation(
 
 alter table player_participation add constraint comp_uniqueness unique (competition_id, account_id); 
 
-create table if not exists competition_reward(
-	id int generated always as identity primary key,
-	reward_description_id int references reward_description(id) not null,
-	competition_id int references competition(id) not null,
-	condition jsonb
+create type condition_type_enum as enum ('place', 'rank');
+
+create table competition_reward (
+    id int generated always as identity primary key,
+    reward_description_id int references reward_description(id) not null,
+    competition_id int references competition(id) not null,
+    condition_type condition_type_enum not null,
+    min_place int,
+    max_place int,
+    min_rank decimal(4,3),
+    max_rank decimal(4,3)
+);
+
+alter table competition_reward
+add constraint chk_place_min check (
+    condition_type <> 'place' or (min_place is not null and min_place >= 1)
+),
+add constraint chk_place_max check (
+    condition_type <> 'place' or (max_place is not null and max_place >= min_place)
+),
+add constraint chk_rank_min check (
+    condition_type <> 'rank' or (min_rank is not null and min_rank >= 0)
+),
+add constraint chk_rank_max check (
+    condition_type <> 'rank' or (max_rank is not null and max_rank <= 1)
+),
+add constraint chk_rank_range check (
+    condition_type <> 'rank' or (max_rank >= min_rank)
 );
 
 create table if not exists player_reward(
@@ -83,17 +106,20 @@ RETURNS SETOF player_participation
 LANGUAGE plpgsql
 AS $$
 DECLARE
-    row_count int := 0;
+    row_cnt int := 0;
 	min_val int := 0;
 	max_val int := 0;
 BEGIN
     -- Move to the end
-    MOVE LAST IN sortedtable;
+    MOVE ABSOLUTE 0 IN sortedtable;
+    MOVE FORWARD ALL FROM sortedtable;
     -- Get the current position (which is the count)
-    GET DIAGNOSTICS row_count = ROW_COUNT;
+    GET DIAGNOSTICS row_cnt = ROW_COUNT;
 	MOVE ABSOLUTE 0 IN sortedtable;
-	min_val := floor((1.0 - max_rank) * row_count);
-	max_val := floor((1.0 - min_rank) * row_count);
+	--RAISE NOTICE 'deepsec row count %', row_cnt;
+	min_val := floor((1.0 - max_rank) * row_cnt) + 1;
+	max_val := ceil((1.0 - min_rank) * row_cnt) + 1;
+	--RAISE NOTICE '% %', min_val, max_val;
 	RETURN QUERY (select * from grant_place_rewards(sortedtable, min_val, max_val));
 END;
 $$;
@@ -106,14 +132,10 @@ DECLARE
     creward competition_reward%rowtype;
     comp_valid_id int := null;
     is_granted bool := false;
-    reward_type text;
+    reward_type condition_type_enum;
     place_cursor REFCURSOR := 'place_cursor';
     reward_cursor REFCURSOR := 'reward_cursor';
     player_rec player_participation%rowtype;
-    min_condition float;
-    max_condition float;
-    min_place int;
-    max_place int;
 BEGIN
     -- Check if rewards already granted
     SELECT c.id, c.has_ended 
@@ -125,8 +147,9 @@ BEGIN
     ELSIF is_granted THEN
         RAISE EXCEPTION 'Rewards have already been granted' USING HINT = 'Rewards already granted.';
     ELSE
+        UPDATE competition c SET has_ended = true WHERE c.id = comp_id;
         -- Open the base cursor for place-based ordering
-        OPEN place_cursor FOR 
+        OPEN place_cursor SCROLL FOR 
             SELECT * FROM player_participation p 
             WHERE p.competition_id = comp_id
             ORDER BY p.score DESC, p.last_update_time ASC;
@@ -134,48 +157,27 @@ BEGIN
         FOR creward IN 
             SELECT * FROM competition_reward c WHERE c.competition_id = comp_id
         LOOP
-            reward_type := creward.condition->>'Type';
-            BEGIN
-	            CASE 
-	                WHEN reward_type = 'rank' THEN
-						IF NOT (creward.condition ?& array['minRank', 'maxRank']) THEN
-							RAISE WARNING 'Processing rank-based reward %: Missing fields MinRank or MaxRank, skipping', creward.id;
-							CONTINUE;
-						END IF;
-	                    min_condition := (creward.condition->>'minRank')::float;
-	                    max_condition := (creward.condition->>'maxRank')::float;
-	                    
-	                    -- Open cursor for rank-based rewards
-	                    OPEN reward_cursor FOR 
-	                        SELECT * FROM grant_rank_rewards(place_cursor, min_condition, max_condition);
-	                    
-	                WHEN reward_type = 'place' THEN
-						IF NOT (creward.condition ?& array['minPlace', 'maxPlace']) THEN
-							RAISE WARNING 'Processing rank-based reward %: Missing fields MinPlace or MaxPlace, skipping', creward.id;
-							CONTINUE;
-						END IF;
-	                    min_place := (creward.condition->>'minPlace')::int;
-	                    max_place := (creward.condition->>'maxPlace')::int;
-	                    
-	                    -- Open cursor for place-based rewards
-	                    OPEN reward_cursor FOR 
-	                        SELECT * FROM grant_place_rewards(place_cursor, min_place, max_place);
-	                    
-	                ELSE
-	                    RAISE WARNING 'Processing %: Unrecognized reward type %; skipping', creward.id, reward_type;
-	                    CONTINUE;  -- Skip to next reward
-	            END CASE;
-		    EXCEPTION WHEN OTHERS THEN
-		        RAISE WARNING 'Processing %: Type cast error occured, skipping', creward.id;
-		        CONTINUE;
-            END;
+            reward_type := creward.condition_type;
+            CASE 
+                WHEN reward_type = 'rank' THEN
+                    OPEN reward_cursor FOR 
+                        SELECT * FROM grant_rank_rewards(place_cursor, creward.min_rank, creward.max_rank);
+                    
+                WHEN reward_type = 'place' THEN
+                    OPEN reward_cursor FOR 
+                        SELECT * FROM grant_place_rewards(place_cursor, creward.min_place, creward.max_place);
+                    
+                ELSE
+                    RAISE WARNING 'Processing %: Unrecognized reward type %; skipping', creward.id, reward_type;
+                    CONTINUE;  -- Skip to next reward
+            END CASE;
             -- Process the reward cursor (common for both types)
             LOOP
                 FETCH reward_cursor INTO player_rec;
                 EXIT WHEN NOT FOUND;
                 
                 INSERT INTO player_reward(reward_description_id, player_id, competition_id)
-                VALUES (creward.id, player_rec.account_id, comp_id);
+                VALUES (creward.reward_description_id, player_rec.account_id, comp_id);
             END LOOP;
             
             -- Clean up and reset for next iteration
@@ -185,7 +187,6 @@ BEGIN
         
         -- Final clean up
         CLOSE place_cursor;
-        UPDATE competition c SET has_ended = true WHERE c.id = comp_id;
     END IF;
 END;
 $$;
@@ -212,7 +213,7 @@ REVOKE SELECT, UPDATE, DELETE ON account FROM PUBLIC;
 CREATE ROLE guest WITH LOGIN PASSWORD 'guest_password';
 GRANT SELECT ON account_readonly, competition, competition_reward, player_participation, reward_description TO guest;
 GRANT INSERT (login, username, email, password_hash, privilegy_level) ON account TO guest;
-GRANT EXECUTE ON FUNCTION check_password_hash(varchar, varchar) TO Guest;
+GRANT EXECUTE ON FUNCTION check_password_hash(varchar, varchar) TO guest;
 ALTER ROLE guest WITH INHERIT;
 
 -- PLAYER

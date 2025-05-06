@@ -6,6 +6,7 @@ using RepositoriesRealisation;
 using ChronoServiceRealisation;
 using CompetitiveBackend.Repositories;
 using Repositories.Repositories;
+using CompetitiveBackend.Services.ExtraTools;
 
 namespace CompetitiveBackend.SolutionInstaller
 {
@@ -14,11 +15,18 @@ namespace CompetitiveBackend.SolutionInstaller
         public static IServiceCollection AddCompetitiveBackendSolution(this IServiceCollection coll)
         {
             coll.AddCompetitiveRepositories(options => { options.UsePrivilegiedConnectionString("Guest"); })
-                .AddQuartzTimeScheduler()
+                .AddQuartzTimeScheduler(options => options.UseSqlite("Data Source=quartznet.sqlite;Version=3"))
                 .AddMajickImageRescaler()
                 .AddCompetitiveServices()
                 .AddCompetitiveUseCases();
             return coll;
+        }
+    }
+    public static class Initializer
+    {
+        public static void InitializeCompetitiveBackendSolution(this IServiceProvider provider)
+        {
+            provider.GetRequiredService<ITimeScheduler>().Initialize().GetAwaiter().GetResult();
         }
     }
 }

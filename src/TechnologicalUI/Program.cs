@@ -18,7 +18,9 @@ namespace TechnologicalUI
             builder.Services.AddLogging(conf => conf.AddConsole());
             builder.Services.AddCompetitiveBackendSolution();
             builder.Services.AddTechnologicalUIHostWithConsole<ConsoleInOut>();
-            builder.Build().Run();
+            IHost hst = builder.Build();
+            hst.Services.InitializeCompetitiveBackendSolution();
+            hst.Run();
         }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Repositories.Repositories;
+using RepositoriesRealisation.Models;
 
 namespace RepositoriesRealisation
 {
@@ -18,7 +19,7 @@ namespace RepositoriesRealisation
         {
             string curPerms = _stringGetter.GetConnectionString();
             var builder = new DbContextOptionsBuilder<BaseDbContext>();
-            builder.UseNpgsql(curPerms);
+            builder.UseNpgsql(curPerms, o=> o.MapEnum<SupportedConditionType>("condition_type_enum"));
             builder.UseLoggerFactory(_factory);
             BaseDbContext context = new BaseDbContext(builder.Options);
             return context;

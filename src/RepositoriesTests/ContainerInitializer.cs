@@ -14,7 +14,7 @@ namespace RepositoriesTests
         protected const string PASSWORD = "tester";
         protected const string DATABASE = "tester";
         protected const string TEST_INIT_PATH = "TestInitScripts";
-        protected const string BASE_INIT_PATH = "BaseInitScript";
+        protected const string BASE_INIT_PATH = "../postgres/init";
 
         protected PostgreSqlContainer Container;
         protected string ConnectionString => Container.GetConnectionString();

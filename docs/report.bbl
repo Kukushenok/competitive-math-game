@@ -19,11 +19,91 @@
 
 \refsection{0}
   \datalist[entry]{none/global//global/global/global}
-    \entry{postgresql_pgdump}{misc}{}{}
+    \entry{postgresql}{misc}{}{}
       \field{sortinit}{1}
       \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labeltitlesource}{title}
-      \field{title}{Документация команды pg_dump в PostgreSQL [Электронный ресурс]}
+      \field{title}{Документация PostgreSQL [Электронный ресурс]}
+      \field{urlday}{5}
+      \field{urlmonth}{5}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.postgresql.org/docs/
+      \endverb
+      \verb{url}
+      \verb https://www.postgresql.org/docs/
+      \endverb
+    \endentry
+    \entry{magicknet}{misc}{}{}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labeltitlesource}{title}
+      \field{title}{Документация библиотеки Magick.NET [Электронный ресурс]}
+      \field{urlday}{6}
+      \field{urlmonth}{5}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://github.com/dlemstra/Magick.NET/tree/main/docs
+      \endverb
+      \verb{url}
+      \verb https://github.com/dlemstra/Magick.NET/tree/main/docs
+      \endverb
+    \endentry
+    \entry{quartznet}{misc}{}{}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labeltitlesource}{title}
+      \field{title}{Документация библиотеки Quartz.NET [Электронный ресурс]}
+      \field{urlday}{5}
+      \field{urlmonth}{5}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.quartz-scheduler.net/documentation/
+      \endverb
+      \verb{url}
+      \verb https://www.quartz-scheduler.net/documentation/
+      \endverb
+    \endentry
+    \entry{intel}{misc}{}{}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labeltitlesource}{title}
+      \field{title}{Спецификация процессора Intel Core i7 [Электронный ресурс]}
+      \field{urlday}{15}
+      \field{urlmonth}{10}
+      \field{urlyear}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.intel.com/content/www/us/en/products/sku/97129/intel-core-i77700k-processor-8m-cache-up-to-4-50-ghz/specifications.html
+      \endverb
+      \verb{url}
+      \verb https://www.intel.com/content/www/us/en/products/sku/97129/intel-core-i77700k-processor-8m-cache-up-to-4-50-ghz/specifications.html
+      \endverb
+    \endentry
+    \entry{testcontainers}{misc}{}{}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labeltitlesource}{title}
+      \field{title}{Документация Testcontainers.Postgresql [Электронный ресурс]}
+      \field{urlday}{5}
+      \field{urlmonth}{5}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://dotnet.testcontainers.org/modules/postgres/
+      \endverb
+      \verb{url}
+      \verb https://dotnet.testcontainers.org/modules/postgres/
+      \endverb
+    \endentry
+    \entry{postgresql_pgdump}{misc}{}{}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labeltitlesource}{title}
+      \field{title}{Документация команды pgdump в PostgreSQL [Электронный ресурс]}
       \field{urlday}{5}
       \field{urlmonth}{5}
       \field{urlyear}{2025}
@@ -36,8 +116,8 @@
       \endverb
     \endentry
     \entry{bogus}{misc}{}{}
-      \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
       \field{labeltitlesource}{title}
       \field{title}{Описание библиотеки Bogus [Электронный ресурс]}
       \field{urlday}{5}
@@ -52,8 +132,8 @@
       \endverb
     \endentry
     \entry{stopwatch}{misc}{}{}
-      \field{sortinit}{3}
-      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
       \field{labeltitlesource}{title}
       \field{title}{Документация класса System.Diagnostics.Stopwatch [Электронный ресурс]}
       \field{urlday}{5}

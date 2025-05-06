@@ -80,5 +80,15 @@ namespace ChronoServiceRealisation
         {
             _subscribers.Remove(subscriber);
         }
+
+        public async Task Initialize()
+        {
+            IScheduler sched = await _schedFactory.GetScheduler();
+            sched.Context.TryAdd(nameof(QuartzTimeScheduler), this);
+            if (!sched.IsStarted)
+            {
+                await sched.Start();
+            }
+        }
     }
 }

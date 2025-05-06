@@ -11,6 +11,11 @@ using System.Threading.Tasks;
 
 namespace RepositoriesRealisation.Models
 {
+    public enum SupportedConditionType { 
+        Rank,
+        Place
+    };
+
     [Table("competition_reward")]
     public class CompetitionRewardModel
     {
@@ -27,21 +32,64 @@ namespace RepositoriesRealisation.Models
         public int CompetitionId { get; set; }
         [Column("reward_description_id")]
         public int RewardDescriptionId { get; set; }
-        [Column("condition")]
-        public JsonDocument Condition { get; set; }
-        public CompetitionRewardModel(int RewardDescriptionID, int CompetitionID, JsonDocument condition)
+        [Column("condition_type")]
+        public SupportedConditionType ConditionType { get; set; }
+        [Column("min_place")]
+        public int? MinPlace { get; set; }
+        [Column("max_place")]
+        public int? MaxPlace { get; set; }
+        [Column("min_rank")]
+        public float? MinRank { get; set; }
+        [Column("max_rank")]
+        public float? MaxRank { get; set; }
+        public CompetitionRewardModel(int RewardDescriptionID, int CompetitionID, GrantCondition cnd)
         {
             this.RewardDescriptionId = RewardDescriptionID;
-            this.Condition = condition;
             this.CompetitionId = CompetitionID;
+            SetCondition(cnd);
         }
         public CompetitionRewardModel()
         {
 
         }
+        public void SetCondition(GrantCondition cnd)
+        {
+            MinPlace = null;
+            MaxPlace = null;
+            MinRank = null;
+            MaxRank = null;
+            if (cnd is RankGrantCondition ranked)
+            {
+                ConditionType = SupportedConditionType.Rank;
+                MinRank = ranked.minRank;
+                MaxRank = ranked.maxRank;
+            }
+            else if (cnd is PlaceGrantCondition placed)
+            {
+                ConditionType = SupportedConditionType.Place;
+                MinPlace = placed.minPlace;
+                MaxPlace = placed.maxPlace;
+            }
+            else
+            {
+                throw new CompetitiveBackend.Repositories.Exceptions.IncorrectOperationException("Unspecified Grant Condition");
+            }
+        }
+        public GrantCondition GetCondition()
+        {
+            switch (ConditionType)
+            {
+                case SupportedConditionType.Place:
+                    return new PlaceGrantCondition(MinPlace!.Value, MaxPlace!.Value);
+                case SupportedConditionType.Rank:
+                    return new RankGrantCondition(MinRank!.Value, MaxRank!.Value);
+                default:
+                    throw new CompetitiveBackend.Repositories.Exceptions.IncorrectOperationException("Unspecified Grant Condition");
+            }
+        }
         public CompetitionReward ToCoreModel()
         {
-            if (!GrantConditionConverter.FromJSON(Condition, out GrantCondition cond)) return null!;
+            GrantCondition cond = GetCondition();
             return new CompetitionReward(RewardDescriptionId, CompetitionId, RewardDescription.Name, RewardDescription.Description ?? "", cond, Id);
         }
     }

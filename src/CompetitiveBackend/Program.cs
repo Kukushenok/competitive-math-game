@@ -63,6 +63,7 @@ namespace CompetitiveBackend
             //app.UseAuthorization();
             app.UseExceptionHandler();
             app.MapControllers();
+            app.Services.InitializeCompetitiveBackendSolution();
             app.Run();
         }
     }

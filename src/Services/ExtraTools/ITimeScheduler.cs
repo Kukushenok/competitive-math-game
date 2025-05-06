@@ -8,6 +8,7 @@
         public Task RemoveScheduledTask(TimeScheduledTaskData task);
         public void AddSubscriber(ITimeScheduledTaskSubscriber subscriber);
         public void RemoveSubscriber(ITimeScheduledTaskSubscriber subscriber);
+        public Task Initialize();
     }
     public interface ITimeScheduledTaskSubscriber: IDisposable
     {

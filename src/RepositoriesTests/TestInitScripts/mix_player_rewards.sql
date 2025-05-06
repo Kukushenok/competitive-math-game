@@ -9,10 +9,10 @@ COPY public.reward_description (id, reward_name, description, icon_image, ingame
 2	Basic	Text	\\x000102	\\x030405
 \.
 
-COPY public.account (id, login, email, password_hash, privilegy_level, description, profile_image) FROM stdin;
-1	amongus	\N	1234567	1	\N	\\x000102
-2	trollface	\N	1234567	0	\N	\N
-3	munny	email@email.com	1234567	0	munny_description	\N
+COPY public.account (id, login, username, email, password_hash, privilegy_level, description, profile_image) FROM stdin;
+1	amongus	amongus	\N	1234567	1	\N	\\x000102
+2	trollface	trollface	\N	1234567	0	\N	\N
+3	munny	munny	email@email.com	1234567	0	munny_description	\N
 \.
 
 

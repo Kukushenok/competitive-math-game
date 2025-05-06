@@ -1,5 +1,6 @@
+powershell -nop -c "& {sleep 500}"
 :again
-if not exist MARKER.txt goto exit
+if not exist marker.txt goto exit
 dotnet test --filter Category=Measurement
 goto again
 :exit

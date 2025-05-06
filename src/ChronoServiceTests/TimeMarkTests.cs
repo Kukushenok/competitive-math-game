@@ -67,6 +67,7 @@ namespace ChronoServiceTests
             coll.UseXUnitLogging(helper);
             ServiceProvider provider = coll.BuildServiceProvider(true);
             sc = provider.GetService<ITimeScheduler>()!;
+            sc.Initialize().GetAwaiter().GetResult();
         }
         [Theory]
         [InlineData(1)]

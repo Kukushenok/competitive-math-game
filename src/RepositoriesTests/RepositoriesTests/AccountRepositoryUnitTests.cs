@@ -22,10 +22,10 @@ namespace RepositoriesTests.RepositoriesTests
         public async Task CreateAccountTest()
         {
             using var context = await GetContext();
-            AccountModel etalon = new AccountModel(new Account("amongus", "1234567"), new AdminRole());
-            await Testing.CreateAccount(new Account("amongus", "1234567"), new AdminRole());
+            AccountModel etalon = new AccountModel(new Account("amongus"), null!, new AdminRole());
+            await Testing.CreateAccount(new Account("amongus"), "1234567", new AdminRole());
 
-            context.AccountsReadOnly.ToList().Should().ContainSingle().Which.Should().BeEquivalentTo(etalon, options => options.Excluding(x => x.Id));
+            context.AccountsReadOnly.ToList().Should().ContainSingle().Which.Should().BeEquivalentTo(etalon, options => options.Excluding(x => x.Id).Excluding(x=>x.Profile));
             await DoDumpings(nameof(CreateAccountTest));
         }
 
@@ -46,14 +46,14 @@ namespace RepositoriesTests.RepositoriesTests
         {
             await ExecSQLFile("accounts.sql");
             Account c = await Testing.GetAccount("amongus");
-            c.Should().NotBeNull().And.BeEquivalentTo(new Account("amongus", "1234567", null, 1));
+            c.Should().NotBeNull().And.BeEquivalentTo(new Account("amongus", null, 1));
         }
         [Fact]
         public async Task GetAccount_Success_ID()
         {
             await ExecSQLFile("accounts.sql");
             Account c = await Testing.GetAccount(2);
-            c.Should().NotBeNull().And.BeEquivalentTo(new Account("trollface", "1234567", null, 2));
+            c.Should().NotBeNull().And.BeEquivalentTo(new Account("trollface", null, 2));
         }
     }
 }

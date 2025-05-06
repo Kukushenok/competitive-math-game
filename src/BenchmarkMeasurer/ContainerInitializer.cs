@@ -14,7 +14,7 @@ namespace BenchmarkMeasurer
         protected const string PASSWORD = "tester";
         protected const string DATABASE = "tester";
         protected const string TEST_INIT_PATH = "TestInitScripts";
-        protected const string BASE_INIT_PATH = "BaseInitScript";
+        protected const string BASE_INIT_PATH = "../postgres/init";
         protected const string DUMMY_INIT_PATH = "dummy";
 
         protected PostgreSqlContainer Container;
