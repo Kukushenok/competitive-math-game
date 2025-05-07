@@ -1,27 +1,12 @@
 ﻿using CompetitiveBackend.Core.Auth;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using RepositoriesRealisation;
 using RepositoriesRealisation.DatabaseObjects;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
 namespace CompetitiveBackend.Repositories
 {
-    public class SessionRepositoryConfiguration
-    {
-        private IConfiguration configuration;
-        public SessionRepositoryConfiguration(IConfiguration conf)
-        {
-            configuration = conf;
-            Key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(conf["Secrets:SessionKey"] ?? new string('N', 128)));
-            Credentials = new SigningCredentials(Key, conf["Secrets:Algo"] ?? SecurityAlgorithms.HmacSha256);
-        }
-        public SymmetricSecurityKey Key { get; private set; }
-        public SigningCredentials Credentials { get; private set; }
-        public DateTime? Expires { get => DateTime.Now.AddHours(int.Parse(configuration["SessionTimeHrs"] ?? "24")); }
-    }
     internal class SessionRepository : ISessionRepository
     {
         private IDbContextFactory<BaseDbContext> contextFactory;
