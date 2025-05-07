@@ -1,0 +1,19 @@
+{
+    "name": "OpenAPIBackendUsage",
+    "rootNamespace": "BackendUsage.OpenAPI",
+    "references": [
+        "GUID:afe987ecf763b634ebe7968b422739f9",
+        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "BackendUsage.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
