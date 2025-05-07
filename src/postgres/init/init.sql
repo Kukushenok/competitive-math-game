@@ -229,7 +229,7 @@ ALTER ROLE player INHERIT;
 
 CREATE ROLE admin WITH LOGIN PASSWORD 'admin_password';
 GRANT guest TO admin;
-GRANT DELETE ON player_participation TO admin;
+GRANT SELECT, DELETE ON player_participation TO admin;
 GRANT INSERT, UPDATE, DELETE ON player_reward TO admin;
 GRANT INSERT, UPDATE ON competition, competition_reward, reward_description TO admin;
 ALTER ROLE admin INHERIT;
@@ -238,7 +238,7 @@ ALTER ROLE admin INHERIT;
 
 CREATE ROLE reward_granter WITH LOGIN PASSWORD 'reward_granter';
 GRANT EXECUTE ON PROCEDURE grant_rewards(integer) TO reward_granter;
-GRANT UPDATE, SELECT ON TABLE competition TO reward_granter;
+GRANT SELECT, UPDATE ON TABLE competition TO reward_granter;
 GRANT SELECT ON TABLE player_participation TO reward_granter;
 GRANT SELECT ON TABLE competition_reward TO reward_granter;
 GRANT INSERT ON TABLE player_reward TO reward_granter;

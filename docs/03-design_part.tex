@@ -78,13 +78,10 @@
 	min\_rank & decimal(4,3) & Минимальный ранг & \\\hline
 	max\_rank & decimal(4,3) & Максимальный ранг & \\\hline
 \end{dbtable}
-
 Дополнительные ограничения к таблице~\ref{db_table:competitionreward}: 
 \begin{itemize}
-	\item если condition\_type = rank, то соблюдается соотношение $0\leq min\_rank\leq max\_rank\leq 1$ и соответствующим полям присвоено значение.
+	\item если condition\_type = rank, то соблюдается соотношение $0\leq min\_rank \leq max\_rank\leq 1$ и соответствующим полям присвоено значение.
 	\item если condition\_type = place, то соблюдается соотношение $1\leq min\_place\leq max\_place$ и соответствующим полям присвоено значение.
-
-
 \end{itemize}
 \begin{dbtable}{playerreward}{Описание таблицы player\_reward}
 	ID & int & Идентификатор & PK \\\hline
@@ -113,12 +110,10 @@
 \scheme{procedure_1}{Хранимая процедура выдачи наград}
 \scheme{procedure_2}{Хранимая процедура выдачи наград}
 
-Для обеспечения безопасности, значение полей "хэш пароля" у таблицы аккаунтов должно быть недоступно. Для этого нужно определить образ таблицы, где данное поле заменено пустыми значениями. Помимо этого, следует определить функцию на уровне базы данных, которая сравнивает хэши паролей.
+Для обеспечения безопасности, значение полей "хэш пароля" у таблицы аккаунтов должно быть недоступно. Для этого нужно определить образ таблицы, где данное поле заменено пустыми значениями. Помимо этого, следует определить функцию на уровне базы данных, которая сравнивает хэши паролей, чтобы предоставить возможность определять правильность пароля. Схема представлена на рисунке~\ref{scheme:procedure_3}
 
-
+\scheme{procedure_3}{Хранимая процедура сравнения хэшей паролей}
 \section{Ролевая модель}
-
-
 В рамках задачи было выделено четыре роли на уровне базы данных:
 \begin{itemize}
 	\item гость,
@@ -128,12 +123,32 @@
 \end{itemize}
 Гость имеет следующие возможности:
 \begin{itemize}
-	\item читать данные из таблиц account\_readonly, competition, competition\_reward, player\_participation, reward\_description
-	\item добавлять новые данные в таблицу account (создавать новый аккаунт)
-	\item вызвать хранимую процедуру check\_password\_hash
+	\item читать данные из таблиц account\_readonly, competition, competition\_reward, player\_par-ticipation, reward\_description;
+	\item добавлять новые данные в таблицу account (создавать новый аккаунт);
+	\item вызвать хранимую процедуру check\_password\_hash.
 \end{itemize}
+Игрок имеет все возможности, что имеет гость. Дополнительно, он имеет следующие возможности:
+\begin{itemize}
+	\item обновлять таблицу account по полям username, description, profile\_image;
+	\item добавлять данные и обновлять таблицу player\_participation;
+	\item читать таблицу player\_reward
+\end{itemize}
+Админ имеет все возможности, что имеет гость. Дополнительно, он имеет следующие возможности:
+\begin{itemize}
+	\item удалять данные из player\_participation;
+	\item добавлять, изменять, удалять данные из player\_reward;
+	\item добавлять, изменять данные из таблиц competition, competition\_reward, reward\_description.
+\end{itemize}
+Демон выдачи наград имеет следующие возможности:
+\begin{itemize}
+	\item вызвать хранимую процедуру grant\_rewards();
+	\item читать и изменять данные из таблицы competition;
+	\item читать данные из таблиц player\_participation, competition\_reward;
+	\item добавлять данные в таблицу player\_reward.
+\end{itemize}
+
 
 \section*{Вывод}
 
-TODO
+Спроектирована архитектура базы данных и ограничения целостности. Спроектированы хранимые процедуры выдачи наград и проверки хэша пароля.
 \clearpage
