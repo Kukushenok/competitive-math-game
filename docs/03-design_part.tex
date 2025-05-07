@@ -3,9 +3,107 @@
 %Программное обеспечение функционально должно обеспечивать
 
 %Программное обеспечение должна предоставлять пользователю следующие возможности
-\section{Проектируемая база данных}
+\section{Описание сущностей базы данных}
+
+Используются следующие сокращения для обозначения ограничений на поля сущности:
+\begin{itemize}
+	\item PK~---~первичный ключ;
+	\item FK~---~внешний ключ;
+	\item U~---~значение уникально в рамках таблицы;
+	\item NN~---~пустое значение поля недопустимо.
+\end{itemize}
+
+\newenvironment{dbtable}[2]{
+\begin{table}[h!]
+	\caption{\label{db_table:#1} #2 }
+	\begin{tabular}{|p{3cm}|p{3cm}|p{6cm}|p{3cm}|}
+	\hline
+	Поле & Тип & Описание & Ограничения \\\hline
+}
+{
+\end{tabular}
+\end{table}
+}
+
+\begin{dbtable}{account}{Описание таблицы account}
+	ID & int & Идентификатор & PK \\\hline
+	login & varchar(32) & Логин игрока & U \\\hline
+	password\_hash & varchar & Хэш пароля & \\\hline
+	email & varchar & Почта & \\\hline
+	privilegy\_level & int & Категория пользователя &\\\hline
+	profile\_image & bytea & Изображение профиля &\\\hline
+	description & varchar & Описание профиля &\\\hline
+\end{dbtable}
+
+Дополнительные ограничения к таблице~\ref{db_table:account}: login не содержит пробелов.
+
+\begin{dbtable}{competition}{Описание таблицы competition}
+	ID & int & Идентификатор & PK \\\hline
+	competition\_name & varchar(64) & Название соревнования & NN \\\hline
+	description & varchar(128) & Описание соревнования & \\\hline
+	start\_time & timestamp & Время начала соревнования & NN \\\hline
+	end\_time & timestamp & Время конца соревнования & NN\\\hline
+	level\_data & bytea & Данные об уровне соревнования &\\\hline
+	has\_ended & bool & Закончилось ли соревнование? (выданы ли награды) &NN\\\hline
+\end{dbtable}
+
+Дополнительные ограничения к таблице~\ref{db_table:competition}: время конца всегда больше времени начала.
+
+\begin{dbtable}{participation}{Описание таблицы player\_participation}
+	competition\_ID & int & Идентификатор соревнования & FK, NN \\\hline
+	account\_ID & int & Идентификатор игрока & FK, NN \\\hline
+	score & int & Очки & NN \\\hline
+	last\_update\_time & timestamp & Последнее время обновления результата & \\\hline
+\end{dbtable}
+
+Дополнительные ограничения к таблице~\ref{db_table:participation}: пара значений competition\_ID и account\_ID уникально в рамках таблицы.
+
+\begin{dbtable}{rewarddescription}{Описание таблицы reward\_description}
+	ID & int & Идентификатор & PK \\\hline
+	reward\_name & varchar(64) & Название награды & NN \\\hline
+	description & varchar(128) & Описание награды & \\\hline
+	icon\_image & bytea & Изображение награды & \\\hline
+	ingame\_data & bytea & Представление награды в игре & \\\hline
+\end{dbtable}
+
+Тип condition\_type\_enum является перечисляемым типом, возможными значениями которого являются 'rank' и 'place'. 
+
+\begin{dbtable}{competitionreward}{Описание таблицы competition\_reward}
+	ID & int & Идентификатор & PK \\\hline
+	reward\_descrip-tion\_id & int & Идентификатор описания награды & FK, NN \\\hline
+	competition\_id & int & Идентификатор соревнования & FK, NN \\\hline
+	condition\_type & condition\_type\_e-num & Тип награды & NN \\\hline
+	min\_place & int & Минимальное место & \\\hline
+	max\_place & int & Максимальное место & \\\hline
+	min\_rank & decimal(4,3) & Минимальный ранг & \\\hline
+	max\_rank & decimal(4,3) & Максимальный ранг & \\\hline
+\end{dbtable}
+
+Дополнительные ограничения к таблице~\ref{db_table:competitionreward}: 
+\begin{itemize}
+	\item если condition\_type = rank, то соблюдается соотношение $0\leq min\_rank\leq max\_rank\leq 1$ и соответствующим полям присвоено значение.
+	\item если condition\_type = place, то соблюдается соотношение $1\leq min\_place\leq max\_place$ и соответствующим полям присвоено значение.
+
+
+\end{itemize}
+\begin{dbtable}{playerreward}{Описание таблицы player\_reward}
+	ID & int & Идентификатор & PK \\\hline
+	reward\_descript-ion\_id & int & Идентификатор описания награды & FK, NN \\\hline
+	player\_id & int & Идентификатор игрока & FK, NN \\\hline
+	competition\_id & int & Идентификатор соревнования & FK \\\hline
+	creation\_date & timestamp & Дата создания награды & NN \\\hline
+\end{dbtable}
+
+
+
+\FloatBarrier
+
+
+На рисунке~\ref{scheme:db} представлена схема базы данных.
 
 \scheme{db}{Схема проектируемой базы данных}
+
+
 
 
 \section{Функциональная модель}
@@ -28,11 +126,11 @@
 	\item админинстратор,
 	\item демон выдачи наград.
 \end{itemize}
-Гость имеет следующие возможности
+Гость имеет следующие возможности:
 \begin{itemize}
-	\item читать данные из таблиц
-	\item добавлять новые данные в таблицы
-	\item вызвать хранимую процедуру
+	\item читать данные из таблиц account\_readonly, competition, competition\_reward, player\_participation, reward\_description
+	\item добавлять новые данные в таблицу account (создавать новый аккаунт)
+	\item вызвать хранимую процедуру check\_password\_hash
 \end{itemize}
 
 \section*{Вывод}
