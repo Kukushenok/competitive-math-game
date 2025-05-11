@@ -39,8 +39,9 @@ namespace ServicesUnitTests.ServiceTests
         public async Task AuthService_LogIn_Success()
         {
             _validator.Reset();
-            _accountRepo.Setup(x => x.GetAccount("abcd")).ReturnsAsync(new Account("abcd", "|12345|", id: 0));
+            _accountRepo.Setup(x => x.GetAccount("abcd")).ReturnsAsync(new Account("abcd", id: 0));
             _sessionRepo.Setup(x => x.CreateSessionFor(0)).ReturnsAsync("hi");
+            _accountRepo.Setup(x => x.VerifyPassword("abcd", "|12345|")).ReturnsAsync(true);
             _sessionRepo.Setup(x => x.GetSessionToken("hi")).ReturnsAsync(new AuthenticatedSessionToken(new TestRole(), 0));
             AuthSuccessResult rw = await _service.LogIn("abcd", "12345");
             Assert.Equal("hi", rw.Token);
@@ -51,7 +52,8 @@ namespace ServicesUnitTests.ServiceTests
         public async Task AuthService_LogIn_BadPassword()
         {
             _validator.Reset();
-            _accountRepo.Setup(x => x.GetAccount("abcd")).ReturnsAsync(new Account("abcd", "|1234|", id: 0));
+            _accountRepo.Setup(x => x.VerifyPassword("abcd", "1234")).ReturnsAsync(false);
+            _accountRepo.Setup(x => x.GetAccount("abcd")).ReturnsAsync(new Account("abcd", id: 0));
             await Assert.ThrowsAnyAsync<IncorrectPasswordException>(async () => await _service.LogIn("abcd", "12345"));
         }
         [Fact]
@@ -59,7 +61,7 @@ namespace ServicesUnitTests.ServiceTests
         {
             _validator.Reset();
             _accountRepo.Setup(x => x.GetAccount("abcd")).ThrowsAsync(new RepositoryException());
-            await Assert.ThrowsAnyAsync<RepositoryException>(async () => await _service.LogIn("abcd", "12345"));
+            await Assert.ThrowsAsync<IncorrectPasswordException>(async () => await _service.LogIn("abcd", "12345"));
         }
         [Fact]
         public async Task AuthService_CreateAccount_Success()
@@ -68,9 +70,10 @@ namespace ServicesUnitTests.ServiceTests
             Account c = new Account("hi", "X");
             _validator.Reset(new AccountCreationData(c, "1234"));
             _accountRepo.Setup(x => x.CreateAccount(It.IsAny<Account>(), "1234", It.IsAny<Role>()))
-                .Callback<Account, Role>((a, r) =>
+                .Callback<Account,string, Role>((a, b, r) =>
                 {
                     Assert.Equal(TestRole.NAME, r.ToString());
+                    Assert.Equal("|1234|", b);
                 });
             _creator.Setup(x => x.Create(It.IsAny<Account>())).Returns(new TestRole());
             await _service.Register(c, "1234");
@@ -82,9 +85,10 @@ namespace ServicesUnitTests.ServiceTests
             Account c = new Account("hi", "X");
             _validator.Reset(new AccountCreationData(c, "1234"), true);
             _accountRepo.Setup(x => x.CreateAccount(It.IsAny<Account>(), "1234", It.IsAny<Role>()))
-                .Callback<Account, Role>((a, r) =>
+                .Callback<Account, string, Role>((a, b, r) =>
                 {
                     Assert.Equal(TestRole.NAME, r.ToString());
+                    Assert.Equal("|1234|", b);
                 });
             _creator.Setup(x => x.Create(It.IsAny<Account>())).Returns(new TestRole());
             await Assert.ThrowsAsync<InvalidArgumentsException>(async () => await _service.Register(c, "1234"));

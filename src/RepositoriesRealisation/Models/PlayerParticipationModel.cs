@@ -24,7 +24,7 @@ namespace RepositoriesRealisation.Models
         [Column("score", TypeName = "int")]
         public int Score { get; set; }
 
-        [Column("last_update_time", TypeName = "timestamp")]
+        [Column("last_update_time")]
         public DateTime LastUpdateTime { get; set; }
         public PlayerParticipationModel(int CompetitionID, int AccountID, int Score, DateTime lastUpdateTime)
         {

@@ -40,6 +40,7 @@ namespace ImageProcessorRealisation
                     uint newHeight = Math.Min(image.Height, _config.MaxHeight);
 
                     image.Resize(newWidth, newHeight);
+                    image.Format = MagickFormat.Jpeg;
                     result = new LargeData(image.ToByteArray());
                     _logger.LogInformation("Image resized successfully");
                 }

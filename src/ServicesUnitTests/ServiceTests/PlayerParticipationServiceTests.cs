@@ -103,7 +103,7 @@ namespace ServicesUnitTests.ServiceTests
         public async Task PlayerParticipationServiceTests_GetParticipation()
         {
             PlayerParticipation etalon = new PlayerParticipation(1, 0, 10, DateTime.UtcNow);
-            _repository.Setup(x => x.GetParticipation(0, 1, false, false)).ReturnsAsync(etalon);
+            _repository.Setup(x => x.GetParticipation(0, 1, It.IsAny<bool>(), It.IsAny<bool>())).ReturnsAsync(etalon);
             Assert.Equal(etalon, await _service.GetParticipation(0, 1));
         }
         [Fact]
@@ -114,9 +114,9 @@ namespace ServicesUnitTests.ServiceTests
             {
                 new PlayerParticipation(0, 1, 2, DateTime.UtcNow)
             };
-            _repository.Setup(x => x.GetLeaderboard(1, It.IsAny<DataLimiter>(), false, false))
-                .Callback((int idx, DataLimiter d) => Assert.Equal(etalon_d, d))
-                .Returns(Task.FromResult<IEnumerable<PlayerParticipation>>(leaderboard));
+            _repository.Setup(x => x.GetLeaderboard(1, It.IsAny<DataLimiter>(), It.IsAny<bool>(), It.IsAny<bool>()))
+                .Callback((int idx, DataLimiter d, bool _, bool _) => Assert.Equal(etalon_d, d))
+                .ReturnsAsync(leaderboard);
             var r = await _service.GetLeaderboard(1, etalon_d);
             Assert.Equal(leaderboard, r);
         }
@@ -128,8 +128,8 @@ namespace ServicesUnitTests.ServiceTests
             {
                 new PlayerParticipation(0, 1, 2, DateTime.UtcNow)
             };
-            _repository.Setup(x => x.GetPlayerParticipations(0, It.IsAny<DataLimiter>(), false, false))
-                .Callback((int idx, DataLimiter d) => Assert.Equal(etalon_d, d))
+            _repository.Setup(x => x.GetPlayerParticipations(0, It.IsAny<DataLimiter>(), It.IsAny<bool>(), It.IsAny<bool>()))
+                .Callback((int idx, DataLimiter d, bool _, bool _) => Assert.Equal(etalon_d, d))
                 .Returns(Task.FromResult<IEnumerable<PlayerParticipation>>(leaderboard));
             var r = await _service.GetPlayerParticipations(0, etalon_d);
             Assert.Equal(leaderboard, r);

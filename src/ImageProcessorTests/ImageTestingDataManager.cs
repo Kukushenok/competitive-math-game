@@ -64,11 +64,11 @@ namespace ImageProcessorTests
             for (int i = 0; i < files.Length; i++)
             {
                 bool positive = true;
-                if (files[i].Contains("neg", StringComparison.InvariantCultureIgnoreCase))
+                if (files[i].StartsWith("neg", StringComparison.InvariantCultureIgnoreCase))
                 {
                     positive = false;
                 }
-                string resultStorage = Path.Combine(ResultsDir, Path.GetFileName(files[i]));
+                string resultStorage = Path.Combine(ResultsDir, Path.GetFileNameWithoutExtension(files[i]) + ".jpg");
                 yield return new object[] { new FuncTestStructure(files[i], positive, resultStorage) };
             }
         }

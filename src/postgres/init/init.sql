@@ -10,10 +10,6 @@ create table if not exists account(
 	check (login not like '% %')
 );
 
-create view account_readonly as
-select a.id, a.login, a.email, null, a.privilegy_level 
-from account a;
-
 create table if not exists reward_description(
 	id int generated always as identity primary key,
 	reward_name varchar(64) not null,
@@ -211,7 +207,8 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 REVOKE SELECT, UPDATE, DELETE ON account FROM PUBLIC;
 CREATE ROLE guest WITH LOGIN PASSWORD 'guest_password';
-GRANT SELECT ON account_readonly, competition, competition_reward, player_participation, reward_description TO guest;
+GRANT SELECT ON competition, competition_reward, player_participation, reward_description TO guest;
+GRANT SELECT (id, login, username, email, privilegy_level, description, profile_image) ON account TO guest;
 GRANT INSERT (login, username, email, password_hash, privilegy_level) ON account TO guest;
 GRANT EXECUTE ON FUNCTION check_password_hash(varchar, varchar) TO guest;
 ALTER ROLE guest WITH INHERIT;
@@ -220,7 +217,7 @@ ALTER ROLE guest WITH INHERIT;
 
 CREATE ROLE player WITH LOGIN PASSWORD 'player_password';
 GRANT guest TO player;
-GRANT SELECT, UPDATE (username, description, profile_image) ON account TO player;
+GRANT UPDATE (username, description, profile_image) ON account TO player;
 GRANT SELECT, INSERT, UPDATE ON player_participation TO player;
 GRANT SELECT ON player_reward TO player;
 ALTER ROLE player INHERIT;

@@ -24,7 +24,7 @@ namespace CompetitiveBackend.Repositories
             using var context = await GetDbContext();
             try
             {
-                await context.PlayerParticipation.AddAsync(new PlayerParticipationModel(participation.CompetitionId, participation.PlayerProfileId, participation.Score, participation.LastUpdateTime));
+                await context.PlayerParticipation.AddAsync(new PlayerParticipationModel(participation.CompetitionId, participation.PlayerProfileId, participation.Score, participation.LastUpdateTime.EnsureUTC()));
                 await context.SaveChangesAsync();
             }
             catch(Exception ex) when (ex.IsDBException())

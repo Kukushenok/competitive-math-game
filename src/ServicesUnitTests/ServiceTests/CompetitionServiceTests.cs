@@ -28,7 +28,7 @@ namespace ServicesUnitTests.ServiceTests
         public async Task CompetitionServiceTests_CreateCompetition_OK()
         {
             DateTime dt = DateTime.Now;
-            Competition etalon = new Competition("Hello", "World", dt + TimeSpan.FromSeconds(5), dt + TimeSpan.FromSeconds(10));
+            Competition etalon = new Competition("Hello", "World", dt + TimeSpan.FromSeconds(5), dt + TimeSpan.FromSeconds(10), 0);
             _validator.Reset(etalon);
             int calls = 0;
             _rewardScheduler.Setup(x=>x.OnCompetitionCreated(It.IsAny<Competition>())).Callback<Competition>((c) => { Assert.Equal(etalon, c); calls++; });
@@ -45,7 +45,7 @@ namespace ServicesUnitTests.ServiceTests
             _validator.Reset(etalon);
             _rewardScheduler.Setup(x => x.OnCompetitionCreated(It.IsAny<Competition>())).Callback<Competition>((c) => { Assert.Fail("Invalid data was added"); });
             _repository.Setup(x => x.CreateCompetition(It.IsAny<Competition>())).Callback<Competition>((c) => Assert.Fail("Invalid data was added"));
-            await Assert.ThrowsAsync<InvalidArgumentsException>(async () => await _service.CreateCompetition(etalon));
+            await Assert.ThrowsAsync<ChronologicalException>(async () => await _service.CreateCompetition(etalon));
             _validator.Check();
         }
         [Fact]
@@ -116,7 +116,7 @@ namespace ServicesUnitTests.ServiceTests
             _rewardScheduler.Setup(x => x.OnCompetitionUpdated(It.IsAny<Competition>())).Callback<Competition>((c) => { Assert.Fail("Invalid data was added"); });
             _repository.Setup(x => x.UpdateCompetition(It.IsAny<Competition>())).Callback<Competition>((c) => Assert.Fail("Invalid data was added"));
 
-            await Assert.ThrowsAsync<InvalidArgumentsException>(async () => await _service.UpdateCompetition(0, null, null, pending.StartDate, pending.EndDate));
+            await Assert.ThrowsAsync<ChronologicalException>(async () => await _service.UpdateCompetition(0, null, null, pending.StartDate, pending.EndDate));
             _validator.Check();
         }
         [Fact]
@@ -130,7 +130,7 @@ namespace ServicesUnitTests.ServiceTests
             _rewardScheduler.Setup(x => x.OnCompetitionUpdated(It.IsAny<Competition>())).Callback<Competition>((c) => { Assert.Fail("Invalid data was added"); });
             _repository.Setup(x => x.UpdateCompetition(It.IsAny<Competition>())).Callback<Competition>((c) => Assert.Fail("Invalid data was added"));
 
-            await Assert.ThrowsAsync<InvalidArgumentsException>(async () => await _service.UpdateCompetition(0, null, null, pending.StartDate, pending.EndDate));
+            await Assert.ThrowsAsync<ChronologicalException>(async () => await _service.UpdateCompetition(0, null, null, pending.StartDate, pending.EndDate));
             _validator.Check();
         }
         [Fact]

@@ -32,7 +32,6 @@ namespace RepositoriesRealisation
             modelBuilder.Entity<PlayerParticipationModel>().HasKey(table => new { table.AccountID, table.CompetitionID });
             modelBuilder.Entity<AccountModel>(options =>
             {
-                options.ToView("account_readonly");
                 options.Ignore(x => x.PasswordHash); // the forbidden knowledge
             });
             ConnectOneToOne<AccountModel, PlayerProfileModel>(modelBuilder, nameof(AccountModel.Profile));
