@@ -10,12 +10,15 @@ create table if not exists account(
 	check (login not like '% %')
 );
 
+alter table account 
+add constraint proper_email check (email ~* '^[A-Za-z0-9._+%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'),
+add constraint proper_login check (login not like '% %');
+
 create table if not exists reward_description(
 	id int generated always as identity primary key,
 	reward_name varchar(64) not null,
 	description varchar(128),
-	icon_image bytea,
-	ingame_data bytea
+	icon_image bytea
 );
 
 create table if not exists competition(
@@ -24,9 +27,16 @@ create table if not exists competition(
 	description varchar(128),
 	start_time timestamp not null,
 	end_time timestamp not null,
-	level_data bytea,
 	has_ended bool not null default(false),
 	check(end_time > start_time)
+);
+
+create table if not exists competition_level(
+	id int generated always as identity primary key,
+	competition_id int references competition(id) not null,
+	version_key int not null,
+	platform varchar(32) not null,
+	level_data bytea not null
 );
 
 create table if not exists player_participation(

@@ -134,8 +134,8 @@ COPY public.account (id, login, username, email, password_hash, privilegy_level,
 -- Data for Name: competition; Type: TABLE DATA; Schema: public; Owner: tester
 --
 
-COPY public.competition (id, competition_name, description, start_time, end_time, level_data, has_ended) FROM stdin;
-1	Свободный Стальной Куртка	Количественный всего требует нац	2025-04-30 14:42:54.302608	2025-05-12 07:20:03.884016	\N	f
+COPY public.competition (id, competition_name, description, start_time, end_time, has_ended) FROM stdin;
+1	Свободный Стальной Куртка	Количественный всего требует нац	2025-04-30 14:42:54.302608	2025-05-12 07:20:03.884016	f
 \.
 
 
@@ -292,10 +292,10 @@ COPY public.player_reward (id, reward_description_id, player_id, competition_id,
 -- Data for Name: reward_description; Type: TABLE DATA; Schema: public; Owner: tester
 --
 
-COPY public.reward_description (id, reward_name, description, icon_image, ingame_data) FROM stdin;
-3	Грубый Кожанный Клатч	Высокотехнологичная активности р	\N	\N
-1	Интеллектуальный Гранитный Стул	Нашей оценить участия правительс	\N	\N
-5	Фантастический Бетонный Свитер	Нашей деятельности значение стор	\N	\N
-2	Свободный Кожанный Майка	Играет управление разработке с н	\N	\N
-4	Невероятный Хлопковый Стул	Позиции уточнения прежде же вызы	\N	\N
+COPY public.reward_description (id, reward_name, description, icon_image) FROM stdin;
+3	Грубый Кожанный Клатч	Высокотехнологичная активности р	\N
+1	Интеллектуальный Гранитный Стул	Нашей оценить участия правительс	\N
+5	Фантастический Бетонный Свитер	Нашей деятельности значение стор	\N
+2	Свободный Кожанный Майка	Играет управление разработке с н	\N
+4	Невероятный Хлопковый Стул	Позиции уточнения прежде же вызы	\N
 \.

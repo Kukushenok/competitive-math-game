@@ -93,48 +93,48 @@ namespace RepositoriesTests.RepositoriesTests
             await DoDumpings("set_reward_icon");
         }
 
-        [Fact]
-        public async Task GetGameAsset_Failure()
-        {
-            await ExecSQLFile("reward_descriptions.sql");
-            await Assert.ThrowsAsync<MissingDataException>(async () => await Testing.GetRewardGameAsset(5));
-        }
-        [Fact]
-        public async Task GetGameAsset_Success()
-        {
-            await ExecSQLFile("reward_descriptions.sql");
-            LargeData data = await Testing.GetRewardGameAsset(2);
-            data.Data.Should().NotBeNull().And.BeEquivalentTo(new byte[] { 3, 4, 5 });
-        }
-        [Fact]
-        public async Task GetGameAsset_Empty()
-        {
-            await ExecSQLFile("reward_descriptions.sql");
-            LargeData data = await Testing.GetRewardGameAsset(1);
-            data.Data.Should().BeEmpty();
-        }
-        [Fact]
-        public async Task SetGameAsset_Failure()
-        {
-            LargeData dt = new LargeData([4, 5, 6]);
-            await ExecSQLFile("reward_descriptions.sql");
-            await Assert.ThrowsAsync<MissingDataException>(async () => await Testing.SetRewardGameAsset(5, dt));
-        }
-        [Fact]
-        public async Task SetGameAsset_Success()
-        {
-            LargeData dt = new LargeData([4, 8, 6]);
-            await ExecSQLFile("reward_descriptions.sql");
-            await Testing.SetRewardGameAsset(2, dt);
+        //[Fact]
+        //public async Task GetGameAsset_Failure()
+        //{
+        //    await ExecSQLFile("reward_descriptions.sql");
+        //    await Assert.ThrowsAsync<MissingDataException>(async () => await Testing.GetRewardGameAsset(5));
+        //}
+        //[Fact]
+        //public async Task GetGameAsset_Success()
+        //{
+        //    await ExecSQLFile("reward_descriptions.sql");
+        //    LargeData data = await Testing.GetRewardGameAsset(2);
+        //    data.Data.Should().NotBeNull().And.BeEquivalentTo(new byte[] { 3, 4, 5 });
+        //}
+        //[Fact]
+        //public async Task GetGameAsset_Empty()
+        //{
+        //    await ExecSQLFile("reward_descriptions.sql");
+        //    LargeData data = await Testing.GetRewardGameAsset(1);
+        //    data.Data.Should().BeEmpty();
+        //}
+        //[Fact]
+        //public async Task SetGameAsset_Failure()
+        //{
+        //    LargeData dt = new LargeData([4, 5, 6]);
+        //    await ExecSQLFile("reward_descriptions.sql");
+        //    await Assert.ThrowsAsync<MissingDataException>(async () => await Testing.SetRewardGameAsset(5, dt));
+        //}
+        //[Fact]
+        //public async Task SetGameAsset_Success()
+        //{
+        //    LargeData dt = new LargeData([4, 8, 6]);
+        //    await ExecSQLFile("reward_descriptions.sql");
+        //    await Testing.SetRewardGameAsset(2, dt);
 
-            using var context = await GetContext();
-            context.RewardDescriptionInGameData.Find(2).Should().NotBeNull().And.Satisfy(
-                (RewardDescriptionModelInGameData md) =>
-                {
-                    md.InGameData.Should().BeEquivalentTo(dt.Data);
-                });
+        //    using var context = await GetContext();
+        //    context.RewardDescriptionInGameData.Find(2).Should().NotBeNull().And.Satisfy(
+        //        (RewardDescriptionModelInGameData md) =>
+        //        {
+        //            md.InGameData.Should().BeEquivalentTo(dt.Data);
+        //        });
 
-            await DoDumpings("set_reward_asset");
-        }
+        //    await DoDumpings("set_reward_asset");
+        //}
     }
 }

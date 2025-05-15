@@ -128,6 +128,7 @@ namespace CompetitiveBackend.Repositories
                 throw new MissingDataException($"Could not update participation of player {participation.PlayerProfileId} with competition {participation.CompetitionId}");
             }
             model.Score = participation.Score;
+            model.LastUpdateTime = participation.LastUpdateTime;
             try
             {
                 await context.SaveChangesAsync();

@@ -43,8 +43,9 @@ namespace RepositoriesRealisation.RepositoriesRealisation
             using var context = await GetDbContext();
             try
             {
-                int count = await context.CompetitionLevelModel.Where(x => x.Id == levelId).ExecuteDeleteAsync();
-                if (count == 0) throw new MissingDataException($"There is no level with ID {levelId}");
+                var model = await context.CompetitionLevelModel.FindAsync(levelId);
+                if (model == null) throw new MissingDataException($"There is no level with ID {levelId}");
+                context.CompetitionLevelModel.Remove(model);
                 await context.SaveChangesAsync();
             }
             catch (Exception ex) when (ex.IsDBException())
@@ -63,8 +64,8 @@ namespace RepositoriesRealisation.RepositoriesRealisation
             using var context = await GetDbContext();
             try
             {
-                var result = await context.CompetitionLevelModel.Where(x => x.CompetitionID == competitionID).Select(x=>ToCore(x)).ToListAsync();
-                return result;
+                var result = await context.CompetitionLevelModel.Where(x => x.CompetitionID == competitionID).ToListAsync();
+                return from r in result select ToCore(r);
             }
             catch(Exception ex) when (ex.IsDBException())
             {
@@ -78,7 +79,7 @@ namespace RepositoriesRealisation.RepositoriesRealisation
             using var context = await GetDbContext();
             try
             {
-                IQueryable<CompetitionLevelDataModel> models = context.CompetitionLevelModel;
+                IQueryable<CompetitionLevelDataModel> models = context.CompetitionLevelModel.Where(x=>x.CompetitionID == competitionID);
                 if (Platform != null)
                 {
                     models = models.Where(x => x.Platform == Platform);
@@ -87,7 +88,7 @@ namespace RepositoriesRealisation.RepositoriesRealisation
                 {
                     models = models.Where(x => x.VersionKey <= MaxVersion);
                 }
-                var result = models.Select(x => ToCore(x)).MaxBy(x=>x.VersionCode);
+                var result = (await models.ToListAsync()).MaxBy(x=>x.VersionKey);
                 var levelDataHolder = await context.CompetitionLevelModelData.FindAsync(result?.Id);
                 return new LargeData(levelDataHolder?.LevelData ?? []);
             }

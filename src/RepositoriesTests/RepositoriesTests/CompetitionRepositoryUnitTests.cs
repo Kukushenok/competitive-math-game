@@ -130,21 +130,6 @@ namespace RepositoriesTests.RepositoriesTests
             context.Competition.Find(1).Should().BeEquivalentTo(sample, options => options.Excluding(x => x.StartTime).Excluding(x => x.EndTime));
             await DoDumpings("updated_first");
         }
-        [Fact]
-        public async Task SetCompetitionLevel_Failure()
-        {
-            await ExecSQLFile("competitions.sql");
-            await Assert.ThrowsAsync<MissingDataException>(async () => await Testing.AddCompetitionLevel(6, new([1, 7, 2])));
-        }
-        [Fact]
-        public async Task SetCompetitionLevel_Success()
-        {
-            await ExecSQLFile("competitions.sql");
-            LargeData dt = new LargeData([5, 6, 7]);
-            await Testing.SetCompetitionLevel(1, dt);
-            using BaseDbContext context = await GetContext();
-            context.CompetitionLevelData.Find(1)!.LevelData.Should().BeEquivalentTo(dt.Data);
-        }
 
     }
 }

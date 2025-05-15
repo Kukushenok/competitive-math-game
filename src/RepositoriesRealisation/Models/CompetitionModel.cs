@@ -60,11 +60,12 @@ namespace RepositoriesRealisation.Models
         public int Id { get; set; }
         [ForeignKey("competition_id"), Column("competition_id", TypeName = "int")]
         public int CompetitionID { get; set; }
-        [Column("platform", TypeName = "int")]
+        [Column("platform", TypeName = "varchar(32)")]
         public string Platform { get; set; }
         [Column("version_key", TypeName = "int")]
         public int VersionKey { get; set; }
         public CompetitionLevelDataModelData LevelData { get; set; } = null!;
+        public CompetitionLevelDataModel() { }
         public CompetitionLevelDataModel(LevelDataInfo info)
         {
             CompetitionID = info.CompetitionID;
