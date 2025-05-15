@@ -1,4 +1,5 @@
 ﻿using CompetitiveBackend.Core.Objects;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using RepositoriesRealisation.DatabaseObjects;
 using System;
 using System.Collections.Generic;
@@ -28,8 +29,6 @@ namespace RepositoriesRealisation.Models
         public DateTime EndTime { get; set; }
         [Column("has_ended")]
         public bool HasEnded { get; set; } = false;
-
-        public CompetitionModelLevelData LevelData { get; set; } = null!;
         public CompetitionModel(int id, string name, string? description, DateTime startTime, DateTime endTime)
         {
             Id = id;
@@ -51,10 +50,32 @@ namespace RepositoriesRealisation.Models
         }
         public Competition ToCoreModel() => new Competition(Name, Description ?? "", StartTime, EndTime, Id);
     }
-    [Table("competition")]
-    public class CompetitionModelLevelData: OneToOneEntity<CompetitionModel>
+    [Table("competition_level")]
+    public class CompetitionLevelDataModel
+    {
+        public CompetitionModel Competition { get; set; } = null!;
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column("id")]
+        public int Id { get; set; }
+        [ForeignKey("competition_id"), Column("competition_id", TypeName = "int")]
+        public int CompetitionID { get; set; }
+        [Column("platform", TypeName = "int")]
+        public string Platform { get; set; }
+        [Column("version_key", TypeName = "int")]
+        public int VersionKey { get; set; }
+        public CompetitionLevelDataModelData LevelData { get; set; } = null!;
+        public CompetitionLevelDataModel(LevelDataInfo info)
+        {
+            CompetitionID = info.CompetitionID;
+            Platform = info.PlatformName;
+            VersionKey = info.VersionCode;
+        }
+    }
+    [Table("competition_level")]
+    public class CompetitionLevelDataModelData: OneToOneEntity<CompetitionLevelDataModel>
     {
         [Column("level_data", TypeName = "bytea")]
-        public byte[]? LevelData { get; set; }
+        public byte[] LevelData { get; set; }
     }
 }

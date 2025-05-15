@@ -43,16 +43,6 @@ namespace CompetitiveBackend.Services.CompetitionService
             return await _competitionRepository.GetCompetition(competitionID);
         }
 
-        public async Task<LargeData> GetCompetitionLevel(int competitionID)
-        {
-            return await _competitionRepository.GetCompetitionLevel(competitionID);
-        }
-
-        public async Task SetCompetitionLevel(int competitionID, LargeData levelData)
-        {
-            await _competitionRepository.SetCompetitionLevel(competitionID, levelData);
-        }
-
         public async Task UpdateCompetition(int id, string? name, string? description, DateTime? startDate, DateTime? endDate)
         {
             Competition c = await _competitionRepository.GetCompetition(id);

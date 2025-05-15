@@ -19,6 +19,7 @@ namespace CompetitiveBackend.BaseUsage.DependencyInjection
             coll.AddScoped<IPlayerParticipationWatchUseCase, PlayerParticipationWatchUseCase>();
             coll.AddScoped<ICompetitionRewardEditUseCase, CompetitionRewardEditUseCase>();
             coll.AddScoped<IPlayerRewardUseCase, PlayerRewardUseCase>();
+            coll.AddScoped<ICompetitionLevelEditUseCase, CompetitionLevelEditUseCase>();
             return coll;
         }
     }

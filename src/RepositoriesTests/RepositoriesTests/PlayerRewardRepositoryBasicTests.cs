@@ -3,11 +3,6 @@ using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Repositories.Exceptions;
 using FluentAssertions;
 using RepositoriesRealisation.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit.Abstractions;
 
 namespace RepositoriesTests.RepositoriesTests

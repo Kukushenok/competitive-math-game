@@ -38,19 +38,6 @@ namespace CompetitiveBackend.Services
         /// <param name="competitionID">Идентификатор соревнования</param>
         /// <returns>Данные о соревновании</returns>
         public Task<Competition> GetCompetition(int competitionID);
-        /// <summary>
-        /// Получить данные об игровом представлении уровня соревнования
-        /// </summary>
-        /// <param name="competitionID">Идентификатор соревнования</param>
-        /// <returns>Данные об игровом представлении уровня соревнования</returns>
-        public Task<LargeData> GetCompetitionLevel(int competitionID);
-        /// <summary>
-        /// Задать данные об игровом представлении уровня соревнования
-        /// </summary>
-        /// <param name="competitionID">Идентификатор соревнования</param>
-        /// <param name="levelData">Данные об игровом представлении уровня соревнования</param>
-        /// <returns></returns>
-        public Task SetCompetitionLevel(int competitionID, LargeData levelData);
 
     }
 }

@@ -33,20 +33,20 @@ namespace RepositoriesTests.RepositoriesTests
             await Testing.CreateCompetition(c);
             await DoDumpings("created_competition");
         }
-        [Fact]
-        public async Task GetCompetitionLevel_Success()
-        {
-            await ExecSQLFile("competitions.sql");
-            LargeData dt = await Testing.GetCompetitionLevel(2);
-            dt.Data.Should().BeEquivalentTo(new byte[] { 1, 2, 3 });
-        }
-        [Fact]
-        public async Task GetCompetitionLevel_Empty()
-        {
-            await ExecSQLFile("competitions.sql");
-            LargeData dt = await Testing.GetCompetitionLevel(1);
-            dt.Data.Should().BeEmpty();
-        }
+        //[Fact]
+        //public async Task GetCompetitionLevel_Success()
+        //{
+        //    await ExecSQLFile("competitions.sql");
+        //    LargeData dt = await Testing.GetCompetitionLevel(2);
+        //    dt.Data.Should().BeEquivalentTo(new byte[] { 1, 2, 3 });
+        //}
+        //[Fact]
+        //public async Task GetCompetitionLevel_Empty()
+        //{
+        //    await ExecSQLFile("competitions.sql");
+        //    LargeData dt = await Testing.GetCompetitionLevel(1);
+        //    dt.Data.Should().BeEmpty();
+        //}
         [Fact]
         public async Task GetCompetition_Failure()
         {
@@ -134,7 +134,7 @@ namespace RepositoriesTests.RepositoriesTests
         public async Task SetCompetitionLevel_Failure()
         {
             await ExecSQLFile("competitions.sql");
-            await Assert.ThrowsAsync<MissingDataException>(async () => await Testing.SetCompetitionLevel(6, new([1, 7, 2])));
+            await Assert.ThrowsAsync<MissingDataException>(async () => await Testing.AddCompetitionLevel(6, new([1, 7, 2])));
         }
         [Fact]
         public async Task SetCompetitionLevel_Success()

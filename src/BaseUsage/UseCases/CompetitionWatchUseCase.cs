@@ -14,11 +14,13 @@ namespace CompetitiveBackend.BaseUsage.UseCases
     public class CompetitionWatchUseCase : ICompetitionWatchUseCase
     {
         private ICompetitionService _service;
+        private ICompetitionLevelService _competitionLevelService;
         private ICompetitionRewardService _rewardService;
-        public CompetitionWatchUseCase(ICompetitionService service, ICompetitionRewardService rewardService)
+        public CompetitionWatchUseCase(ICompetitionService service, ICompetitionLevelService levelService, ICompetitionRewardService rewardService)
         {
             _service = service;
             _rewardService = rewardService;
+            _competitionLevelService = levelService;
         }
 
         public async Task<IEnumerable<CompetitionDTO>> GetActiveCompetitions()
@@ -36,9 +38,9 @@ namespace CompetitiveBackend.BaseUsage.UseCases
             return (await _service.GetCompetition(competitionID)).Convert();
         }
 
-        public async Task<LargeDataDTO> GetCompetitionLevel(int competitionID)
+        public async Task<LargeDataDTO> GetCompetitionLevel(int competitionID, string? Platform = null, int? maxVersion = null)
         {
-            return (await _service.GetCompetitionLevel(competitionID)).Convert();
+            return (await _competitionLevelService.GetCompetitionLevel(competitionID, Platform, maxVersion)).Convert();
         }
 
         public async Task<IEnumerable<CompetitionRewardDTO>> GetRewardsFor(int competitionID)

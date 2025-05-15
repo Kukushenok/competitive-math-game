@@ -19,12 +19,6 @@ namespace CompetitiveBackend.BaseUsage.UseCases
             await _service.CreateCompetition(competition.Convert());
         }
 
-        public async Task SetCompetitionLevel(int competitionID, LargeDataDTO levelData)
-        {
-            AdminAuthCheck(out _);
-            await _service.SetCompetitionLevel(competitionID, levelData.Convert());
-        }
-
         public async Task UpdateCompetition(CompetitionUpdateRequestDTO competition)
         {
             AdminAuthCheck(out _);

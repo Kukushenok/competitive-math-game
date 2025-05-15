@@ -90,12 +90,12 @@ namespace RepositoriesRealisation.RepositoriesRealisation
             return rd.ToCoreRewardDescription();
         }
 
-        public async Task<LargeData> GetRewardGameAsset(int rewardID)
-        {
-            using BaseDbContext context = await GetDbContext();
-            var rd = await FetchRewardDescription(rewardID, context.RewardDescriptionInGameData);
-            return new LargeData(rd.InGameData ?? Array.Empty<byte>());
-        }
+        //public async Task<LargeData> GetRewardGameAsset(int rewardID)
+        //{
+        //    using BaseDbContext context = await GetDbContext();
+        //    var rd = await FetchRewardDescription(rewardID, context.RewardDescriptionInGameData);
+        //    return new LargeData(rd.InGameData ?? Array.Empty<byte>());
+        //}
 
         public async Task<LargeData> GetRewardIcon(int rewardID)
         {
@@ -104,22 +104,22 @@ namespace RepositoriesRealisation.RepositoriesRealisation
             return new LargeData(rd.IconImage ?? Array.Empty<byte>());
         }
 
-        public async Task SetRewardGameAsset(int rewardID, LargeData data)
-        {
-            using BaseDbContext context = await GetDbContext();
-            var rd = await FetchRewardDescription(rewardID, context.RewardDescriptionInGameData);
-            rd.InGameData = data.Data;
-            try
-            {
-                context.RewardDescriptionInGameData.Update(rd);
-                await context.SaveChangesAsync();
-            }
-            catch(DbUpdateException exception)
-            {
-                _logger.LogError(exception, $"Could not update reward game asset for {rewardID}");
-                throw new FailedOperationException();
-            }
-        }
+        //public async Task SetRewardGameAsset(int rewardID, LargeData data)
+        //{
+        //    using BaseDbContext context = await GetDbContext();
+        //    var rd = await FetchRewardDescription(rewardID, context.RewardDescriptionInGameData);
+        //    rd.InGameData = data.Data;
+        //    try
+        //    {
+        //        context.RewardDescriptionInGameData.Update(rd);
+        //        await context.SaveChangesAsync();
+        //    }
+        //    catch(DbUpdateException exception)
+        //    {
+        //        _logger.LogError(exception, $"Could not update reward game asset for {rewardID}");
+        //        throw new FailedOperationException();
+        //    }
+        //}
 
         public async Task SetRewardIcon(int rewardID, LargeData data)
         {

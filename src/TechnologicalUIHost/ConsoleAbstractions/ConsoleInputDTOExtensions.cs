@@ -28,7 +28,7 @@ namespace TechnologicalUIHost.ConsoleAbstractions
 
         public static CompetitionUpdateRequestDTO ReadCompetitionUpdateRequestDTO(this IConsoleInput input, string prompt = "> ")
         {
-            int id = input.ReadInt($"ID {prompt}");
+            int id = input.ReadInt($"Введите ID соревнования {prompt}");
             string? name = input.PromtInput($"Имя (если нужно изменить) {prompt}");
             name = string.IsNullOrWhiteSpace(name) ? null : name;
 
@@ -40,11 +40,24 @@ namespace TechnologicalUIHost.ConsoleAbstractions
 
             return new CompetitionUpdateRequestDTO(id, name, description, startDate, endDate);
         }
-
+        public static LevelDataInfoDTO ReadLevelDataInfoDTOWithoutID(this IConsoleInput input, string prompt)
+        {
+            int id = input.ReadInt($"Введите ID соревнования {prompt}");
+            string place = input.PromtInput($"Введите целевую платформу уровня {prompt}");
+            int version = input.ReadInt($"Введите код версии уровня {prompt}");
+            return new LevelDataInfoDTO(id, place, version, null);
+        }
+        public static LevelDataInfoDTO ReadLevelDataInfoDTO(this IConsoleInput input, string prompt)
+        {
+            int id = input.ReadInt($"Введите ID уровня {prompt}");
+            LevelDataInfoDTO res = input.ReadLevelDataInfoDTOWithoutID(prompt);
+            res.ID = id;
+            return res;
+        }
         public static UpdateCompetitionRewardDTO ReadUpdateCompetitionRewardDTO(this IConsoleInput input, string prompt = "> ")
         {
-            int? id = input.ReadNullableInt($"ID (optional) {prompt}");
-            int rewardDescriptionID = input.ReadInt($"Reward Description ID {prompt}");
+            int? id = input.ReadNullableInt($"ID: {prompt}");
+            int rewardDescriptionID = input.ReadInt($"ID награды {prompt}");
             int choice = input.ReadInt($"Выберите тип условия\n1. По рангу\n2. По месту\nВаш выбор {prompt}");
 
             RankRewardConditionDTO? rankCondition = null;
@@ -52,14 +65,14 @@ namespace TechnologicalUIHost.ConsoleAbstractions
 
             if (choice == 1)
             {
-                float minRank = input.ReadFloat($"Min Rank {prompt}");
-                float maxRank = input.ReadFloat($"Max Rank {prompt}");
+                float minRank = input.ReadFloat($"Мин. ранг {prompt}");
+                float maxRank = input.ReadFloat($"Макс. ранг {prompt}");
                 rankCondition = new RankRewardConditionDTO(minRank, maxRank);
             }
             else if (choice == 2)
             {
-                int minPlace = input.ReadInt($"Min Place {prompt}");
-                int maxPlace = input.ReadInt($"Max Place {prompt}");
+                int minPlace = input.ReadInt($"Мин. место {prompt}");
+                int maxPlace = input.ReadInt($"Макс. место {prompt}");
                 placeCondition = new PlaceRewardConditionDTO(minPlace, maxPlace);
             }
             else
@@ -104,23 +117,6 @@ namespace TechnologicalUIHost.ConsoleAbstractions
             description = string.IsNullOrWhiteSpace(description) ? null : description;
 
             return new PlayerProfileDTO(name, description, null);
-        }
-
-        public static PlayerRewardDTO ReadPlayerRewardDTO(this IConsoleInput input, string prompt = "> ")
-        {
-            int playerID = input.ReadInt($"ID игрока {prompt}");
-            int rewardDescriptionID = input.ReadInt($"Reward Description ID {prompt}");
-            int? grantedCompetitionID = input.ReadNullableInt($"Granted Competition ID (optional) {prompt}");
-            DateTime? grantDate = input.ReadNullableDateTime($"Grant Date (optional) {prompt}");
-            string? name = input.PromtInput($"Name (optional) {prompt}");
-            name = string.IsNullOrWhiteSpace(name) ? null : name;
-
-            string? description = input.PromtInput($"Description (optional) {prompt}");
-            description = string.IsNullOrWhiteSpace(description) ? null : description;
-
-            int? id = input.ReadNullableInt($"ID (optional) {prompt}");
-
-            return new PlayerRewardDTO(playerID, rewardDescriptionID, grantedCompetitionID, grantDate, name, description, id);
         }
 
         public static RewardDescriptionDTO ReadRewardDescriptionDTO(this IConsoleInput input, string prompt = "> ")

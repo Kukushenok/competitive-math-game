@@ -1,5 +1,4 @@
 ﻿using CompetitiveBackend.Core.Objects;
-
 namespace CompetitiveBackend.Repositories
 {
     public interface ICompetitionRepository
@@ -35,19 +34,5 @@ namespace CompetitiveBackend.Repositories
         /// <returns>Данные о соревновании</returns>
         /// <exception cref="CompetitiveBackend.Repositories.Exceptions.MissingDataException">Соревнование с таким ID не найдено</exception>
         public Task<Competition> GetCompetition(int competitionID);
-        /// <summary>
-        /// Получить данные об уровне соревнования
-        /// </summary>
-        /// <param name="competitionID">Идентификатор соревнования</param>
-        /// <returns>Данные</returns>
-        /// <exception cref="CompetitiveBackend.Repositories.Exceptions.MissingDataException">Соревнование с таким ID не найдено</exception>
-        public Task<LargeData> GetCompetitionLevel(int competitionID);
-        /// <summary>
-        /// Загрузить уровень соревнования
-        /// </summary>
-        /// <param name="competitionID">Идентификатор соревнования</param>
-        /// <param name="levelData">Данные об уровне соревнования</param>
-        /// <exception cref="CompetitiveBackend.Repositories.Exceptions.MissingDataException">Соревнование с таким ID не найдено</exception>
-        public Task SetCompetitionLevel(int competitionID, LargeData levelData);
     }
 }

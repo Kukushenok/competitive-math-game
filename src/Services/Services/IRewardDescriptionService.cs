@@ -42,18 +42,5 @@ namespace CompetitiveBackend.Services
         /// <param name="data">Данные о картинке</param>
         /// <returns></returns>
         public Task SetRewardIcon(int rewardID, LargeData data);
-        /// <summary>
-        /// Получить внутриигровое представление награды
-        /// </summary>
-        /// <param name="rewardID">Идентификатор описания награды</param>
-        /// <returns>Данные о внутриигрововом представлении награды</returns>
-        public Task<LargeData> GetRewardGameAsset(int rewardID);
-        /// <summary>
-        /// Задать внутриигровое представление награды
-        /// </summary>
-        /// <param name="rewardID">Идентификатор описания награды</param>
-        /// <param name="data">Данные о картинке</param>
-        /// <returns></returns>
-        public Task SetRewardGameAsset(int rewardID, LargeData data);
     }
 }

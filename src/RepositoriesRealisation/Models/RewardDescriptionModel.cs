@@ -22,7 +22,6 @@ namespace RepositoriesRealisation.Models
         [Column("description", TypeName = "varchar(64)")]
         public string? Description { get; set; }
         public RewardDescriptionModelIconImage IconImage { get; set; } = null!;
-        public RewardDescriptionModelInGameData InGameData { get; set; } = null!;
         public RewardDescriptionModel()
         {
 
@@ -48,11 +47,5 @@ namespace RepositoriesRealisation.Models
     {
         [Column("icon_image", TypeName = "bytea")]
         public byte[]? IconImage { get; set; }
-    }
-    [Table("reward_description")]
-    public class RewardDescriptionModelInGameData : OneToOneEntity<RewardDescriptionModel>
-    {
-        [Column("ingame_data", TypeName = "bytea")]
-        public byte[]? InGameData { get; set; }
     }
 }

@@ -96,38 +96,38 @@ namespace CompetitiveBackend.Repositories
             return comp.ToCoreModel();
         }
 
-        public async Task<LargeData> GetCompetitionLevel(int competitionID)
-        {
-            using BaseDbContext context = await GetDbContext();
-            CompetitionModelLevelData? comp = await context.CompetitionLevelData.FindAsync(competitionID);
-            if (comp == null)
-            {
-                _logger.LogError($"Could not find competition with ID {competitionID}");
-                throw new Exceptions.MissingDataException($"Could not find competition with ID {competitionID}");
-            }
-            return new LargeData(comp.LevelData ?? Array.Empty<byte>());
-        }
+        //public async Task<LargeData> GetCompetitionLevel(int competitionID)
+        //{
+        //    using BaseDbContext context = await GetDbContext();
+        //    CompetitionLevelDataModelData? comp = await context.CompetitionLevelData.FindAsync(competitionID);
+        //    if (comp == null)
+        //    {
+        //        _logger.LogError($"Could not find competition with ID {competitionID}");
+        //        throw new Exceptions.MissingDataException($"Could not find competition with ID {competitionID}");
+        //    }
+        //    return new LargeData(comp.LevelData ?? Array.Empty<byte>());
+        //}
         
-        public async Task SetCompetitionLevel(int competitionID, LargeData levelData)
-        {
-            using BaseDbContext context = await GetDbContext();
-            CompetitionModelLevelData? comp = await context.CompetitionLevelData.FindAsync(competitionID);
-            if(comp == null)
-            {
-                _logger.LogError($"Could not find competition with ID {competitionID}");
-                throw new Exceptions.MissingDataException($"Could not find competition with ID {competitionID}");
-            }
-            comp.LevelData = levelData.Data;
-            try
-            {
-                await context.SaveChangesAsync();
-            }
-            catch (Exception ex) when (ex.IsDBException())
-            {
-                _logger.LogError("Could not update Competition");
-                throw new Exceptions.FailedOperationException("Could not update Competition",ex);
-            }
-        }
+        //public async Task SetCompetitionLevel(int competitionID, LargeData levelData)
+        //{
+        //    using BaseDbContext context = await GetDbContext();
+        //    CompetitionLevelDataModelData? comp = await context.CompetitionLevelData.FindAsync(competitionID);
+        //    if(comp == null)
+        //    {
+        //        _logger.LogError($"Could not find competition with ID {competitionID}");
+        //        throw new Exceptions.MissingDataException($"Could not find competition with ID {competitionID}");
+        //    }
+        //    comp.LevelData = levelData.Data;
+        //    try
+        //    {
+        //        await context.SaveChangesAsync();
+        //    }
+        //    catch (Exception ex) when (ex.IsDBException())
+        //    {
+        //        _logger.LogError("Could not update Competition");
+        //        throw new Exceptions.FailedOperationException("Could not update Competition",ex);
+        //    }
+        //}
 
         public async Task UpdateCompetition(Competition c)
         {

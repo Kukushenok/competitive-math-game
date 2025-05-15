@@ -15,6 +15,7 @@ namespace RepositoriesRealisation
             container.AddScoped<IRewardDescriptionRepository, RewardDescriptionRepository>();
             container.AddScoped<ICompetitionRepository, CompetitionRepository>();
             container.AddScoped<ICompetitionRewardRepository, CompetitionRewardRepository>();
+            container.AddScoped<ICompetitionLevelRepository, CompetitionLevelDataRepository>();
             container.AddScoped<IPlayerRewardRepository, PlayerRewardRepository>();
             container.AddScoped<IPlayerParticipationRepository, PlayerParticipationRepository>();
             container.AddScoped<SessionRepositoryConfiguration>();

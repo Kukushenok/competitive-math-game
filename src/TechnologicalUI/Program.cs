@@ -15,7 +15,7 @@ namespace TechnologicalUI
         static void Main(string[] args)
         {
             HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
-            builder.Services.AddLogging(conf => conf.AddConsole());
+            builder.Services.AddLogging(conf => conf.AddProvider(new FileLoggerProvider("log.log")));
             builder.Services.AddCompetitiveBackendSolution();
             builder.Services.AddTechnologicalUIHostWithConsole<ConsoleInOut>();
             IHost hst = builder.Build();

@@ -35,34 +35,12 @@ namespace ServicesUnitTests.ServiceTests
             await _service.SetRewardIcon(0, new LargeData([1, 2, 3]));
         }
         [Fact]
-        public async Task RewardDescriptionServiceTests_SetRewardGameAsset()
-        {
-            _rdValidator.Reset();
-            LargeData etalon = new LargeData([1, 2, 3]);
-            _repository.Setup(x => x.SetRewardGameAsset(0, It.IsAny<LargeData>())).Callback((int a, LargeData d) =>
-            {
-                Assert.Equal(0, a);
-                Assert.Equal(etalon.Data, d.Data);
-            });
-            _imageProcessor.Setup(x => x.Process(It.IsAny<LargeData>())).ReturnsAsync(new LargeData([42]));
-            await _service.SetRewardGameAsset(0, etalon);
-        }
-        [Fact]
         public async Task RewardDescriptionServiceTests_GetRewardIcon()
         {
             _rdValidator.Reset();
             LargeData etalon = new LargeData([1, 2, 3]);
             _repository.Setup(x => x.GetRewardIcon(0)).ReturnsAsync(etalon);
             LargeData d = await _service.GetRewardIcon(0);
-            Assert.Equal(etalon.Data, d.Data);
-        }
-        [Fact]
-        public async Task RewardDescriptionServiceTests_GetRewardGameAsset()
-        {
-            _rdValidator.Reset();
-            LargeData etalon = new LargeData([1, 2, 3]);
-            _repository.Setup(x => x.GetRewardGameAsset(0)).ReturnsAsync(etalon);
-            LargeData d = await _service.GetRewardGameAsset(0);
             Assert.Equal(etalon.Data, d.Data);
         }
         [Fact]

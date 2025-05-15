@@ -34,20 +34,9 @@ namespace CompetitiveBackend.Services.RewardDescriptionService
         {
             return await _repository.GetRewardDescription(rewardID);
         }
-
-        public async Task<LargeData> GetRewardGameAsset(int rewardID)
-        {
-            return await _repository.GetRewardGameAsset(rewardID);
-        }
-
         public async Task<LargeData> GetRewardIcon(int rewardID)
         {
             return await _repository.GetRewardIcon(rewardID);
-        }
-
-        public async Task SetRewardGameAsset(int rewardID, LargeData data)
-        {
-            await _repository.SetRewardGameAsset(rewardID, data);
         }
 
         public async Task SetRewardIcon(int rewardID, LargeData data)

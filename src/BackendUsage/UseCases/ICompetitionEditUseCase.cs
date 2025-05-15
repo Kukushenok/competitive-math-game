@@ -7,6 +7,5 @@ namespace CompetitiveBackend.BackendUsage.UseCases
     {
         public Task CreateCompetition(CompetitionDTO competition);
         public Task UpdateCompetition(CompetitionUpdateRequestDTO competition);
-        public Task SetCompetitionLevel(int competitionID, LargeDataDTO levelData);
     }
 }

@@ -142,23 +142,6 @@ namespace ServicesUnitTests.ServiceTests
             var r = await _service.GetCompetition(0);
             Assert.Equal(etalon, r);
         }
-
-        [Fact]
-        public async Task CompetitionServiceTest_GetCompetitionLevel()
-        {
-            LargeData etalon = new LargeData([1, 2, 3]);
-            _repository.Setup(x => x.GetCompetitionLevel(0)).ReturnsAsync(etalon);
-            LargeData d = await _service.GetCompetitionLevel(0);
-            Assert.Equal(etalon.Data, d.Data);
-        }
-        [Fact]
-        public async Task CompetitionServiceTest_SetCompetitionLevel()
-        {
-            LargeData etalon = new LargeData([1, 2, 3]);
-            _repository.Setup(x => x.SetCompetitionLevel(0, It.IsAny<LargeData>()))
-                .Callback<int, LargeData>((idx, d) => Assert.Equal(etalon.Data, d.Data));
-            await _service.SetCompetitionLevel(0, etalon);
-        }
         [Fact]
         public async Task CompetitionServiceTest_GetAllCompetitions()
         {

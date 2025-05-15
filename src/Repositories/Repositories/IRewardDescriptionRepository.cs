@@ -42,19 +42,5 @@ namespace CompetitiveBackend.Repositories
         /// <param name="data">Данные</param>
         /// <exception cref="CompetitiveBackend.Repositories.Exceptions.MissingDataException">Описания награды с таким ID не существует</exception>
         public Task SetRewardIcon(int rewardID, LargeData data);
-        /// <summary>
-        /// Получить данные об игровом представлении награды
-        /// </summary>
-        /// <param name="rewardID">Идентификатор описания награды</param>
-        /// <returns>Данные</returns>
-        /// <exception cref="CompetitiveBackend.Repositories.Exceptions.IncorrectOperationException">Описания награды с таким ID не существует</exception>
-        public Task<LargeData> GetRewardGameAsset(int rewardID);
-        /// <summary>
-        /// Задать данные об игровом представлении награды
-        /// </summary>
-        /// <param name="rewardID">Идентификатор описания награды</param>
-        /// <param name="data">Данные</param>
-        /// <exception cref="CompetitiveBackend.Repositories.Exceptions.MissingDataException">Описания награды с таким ID не существует</exception>
-        public Task SetRewardGameAsset(int rewardID, LargeData data);
     }
 }

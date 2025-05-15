@@ -18,9 +18,9 @@ namespace RepositoriesRealisation
         public DbSet<AccountModelProfileImage> AccountsProfileImages { get; set; } = null!;
         public DbSet<RewardDescriptionModel> RewardDescription { get; set; } = null!;
         public DbSet<RewardDescriptionModelIconImage> RewardDescriptionIconImages { get; set; } = null!;
-        public DbSet<RewardDescriptionModelInGameData> RewardDescriptionInGameData { get; set; } = null!;
+        public DbSet<CompetitionLevelDataModel> CompetitionLevelModel { get; set; } = null!;
+        public DbSet<CompetitionLevelDataModelData> CompetitionLevelModelData { get; set; } = null!;
         public DbSet<CompetitionModel> Competition { get; set; } = null!;
-        public DbSet<CompetitionModelLevelData> CompetitionLevelData { get; set; } = null!;
         public DbSet<PlayerParticipationModel> PlayerParticipation { get; set; } = null!;
         public DbSet<PlayerRewardModel> PlayerReward { get; set; } = null!;
         public DbSet<CompetitionRewardModel> CompetitionReward { get; set; } = null!;
@@ -35,9 +35,8 @@ namespace RepositoriesRealisation
                 options.Ignore(x => x.PasswordHash); // the forbidden knowledge
             });
             ConnectOneToOne<AccountModel, PlayerProfileModel>(modelBuilder, nameof(AccountModel.Profile));
-            ConnectOneToOne<CompetitionModel, CompetitionModelLevelData>(modelBuilder, nameof(CompetitionModel.LevelData));
+            ConnectOneToOne<CompetitionLevelDataModel, CompetitionLevelDataModelData>(modelBuilder, nameof(CompetitionLevelDataModel.LevelData));
             ConnectOneToOne<RewardDescriptionModel, RewardDescriptionModelIconImage>(modelBuilder, nameof(RewardDescriptionModel.IconImage));
-            ConnectOneToOne<RewardDescriptionModel, RewardDescriptionModelInGameData>(modelBuilder, nameof(RewardDescriptionModel.InGameData));
             ConnectOneToOne<AccountModel, AccountModelProfileImage>(modelBuilder, nameof(AccountModel.ProfileImage));
             base.OnModelCreating(modelBuilder);
         }
