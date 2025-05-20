@@ -25,12 +25,6 @@ namespace CompetitiveBackend.BaseUsage.UseCases
             await _rewardDescriptionService.CreateRewardDescription(new RewardDescription(reward.Name, reward.Description));
         }
 
-        public async Task SetRewardGameAsset(int id, LargeDataDTO gameAsset)
-        {
-            AdminAuthCheck(out _);
-            await _rewardDescriptionService.SetRewardGameAsset(id, gameAsset.Convert());
-        }
-
         public async Task SetRewardIcon(int id, LargeDataDTO rewardIcon)
         {
             AdminAuthCheck(out _);

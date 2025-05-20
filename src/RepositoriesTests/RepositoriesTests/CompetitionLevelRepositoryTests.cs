@@ -65,10 +65,9 @@ namespace RepositoriesTests.RepositoriesTests
             await ExecSQLFile("competitions.sql");
             await Assert.ThrowsAnyAsync<RepositoryException>(async () => await Testing.UpdateCompetitionLevelInfo(info));
         }
+        public static object[][] onetwothree = [[1], [2], [3]];
         [Theory]
-        [InlineData(1)]
-        [InlineData(2)]
-        [InlineData(3)]
+        [MemberData(nameof(onetwothree))]
         public async Task UpdateCompetitionLevelData(int idx)
         {
             await ExecSQLFile("competition_levels.sql");
@@ -89,9 +88,7 @@ namespace RepositoriesTests.RepositoriesTests
         }
 
         [Theory]
-        [InlineData(1)]
-        [InlineData(2)]
-        [InlineData(3)]
+        [MemberData(nameof(onetwothree))]
         public async Task DeleteCompetitionLevelData(int idx)
         {
             await ExecSQLFile("competition_levels.sql");
@@ -139,6 +136,36 @@ namespace RepositoriesTests.RepositoriesTests
             await ExecSQLFile("competitions.sql");
             IEnumerable<LevelDataInfo> c = await Testing.GetAllLevelData(2);
             c.ToList().Should().BeEmpty();
+        }
+        [Theory]
+        [MemberData(nameof(onetwothree))]
+        public async Task GetSpecificLevelData(int idx)
+        {
+            await ExecSQLFile("competition_levels.sql");
+            LargeData dat = await Testing.GetSpecificCompetitionLevel(idx);
+            byte[] garn = { (byte)(idx*3 - 2), (byte)(idx *3 - 1), (byte)(idx *3)};
+            dat.Data.Should().NotBeEmpty().And.BeEquivalentTo(garn);
+        }
+        [Fact]
+        public async Task GetSpecificLevelData_Failure()
+        {
+            await ExecSQLFile("competitions.sql");
+            await Assert.ThrowsAnyAsync<RepositoryException>(async () => await Testing.GetSpecificCompetitionLevel(7));
+        }
+        [Theory]
+        [MemberData(nameof(onetwothree))]
+        public async Task GetSpecificLevelDataInfo(int idx)
+        {
+            await ExecSQLFile("competition_levels.sql");
+            LevelDataInfo dat = await Testing.GetSpecificCompetitionLevelInfo(idx);
+            dat.Id.Should().Be(idx);
+            dat.CompetitionID.Should().Be(1);
+        }
+        [Fact]
+        public async Task GetSpecificLevelDataInfo_Failure()
+        {
+            await ExecSQLFile("competitions.sql");
+            await Assert.ThrowsAnyAsync<RepositoryException>(async () => await Testing.GetSpecificCompetitionLevelInfo(7));
         }
     }
 }

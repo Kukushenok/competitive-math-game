@@ -46,17 +46,17 @@ namespace CompetitiveBackend.Controllers
             await self.UpdateCompetition(dto);
             return NoContent();
         }
-        [HttpPatch("{id}/level")]
-        public async Task<ActionResult> SetCompetitionLevel(int id, IFormFile file)
+        //[HttpPatch("{id}/level")]
+        //public async Task<ActionResult> SetCompetitionLevel(int id, IFormFile file)
+        //{
+        //    using var self = await editUseCase.Auth(HttpContext);
+        //    await self.SetCompetitionLevel(id, await file.ToLargeData());
+        //    return NoContent();
+        //}
+        [HttpGet($"{{id}}/{APIConsts.LEVEL_FILE}")]
+        public async Task<FileContentResult> GetCompetitionLevel(int id,string? platform = null, int? maxVersion = null)
         {
-            using var self = await editUseCase.Auth(HttpContext);
-            await self.SetCompetitionLevel(id, await file.ToLargeData());
-            return NoContent();
-        }
-        [HttpGet("{id}/level")]
-        public async Task<FileContentResult> GetCompetitionLevel(int id)
-        {
-            return (await watchUseCase.GetCompetitionLevel(id)).ToFileResult($"level_{id}.bytes");
+            return (await watchUseCase.GetCompetitionLevel(id, platform, maxVersion)).ToFileResult($"level_{id}.bytes");
         }
     }
 }

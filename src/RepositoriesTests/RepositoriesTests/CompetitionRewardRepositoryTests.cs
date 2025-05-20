@@ -19,6 +19,7 @@ namespace RepositoriesTests.RepositoriesTests
     {
         public override string Type => "Not supported condition type :P";
     }
+    [Collection("sample")]
     public class CompetitionRewardRepositoryTests : IntegrationTest<ICompetitionRewardRepository>
     {
         public CompetitionRewardRepositoryTests(ITestOutputHelper helper) : base(helper)

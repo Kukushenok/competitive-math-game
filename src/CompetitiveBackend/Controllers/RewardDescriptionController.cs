@@ -32,11 +32,11 @@ namespace CompetitiveBackend.Controllers
         {
             return (await watchUseCase.GetRewardIcon(id)).ToFileResult($"reward_{id}.jpg");
         }
-        [HttpGet($"{{id}}/{APIConsts.ASSET}")]
-        public async Task<FileContentResult> GetRewardGameAsset(int id)
-        {
-            return (await watchUseCase.GetRewardGameAsset(id)).ToFileResult($"reward_{id}_asset.bytes");
-        }
+        //[HttpGet($"{{id}}/{APIConsts.ASSET}")]
+        //public async Task<FileContentResult> GetRewardGameAsset(int id)
+        //{
+        //    return (await watchUseCase.GetRewardGameAsset(id)).ToFileResult($"reward_{id}_asset.bytes");
+        //}
         [HttpPut("")]
         public async Task<ActionResult> CreateReward(RewardDescriptionDTO dto)
         {
@@ -58,12 +58,12 @@ namespace CompetitiveBackend.Controllers
             await self.SetRewardIcon(id, await file.ToLargeData());
             return NoContent();
         }
-        [HttpPatch($"{{id}}/{APIConsts.ASSET}")]
-        public async Task<ActionResult> UpdateRewardGameAsset(int id, IFormFile file)
-        {
-            using var self = await editUseCase.Auth(HttpContext);
-            await self.SetRewardGameAsset(id, await file.ToLargeData());
-            return NoContent();
-        }
+        //[HttpPatch($"{{id}}/{APIConsts.ASSET}")]
+        //public async Task<ActionResult> UpdateRewardGameAsset(int id, IFormFile file)
+        //{
+        //    using var self = await editUseCase.Auth(HttpContext);
+        //    await self.SetRewardGameAsset(id, await file.ToLargeData());
+        //    return NoContent();
+        //}
     }
 }

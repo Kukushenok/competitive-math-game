@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using CompetitiveBackend.Services.ExtraTools;
 using CompetitiveBackend.Services.Exceptions;
 using System.Drawing;
+using ImageMagick.Drawing;
 
 namespace ImageProcessorRealisation
 {
@@ -25,7 +26,7 @@ namespace ImageProcessorRealisation
                 using (_logger.BeginScope("Image processing..."))
                 using (var image = new MagickImage(data.Data))
                 {
-                    if(image.Width < _config.MinWidth || image.Height < _config.MaxWidth)
+                    if(image.Width < _config.MinWidth || image.Height < _config.MinHeight)
                     {
                         _logger.LogWarning("Provided image is too small, exiting");
                         throw new BadImageException("Provided image is too small");
@@ -35,11 +36,23 @@ namespace ImageProcessorRealisation
                         image.BackgroundColor = MagickColor.FromRgb(0, 0, 0);
                         image.Alpha(AlphaOption.Remove);
                     }
-
-                    uint newWidth = Math.Min(image.Width, _config.MaxWidth);
-                    uint newHeight = Math.Min(image.Height, _config.MaxHeight);
-
+                    float ratio = (float)image.Width / image.Height;
+                    uint newWidth, newHeight;
+                    if (image.Height > image.Width)
+                    {
+                        newHeight = Math.Min(image.Height, _config.MaxHeight);
+                        newWidth = Math.Min((uint)(newHeight * ratio), _config.MaxWidth);
+                    }
+                    else
+                    {
+                        newWidth = Math.Min(image.Width, _config.MaxWidth);
+                        newHeight = Math.Min((uint)(newWidth / ratio), _config.MaxHeight);
+                    }
+                    uint mx = Math.Max(newWidth, newHeight);
                     image.Resize(newWidth, newHeight);
+                    image.BorderColor = image.BackgroundColor;
+                    image.Border((mx - newWidth) / 2, (mx - newHeight) / 2);
+
                     image.Format = MagickFormat.Jpeg;
                     result = new LargeData(image.ToByteArray());
                     _logger.LogInformation("Image resized successfully");

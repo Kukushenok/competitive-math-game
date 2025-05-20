@@ -7,6 +7,7 @@ using Xunit.Abstractions;
 
 namespace RepositoriesTests.RepositoriesTests
 {
+    [Collection("sample")]
     public class PlayerRewardRepositoryBasicTests : IntegrationTest<IPlayerRewardRepository>
     {
         public PlayerRewardRepositoryBasicTests(ITestOutputHelper helper) : base(helper)

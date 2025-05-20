@@ -8,6 +8,7 @@ using CompetitiveBackend.Services.PlayerParticipationService;
 using CompetitiveBackend.Services.PlayerProfileService;
 using CompetitiveBackend.Services.PlayerRewardService;
 using CompetitiveBackend.Services.RewardDescriptionService;
+using CompetitiveBackend.Services.ServicesRealisation;
 using Microsoft.Extensions.DependencyInjection;
 using ServicesRealisation.Objects;
 using ServicesRealisation.ServicesRealisation.Validator;
@@ -26,6 +27,7 @@ namespace ServicesRealisation
             container.AddScoped<IPlayerRewardService, PlayerRewardService>();
             container.AddScoped<IRewardDescriptionService, RewardDescriptionService>();
             container.AddSingleton<ICompetitionRewardScheduler, CompetitionRewardScheduler>();
+            container.AddScoped<ICompetitionLevelService, CompetitionLevelService>();
             return container;
         }
         public static IServiceCollection AddAuthService(this IServiceCollection container)

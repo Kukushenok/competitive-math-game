@@ -16,7 +16,7 @@ namespace CompetitiveBackend.SolutionInstaller
         {
             coll.AddCompetitiveRepositories(options => { options.UsePrivilegiedConnectionString("Guest"); })
                 .AddQuartzTimeScheduler(options => options.UseSqlite("Data Source=quartznet.sqlite;Version=3"))
-                .AddMajickImageRescaler()
+                .AddMajickImageRescaler(option=>option.UseConfigurationConstraints())
                 .AddCompetitiveServices()
                 .AddCompetitiveUseCases();
             return coll;

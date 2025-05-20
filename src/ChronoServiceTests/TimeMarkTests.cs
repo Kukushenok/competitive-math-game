@@ -16,22 +16,26 @@ namespace ChronoServiceTests
         public static TimeSpan ACCEPTABLE_LATENCY = new TimeSpan(0, 0, 0, 0, 500);
         public TimeScheduledTaskData? Expected;
         public bool Recieved { get; private set; } = false;
-        private ITimeScheduler _sched;
+        private ITimeScheduler? _sched;
         public int TriggerCount { get; private set; }
         private bool onlyOnce;
         private bool disposed;
-        public MockSubscriber(ITimeScheduler sched, TimeScheduledTaskData? expected = null, bool onlyOnce = false)
+        public MockSubscriber(ITimeScheduler? sched = null, TimeScheduledTaskData? expected = null, bool onlyOnce = false)
         {
             Expected = expected;
-            _sched = sched;
-            _sched.AddSubscriber(this);
+            if (sched != null)
+            {
+                _sched = sched;
+                _sched.AddSubscriber(this);
+            }
             this.onlyOnce = onlyOnce;
             TriggerCount = 0;
             disposed = false;
         }
         public void Dispose()
         {
-            _sched.RemoveSubscriber(this);
+            if(_sched != null) _sched.RemoveSubscriber(this);
+            _sched = null;
             disposed = true;
         }
 
@@ -90,7 +94,7 @@ namespace ChronoServiceTests
         public async Task RescheduledOne()
         {
             using MockSubscriber subscriber = new MockSubscriber(sc);
-            for(int i = 1; i < 5; i++)
+            for (int i = 1; i < 5; i++)
             {
                 await sc.AddOrUpdateScheduledTask(FromTimeOffset(0, TimeSpan.FromSeconds(i)));
             }
@@ -108,6 +112,36 @@ namespace ChronoServiceTests
             await Task.Delay(5500);
             Assert.True(subscriber.Recieved);
             Assert.Equal(4, subscriber.TriggerCount);
+        }
+        [Fact]
+        public async Task MultipleJobsWithDifferentCategories()
+        {
+            using MockSubscriber subscriber = new MockSubscriber(sc);
+            for (int i = 1; i < 5; i++)
+            {
+                TimeScheduledTaskData dt = FromTimeOffset(i, TimeSpan.FromSeconds(i));
+                dt.Category = "OtherCategory";
+                TimeScheduledTaskData dt2 = FromTimeOffset(i, TimeSpan.FromSeconds(i));
+                await sc.AddOrUpdateScheduledTask(dt);
+                await sc.AddOrUpdateScheduledTask(dt2);
+            }
+            await Task.Delay(5500);
+            Assert.True(subscriber.Recieved);
+            Assert.Equal(8, subscriber.TriggerCount);
+        }
+        [Fact]
+        public async Task UnsubscribeWorking()
+        {
+            using MockSubscriber subscriber = new MockSubscriber(sc);
+            for (int i = 1; i < 5; i++)
+            {
+                await sc.AddOrUpdateScheduledTask(FromTimeOffset(i, TimeSpan.FromSeconds(i)));
+            }
+            await Task.Delay(2500);
+            sc.RemoveSubscriber(subscriber);
+            await Task.Delay(2000);
+            Assert.True(subscriber.Recieved);
+            Assert.Equal(2, subscriber.TriggerCount);
         }
     }
 }

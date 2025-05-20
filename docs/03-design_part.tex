@@ -46,7 +46,6 @@
 	description & varchar(128) & Описание соревнования & \\\hline
 	start\_time & timestamp & Время начала соревнования & NN \\\hline
 	end\_time & timestamp & Время конца соревнования & NN\\\hline
-	level\_data & bytea & Данные об уровне соревнования &\\\hline
 	has\_ended & bool & Закончилось ли соревнование? (выданы ли награды) &NN\\\hline
 \end{dbtable}
 
@@ -66,7 +65,6 @@
 	reward\_name & varchar(64) & Название награды & NN \\\hline
 	description & varchar(128) & Описание награды & \\\hline
 	icon\_image & bytea & Изображение награды & \\\hline
-	ingame\_data & bytea & Представление награды в игре & \\\hline
 \end{dbtable}
 
 Тип condition\_type\_enum является перечисляемым типом, возможными значениями которого являются 'rank' и 'place'. 
@@ -86,6 +84,16 @@
 	\item если condition\_type = rank, то соблюдается соотношение $0\leq min\_rank \leq max\_rank\leq 1$ и соответствующим полям присвоено не пустое значение.
 	\item если condition\_type = place, то соблюдается соотношение $1\leq min\_place\leq max\_place$ и соответствующим полям присвоено не пустое значение.
 \end{itemize}
+
+\begin{dbtable}{competitionlevel}{Описание таблицы competition\_level}
+	ID & int & Идентификатор & PK \\\hline
+	competition\_id & int & Идентификатор соревнования & FK, NN \\\hline
+	platform & varchar(32) & Название платформы уровня & NN \\\hline
+	version\_key & int & Версия уровня & NN \\\hline
+	level\_data & bytea & Данные об уровне соревнования & NN\\\hline
+\end{dbtable}
+
+
 \begin{dbtable}{playerreward}{Описание таблицы player\_reward}
 	ID & int & Идентификатор & PK \\\hline
 	reward\_descript-ion\_id & int & Идентификатор описания награды & FK, NN \\\hline
@@ -93,6 +101,8 @@
 	competition\_id & int & Идентификатор соревнования & FK \\\hline
 	creation\_date & timestamp & Дата создания награды & NN \\\hline
 \end{dbtable}
+
+
 
 \FloatBarrier
 
@@ -126,7 +136,7 @@
 \end{itemize}
 Гость имеет следующие возможности:
 \begin{itemize}
-	\item читать данные из таблиц competition, competition\_reward, player\_par-ticipation, reward\_description;
+	\item читать данные из таблиц competition, competition\_reward, player\_participation, reward\_des-cription, competition\_level;
 	\item читать из таблицы account все поля, кроме password\_hash;
 	\item добавлять новые данные в таблицу account (создавать новый аккаунт);
 	\item вызвать хранимую процедуру check\_password\_hash.
@@ -140,7 +150,7 @@
 Админ имеет все возможности, что имеет гость. Дополнительно, он имеет следующие возможности:
 \begin{itemize}
 	\item удалять данные из player\_participation;
-	\item добавлять, изменять, удалять данные из player\_reward;
+	\item читать, добавлять, изменять, удалять данные из player\_reward, competition\_level;
 	\item добавлять, изменять данные из таблиц competition, competition\_reward, reward\_description.
 \end{itemize}
 Демон выдачи наград имеет следующие возможности:

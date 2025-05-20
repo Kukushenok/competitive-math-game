@@ -6,16 +6,18 @@ create table if not exists account(
 	password_hash varchar,
 	privilegy_level int,
 	description varchar(128),
-	profile_image bytea,
-	check (login not like '% %')
+	profile_image bytea
 );
+
+alter table account 
+add constraint proper_email check (email ~* '^[A-Za-z0-9._+%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'),
+add constraint proper_login check (login not like '% %');
 
 create table if not exists reward_description(
 	id int generated always as identity primary key,
 	reward_name varchar(64) not null,
 	description varchar(128),
-	icon_image bytea,
-	ingame_data bytea
+	icon_image bytea
 );
 
 create table if not exists competition(
@@ -24,9 +26,17 @@ create table if not exists competition(
 	description varchar(128),
 	start_time timestamp not null,
 	end_time timestamp not null,
-	level_data bytea,
-	has_ended bool not null default(false),
-	check(end_time > start_time)
+	has_ended bool not null default(false)
+);
+
+alter table competition add constraint start_end_coherency check (end_time > start_time); 
+
+create table if not exists competition_level(
+	id int generated always as identity primary key,
+	competition_id int references competition(id) not null,
+	version_key int not null,
+	platform varchar(32) not null,
+	level_data bytea not null
 );
 
 create table if not exists player_participation(
@@ -76,168 +86,154 @@ create table if not exists player_reward(
 	creation_date timestamp default(now())
 );
 
-
-
 create or replace function grant_place_rewards(sortedtable refcursor, min_val int, max_val int)
-RETURNS SETOF player_participation  -- Use SETOF to return multiple rows
-LANGUAGE plpgsql
-AS $$
-DECLARE
+returns setof player_participation  -- use setof to return multiple rows
+language plpgsql
+as $$
+declare
     row_data player_participation;
-BEGIN
-    -- Move to the starting position
-    MOVE ABSOLUTE (min_val - 1) IN sortedtable;
-    -- Fetch and return rows in a loop
-    FOR i IN 1..(max_val - min_val + 1) LOOP
-        FETCH NEXT FROM sortedtable INTO row_data;
-        EXIT WHEN NOT FOUND;
-        RETURN NEXT row_data;
-    END LOOP;
-    RETURN;
-END;
+begin
+    move absolute (min_val - 1) in sortedtable;
+    for i in 1..(max_val - min_val + 1) loop
+        fetch next from sortedtable into row_data;
+        exit when not found;
+        return next row_data;
+    end loop;
+    return;
+end;
 $$;
 
 create or replace function grant_rank_rewards(sortedtable refcursor, min_rank float, max_rank float)
-RETURNS SETOF player_participation  
-LANGUAGE plpgsql
-AS $$
-DECLARE
+returns setof player_participation  
+language plpgsql
+as $$
+declare
     row_cnt int := 0;
 	min_val int := 0;
 	max_val int := 0;
-BEGIN
-    -- Move to the end
-    MOVE ABSOLUTE 0 IN sortedtable;
-    MOVE FORWARD ALL FROM sortedtable;
-    -- Get the current position (which is the count)
-    GET DIAGNOSTICS row_cnt = ROW_COUNT;
-	MOVE ABSOLUTE 0 IN sortedtable;
-	--RAISE NOTICE 'deepsec row count %', row_cnt;
+begin
+    move absolute 0 in sortedtable;
+    move forward all from sortedtable;
+    get diagnostics row_cnt = row_count;
+	move absolute 0 in sortedtable;
+
 	min_val := floor((1.0 - max_rank) * row_cnt) + 1;
 	max_val := ceil((1.0 - min_rank) * row_cnt) + 1;
-	--RAISE NOTICE '% %', min_val, max_val;
-	RETURN QUERY (select * from grant_place_rewards(sortedtable, min_val, max_val));
-END;
+
+	return query (select * from grant_place_rewards(sortedtable, min_val, max_val));
+end;
 $$;
 
--- deepseek my beloved goat
-CREATE OR REPLACE PROCEDURE grant_rewards(comp_id int)
-LANGUAGE plpgsql 
-AS $$
-DECLARE
+create or replace procedure grant_rewards(comp_id int)
+language plpgsql 
+as $$
+declare
     creward competition_reward%rowtype;
     comp_valid_id int := null;
     is_granted bool := false;
     reward_type condition_type_enum;
-    place_cursor REFCURSOR := 'place_cursor';
-    reward_cursor REFCURSOR := 'reward_cursor';
+    place_cursor refcursor := 'place_cursor';
+    reward_cursor refcursor := 'reward_cursor';
     player_rec player_participation%rowtype;
-BEGIN
-    -- Check if rewards already granted
-    SELECT c.id, c.has_ended 
-    INTO comp_valid_id, is_granted
-    FROM competition c
-    WHERE c.id = comp_id;
-    IF comp_valid_id is null THEN
-    	RAISE EXCEPTION 'There is no such competition' USING HINT = 'No competition with ID';
-    ELSIF is_granted THEN
-        RAISE EXCEPTION 'Rewards have already been granted' USING HINT = 'Rewards already granted.';
-    ELSE
-        UPDATE competition c SET has_ended = true WHERE c.id = comp_id;
-        -- Open the base cursor for place-based ordering
-        OPEN place_cursor SCROLL FOR 
-            SELECT * FROM player_participation p 
-            WHERE p.competition_id = comp_id
-            ORDER BY p.score DESC, p.last_update_time ASC;
+begin
+    select c.id, c.has_ended 
+    into comp_valid_id, is_granted
+    from competition c
+    where c.id = comp_id;
+    if comp_valid_id is null then
+    	raise exception 'There is no such competition' using hint = 'No competition with ID';
+    elsif is_granted then
+        raise exception 'Rewards have already been granted' using hint = 'Rewards already granted.';
+    else
+        update competition c set has_ended = true where c.id = comp_id;
+        open place_cursor scroll for 
+            select * from player_participation p 
+            where p.competition_id = comp_id
+            order by p.score desc, p.last_update_time asc;
         
-        FOR creward IN 
-            SELECT * FROM competition_reward c WHERE c.competition_id = comp_id
-        LOOP
+        for creward in 
+            select * from competition_reward c where c.competition_id = comp_id
+        loop
             reward_type := creward.condition_type;
-            CASE 
-                WHEN reward_type = 'rank' THEN
-                    OPEN reward_cursor FOR 
-                        SELECT * FROM grant_rank_rewards(place_cursor, creward.min_rank, creward.max_rank);
+            case 
+                when reward_type = 'rank' then
+                    open reward_cursor for 
+                        select * from grant_rank_rewards(place_cursor, creward.min_rank, creward.max_rank);
                     
-                WHEN reward_type = 'place' THEN
-                    OPEN reward_cursor FOR 
-                        SELECT * FROM grant_place_rewards(place_cursor, creward.min_place, creward.max_place);
+                when reward_type = 'place' then
+                    open reward_cursor for 
+                        select * from grant_place_rewards(place_cursor, creward.min_place, creward.max_place);
                     
-                ELSE
+                else
                     RAISE WARNING 'Processing %: Unrecognized reward type %; skipping', creward.id, reward_type;
-                    CONTINUE;  -- Skip to next reward
-            END CASE;
-            -- Process the reward cursor (common for both types)
-            LOOP
-                FETCH reward_cursor INTO player_rec;
-                EXIT WHEN NOT FOUND;
+                    continue;  -- skip to next reward
+            end case;
+            loop
+                fetch reward_cursor into player_rec;
+                exit when not found;
                 
-                INSERT INTO player_reward(reward_description_id, player_id, competition_id)
-                VALUES (creward.reward_description_id, player_rec.account_id, comp_id);
-            END LOOP;
-            
-            -- Clean up and reset for next iteration
-            CLOSE reward_cursor;
-            MOVE ABSOLUTE 0 IN place_cursor;
-        END LOOP;
-        
-        -- Final clean up
-        CLOSE place_cursor;
-    END IF;
-END;
+                insert into player_reward(reward_description_id, player_id, competition_id)
+                values (creward.reward_description_id, player_rec.account_id, comp_id);
+            end loop;
+            close reward_cursor;
+            move absolute 0 in place_cursor;
+        end loop;
+        close place_cursor;
+    end if;
+end;
 $$;
 
-CREATE OR REPLACE FUNCTION public.check_password_hash(
-    p_login VARCHAR,
-    p_input_hash VARCHAR
+create or replace function public.check_password_hash(
+    p_login varchar,
+    p_input_hash varchar
 )
-RETURNS BOOLEAN AS $$
-DECLARE
-    v_stored_hash VARCHAR;
-    v_result BOOLEAN;
-BEGIN
-    SELECT password_hash FROM account WHERE login = p_login INTO v_stored_hash;
-    SELECT v_stored_hash = p_input_hash INTO v_result;
+returns boolean as $$
+declare
+    v_stored_hash varchar;
+    v_result boolean;
+begin
+    select password_hash from account where login = p_login into v_stored_hash;
+    select v_stored_hash = p_input_hash into v_result;
     
-    RETURN v_result;
-END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+    return v_result;
+end;
+$$ language plpgsql security definer;
 
--- GUEST
+-- guest
 
-REVOKE SELECT, UPDATE, DELETE ON account FROM PUBLIC;
-CREATE ROLE guest WITH LOGIN PASSWORD 'guest_password';
-GRANT SELECT ON competition, competition_reward, player_participation, reward_description TO guest;
-GRANT SELECT (id, login, username, email, privilegy_level, description, profile_image) ON account TO guest;
-GRANT INSERT (login, username, email, password_hash, privilegy_level) ON account TO guest;
-GRANT EXECUTE ON FUNCTION check_password_hash(varchar, varchar) TO guest;
-ALTER ROLE guest WITH INHERIT;
+revoke select, update, delete on account from public;
+create role guest with login password 'guest_password';
+grant select on competition, competition_reward, player_participation, reward_description, competition_level to guest;
+grant select (id, login, username, email, privilegy_level, description, profile_image) on account to guest;
+grant insert (login, username, email, password_hash, privilegy_level) on account to guest;
+grant execute on function check_password_hash(varchar, varchar) to guest;
+alter role guest with inherit;
 
--- PLAYER
+-- player
 
-CREATE ROLE player WITH LOGIN PASSWORD 'player_password';
-GRANT guest TO player;
-GRANT UPDATE (username, description, profile_image) ON account TO player;
-GRANT SELECT, INSERT, UPDATE ON player_participation TO player;
-GRANT SELECT ON player_reward TO player;
-ALTER ROLE player INHERIT;
+create role player with login password 'player_password';
+grant guest to player;
+grant update (username, description, profile_image) on account to player;
+grant select, insert, update on player_participation to player;
+grant select on player_reward to player;
+alter role player inherit;
 
--- ADMIN
+-- admin
 
-CREATE ROLE admin WITH LOGIN PASSWORD 'admin_password';
-GRANT guest TO admin;
-GRANT SELECT, DELETE ON player_participation TO admin;
-GRANT INSERT, UPDATE, DELETE ON player_reward TO admin;
-GRANT INSERT, UPDATE ON competition, competition_reward, reward_description TO admin;
-ALTER ROLE admin INHERIT;
+create role admin with login password 'admin_password';
+grant guest to admin;
+grant select, delete on player_participation to admin;
+grant select, insert, update, delete on player_reward, competition_level to admin;
+grant insert, update on competition, competition_reward, reward_description to admin;
+alter role admin inherit;
 
--- REWARD_GRANTER
+-- reward_granter
 
-CREATE ROLE reward_granter WITH LOGIN PASSWORD 'reward_granter';
-GRANT EXECUTE ON PROCEDURE grant_rewards(integer) TO reward_granter;
-GRANT SELECT, UPDATE ON TABLE competition TO reward_granter;
-GRANT SELECT ON TABLE player_participation TO reward_granter;
-GRANT SELECT ON TABLE competition_reward TO reward_granter;
-GRANT INSERT ON TABLE player_reward TO reward_granter;
+create role reward_granter with login password 'reward_granter';
+grant execute on procedure grant_rewards(integer) to reward_granter;
+grant select, update on table competition to reward_granter;
+grant select on table player_participation to reward_granter;
+grant select on table competition_reward to reward_granter;
+grant insert on table player_reward to reward_granter;
 
 

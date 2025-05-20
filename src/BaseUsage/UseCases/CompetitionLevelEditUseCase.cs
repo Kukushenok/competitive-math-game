@@ -31,6 +31,18 @@ namespace CompetitiveBackend.BaseUsage.UseCases
             return from a in await _competitionLevelService.GetAllLevelData(competitionID) select a.Convert();
         }
 
+        public async Task<LargeDataDTO> GetSpecificCompetitionData(int levelID)
+        {
+            AdminAuthCheck(out _);
+            return (await _competitionLevelService.GetSpecificCompetitionLevel(levelID)).Convert();
+        }
+
+        public async Task<LevelDataInfoDTO> GetSpecificCompetitionInfo(int levelID)
+        {
+            AdminAuthCheck(out _);
+            return (await _competitionLevelService.GetSpecificCompetitionLevelInfo(levelID)).Convert();
+        }
+
         public async Task UpdateLevelData(int levelId, LargeDataDTO levelContents)
         {
             AdminAuthCheck(out _);

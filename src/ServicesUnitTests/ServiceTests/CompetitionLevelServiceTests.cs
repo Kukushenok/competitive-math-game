@@ -87,6 +87,24 @@ namespace ServicesUnitTests.ServiceTests
         }
 
         [Fact]
+        public async Task GetCompetitionLevelInfo_CallsRepositoryWithData()
+        {
+            var excepted = new LevelDataInfo(1, 2, "Platform", 123);
+            _mockRepo.Setup(r => r.GetSpecificCompetitionLevelInfo(123))
+                    .ReturnsAsync(excepted);
+            await _service.GetSpecificCompetitionLevelInfo(123);
+            _mockRepo.Verify(r => r.GetSpecificCompetitionLevelInfo(123), Times.Once);
+        }
+        [Fact]
+        public async Task GetCompetitionLevelData_CallsRepositoryWithData()
+        {
+            var expected = new LargeData(Array.Empty<byte>());
+            _mockRepo.Setup(r => r.GetSpecificCompetitionLevel(123))
+                    .ReturnsAsync(expected);
+            await _service.GetSpecificCompetitionLevel(123);
+            _mockRepo.Verify(r => r.GetSpecificCompetitionLevel(123), Times.Once);
+        }
+        [Fact]
         public async Task DeleteLevelData_CallsRepositoryWithCorrectId()
         {
             const int levelDataId = 456;

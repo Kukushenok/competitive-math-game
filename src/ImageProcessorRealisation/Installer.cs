@@ -15,7 +15,7 @@ namespace ImageProcessorRealisation
             container.AddScoped<IImageProcessor, ImageRescaler>();
             Options opt = new Options(container);
             if (setup != null) setup.Invoke(opt);
-            else opt.UseDefaultConstraints();
+            if (!opt.ConfigurationSetUp) opt.UseDefaultConstraints();
             return container;
         }
     }

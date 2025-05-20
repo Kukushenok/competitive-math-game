@@ -99,7 +99,7 @@ namespace RepositoriesRealisation.RepositoriesRealisation
             }
         }
 
-        public async Task<LargeData> GetCompetitionLevel(int levelDataID)
+        public async Task<LargeData> GetSpecificCompetitionLevel(int levelDataID)
         {
             using var context = await GetDbContext();
             try
@@ -118,7 +118,25 @@ namespace RepositoriesRealisation.RepositoriesRealisation
                 throw new FailedOperationException($"Could not get level of {levelDataID}", ex);
             }
         }
-
+        public async Task<LevelDataInfo> GetSpecificCompetitionLevelInfo(int levelDataID)
+        {
+            using var context = await GetDbContext();
+            try
+            {
+                var levelDataHolder = await context.CompetitionLevelModel.FindAsync(levelDataID);
+                if (levelDataHolder == null)
+                {
+                    _logger.LogError($"No data presented for {levelDataID}");
+                    throw new MissingDataException($"No data presented for {levelDataID}");
+                }
+                return ToCore(levelDataHolder);
+            }
+            catch (Exception ex) when (ex.IsDBException())
+            {
+                _logger.LogError($"Could not get competition level of {levelDataID}");
+                throw new FailedOperationException($"Could not get level of {levelDataID}", ex);
+            }
+        }
         public async Task UpdateCompetitionLevelData(int levelDataID, LargeData data)
         {
             using var context = await GetDbContext();

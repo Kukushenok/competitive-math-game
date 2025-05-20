@@ -36,6 +36,16 @@ namespace CompetitiveBackend.Services.ServicesRealisation
             return levelRepository.GetCompetitionLevel(competitionID, platform, maxVersion);
         }
 
+        public Task<LargeData> GetSpecificCompetitionLevel(int levelDataID)
+        {
+            return levelRepository.GetSpecificCompetitionLevel(levelDataID);
+        }
+
+        public Task<LevelDataInfo> GetSpecificCompetitionLevelInfo(int levelDataID)
+        {
+            return levelRepository.GetSpecificCompetitionLevelInfo(levelDataID);
+        }
+
         public Task UpdateCompetitionLevelData(int levelDataID, LargeData largeData)
         {
             return levelRepository.UpdateCompetitionLevelData(levelDataID, largeData);

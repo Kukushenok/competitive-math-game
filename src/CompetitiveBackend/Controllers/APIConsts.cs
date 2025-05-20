@@ -17,5 +17,8 @@
         public const string REGISTER = "register";
         public const string COMP_PARTICIPATIONS = "participations";
         public const string SELF = "self";
+        public const string LEVELS = "levels";
+        public const string INFO = "info";
+        public const string LEVEL_FILE = "level_file";
     }
 }

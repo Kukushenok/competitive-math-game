@@ -16,7 +16,8 @@ namespace CompetitiveBackend.Repositories
         /// <returns>Данные</returns>
         /// <exception cref="CompetitiveBackend.Repositories.Exceptions.MissingDataException">Соревнование с таким ID не найдено</exception>
         public Task<LargeData> GetCompetitionLevel(int competitionID, string? Platform = null, int? MaxVersion = null);
-        public Task<LargeData> GetCompetitionLevel(int levelDataID);
+        public Task<LargeData> GetSpecificCompetitionLevel(int levelDataID);
+        public Task<LevelDataInfo> GetSpecificCompetitionLevelInfo(int levelDataID);
         /// <summary>
         /// Загрузить уровень соревнования
         /// </summary>

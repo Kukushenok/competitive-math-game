@@ -13,6 +13,7 @@ namespace CompetitiveBackend.BackendUsage.UseCases
         public Task UpdateLevelDataInfo(LevelDataInfoDTO levelDataInfo);
         public Task UpdateLevelData(int levelId, LargeDataDTO levelContents);
         public Task DeleteLevel(int levelId);
-
+        public Task<LargeDataDTO> GetSpecificCompetitionData(int levelID);
+        public Task<LevelDataInfoDTO> GetSpecificCompetitionInfo(int levelID);
     }
 }

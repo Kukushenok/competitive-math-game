@@ -25,11 +25,6 @@ namespace CompetitiveBackend.BaseUsage.UseCases
             return (await _rewardDescriptionService.GetRewardDescription(id)).Convert();
         }
 
-        public async Task<LargeDataDTO> GetRewardGameAsset(int id)
-        {
-            return (await _rewardDescriptionService.GetRewardGameAsset(id)).Convert();
-        }
-
         public async Task<LargeDataDTO> GetRewardIcon(int id)
         {
             return (await _rewardDescriptionService.GetRewardIcon(id)).Convert();

@@ -39,5 +39,6 @@ namespace CompetitiveBackend.Services
         /// <returns>Данные о соревновании</returns>
         public Task<Competition> GetCompetition(int competitionID);
 
+
     }
 }

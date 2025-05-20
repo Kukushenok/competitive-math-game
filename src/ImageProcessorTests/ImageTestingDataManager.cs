@@ -64,7 +64,7 @@ namespace ImageProcessorTests
             for (int i = 0; i < files.Length; i++)
             {
                 bool positive = true;
-                if (files[i].StartsWith("neg", StringComparison.InvariantCultureIgnoreCase))
+                if (Path.GetFileNameWithoutExtension(files[i]).StartsWith("neg", StringComparison.InvariantCultureIgnoreCase))
                 {
                     positive = false;
                 }

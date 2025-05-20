@@ -8,6 +8,7 @@ namespace CompetitiveBackend.BackendUsage.Objects
         public int CompetitionID { get; set; }
         public string Platform { get; set; }
         public int VersionKey { get; set; }
+        public LevelDataInfoDTO() { }
         public LevelDataInfoDTO(int competitionID, string platform, int versionKey, int? id): base(id)
         {
             CompetitionID = competitionID;

@@ -10,7 +10,6 @@ namespace CompetitiveBackend.BackendUsage.UseCases
     public interface IRewardDescriptionWatchUseCase
     {
         public Task<LargeDataDTO> GetRewardIcon(int id);
-        public Task<LargeDataDTO> GetRewardGameAsset(int id);
         public Task<RewardDescriptionDTO> GetRewardDescription(int id);
         public Task<IEnumerable<RewardDescriptionDTO>> GetAllRewardDescriptions(DataLimiterDTO dataLimiter);
     }
