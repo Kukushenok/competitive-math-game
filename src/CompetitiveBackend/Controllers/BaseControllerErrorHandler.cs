@@ -14,13 +14,13 @@ namespace CompetitiveBackend.Controllers
             IResult rslt = Results.Problem(statusCode: 500, detail: "Unknown exception was thrown: " + ex.Message);
             if (ex is RepositoryException)
             {
-                if (ex is MissingDataException) rslt = Results.NotFound();
-                else if (ex is FailedOperationException) rslt = Results.BadRequest();
-                else if (ex is IncorrectOperationException) rslt = Results.BadRequest();
+                if (ex is MissingDataException) rslt = Results.NotFound(ex.Message);
+                else if (ex is FailedOperationException) rslt = Results.BadRequest(ex.Message);
+                else if (ex is IncorrectOperationException) rslt = Results.BadRequest(ex.Message);
             }
             else if (ex is ServiceException)
             {
-                if (ex is BadImageException) rslt = Results.BadRequest("Image is not sufficient");
+                if (ex is BadImageException) rslt = Results.BadRequest("Image not sufficient: " + ex.Message);
                 else if (ex is IncorrectPasswordException) rslt = Results.Unauthorized();
                 else if (ex is BadLoginException) rslt = Results.BadRequest("Login is erroneous");
                 else if (ex is InvalidArgumentsException invx) rslt = Results.BadRequest($"Some field is invalid: {invx.Message}");
@@ -28,10 +28,11 @@ namespace CompetitiveBackend.Controllers
             else if (ex is UseCaseException)
             {
                 if (ex is UnauthenticatedException) rslt = Results.Unauthorized();
-                else if (ex is OperationNotPermittedException) rslt = Results.Forbid();
-                else if (ex is IsNotPlayerException) rslt = Results.Forbid();
-                else if (ex is RequestFailedException) rslt = Results.StatusCode(500);
+                else if (ex is OperationNotPermittedException) rslt = Results.BadRequest(ex.Message);
+                else if (ex is IsNotPlayerException) rslt = Results.BadRequest(ex.Message);
+                else if (ex is RequestFailedException) rslt = Results.BadRequest(ex.Message);
             }
+            httpContext.Response.Clear();
             await rslt.ExecuteAsync(httpContext);
             return httpContext.Response.StatusCode != 500;
         }

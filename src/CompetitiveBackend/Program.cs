@@ -18,7 +18,8 @@ namespace CompetitiveBackend
         {
             var builder = WebApplication.CreateBuilder(args);
             // The SIN of us. Pray for it to work blud.
-            builder.Services.AddCompetitiveBackendSolution();
+            // builder.Services.AddCompetitiveBackendSolution();
+            builder.Services.AddCompetitiveMongoDBSolution();
             builder.Services.AddExceptionHandler<BaseControllerErrorHandler>();
             builder.Services.AddProblemDetails();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -7,6 +7,7 @@ using ChronoServiceRealisation;
 using CompetitiveBackend.Repositories;
 using Repositories.Repositories;
 using CompetitiveBackend.Services.ExtraTools;
+using MongoDBRepositoryRealisation;
 
 namespace CompetitiveBackend.SolutionInstaller
 {
@@ -15,6 +16,15 @@ namespace CompetitiveBackend.SolutionInstaller
         public static IServiceCollection AddCompetitiveBackendSolution(this IServiceCollection coll)
         {
             coll.AddCompetitiveRepositories(options => { options.UsePrivilegiedConnectionString("Guest"); })
+                .AddQuartzTimeScheduler(options => options.UseSqlite("Data Source=quartznet.sqlite;Version=3"))
+                .AddMajickImageRescaler()
+                .AddCompetitiveServices()
+                .AddCompetitiveUseCases();
+            return coll;
+        }
+        public static IServiceCollection AddCompetitiveMongoDBSolution(this IServiceCollection coll)
+        {
+            coll.UseMongoDBRepositories()
                 .AddQuartzTimeScheduler(options => options.UseSqlite("Data Source=quartznet.sqlite;Version=3"))
                 .AddMajickImageRescaler()
                 .AddCompetitiveServices()
