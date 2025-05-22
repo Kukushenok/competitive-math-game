@@ -8,7 +8,6 @@ create table if not exists account(
 	description varchar(128),
 	profile_image bytea
 );
-
 alter table account 
 add constraint proper_email check (email ~* '^[A-Za-z0-9._+%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'),
 add constraint proper_login check (login not like '% %');
@@ -28,7 +27,6 @@ create table if not exists competition(
 	end_time timestamp not null,
 	has_ended bool not null default(false)
 );
-
 alter table competition add constraint start_end_coherency check (end_time > start_time); 
 
 create table if not exists competition_level(
@@ -45,7 +43,6 @@ create table if not exists player_participation(
 	score int not null,
 	last_update_time timestamp not null default(now()) 
 );
-
 alter table player_participation add constraint comp_uniqueness unique (competition_id, account_id); 
 
 create type condition_type_enum as enum ('place', 'rank');
@@ -60,7 +57,6 @@ create table competition_reward (
     min_rank decimal(4,3),
     max_rank decimal(4,3)
 );
-
 alter table competition_reward
 add constraint chk_place_min check (
     condition_type <> 'place' or (min_place is not null and min_place >= 1)
@@ -116,10 +112,8 @@ begin
     move forward all from sortedtable;
     get diagnostics row_cnt = row_count;
 	move absolute 0 in sortedtable;
-
 	min_val := floor((1.0 - max_rank) * row_cnt) + 1;
 	max_val := ceil((1.0 - min_rank) * row_cnt) + 1;
-
 	return query (select * from grant_place_rewards(sortedtable, min_val, max_val));
 end;
 $$;
@@ -150,7 +144,6 @@ begin
             select * from player_participation p 
             where p.competition_id = comp_id
             order by p.score desc, p.last_update_time asc;
-        
         for creward in 
             select * from competition_reward c where c.competition_id = comp_id
         loop
@@ -159,11 +152,9 @@ begin
                 when reward_type = 'rank' then
                     open reward_cursor for 
                         select * from grant_rank_rewards(place_cursor, creward.min_rank, creward.max_rank);
-                    
                 when reward_type = 'place' then
                     open reward_cursor for 
                         select * from grant_place_rewards(place_cursor, creward.min_place, creward.max_place);
-                    
                 else
                     RAISE WARNING 'Processing %: Unrecognized reward type %; skipping', creward.id, reward_type;
                     continue;  -- skip to next reward
@@ -171,7 +162,6 @@ begin
             loop
                 fetch reward_cursor into player_rec;
                 exit when not found;
-                
                 insert into player_reward(reward_description_id, player_id, competition_id)
                 values (creward.reward_description_id, player_rec.account_id, comp_id);
             end loop;
@@ -200,7 +190,6 @@ end;
 $$ language plpgsql security definer;
 
 -- guest
-
 revoke select, update, delete on account from public;
 create role guest with login password 'guest_password';
 grant select on competition, competition_reward, player_participation, reward_description, competition_level to guest;
@@ -208,32 +197,24 @@ grant select (id, login, username, email, privilegy_level, description, profile_
 grant insert (login, username, email, password_hash, privilegy_level) on account to guest;
 grant execute on function check_password_hash(varchar, varchar) to guest;
 alter role guest with inherit;
-
 -- player
-
 create role player with login password 'player_password';
 grant guest to player;
 grant update (username, description, profile_image) on account to player;
 grant select, insert, update on player_participation to player;
 grant select on player_reward to player;
 alter role player inherit;
-
 -- admin
-
 create role admin with login password 'admin_password';
 grant guest to admin;
 grant select, delete on player_participation to admin;
 grant select, insert, update, delete on player_reward, competition_level to admin;
 grant insert, update on competition, competition_reward, reward_description to admin;
 alter role admin inherit;
-
 -- reward_granter
-
 create role reward_granter with login password 'reward_granter';
 grant execute on procedure grant_rewards(integer) to reward_granter;
 grant select, update on table competition to reward_granter;
 grant select on table player_participation to reward_granter;
 grant select on table competition_reward to reward_granter;
 grant insert on table player_reward to reward_granter;
-
-
