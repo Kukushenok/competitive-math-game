@@ -83,7 +83,7 @@
 \end{dbtable}
 Дополнительные ограничения к таблице~\ref{db_table:competitionreward}: 
 \begin{itemize}
-	\item если condition\_type = rank, то соблюдается соотношение $0\leq min\_rank \leq max\_rank\leq 1$ и соответствующим полям присвоено не пустое значение.
+	\item если condition\_type = rank, то соблюдается соотношение $0\leq min\_rank \leq max\_rank$ $\leq 1$ и соответствующим полям присвоено не пустое значение.
 	\item если condition\_type = place, то соблюдается соотношение $1\leq min\_place\leq max\_place$ и соответствующим полям присвоено не пустое значение.
 \end{itemize}
 \begin{dbtable}{playerreward}{Описание таблицы player\_reward}
