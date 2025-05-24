@@ -12,6 +12,7 @@ using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories.Exceptions;
 namespace RepositoriesTests.RepositoriesTests
 {
+    [Collection("sample2")]
     public class AccountRepositoryUnitTests : IntegrationTest<IAccountRepository>
     {
         public AccountRepositoryUnitTests(ITestOutputHelper helper) : base(helper)

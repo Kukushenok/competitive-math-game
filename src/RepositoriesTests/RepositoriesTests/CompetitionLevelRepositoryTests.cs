@@ -14,6 +14,7 @@ using Docker.DotNet.Models;
 
 namespace RepositoriesTests.RepositoriesTests
 {
+    [Collection("sample2")]
     public class CompetitionLevelRepositoryTests : IntegrationTest<ICompetitionLevelRepository>
     {
         public CompetitionLevelRepositoryTests(ITestOutputHelper helper) : base(helper)

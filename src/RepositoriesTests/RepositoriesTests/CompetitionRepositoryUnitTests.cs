@@ -13,6 +13,7 @@ using RepositoriesRealisation.Models;
 
 namespace RepositoriesTests.RepositoriesTests
 {
+    [Collection("sample2")]
     public class CompetitionRepositoryUnitTests : IntegrationTest<ICompetitionRepository>
     {
         public CompetitionRepositoryUnitTests(ITestOutputHelper helper) : base(helper)

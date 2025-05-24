@@ -56,13 +56,13 @@ namespace RepositoriesRealisation.RewardGranters
             }
             await context.SaveChangesAsync();
         }
-        private async Task GrantByCondition(BaseDbContext context, CompetitionRewardModel model, PlayerParticipationModel[] participations, PlaceGrantCondition rankCondition)
+        private async Task GrantByCondition(BaseDbContext context, CompetitionRewardModel model, PlayerParticipationModel[] participations, PlaceGrantCondition placeCondition)
         {
             if (participations.Length == 0)
                 return;
             int competitionID = participations[0].CompetitionID;
-            int startIdx = rankCondition.minPlace <= 0 ? 0: rankCondition.minPlace - 1;
-            for (int i = startIdx; i < rankCondition.maxPlace && i < participations.Length; i++)
+            int startIdx = placeCondition.minPlace <= 0 ? 0: placeCondition.minPlace - 1;
+            for (int i = startIdx; i < placeCondition.maxPlace && i < participations.Length; i++)
             {
                 await context.PlayerReward.AddAsync(new PlayerRewardModel(participations[i].AccountID, model.RewardDescriptionId, competitionID));
             }
