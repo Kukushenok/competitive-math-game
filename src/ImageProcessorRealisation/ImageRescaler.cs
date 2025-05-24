@@ -26,36 +26,23 @@ namespace ImageProcessorRealisation
                 using (_logger.BeginScope("Image processing..."))
                 using (var image = new MagickImage(data.Data))
                 {
-                    if(image.Width < _config.MinWidth || image.Height < _config.MinHeight)
+                    if(image.Width < _config.MinSize || image.Height < _config.MinSize)
                     {
                         _logger.LogWarning("Provided image is too small, exiting");
                         throw new BadImageException("Provided image is too small");
                     }
-                    if (image.HasAlpha)
-                    {
-                        image.BackgroundColor = MagickColor.FromRgb(0, 0, 0);
-                        image.Alpha(AlphaOption.Remove);
-                    }
-                    float ratio = (float)image.Width / image.Height;
-                    uint newWidth, newHeight;
-                    if (image.Height > image.Width)
-                    {
-                        newHeight = Math.Min(image.Height, _config.MaxHeight);
-                        newWidth = Math.Min((uint)(newHeight * ratio), _config.MaxWidth);
-                    }
-                    else
-                    {
-                        newWidth = Math.Min(image.Width, _config.MaxWidth);
-                        newHeight = Math.Min((uint)(newWidth / ratio), _config.MaxHeight);
-                    }
-                    uint mx = Math.Max(newWidth, newHeight);
-                    image.Resize(newWidth, newHeight);
-                    image.BorderColor = image.BackgroundColor;
-                    image.Border((mx - newWidth) / 2, (mx - newHeight) / 2);
+                    uint mx = Math.Min(Math.Max(image.Width, image.Height), _config.MaxSize);
+                    image.Resize(new MagickGeometry($"{mx}x{mx}"));
 
-                    image.Format = MagickFormat.Jpeg;
-                    result = new LargeData(image.ToByteArray());
-                    _logger.LogInformation("Image resized successfully");
+                    // Create an 80x80 blue background
+                    using (var background = new MagickImage(MagickColors.Black, mx, mx))
+                    {
+                        // Composite the resized image onto the center of the background
+                        background.Composite(image, Gravity.Center, CompositeOperator.Over);
+                        background.Format = MagickFormat.Jpeg;
+                        result = new LargeData(background.ToByteArray());
+                        _logger.LogInformation("Image resized successfully");
+                    }
                 }
                 return await Task.FromResult(result);
             }

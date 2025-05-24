@@ -22,12 +22,8 @@ namespace SolutionInstaller
             return uint.TryParse(conf.GetSection(_section)[name], out uint result) ? result : deflt;
         }
 
-        public uint MaxWidth => TryGet(nameof(MaxWidth), 256);
+        public uint MinSize => TryGet(nameof(MinSize), 256);
 
-        public uint MaxHeight => TryGet(nameof(MaxHeight), 256);
-
-        public uint MinWidth => TryGet(nameof(MinWidth), 32);
-
-        public uint MinHeight => TryGet(nameof(MinHeight), 32);
+        public uint MaxSize => TryGet(nameof(MaxSize), 256);
     }
 }

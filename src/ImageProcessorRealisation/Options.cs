@@ -18,14 +18,12 @@ namespace ImageProcessorRealisation
             this.collection = collection;
         }
 
-        public Options AddConstraints(uint minWidth, uint maxWidth, uint minHeight, uint maxHeight)
+        public Options AddConstraints(uint minSize, uint maxSize)
         {
             collection.AddSingleton<IImageConfig>(new DefaultImageConfig()
             {
-                MaxHeight = maxHeight,
-                MinHeight = minHeight,
-                MaxWidth = maxWidth,
-                MinWidth = minWidth
+                MinSize = minSize,
+                MaxSize = maxSize
             });
             ConfigurationSetUp = true;
             return this;
@@ -38,7 +36,7 @@ namespace ImageProcessorRealisation
         }
         public Options UseDefaultConstraints()
         {
-            AddConstraints(16, 256, 16, 256);
+            AddConstraints(16, 256);
             ConfigurationSetUp = true;
             return this;
         }

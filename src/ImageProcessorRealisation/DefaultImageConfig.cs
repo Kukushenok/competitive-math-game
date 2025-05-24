@@ -2,9 +2,7 @@
 {
     public class DefaultImageConfig : IImageConfig
     {
-        public required uint MaxWidth { get; init; }
-        public required uint MaxHeight { get; init; }
-        public required uint MinWidth { get; init; }
-        public required uint MinHeight { get; init; }
+        public required uint MinSize { get; init; }
+        public required uint MaxSize { get; init; }
     }
 }

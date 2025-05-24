@@ -1,9 +1,7 @@
 <Settings>
     <Dimensions>
-        <MinWidth>32</MinWidth>
-        <MaxWidth>128</MaxWidth>
-        <MinHeight>32</MinHeight>
-        <MaxHeight>128</MaxHeight>
+        <MinSize>32</MinSize>
+        <MaxSize>128</MaxSize>
     </Dimensions>
 	<Paths>
 		<ResultsDir>Results</ResultsDir>

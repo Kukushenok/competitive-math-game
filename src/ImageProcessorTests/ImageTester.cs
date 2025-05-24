@@ -34,10 +34,8 @@ namespace ImageProcessorTests
             coll.AddMajickImageRescaler((options) =>
             {
                 options.AddConstraints(
-                    ImageTestingDataManager.MinWidth,
-                    ImageTestingDataManager.MaxWidth,
-                    ImageTestingDataManager.MinHeight,
-                    ImageTestingDataManager.MaxHeight
+                    ImageTestingDataManager.MinSize,
+                    ImageTestingDataManager.MaxSize
                     );
             });
             coll.UseXUnitLogging(helper);

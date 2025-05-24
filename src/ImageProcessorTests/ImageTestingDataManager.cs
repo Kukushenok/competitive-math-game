@@ -10,10 +10,8 @@ namespace ImageProcessorTests
         private static string ResultsDir = string.Empty;
         private static string TestsDir = string.Empty;
         private static bool Initialized = false;
-        public static uint MinWidth = 0;
-        public static uint MinHeight = 0;
-        public static uint MaxWidth = 256;
-        public static uint MaxHeight = 256;
+        public static uint MinSize = 0;
+        public static uint MaxSize = 256;
 
         public ImageTestingDataManager()
         {
@@ -33,10 +31,8 @@ namespace ImageProcessorTests
 
             ResultsDir = directoriesElement?.Element(nameof(ResultsDir))?.Value ?? string.Empty;
             TestsDir = directoriesElement?.Element(nameof(TestsDir))?.Value ?? string.Empty;
-            uint.TryParse(dimensionsElement?.Element(nameof(MinWidth))?.Value, out MinWidth);
-            uint.TryParse(dimensionsElement?.Element(nameof(MinHeight))?.Value, out MinHeight);
-            uint.TryParse(dimensionsElement?.Element(nameof(MaxWidth))?.Value, out MaxWidth);
-            uint.TryParse(dimensionsElement?.Element(nameof(MaxHeight))?.Value, out MaxHeight);
+            uint.TryParse(dimensionsElement?.Element(nameof(MinSize))?.Value, out MinSize);
+            uint.TryParse(dimensionsElement?.Element(nameof(MaxSize))?.Value, out MaxSize);
             //resultsDir = "./results/";
             //testsDir = "../../../Tests";
 
