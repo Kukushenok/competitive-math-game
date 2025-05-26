@@ -10,8 +10,8 @@ create table if not exists account(
 );
 
 alter table account 
-add constraint proper_email check (email ~* '^[A-Za-z0-9._+%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'),
-add constraint proper_login check (login not like '% %');
+add constraint proper_email check (email ~* '^[a-z0-9._+%-]+@[a-z0-9.-]+[.][a-z]+$'),
+add constraint proper_login check (login ~* '^[a-z0-9._]+$');
 
 create table if not exists reward_description(
 	id int generated always as identity primary key,

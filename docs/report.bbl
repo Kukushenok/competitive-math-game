@@ -48,6 +48,47 @@
       \field{title}{Базы данных : Учебное пособие}
       \field{year}{2013}
     \endentry
+    \entry{documentoriented}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=666ad3a9b965824ac9bf1de7f39edfb1}{%
+           family={Якушин},
+           familyi={Я\bibinitperiod},
+           given={АЮ},
+           giveni={А\bibinitperiod}}}%
+        {{hash=e9acf1086eccd836c4059cca3fcd7423}{%
+           family={Муковозов},
+           familyi={М\bibinitperiod},
+           given={АМ},
+           giveni={А\bibinitperiod}}}%
+        {{hash=7cc982c61c5f09087095d615bacc1054}{%
+           family={Исмоилов},
+           familyi={И\bibinitperiod},
+           given={МИ},
+           giveni={М\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Общество с ограниченной ответственностью {«}Аэтерна{»}}%
+      }
+      \strng{namehash}{c348c4053d9bde9e319c80b35e4bec18}
+      \strng{fullhash}{c348c4053d9bde9e319c80b35e4bec18}
+      \strng{fullhashraw}{c348c4053d9bde9e319c80b35e4bec18}
+      \strng{bibnamehash}{c348c4053d9bde9e319c80b35e4bec18}
+      \strng{authorbibnamehash}{c348c4053d9bde9e319c80b35e4bec18}
+      \strng{authornamehash}{c348c4053d9bde9e319c80b35e4bec18}
+      \strng{authorfullhash}{c348c4053d9bde9e319c80b35e4bec18}
+      \strng{authorfullhashraw}{c348c4053d9bde9e319c80b35e4bec18}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Инновационная наука}
+      \field{title}{Сравнительный анализ реляционной базы данных и документоориентированной NoSQL базы данных в разрезе их применения при создании локального чата/мессенджера}
+      \field{year}{2018}
+      \field{number}{4}
+      \range{number}{1}
+      \field{pages}{73\bibrangedash 83}
+      \range{pages}{11}
+    \endentry
     \entry{relationdb}{book}{}{}
       \name{author}{1}{}{%
         {{hash=12cd34eb95b1af61399be85ddc1beb64}{%
@@ -70,8 +111,8 @@
       \strng{authornamehash}{12cd34eb95b1af61399be85ddc1beb64}
       \strng{authorfullhash}{12cd34eb95b1af61399be85ddc1beb64}
       \strng{authorfullhashraw}{12cd34eb95b1af61399be85ddc1beb64}
-      \field{sortinit}{4}
-      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{Реляционные базы данных. Практические приемы оптимальных решений}
@@ -106,8 +147,8 @@
       \strng{authornamehash}{19c1893f3fcf8e1854e4f192aa615c4f}
       \strng{authorfullhash}{19c1893f3fcf8e1854e4f192aa615c4f}
       \strng{authorfullhashraw}{19c1893f3fcf8e1854e4f192aa615c4f}
-      \field{sortinit}{5}
-      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Modern Science}
@@ -119,8 +160,8 @@
       \range{pages}{5}
     \endentry
     \entry{postgresql}{misc}{}{}
-      \field{sortinit}{6}
-      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
       \field{labeltitlesource}{title}
       \field{title}{Документация PostgreSQL [Электронный ресурс]}
       \field{urlday}{5}
@@ -135,8 +176,8 @@
       \endverb
     \endentry
     \entry{aspnet}{misc}{}{}
-      \field{sortinit}{7}
-      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
       \field{labeltitlesource}{title}
       \field{title}{Документация ASP.NET Core [Электронный ресурс]}
       \field{urlday}{8}
@@ -148,22 +189,6 @@
       \endverb
       \verb{url}
       \verb https://learn.microsoft.com/en-us/aspnet/core/?view=aspnetcore-8.0
-      \endverb
-    \endentry
-    \entry{efcore}{misc}{}{}
-      \field{sortinit}{8}
-      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
-      \field{labeltitlesource}{title}
-      \field{title}{Документация Entity Framework Core [Электронный ресурс]}
-      \field{urlday}{8}
-      \field{urlmonth}{5}
-      \field{urlyear}{2025}
-      \field{urldateera}{ce}
-      \verb{urlraw}
-      \verb https://learn.microsoft.com/ru-ru/ef/core/
-      \endverb
-      \verb{url}
-      \verb https://learn.microsoft.com/ru-ru/ef/core/
       \endverb
     \endentry
     \entry{magicknet}{misc}{}{}
