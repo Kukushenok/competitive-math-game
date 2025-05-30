@@ -30,6 +30,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Abstractions", "Abstractions", "{4F8C684C-8A5F-4193-AEAF-1416413E9A69}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repositories", "Repositories", "{8D3BD898-2439-4FC2-87D1-4390B07F2772}"
+	ProjectSection(SolutionItems) = preProject
+		ImageProcessorRealisation\Options.cs = ImageProcessorRealisation\Options.cs
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{48547343-2C68-4B79-9971-33F3238C8E6A}"
 EndProject
