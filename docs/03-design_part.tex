@@ -44,8 +44,8 @@
 	ID & Целое число & Идентификатор & PK \\\hline
 	competition\_name & Строка & Название соревнования & NN \\\hline
 	description & Строка & Описание соревнования & \\\hline
-	start\_time & Временная отметка & Время начала соревнования & NN \\\hline
-	end\_time & Временная отметка & Время конца соревнования & NN\\\hline
+	start\_time & Отметка времени & Время начала соревнования & NN \\\hline
+	end\_time & Отметка времени & Время конца соревнования & NN\\\hline
 	has\_ended & Логическое значение & Закончилось ли соревнование? (выданы ли награды) &NN\\\hline
 \end{dbtable}
 
@@ -55,7 +55,7 @@
 	competition\_ID & Целое число & Идентификатор соревнования & FK, NN \\\hline
 	account\_ID & Целое число & Идентификатор игрока & FK, NN \\\hline
 	score & Целое число & Очки & NN \\\hline
-	last\_update\_time & Временная отметка & Последнее время обновления результата & \\\hline
+	last\_update\_time & Отметка времени & Последнее время обновления результата & \\\hline
 \end{dbtable}
 
 Дополнительные ограничения к таблице~\ref{db_table:participation}: пара значений competition\_ID и account\_ID уникально в рамках таблицы.
@@ -99,7 +99,7 @@
 	reward\_descript-ion\_id & Целое число & Идентификатор описания награды & FK, NN \\\hline
 	player\_id & Целое число & Идентификатор игрока & FK, NN \\\hline
 	competition\_id & Целое число & Идентификатор соревнования & FK \\\hline
-	creation\_date & Временная отметка & Дата создания награды & NN \\\hline
+	creation\_date & Отметка времени & Дата создания награды & NN \\\hline
 \end{dbtable}
 
 
@@ -149,8 +149,8 @@
 \end{itemize}
 Админ имеет все возможности, что имеет гость. Дополнительно, он имеет следующие возможности:
 \begin{itemize}
-	\item удалять данные из player\_participation;
-	\item читать, добавлять, изменять, удалять данные из player\_reward, competition\_level;
+	\item удалять данные из таблицы player\_participation;
+	\item читать, добавлять, изменять, удалять данные из таблиц player\_reward, competition\_level;
 	\item добавлять, изменять данные из таблиц competition, competition\_reward, reward\_descri--ption.
 \end{itemize}
 Демон выдачи наград имеет следующие возможности:
