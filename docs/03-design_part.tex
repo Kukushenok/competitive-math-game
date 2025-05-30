@@ -37,7 +37,7 @@
 
 \end{dbtable}
 
-Дополнительные ограничения к таблице~\ref{db_table:account}: login не содержит пробелов.
+Дополнительные ограничения к таблице~\ref{db_table:account}: login должен содержать только латинские символы.
 Для обеспечения безопасности, поле "хэш пароля" у таблицы аккаунтов должно быть недоступно для всех категорий пользователей.
 
 \begin{dbtable}{competition}{Описание таблицы competition}
@@ -59,7 +59,7 @@
 \end{dbtable}
 
 Дополнительные ограничения к таблице~\ref{db_table:participation}: пара значений competition\_ID и account\_ID уникально в рамках таблицы.
-
+\FloatBarrier
 \begin{dbtable}{rewarddescription}{Описание таблицы reward\_description}
 	ID & Целое число & Идентификатор & PK \\\hline
 	reward\_name & Строка & Название награды & NN \\\hline
@@ -68,7 +68,7 @@
 \end{dbtable}
 
 Тип "Критерий выдачи" является перечисляемым типом, возможными значениями которого являются 'rank' и 'place'. 
-
+\FloatBarrier
 \begin{dbtable}{competitionreward}{Описание таблицы competition\_reward}
 	ID & Целое число & Идентификатор & PK \\\hline
 	reward\_descrip-tion\_id & Целое число & Идентификатор описания награды & FK, NN \\\hline
@@ -81,10 +81,10 @@
 \end{dbtable}
 Дополнительные ограничения к таблице~\ref{db_table:competitionreward}: 
 \begin{itemize}
-	\item если condition\_type = rank, то соблюдается соотношение $0\leq min\_rank \leq max\_rank $ $\leq 1$ и соответствующим полям присвоено не пустое значение.
+	\item если condition\_type = rank, то соблюдается соотношение $0\leq min\_rank \leq max\_rank $ $\leq 1$ и соответствующим полям присвоено не пустое значение;
 	\item если condition\_type = place, то соблюдается соотношение $1\leq min\_place\leq max\_place$ и соответствующим полям присвоено не пустое значение.
 \end{itemize}
-
+\FloatBarrier
 \begin{dbtable}{competitionlevel}{Описание таблицы competition\_level}
 	ID & Целое число & Идентификатор & PK \\\hline
 	competition\_id & Целое число & Идентификатор соревнования & FK, NN \\\hline
