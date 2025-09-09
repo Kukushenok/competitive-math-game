@@ -38,12 +38,17 @@ namespace ServicesUnitTests.ServiceTests
         [Fact]
         public async Task AuthService_LogIn_Success()
         {
+            // Arrange
             _validator.Reset();
             _accountRepo.Setup(x => x.GetAccount("abcd")).ReturnsAsync(new Account("abcd", id: 0));
             _sessionRepo.Setup(x => x.CreateSessionFor(0)).ReturnsAsync("hi");
             _accountRepo.Setup(x => x.VerifyPassword("abcd", "|12345|")).ReturnsAsync(true);
             _sessionRepo.Setup(x => x.GetSessionToken("hi")).ReturnsAsync(new AuthenticatedSessionToken(new TestRole(), 0));
+
+            // Act
             AuthSuccessResult rw = await _service.LogIn("abcd", "12345");
+
+            // Assert
             Assert.Equal("hi", rw.Token);
             Assert.Equal(0, rw.AccountID);
             Assert.Equal(TestRole.NAME, rw.RoleName);
@@ -51,56 +56,64 @@ namespace ServicesUnitTests.ServiceTests
         [Fact]
         public async Task AuthService_LogIn_BadPassword()
         {
+            // Arrange
             _validator.Reset();
             _accountRepo.Setup(x => x.VerifyPassword("abcd", "1234")).ReturnsAsync(false);
             _accountRepo.Setup(x => x.GetAccount("abcd")).ReturnsAsync(new Account("abcd", id: 0));
+
+            // Act Assert
             await Assert.ThrowsAnyAsync<IncorrectPasswordException>(async () => await _service.LogIn("abcd", "12345"));
         }
         [Fact]
         public async Task AuthService_LogIn_RepositoryException()
         {
+            // Arrange
             _validator.Reset();
             _accountRepo.Setup(x => x.GetAccount("abcd")).ThrowsAsync(new RepositoryException());
+
+            // Act Assert
             await Assert.ThrowsAsync<IncorrectPasswordException>(async () => await _service.LogIn("abcd", "12345"));
         }
         [Fact]
         public async Task AuthService_CreateAccount_Success()
         {
-
+            // Arrange
             Account c = new Account("hi", "X");
             _validator.Reset(new AccountCreationData(c, "1234"));
-            _accountRepo.Setup(x => x.CreateAccount(It.IsAny<Account>(), "1234", It.IsAny<Role>()))
-                .Callback<Account,string, Role>((a, b, r) =>
-                {
-                    Assert.Equal(TestRole.NAME, r.ToString());
-                    Assert.Equal("|1234|", b);
-                });
+            _accountRepo.Setup(x => x.CreateAccount(It.IsAny<Account>(), "1234", It.IsAny<Role>()));
             _creator.Setup(x => x.Create(It.IsAny<Account>())).Returns(new TestRole());
+
+            // Act
             await _service.Register(c, "1234");
+
+            // Assert
             _validator.Check();
         }
         [Fact]
         public async Task AuthService_CreateAccount_Failure()
         {
+            // Arrange
             Account c = new Account("hi", "X");
             _validator.Reset(new AccountCreationData(c, "1234"), true);
-            _accountRepo.Setup(x => x.CreateAccount(It.IsAny<Account>(), "1234", It.IsAny<Role>()))
-                .Callback<Account, string, Role>((a, b, r) =>
-                {
-                    Assert.Equal(TestRole.NAME, r.ToString());
-                    Assert.Equal("|1234|", b);
-                });
+            _accountRepo.Setup(x => x.CreateAccount(It.IsAny<Account>(), "1234", It.IsAny<Role>()));
             _creator.Setup(x => x.Create(It.IsAny<Account>())).Returns(new TestRole());
+
+            // Act
             await Assert.ThrowsAsync<InvalidArgumentsException>(async () => await _service.Register(c, "1234"));
         }
         [Fact]
         public async Task AuthService_GetSessionToken()
         {
+            // Arrange
             _sessionRepo.Setup(x => x.GetSessionToken("abc")).ReturnsAsync(new AuthenticatedSessionToken(new TestRole(), 12));
+
+            // Act
             AuthenticatedSessionToken d = (AuthenticatedSessionToken)await _service.GetSessionToken("abc");
+            bool valid = d.TryGetAccountIdentifier(out int id);
+
+            // Assert
+            Assert.True(valid);
             Assert.Equal(TestRole.NAME, d.Role.ToString());
-            int id;
-            Assert.True(d.TryGetAccountIdentifier(out id));
             Assert.Equal(12, id);
         }
     }

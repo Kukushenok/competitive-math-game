@@ -1,4 +1,5 @@
-﻿using CompetitiveBackend.Core.Objects;
+﻿using Allure.Xunit.Attributes;
+using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Core.RewardCondition;
 using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Services.CompetitionRewardService;
@@ -6,6 +7,7 @@ using Moq;
 
 namespace ServicesUnitTests.ServiceTests
 {
+    [AllureSuite("wtf")]
     public class CompetitionRewardServiceTests
     {
         private CompetitionRewardService _service;

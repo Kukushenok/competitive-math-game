@@ -24,6 +24,8 @@ namespace ServicesUnitTests.ValidatorTests
                {"Constraints:Player:NameLength:max", "16"},
                {"Constraints:Player:Password:MinLength", "8"},
                {"Constraints:Player:Password:RequiresLetters", "true"},
+               {"Constraints:Player:NameRegex:pattern", ".*"},
+               {"Constraints:Player:EmailRegex:pattern", ".*"},
             };
             var conf = new ConfigurationBuilder().AddInMemoryCollection(Dict).Build();
             dt = new PlayerAccountValidator(conf);

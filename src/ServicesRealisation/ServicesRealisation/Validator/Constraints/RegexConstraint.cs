@@ -19,7 +19,7 @@ namespace ServicesRealisation.ServicesRealisation.Validator.Constraints
         public bool IsValid(string value, out string? msg)
         {
             msg = null;
-            if (!Regex.IsMatch(value, pattern)) msg = $"Not validating the regex pattern {msg}";
+            if (!Regex.IsMatch(value ?? "", pattern)) msg = $"Not validating the regex pattern {msg}";
             return msg == null;
         }
 

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+	<TestAdapterLoading>
+		<DisableAppDomain>true</DisableAppDomain>
+		<RemoveTestAdapter>
+			<AssemblyPath>Microsoft.VisualStudio.TestPlatform.Extensions.XunitAdapter.dll</AssemblyPath>
+		</RemoveTestAdapter>
+	</TestAdapterLoading>
+  <RunConfiguration>
+		<ReporterSwitch>allure</ReporterSwitch>
+  </RunConfiguration>
+</RunSettings>
