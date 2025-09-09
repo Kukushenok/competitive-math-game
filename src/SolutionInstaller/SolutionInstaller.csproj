@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BaseUsage.DependencyInjection\BaseUsage.DependencyInjection.csproj" />
+    <ProjectReference Include="..\ChronoServiceRealisation\ChronoServiceRealisation.csproj" />
+    <ProjectReference Include="..\ImageProcessorRealisation\ImageProcessorRealisation.csproj" />
+    <ProjectReference Include="..\RepositoriesRealisation\RepositoriesRealisation.csproj" />
+    <ProjectReference Include="..\ServicesRealisation\ServicesRealisation.csproj" />
+  </ItemGroup>
+
+</Project>

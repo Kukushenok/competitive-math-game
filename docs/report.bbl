@@ -1,0 +1,325 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{karpova}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=4c5f2eb088cb73066f5363fda80183b0}{%
+           family={Карпова},
+           familyi={К\bibinitperiod},
+           given={Ирина\bibnamedelima Петровна},
+           giveni={И\bibinitperiod\bibinitdelim П\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Санкт-Петербург}%
+      }
+      \list{publisher}{1}{%
+        {Питер}%
+      }
+      \strng{namehash}{4c5f2eb088cb73066f5363fda80183b0}
+      \strng{fullhash}{4c5f2eb088cb73066f5363fda80183b0}
+      \strng{fullhashraw}{4c5f2eb088cb73066f5363fda80183b0}
+      \strng{bibnamehash}{4c5f2eb088cb73066f5363fda80183b0}
+      \strng{authorbibnamehash}{4c5f2eb088cb73066f5363fda80183b0}
+      \strng{authornamehash}{4c5f2eb088cb73066f5363fda80183b0}
+      \strng{authorfullhash}{4c5f2eb088cb73066f5363fda80183b0}
+      \strng{authorfullhashraw}{4c5f2eb088cb73066f5363fda80183b0}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Базы данных : Учебное пособие}
+      \field{year}{2013}
+    \endentry
+    \entry{documentoriented}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=666ad3a9b965824ac9bf1de7f39edfb1}{%
+           family={Якушин},
+           familyi={Я\bibinitperiod},
+           given={АЮ},
+           giveni={А\bibinitperiod}}}%
+        {{hash=e9acf1086eccd836c4059cca3fcd7423}{%
+           family={Муковозов},
+           familyi={М\bibinitperiod},
+           given={АМ},
+           giveni={А\bibinitperiod}}}%
+        {{hash=7cc982c61c5f09087095d615bacc1054}{%
+           family={Исмоилов},
+           familyi={И\bibinitperiod},
+           given={МИ},
+           giveni={М\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Общество с ограниченной ответственностью {«}Аэтерна{»}}%
+      }
+      \strng{namehash}{c348c4053d9bde9e319c80b35e4bec18}
+      \strng{fullhash}{c348c4053d9bde9e319c80b35e4bec18}
+      \strng{fullhashraw}{c348c4053d9bde9e319c80b35e4bec18}
+      \strng{bibnamehash}{c348c4053d9bde9e319c80b35e4bec18}
+      \strng{authorbibnamehash}{c348c4053d9bde9e319c80b35e4bec18}
+      \strng{authornamehash}{c348c4053d9bde9e319c80b35e4bec18}
+      \strng{authorfullhash}{c348c4053d9bde9e319c80b35e4bec18}
+      \strng{authorfullhashraw}{c348c4053d9bde9e319c80b35e4bec18}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Инновационная наука}
+      \field{title}{Сравнительный анализ реляционной базы данных и документоориентированной NoSQL базы данных в разрезе их применения при создании локального чата/мессенджера}
+      \field{year}{2018}
+      \field{number}{4}
+      \range{number}{1}
+      \field{pages}{73\bibrangedash 83}
+      \range{pages}{11}
+    \endentry
+    \entry{relationdb}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=12cd34eb95b1af61399be85ddc1beb64}{%
+           family={Мирошниченко},
+           familyi={М\bibinitperiod},
+           given={Галина\bibnamedelima Александровна},
+           giveni={Г\bibinitperiod\bibinitdelim А\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Санкт-Петербург}%
+      }
+      \list{publisher}{1}{%
+        {БХВ-Петербург}%
+      }
+      \strng{namehash}{12cd34eb95b1af61399be85ddc1beb64}
+      \strng{fullhash}{12cd34eb95b1af61399be85ddc1beb64}
+      \strng{fullhashraw}{12cd34eb95b1af61399be85ddc1beb64}
+      \strng{bibnamehash}{12cd34eb95b1af61399be85ddc1beb64}
+      \strng{authorbibnamehash}{12cd34eb95b1af61399be85ddc1beb64}
+      \strng{authornamehash}{12cd34eb95b1af61399be85ddc1beb64}
+      \strng{authorfullhash}{12cd34eb95b1af61399be85ddc1beb64}
+      \strng{authorfullhashraw}{12cd34eb95b1af61399be85ddc1beb64}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Реляционные базы данных. Практические приемы оптимальных решений}
+      \field{year}{2005}
+    \endentry
+    \entry{dbanalyse}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=103e4b79857f2045b903da72e408fd6c}{%
+           family={Иус},
+           familyi={И\bibinitperiod},
+           given={АД},
+           giveni={А\bibinitperiod}}}%
+        {{hash=08ae0059c323a6f769b6f42a64a469e7}{%
+           family={Магомедов},
+           familyi={М\bibinitperiod},
+           given={ОР},
+           giveni={О\bibinitperiod}}}%
+        {{hash=7b056ad344866a6a0c16777b0b8adc87}{%
+           family={Чернышев},
+           familyi={Ч\bibinitperiod},
+           given={СА},
+           giveni={С\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Научно-информационный издательский центр" Институт стратегических исследований"}%
+      }
+      \strng{namehash}{19c1893f3fcf8e1854e4f192aa615c4f}
+      \strng{fullhash}{19c1893f3fcf8e1854e4f192aa615c4f}
+      \strng{fullhashraw}{19c1893f3fcf8e1854e4f192aa615c4f}
+      \strng{bibnamehash}{19c1893f3fcf8e1854e4f192aa615c4f}
+      \strng{authorbibnamehash}{19c1893f3fcf8e1854e4f192aa615c4f}
+      \strng{authornamehash}{19c1893f3fcf8e1854e4f192aa615c4f}
+      \strng{authorfullhash}{19c1893f3fcf8e1854e4f192aa615c4f}
+      \strng{authorfullhashraw}{19c1893f3fcf8e1854e4f192aa615c4f}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Modern Science}
+      \field{title}{Анализ особенностей современных реляционных СУБД}
+      \field{year}{2020}
+      \field{number}{11\bibrangedash 1}
+      \range{number}{1}
+      \field{pages}{398\bibrangedash 402}
+      \range{pages}{5}
+    \endentry
+    \entry{postgresql}{misc}{}{}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labeltitlesource}{title}
+      \field{title}{Документация PostgreSQL [Электронный ресурс]}
+      \field{urlday}{5}
+      \field{urlmonth}{5}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.postgresql.org/docs/
+      \endverb
+      \verb{url}
+      \verb https://www.postgresql.org/docs/
+      \endverb
+    \endentry
+    \entry{aspnet}{misc}{}{}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labeltitlesource}{title}
+      \field{title}{Документация ASP.NET Core [Электронный ресурс]}
+      \field{urlday}{8}
+      \field{urlmonth}{5}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://learn.microsoft.com/en-us/aspnet/core/?view=aspnetcore-8.0
+      \endverb
+      \verb{url}
+      \verb https://learn.microsoft.com/en-us/aspnet/core/?view=aspnetcore-8.0
+      \endverb
+    \endentry
+    \entry{magicknet}{misc}{}{}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labeltitlesource}{title}
+      \field{title}{Документация библиотеки Magick.NET [Электронный ресурс]}
+      \field{urlday}{6}
+      \field{urlmonth}{5}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://github.com/dlemstra/Magick.NET/tree/main/docs
+      \endverb
+      \verb{url}
+      \verb https://github.com/dlemstra/Magick.NET/tree/main/docs
+      \endverb
+    \endentry
+    \entry{quartznet}{misc}{}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{Документация библиотеки Quartz.NET [Электронный ресурс]}
+      \field{urlday}{5}
+      \field{urlmonth}{5}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.quartz-scheduler.net/documentation/
+      \endverb
+      \verb{url}
+      \verb https://www.quartz-scheduler.net/documentation/
+      \endverb
+    \endentry
+    \entry{moq}{misc}{}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{Документация библиотеки Moq [Электронный ресурс]}
+      \field{urlday}{7}
+      \field{urlmonth}{5}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://github.com/devlooped/moq/wiki/Quickstart
+      \endverb
+      \verb{url}
+      \verb https://github.com/devlooped/moq/wiki/Quickstart
+      \endverb
+    \endentry
+    \entry{testcontainers}{misc}{}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{Документация Testcontainers.Postgresql [Электронный ресурс]}
+      \field{urlday}{5}
+      \field{urlmonth}{5}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://dotnet.testcontainers.org/modules/postgres/
+      \endverb
+      \verb{url}
+      \verb https://dotnet.testcontainers.org/modules/postgres/
+      \endverb
+    \endentry
+    \entry{intel}{misc}{}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{Спецификация процессора Intel Core i7 [Электронный ресурс]}
+      \field{urlday}{15}
+      \field{urlmonth}{10}
+      \field{urlyear}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.intel.com/content/www/us/en/products/sku/97129/intel-core-i77700k-processor-8m-cache-up-to-4-50-ghz/specifications.html
+      \endverb
+      \verb{url}
+      \verb https://www.intel.com/content/www/us/en/products/sku/97129/intel-core-i77700k-processor-8m-cache-up-to-4-50-ghz/specifications.html
+      \endverb
+    \endentry
+    \entry{postgresql_pgdump}{misc}{}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{Документация команды pgdump в PostgreSQL [Электронный ресурс]}
+      \field{urlday}{5}
+      \field{urlmonth}{5}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.postgresql.org/docs/current/app-pgdump.html
+      \endverb
+      \verb{url}
+      \verb https://www.postgresql.org/docs/current/app-pgdump.html
+      \endverb
+    \endentry
+    \entry{bogus}{misc}{}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{Описание библиотеки Bogus [Электронный ресурс]}
+      \field{urlday}{5}
+      \field{urlmonth}{5}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.nuget.org/packages/bogus
+      \endverb
+      \verb{url}
+      \verb https://www.nuget.org/packages/bogus
+      \endverb
+    \endentry
+    \entry{stopwatch}{misc}{}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{Документация класса System.Diagnostics.Stopwatch [Электронный ресурс]}
+      \field{urlday}{5}
+      \field{urlmonth}{5}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://learn.microsoft.com/ru-ru/dotnet/api/system.diagnostics.stopwatch?view=net-8.0
+      \endverb
+      \verb{url}
+      \verb https://learn.microsoft.com/ru-ru/dotnet/api/system.diagnostics.stopwatch?view=net-8.0
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

@@ -1,0 +1,10 @@
+<Settings>
+    <Dimensions>
+        <MinSize>32</MinSize>
+        <MaxSize>128</MaxSize>
+    </Dimensions>
+	<Paths>
+		<ResultsDir>Results</ResultsDir>
+		<TestsDir>Tests</TestsDir>
+	</Paths>
+</Settings>
