@@ -7,7 +7,7 @@ using Moq;
 
 namespace ServicesUnitTests.ServiceTests
 {
-    [AllureSuite("wtf")]
+    // Todo
     public class CompetitionRewardServiceTests
     {
         private CompetitionRewardService _service;

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace ServicesUnitTests.ServiceTests
 {
+    // Todo
     public class CompetitionRewardSchedulerTests
     {
         private Mock<ITimeScheduler> _timeScheduler;
