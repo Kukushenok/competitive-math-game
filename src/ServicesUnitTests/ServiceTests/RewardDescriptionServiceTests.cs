@@ -23,10 +23,12 @@ namespace ServicesUnitTests.ServiceTests
             // Arrange
             var processedData = new LargeData([42]);
             MockValidator<RewardDescription> _rdValidator = new MockValidatorBuilder<RewardDescription>().Build();
-            _imageProcessor.Setup(x => x.Process(It.IsAny<LargeData>())).ReturnsAsync(processedData);
+            _imageProcessor.Setup(x => x.Process(It.Is<LargeData>(x=>x.Data.Length == 3))).ReturnsAsync(processedData);
             var _service = new RewardDescriptionService(_repository.Object, _imageProcessor.Object, _rdValidator);
+
             // Act
             await _service.SetRewardIcon(0, new LargeData([1, 2, 3]));
+
             // Assert
             _repository.Verify(x => x.SetRewardIcon(0, processedData), Times.Once);
         }
@@ -38,8 +40,10 @@ namespace ServicesUnitTests.ServiceTests
             LargeData etalon = new LargeData([1, 2, 3]);
             _repository.Setup(x => x.GetRewardIcon(0)).ReturnsAsync(etalon);
             var _service = new RewardDescriptionService(_repository.Object, _imageProcessor.Object, _rdValidator);
+
             // Act
             LargeData d = await _service.GetRewardIcon(0);
+
             // Assert
             Assert.Equal(etalon.Data, d.Data);
         }
@@ -51,8 +55,10 @@ namespace ServicesUnitTests.ServiceTests
             RewardDescription etalon = new RewardDescription("A", "B", 0);
             _repository.Setup(x => x.GetRewardDescription(0)).ReturnsAsync(etalon);
             var _service = new RewardDescriptionService(_repository.Object, _imageProcessor.Object, _rdValidator);
+
             // Act
             RewardDescription r = await _service.GetRewardDescription(0);
+
             // Assert
             Assert.Equal(etalon.Description, r.Description);
             Assert.Equal(etalon.Name, r.Name);
@@ -67,8 +73,10 @@ namespace ServicesUnitTests.ServiceTests
             DataLimiter etalon_d = new DataLimiter(10, 10);
             _repository.Setup(x => x.GetAllRewardDescriptions(etalon_d)).ReturnsAsync(etalon);
             var _service = new RewardDescriptionService(_repository.Object, _imageProcessor.Object, _rdValidator);
+
             // Act
             var r = await _service.GetAllRewardDescriptions(etalon_d);
+
             // Assert
             Assert.Equal(etalon, r);
         }
@@ -80,8 +88,10 @@ namespace ServicesUnitTests.ServiceTests
             MockValidator<RewardDescription> _rdValidator = new MockValidatorBuilder<RewardDescription>().Build();
             _repository.Setup(x => x.CreateRewardDescription(d));
             var _service = new RewardDescriptionService(_repository.Object, _imageProcessor.Object, _rdValidator);
+
             // Act
             await _service.CreateRewardDescription(d);
+
             // Assert
             _rdValidator.CheckWasCalled();
         }
@@ -92,8 +102,10 @@ namespace ServicesUnitTests.ServiceTests
             RewardDescription d = new RewardDescription("A", "B", 5);
             MockValidator<RewardDescription> _rdValidator = new MockValidatorBuilder<RewardDescription>().FailByDefault().Build();
             var _service = new RewardDescriptionService(_repository.Object, _imageProcessor.Object, _rdValidator);
+
             // Act
             await Assert.ThrowsAsync<InvalidArgumentsException>(async () => await _service.CreateRewardDescription(d));
+
             // Assert
             _rdValidator.CheckWasCalled();
             _repository.Verify(x => x.CreateRewardDescription(It.IsAny<RewardDescription>()), Times.Never);
@@ -109,8 +121,10 @@ namespace ServicesUnitTests.ServiceTests
                 .Build();
             _repository.Setup(x => x.GetRewardDescription(5)).ReturnsAsync(d);
             var _service = new RewardDescriptionService(_repository.Object, _imageProcessor.Object, _rdValidator);
+
             // Act
             await _service.UpdateRewardDescription(5, "C", "D");
+
             // Assert
             _rdValidator.CheckWasCalled();
             _repository.Verify(x => x.UpdateRewardDescription(It.IsAny<RewardDescription>()), Times.Once);
@@ -131,8 +145,10 @@ namespace ServicesUnitTests.ServiceTests
             _repository.Setup(x => x.GetRewardDescription(4)).ReturnsAsync(d);
             _repository.Setup(x => x.UpdateRewardDescription(It.IsAny<RewardDescription>()));
             var _service = new RewardDescriptionService(_repository.Object, _imageProcessor.Object, _rdValidator);
+
             // Act
             await _service.UpdateRewardDescription(4, "C", null);
+
             // Assert
             _rdValidator.CheckWasCalled();
         }

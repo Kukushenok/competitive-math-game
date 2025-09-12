@@ -59,6 +59,7 @@ namespace ServicesUnitTests.ServiceTests
             _accountRepo.Setup(x => x.VerifyPassword("abcd", "1234")).ReturnsAsync(false);
             _accountRepo.Setup(x => x.GetAccount("abcd")).ReturnsAsync(new Account("abcd", id: 0));
             var _service = new AuthService(_accountRepo.Object, _sessionRepo.Object, _algo.Object, _creator.Object, _validator, _setting.Object);
+            
             // Act Assert
             await Assert.ThrowsAnyAsync<IncorrectPasswordException>(async () => await _service.LogIn("abcd", "12345"));
         }
@@ -69,6 +70,7 @@ namespace ServicesUnitTests.ServiceTests
             var _validator = new MockValidatorBuilder<AccountCreationData>().Build();
             _accountRepo.Setup(x => x.GetAccount("abcd")).ThrowsAsync(new RepositoryException());
             var _service = new AuthService(_accountRepo.Object, _sessionRepo.Object, _algo.Object, _creator.Object, _validator, _setting.Object);
+            
             // Act Assert
             await Assert.ThrowsAsync<IncorrectPasswordException>(async () => await _service.LogIn("abcd", "12345"));
         }
@@ -82,6 +84,7 @@ namespace ServicesUnitTests.ServiceTests
             _accountRepo.Setup(x => x.CreateAccount(It.IsAny<Account>(), "1234", It.IsAny<Role>()));
             _creator.Setup(x => x.Create(It.IsAny<Account>())).Returns(new TestRole());
             var _service = new AuthService(_accountRepo.Object, _sessionRepo.Object, _algo.Object, _creator.Object, _validator, _setting.Object);
+            
             // Act
             await _service.Register(c, "1234");
 
@@ -97,7 +100,8 @@ namespace ServicesUnitTests.ServiceTests
             _accountRepo.Setup(x => x.CreateAccount(It.IsAny<Account>(), "1234", It.IsAny<Role>()));
             _creator.Setup(x => x.Create(It.IsAny<Account>())).Returns(new TestRole());
             var _service = new AuthService(_accountRepo.Object, _sessionRepo.Object, _algo.Object, _creator.Object, _validator, _setting.Object);
-            // Act
+            
+            // Act Assert
             await Assert.ThrowsAsync<InvalidArgumentsException>(async () => await _service.Register(c, "1234"));
         }
         [Fact]

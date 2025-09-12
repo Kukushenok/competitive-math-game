@@ -21,7 +21,7 @@ namespace ServicesUnitTests.ServiceTests
             // Arrange
             var levelDataInfo = new LevelDataInfo(1, 2, "Platform", 123);
             var largeData = new LargeData(new byte[10]);
-            _mockRepo.Setup(r => r.AddCompetitionLevel(It.IsAny<LargeData>(), It.IsAny<LevelDataInfo>()))
+            _mockRepo.Setup(r => r.AddCompetitionLevel(largeData, levelDataInfo))
                     .Returns(Task.CompletedTask);
 
             // Act

@@ -18,8 +18,6 @@ namespace ServicesUnitTests.ServiceTests
             _repository = new Mock<ICompetitionRepository>();
             MockValidator<Competition> _validator = new MockValidator<Competition>();
             _rewardScheduler = new Mock<ICompetitionRewardScheduler>();
-            //_service.GetAllCompetitions();
-            //_service.GetActiveCompetitions();
         }
         [Fact]
         public async Task CompetitionServiceTests_CreateCompetition_OK()
@@ -28,14 +26,14 @@ namespace ServicesUnitTests.ServiceTests
             DateTime dt = DateTime.Now;
             Competition etalon = new Competition("Hello", "World", dt + TimeSpan.FromSeconds(5), dt + TimeSpan.FromSeconds(10), 0);
             MockValidator<Competition> _validator = (new MockValidatorBuilder<Competition>()).CheckEtalon(etalon).Build();
-            int calls = 0;
-            _rewardScheduler.Setup(x=>x.OnCompetitionCreated(It.IsAny<Competition>())).Callback<Competition>((c) => { Assert.Equal(etalon, c); calls++; });
-            _repository.Setup(x => x.CreateCompetition(It.IsAny<Competition>())).Callback<Competition>((c) => {Assert.Equal(etalon, c); calls++; });
             var _service = new CompetitionService(_repository.Object, _validator, _rewardScheduler.Object);
+            
             // Act
             await _service.CreateCompetition(etalon);
+            
             // Assert
-            Assert.Equal(2, calls);
+            _rewardScheduler.Verify(x => x.OnCompetitionCreated(It.Is<Competition>(x => x.Equals(etalon))), Times.Once);
+            _repository.Verify(x => x.CreateCompetition(It.Is<Competition>(x => x.Equals(etalon))), Times.Once);
             _validator.CheckWasCalled();
         }
         [Fact]
@@ -45,13 +43,15 @@ namespace ServicesUnitTests.ServiceTests
             DateTime dt = DateTime.Now;
             Competition etalon = new Competition("Hello", "World", dt - TimeSpan.FromSeconds(5), dt + TimeSpan.FromSeconds(10));
             MockValidator<Competition> _validator = (new MockValidatorBuilder<Competition>()).CheckEtalon(etalon).Build();
-            _rewardScheduler.Setup(x => x.OnCompetitionCreated(It.IsAny<Competition>())).Callback<Competition>((c) => { Assert.Fail("Invalid data was added"); });
-            _repository.Setup(x => x.CreateCompetition(It.IsAny<Competition>())).Callback<Competition>((c) => Assert.Fail("Invalid data was added"));
             var _service = new CompetitionService(_repository.Object, _validator, _rewardScheduler.Object);
+            
             // Act
             await Assert.ThrowsAsync<ChronologicalException>(async () => await _service.CreateCompetition(etalon));
+            
             // Assert
             _validator.CheckWasCalled();
+            _repository.Verify(x => x.CreateCompetition(It.IsAny<Competition>()), Times.Never);
+            _rewardScheduler.Verify(x => x.OnCompetitionCreated(It.IsAny<Competition>()), Times.Never);
         }
         [Fact]
         public async Task CompetitionServiceTests_CreateCompetition_Bad2()
@@ -60,13 +60,15 @@ namespace ServicesUnitTests.ServiceTests
             DateTime dt = DateTime.Now;
             Competition etalon = new Competition("Hello", "World", dt + TimeSpan.FromSeconds(20), dt + TimeSpan.FromSeconds(10));
             MockValidator<Competition> _validator = (new MockValidatorBuilder<Competition>()).FailByDefault().Build();
-            _rewardScheduler.Setup(x => x.OnCompetitionCreated(It.IsAny<Competition>())).Callback<Competition>((c) => { Assert.Fail("Invalid data was added"); });
-            _repository.Setup(x => x.CreateCompetition(It.IsAny<Competition>())).Callback<Competition>((c) => Assert.Fail("Invalid data was added"));
             var _service = new CompetitionService(_repository.Object, _validator, _rewardScheduler.Object);
+            
             // Act
             await Assert.ThrowsAsync<InvalidArgumentsException>(async () => await _service.CreateCompetition(etalon));
+            
             // Assert
             _validator.CheckWasCalled();
+            _repository.Verify(x => x.CreateCompetition(It.IsAny<Competition>()), Times.Never);
+            _rewardScheduler.Verify(x => x.OnCompetitionCreated(It.IsAny<Competition>()), Times.Never);
         }
         [Fact]
         public async Task CompetitionServiceTest_UpdateCompetition_OK()
@@ -77,15 +79,15 @@ namespace ServicesUnitTests.ServiceTests
             Competition pending = new Competition("a", "b", dt + TimeSpan.FromSeconds(5), dt + TimeSpan.FromSeconds(10), 0);
             MockValidator<Competition> _validator = (new MockValidatorBuilder<Competition>()).Build();
             _repository.Setup(x => x.GetCompetition(0)).ReturnsAsync(etalon);
-            int calls = 0;
-            _rewardScheduler.Setup(x => x.OnCompetitionUpdated(It.IsAny<Competition>())).Callback<Competition>((c) => { Assert.Equal(pending, c); calls++; });
-            _repository.Setup(x => x.UpdateCompetition(It.IsAny<Competition>())).Callback<Competition>((c) => { Assert.Equal(pending, c); calls++; });
             var _service = new CompetitionService(_repository.Object, _validator, _rewardScheduler.Object);
+            
             // Act
             await _service.UpdateCompetition(0, pending.Name, pending.Description, pending.StartDate, pending.EndDate);
+            
             // Assert
-            Assert.Equal(2, calls);
             _validator.CheckWasCalled();
+            _rewardScheduler.Verify(x => x.OnCompetitionUpdated(It.Is<Competition>(x=>x.Equals(pending))), Times.Once);
+            _repository.Verify(x => x.UpdateCompetition(It.Is<Competition>(x => x.Equals(pending))), Times.Once);
         }
         [Fact]
         public async Task CompetitionServiceTest_UpdateCompetition_OK2()
@@ -96,14 +98,14 @@ namespace ServicesUnitTests.ServiceTests
             Competition pending = new Competition("Hello", "World", dt + TimeSpan.FromSeconds(5), dt + TimeSpan.FromSeconds(10), 0);
             MockValidator<Competition> _validator = (new MockValidatorBuilder<Competition>()).Build();
             _repository.Setup(x => x.GetCompetition(0)).ReturnsAsync(etalon);
-            int calls = 0;
-            _rewardScheduler.Setup(x => x.OnCompetitionUpdated(It.IsAny<Competition>())).Callback<Competition>((c) => { Assert.Equal(pending, c); calls++; });
-            _repository.Setup(x => x.UpdateCompetition(It.IsAny<Competition>())).Callback<Competition>((c) => { Assert.Equal(pending, c); calls++; });
             var _service = new CompetitionService(_repository.Object, _validator, _rewardScheduler.Object);
+            
             // Act
             await _service.UpdateCompetition(0, null, null, pending.StartDate, pending.EndDate);
+            
             // Assert
-            Assert.Equal(2, calls);
+            _rewardScheduler.Verify(x => x.OnCompetitionUpdated(It.Is<Competition>(x => x.Equals(pending))), Times.Once);
+            _repository.Verify(x => x.UpdateCompetition(It.Is<Competition>(x => x.Equals(pending))), Times.Once);
             _validator.CheckWasCalled();
         }
         [Fact]
@@ -115,13 +117,15 @@ namespace ServicesUnitTests.ServiceTests
             Competition pending = new Competition("Hello", "World", dt + TimeSpan.FromSeconds(5), dt - TimeSpan.FromSeconds(10), 0);
             MockValidator<Competition> _validator = (new MockValidatorBuilder<Competition>()).FailByDefault().Build();
             _repository.Setup(x => x.GetCompetition(0)).ReturnsAsync(etalon);
-            _rewardScheduler.Setup(x => x.OnCompetitionUpdated(It.IsAny<Competition>())).Callback<Competition>((c) => { Assert.Fail("Invalid data was added"); });
-            _repository.Setup(x => x.UpdateCompetition(It.IsAny<Competition>())).Callback<Competition>((c) => Assert.Fail("Invalid data was added"));
             var _service = new CompetitionService(_repository.Object, _validator, _rewardScheduler.Object);
+            
             // Act
             await Assert.ThrowsAsync<InvalidArgumentsException>(async () => await _service.UpdateCompetition(0, null, null, pending.StartDate, pending.EndDate));
+            
             // Assert
             _validator.CheckWasCalled();
+            _repository.Verify(x => x.CreateCompetition(It.IsAny<Competition>()), Times.Never);
+            _rewardScheduler.Verify(x => x.OnCompetitionCreated(It.IsAny<Competition>()), Times.Never);
         }
         [Fact]
         public async Task CompetitionServiceTest_UpdateCompetition_Bad2()
@@ -132,13 +136,15 @@ namespace ServicesUnitTests.ServiceTests
             Competition pending = new Competition("Hello", "World", dt + TimeSpan.FromSeconds(5), dt + TimeSpan.FromSeconds(10), 0);
             MockValidator<Competition> _validator = (new MockValidatorBuilder<Competition>()).Build();
             _repository.Setup(x => x.GetCompetition(0)).ReturnsAsync(etalon);
-            _rewardScheduler.Setup(x => x.OnCompetitionUpdated(It.IsAny<Competition>())).Callback<Competition>((c) => { Assert.Fail("Invalid data was added"); });
-            _repository.Setup(x => x.UpdateCompetition(It.IsAny<Competition>())).Callback<Competition>((c) => Assert.Fail("Invalid data was added"));
             var _service = new CompetitionService(_repository.Object, _validator, _rewardScheduler.Object);
+            
             // Act
             await Assert.ThrowsAsync<ChronologicalException>(async () => await _service.UpdateCompetition(0, null, null, pending.StartDate, pending.EndDate));
+            
             // Assert
             _validator.CheckWasCalled();
+            _repository.Verify(x => x.CreateCompetition(It.IsAny<Competition>()), Times.Never);
+            _rewardScheduler.Verify(x => x.OnCompetitionCreated(It.IsAny<Competition>()), Times.Never);
         }
         [Fact]
         public async Task CompetitionServiceTest_UpdateCompetition_Bad3()
@@ -149,13 +155,15 @@ namespace ServicesUnitTests.ServiceTests
             Competition pending = new Competition("Hello", "World", dt - TimeSpan.FromSeconds(20), dt + TimeSpan.FromSeconds(10), 0);
             MockValidator<Competition> _validator = (new MockValidatorBuilder<Competition>()).Build();
             _repository.Setup(x => x.GetCompetition(0)).ReturnsAsync(etalon);
-            _rewardScheduler.Setup(x => x.OnCompetitionUpdated(It.IsAny<Competition>())).Callback<Competition>((c) => { Assert.Fail("Invalid data was added"); });
-            _repository.Setup(x => x.UpdateCompetition(It.IsAny<Competition>())).Callback<Competition>((c) => Assert.Fail("Invalid data was added"));
             var _service = new CompetitionService(_repository.Object, _validator, _rewardScheduler.Object);
+            
             // Act
             await Assert.ThrowsAsync<ChronologicalException>(async () => await _service.UpdateCompetition(0, null, null, pending.StartDate, pending.EndDate));
+            
             // Assert
             _validator.CheckWasCalled();
+            _repository.Verify(x => x.CreateCompetition(It.IsAny<Competition>()), Times.Never);
+            _rewardScheduler.Verify(x => x.OnCompetitionCreated(It.IsAny<Competition>()), Times.Never);
         }
         [Fact]
         public async Task CompetitionServiceTest_GetCompetition()
@@ -166,8 +174,10 @@ namespace ServicesUnitTests.ServiceTests
             _repository.Setup(x => x.GetCompetition(0)).ReturnsAsync(etalon);
             var _validator = new MockValidatorBuilder<Competition>().Build();
             var _service = new CompetitionService(_repository.Object, _validator, _rewardScheduler.Object);
+            
             // Act
             var r = await _service.GetCompetition(0);
+            
             // Assert
             Assert.Equal(etalon, r);
         }
@@ -186,8 +196,10 @@ namespace ServicesUnitTests.ServiceTests
                 .Returns(Task.FromResult<IEnumerable<Competition>>(etalon));
             var _validator = new MockValidatorBuilder<Competition>().Build();
             var _service = new CompetitionService(_repository.Object, _validator, _rewardScheduler.Object);
+            
             // Act
             var r = await _service.GetAllCompetitions(etalon_d);
+            
             // Assert
             Assert.Equal(etalon, r);
         }
@@ -204,8 +216,10 @@ namespace ServicesUnitTests.ServiceTests
                 .Returns(Task.FromResult<IEnumerable<Competition>>(etalon));
             var _validator = new MockValidatorBuilder<Competition>().Build();
             var _service = new CompetitionService(_repository.Object, _validator, _rewardScheduler.Object);
+            
             // Act
             var r = await _service.GetActiveCompetitions();
+            
             // Assert
             Assert.Equal(etalon, r);
         }

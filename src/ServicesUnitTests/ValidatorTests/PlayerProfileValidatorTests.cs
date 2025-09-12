@@ -71,10 +71,14 @@ namespace ServicesUnitTests.ValidatorTests
             }
         }
         [Theory]
+        // Arrange
         [ClassData(typeof(PlayerProfileValues))]
         public void CheckPlayerProfile(PlayerProfile comp, bool expected)
         {
-            Assert.Equal(expected, dt.IsValid(comp, out _));
+            // Act
+            var result = dt.IsValid(comp, out _);
+            // Assert
+            Assert.Equal(expected, result);
         }
         #endregion
         #region AccountTests
@@ -113,10 +117,14 @@ namespace ServicesUnitTests.ValidatorTests
             }
         }
         [Theory]
+        // Arrange
         [ClassData(typeof(AccountValues))]
         public void CheckAccount(Account comp, bool expected)
         {
-            Assert.Equal(expected, dt.IsValid(comp, out _));
+            // Act
+            var result = dt.IsValid(comp, out _);
+            // Assert
+            Assert.Equal(expected, result);
         }
         #endregion
         #region AccountCreationTests
@@ -152,10 +160,14 @@ namespace ServicesUnitTests.ValidatorTests
             }
         }
         [Theory]
+        // Arrange
         [ClassData(typeof(AccountCreationValues))]
         public void CheckAccountCreation(AccountCreationData comp, bool expected)
         {
-            Assert.Equal(expected, dt.IsValid(comp, out _));
+            // Act
+            var result = dt.IsValid(comp, out _);
+            // Assert
+            Assert.Equal(expected, result);
         }
         #endregion
     }

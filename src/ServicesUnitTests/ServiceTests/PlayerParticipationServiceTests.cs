@@ -29,7 +29,9 @@ namespace ServicesUnitTests.ServiceTests
             // Arrange
             _competitionRepo.Setup(x => x.GetCompetition(1)).ReturnsAsync(GetCompetition(-5,10));
             _repository.Setup(x => x.GetParticipation(0, 1, false, false)).ReturnsAsync(new PlayerParticipation(1, 0, 10, DateTime.UtcNow));
-            _repository.Setup(x => x.UpdateParticipation(It.IsAny<PlayerParticipation>()));
+            _repository.Setup(x => x.UpdateParticipation(It.Is<PlayerParticipation>(p => 
+                (20 == p.Score) && 0 == p.PlayerProfileId && 1 == p.CompetitionId
+            )));
                 //.Callback<PlayerParticipation>((p) =>
                 //{
                 //    Assert.Equal(20, p.Score);
