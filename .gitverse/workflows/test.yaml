@@ -1,0 +1,96 @@
+name: .NET Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/dotnet/sdk:9.0
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Restore dependencies
+        run: dotnet restore src/ServicesUnitTests
+
+      - name: Run Unit Tests
+        run: |
+          cd src/ServicesUnitTests
+          dotnet test --logger "trx;LogFileName=unit-tests.trx" \
+                      --results-directory ./TestResults \
+                      --collect:"XPlat Code Coverage"
+
+      - name: Upload Unit Test Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-results
+          path: |
+            src/ServicesUnitTests/allure-results
+            src/ServicesUnitTests/TestResults
+
+  integration-tests:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    needs: unit-tests
+    container:
+      image: mcr.microsoft.com/dotnet/sdk:9.0
+    services:
+      docker:
+        image: docker:dind
+        options: --privileged
+    env:
+      DOCKER_HOST: "tcp://docker:2375"
+      DOCKER_TLS_CERTDIR: ""
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Restore dependencies
+        run: dotnet restore src/RepositoriesTests
+
+      - name: Run Integration Tests
+        run: |
+          cd src/RepositoriesTests
+          dotnet test --logger "trx;LogFileName=integration-tests.trx" \
+                      --results-directory ./TestResults
+
+      - name: Upload Integration Test Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: integration-test-results
+          path: |
+            src/RepositoriesTests/allure-results
+            src/RepositoriesTests/TestResults
+
+  merge-allure:
+    name: Merge Allure Results
+    runs-on: ubuntu-latest
+    needs: [unit-tests, integration-tests]
+    steps:
+      - name: Download Unit Test Results
+        uses: actions/download-artifact@v4
+        with:
+          name: unit-test-results
+          path: unit
+
+      - name: Download Integration Test Results
+        uses: actions/download-artifact@v4
+        with:
+          name: integration-test-results
+          path: integration
+
+      - name: Merge allure-results
+        run: |
+          mkdir -p merged-allure-results
+          cp -r unit/allure-results/* merged-allure-results/ || true
+          cp -r integration/allure-results/* merged-allure-results/ || true
+
+      - name: Upload Merged Allure Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: merged-allure-results
+          path: merged-allure-results
