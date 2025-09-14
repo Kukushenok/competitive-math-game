@@ -53,10 +53,14 @@ namespace ServicesUnitTests.ValidatorTests
             dt = new CompetitionValidator(conf);
         }
         [Theory]
+        // Arrange
         [ClassData(typeof(Values))]
         public void CheckOK(Competition comp, bool expected)
         {
-            Assert.Equal(expected, dt.IsValid(comp, out _));
+            // Act
+            var result = dt.IsValid(comp, out _);
+            // Assert
+            Assert.Equal(expected, result);
         }
     }
 }

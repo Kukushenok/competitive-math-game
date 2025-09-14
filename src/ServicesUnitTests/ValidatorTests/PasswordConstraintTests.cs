@@ -26,8 +26,12 @@ namespace ServicesUnitTests.ValidatorTests
         [InlineData("___A___", true)]
         public void LettersPasswordTest(string password, bool isValid)
         {
+            // Arrange
             var cons = new PasswordConstraint(4, true);
-            Assert.Equal(isValid, cons.IsValid(password, out _));
+            // Act
+            var result = cons.IsValid(password, out _);
+            // Assert
+            Assert.Equal(isValid, result);
         }
     }
 }

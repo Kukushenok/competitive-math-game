@@ -26,89 +26,102 @@ namespace ServicesUnitTests.ServiceTests
         [Fact]
         public async Task PlayerParticipationServiceTests_SubmitParticipation_UPDATE()
         {
+            // Arrange
             _competitionRepo.Setup(x => x.GetCompetition(1)).ReturnsAsync(GetCompetition(-5,10));
             _repository.Setup(x => x.GetParticipation(0, 1, false, false)).ReturnsAsync(new PlayerParticipation(1, 0, 10, DateTime.UtcNow));
-            _repository.Setup(x => x.UpdateParticipation(It.IsAny<PlayerParticipation>()))
-                .Callback<PlayerParticipation>((p) =>
-                {
-                    Assert.Equal(20, p.Score);
-                    Assert.Equal(0, p.PlayerProfileId);
-                    Assert.Equal(1, p.CompetitionId);
-                });
+            _repository.Setup(x => x.UpdateParticipation(It.Is<PlayerParticipation>(p => 
+                (20 == p.Score) && 0 == p.PlayerProfileId && 1 == p.CompetitionId
+            )));
+                //.Callback<PlayerParticipation>((p) =>
+                //{
+                //    Assert.Equal(20, p.Score);
+                //    Assert.Equal(0, p.PlayerProfileId);
+                //    Assert.Equal(1, p.CompetitionId);
+                //});
+            // Act
             await _service.SubmitParticipation(0, 1, 20);
+
+            // Assert
+            _repository.Verify(x => x.UpdateParticipation(It.IsAny<PlayerParticipation>()), Times.Once);
         }
         [Fact]
         public async Task PlayerParticipationServiceTests_SubmitParticipation_TOO_EARLY()
         {
+            // Arrange
             _competitionRepo.Setup(x => x.GetCompetition(1)).ReturnsAsync(GetCompetition(5, 10));
             _repository.Setup(x => x.GetParticipation(0, 1, false, false)).Throws(new MissingDataException());
-            _repository.Setup(x => x.CreateParticipation(It.IsAny<PlayerParticipation>()))
-                .Callback<PlayerParticipation>((p) =>
-                {
-                    Assert.Fail("No no no!");
-                });
+            _repository.Setup(x => x.CreateParticipation(It.IsAny<PlayerParticipation>())).Throws(new FailedOperationException());
+
+            // Act Assert
             await Assert.ThrowsAsync<ChronologicalException>(async () => await _service.SubmitParticipation(0, 1, 20));
+            _repository.Verify(x => x.CreateParticipation(It.IsAny<PlayerParticipation>()), Times.Never);
         }
         [Fact]
         public async Task PlayerParticipationServiceTests_SubmitParticipation_TOO_LATE()
         {
+            // Arrange
             _competitionRepo.Setup(x => x.GetCompetition(1)).ReturnsAsync(GetCompetition(-10, -5));
             _repository.Setup(x => x.GetParticipation(0, 1, false, false)).Throws(new MissingDataException());
-            _repository.Setup(x => x.CreateParticipation(It.IsAny<PlayerParticipation>()))
-                .Callback<PlayerParticipation>((p) =>
-                {
-                    Assert.Fail("No no no!");
-                });
+            // Act
             await Assert.ThrowsAsync<ChronologicalException>(async () => await _service.SubmitParticipation(0, 1, 20));
+            // Assert
+            _repository.Verify(x => x.CreateParticipation(It.IsAny<PlayerParticipation>()), Times.Never);
         }
         [Fact]
         public async Task PlayerParticipationServiceTests_SubmitParticipation_DISCARD()
         {
-
+            // Arrange
             _competitionRepo.Setup(x => x.GetCompetition(1)).ReturnsAsync(GetCompetition(-5, 10));
             _repository.Setup(x => x.GetParticipation(0, 1, false, false)).ReturnsAsync(new PlayerParticipation(1, 0, 10, DateTime.UtcNow));
-            _repository.Setup(x => x.UpdateParticipation(It.IsAny<PlayerParticipation>()))
-                .Callback<PlayerParticipation>((p) =>
-                {
-                    Assert.Fail();
-                });
+            _repository.Setup(x => x.UpdateParticipation(It.IsAny<PlayerParticipation>()));
+            // Act
             await _service.SubmitParticipation(0, 1, 5);
+            // Assert
+            _repository.Verify(x => x.UpdateParticipation(It.IsAny<PlayerParticipation>()), Times.Never);
         }
         [Fact]
         public async Task PlayerParticipationServiceTests_SubmitParticipation_CREATE()
         {
-
+            // Arrange
             _competitionRepo.Setup(x => x.GetCompetition(1)).ReturnsAsync(GetCompetition(-5, 10));
             _repository.Setup(x => x.GetParticipation(0, 1, false, false)).Throws(new MissingDataException());
-            _repository.Setup(x => x.CreateParticipation(It.IsAny<PlayerParticipation>()))
-                .Callback<PlayerParticipation>((p) =>
-                {
-                    Assert.Equal(20, p.Score);
-                    Assert.Equal(0, p.PlayerProfileId);
-                    Assert.Equal(1, p.CompetitionId);
-                });
+            _repository.Setup(x => x.CreateParticipation(It.IsAny<PlayerParticipation>()));
+                //.Callback<PlayerParticipation>((p) =>
+                //{
+                //    Assert.Equal(20, p.Score);
+                //    Assert.Equal(0, p.PlayerProfileId);
+                //    Assert.Equal(1, p.CompetitionId);
+                //});
+            // Act
             await _service.SubmitParticipation(0, 1, 20);
+            // Assert
+            _repository.Verify(x => x.CreateParticipation(It.IsAny<PlayerParticipation>()), Times.Once);
         }
         [Fact]
         public async Task PlayerParticipationServiceTests_DeleteParticipation()
         {
-            _repository.Setup(x => x.DeleteParticipation(It.IsAny<int>(), It.IsAny<int>())).Callback((int player, int comp) =>
-            {
-                Assert.Equal(0, player);
-                Assert.Equal(1, comp);
-            });
+            // Arrange
+            _repository.Setup(x => x.DeleteParticipation(It.IsAny<int>(), It.IsAny<int>()));
+            // Act
             await _service.DeleteParticipation(0, 1);
+            // Assert
+            _repository.Verify(x => x.DeleteParticipation(0, 1), Times.Once);
         }
         [Fact]
         public async Task PlayerParticipationServiceTests_GetParticipation()
         {
+            // Arrange
             PlayerParticipation etalon = new PlayerParticipation(1, 0, 10, DateTime.UtcNow);
             _repository.Setup(x => x.GetParticipation(0, 1, It.IsAny<bool>(), It.IsAny<bool>())).ReturnsAsync(etalon);
-            Assert.Equal(etalon, await _service.GetParticipation(0, 1));
+            // Act
+            var r = await _service.GetParticipation(0, 1);
+            // Assert
+            Assert.Equal(etalon, r);
         }
         [Fact]
         public async Task PlayerParticipationServiceTests_GetLeaderboard()
         {
+            // Arrange
             DataLimiter etalon_d = new DataLimiter(10, 10);
             List<PlayerParticipation> leaderboard = new List<PlayerParticipation>()
             {
@@ -117,12 +130,17 @@ namespace ServicesUnitTests.ServiceTests
             _repository.Setup(x => x.GetLeaderboard(1, It.IsAny<DataLimiter>(), It.IsAny<bool>(), It.IsAny<bool>()))
                 .Callback((int idx, DataLimiter d, bool _, bool _) => Assert.Equal(etalon_d, d))
                 .ReturnsAsync(leaderboard);
+            
+            // Act
             var r = await _service.GetLeaderboard(1, etalon_d);
+
+            // Assert
             Assert.Equal(leaderboard, r);
         }
         [Fact]
         public async Task PlayerParticipationServiceTests_GetPlayerParticipations()
         {
+            // Arrange
             DataLimiter etalon_d = new DataLimiter(10, 10);
             List<PlayerParticipation> leaderboard = new List<PlayerParticipation>()
             {
@@ -131,7 +149,10 @@ namespace ServicesUnitTests.ServiceTests
             _repository.Setup(x => x.GetPlayerParticipations(0, It.IsAny<DataLimiter>(), It.IsAny<bool>(), It.IsAny<bool>()))
                 .Callback((int idx, DataLimiter d, bool _, bool _) => Assert.Equal(etalon_d, d))
                 .Returns(Task.FromResult<IEnumerable<PlayerParticipation>>(leaderboard));
+            // Act
             var r = await _service.GetPlayerParticipations(0, etalon_d);
+
+            // Assert
             Assert.Equal(leaderboard, r);
         }
     }

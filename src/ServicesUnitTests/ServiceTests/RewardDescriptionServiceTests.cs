@@ -12,44 +12,54 @@ namespace ServicesUnitTests.ServiceTests
     {
         Mock<IRewardDescriptionRepository> _repository;
         Mock<IImageProcessor> _imageProcessor;
-        MockValidator<RewardDescription> _rdValidator;
-        RewardDescriptionService _service;
         public RewardDescriptionServiceTests()
         {
             _repository = new Mock<IRewardDescriptionRepository>();
             _imageProcessor = new Mock<IImageProcessor>();
-            _rdValidator = new MockValidator<RewardDescription>();
-            _service = new RewardDescriptionService(_repository.Object, _imageProcessor.Object, _rdValidator);
         }
         [Fact]
         public async Task RewardDescriptionServiceTests_SetRewardIcon()
         {
-            _rdValidator.Reset();
-            _repository.Setup(x => x.SetRewardIcon(0, It.IsAny<LargeData>())).Callback((int a, LargeData d) =>
-            {
-                Assert.Equal(0, a);
-                Assert.Single(d.Data);
-                Assert.Equal(42, d.Data[0]);
-            });
-            _imageProcessor.Setup(x => x.Process(It.IsAny<LargeData>())).ReturnsAsync(new LargeData([42]));
+            // Arrange
+            var processedData = new LargeData([42]);
+            MockValidator<RewardDescription> _rdValidator = new MockValidatorBuilder<RewardDescription>().Build();
+            _imageProcessor.Setup(x => x.Process(It.Is<LargeData>(x=>x.Data.Length == 3))).ReturnsAsync(processedData);
+            var _service = new RewardDescriptionService(_repository.Object, _imageProcessor.Object, _rdValidator);
+
+            // Act
             await _service.SetRewardIcon(0, new LargeData([1, 2, 3]));
+
+            // Assert
+            _repository.Verify(x => x.SetRewardIcon(0, processedData), Times.Once);
         }
         [Fact]
         public async Task RewardDescriptionServiceTests_GetRewardIcon()
         {
-            _rdValidator.Reset();
+            // Arrange
+            MockValidator<RewardDescription> _rdValidator = new MockValidatorBuilder<RewardDescription>().Build();
             LargeData etalon = new LargeData([1, 2, 3]);
             _repository.Setup(x => x.GetRewardIcon(0)).ReturnsAsync(etalon);
+            var _service = new RewardDescriptionService(_repository.Object, _imageProcessor.Object, _rdValidator);
+
+            // Act
             LargeData d = await _service.GetRewardIcon(0);
+
+            // Assert
             Assert.Equal(etalon.Data, d.Data);
         }
         [Fact]
         public async Task RewardDescriptionServiceTests_GetRewardDescription()
         {
-            _rdValidator.Reset();
+            // Arrange
+            MockValidator<RewardDescription> _rdValidator = new MockValidatorBuilder<RewardDescription>().Build();
             RewardDescription etalon = new RewardDescription("A", "B", 0);
             _repository.Setup(x => x.GetRewardDescription(0)).ReturnsAsync(etalon);
+            var _service = new RewardDescriptionService(_repository.Object, _imageProcessor.Object, _rdValidator);
+
+            // Act
             RewardDescription r = await _service.GetRewardDescription(0);
+
+            // Assert
             Assert.Equal(etalon.Description, r.Description);
             Assert.Equal(etalon.Name, r.Name);
             Assert.Equal(etalon.Id, r.Id);
@@ -57,90 +67,105 @@ namespace ServicesUnitTests.ServiceTests
         [Fact]
         public async Task RewardDescriptionServiceTests_GetAllRewardDescriptions()
         {
-            _rdValidator.Reset();
+            // Arrange
+            MockValidator<RewardDescription> _rdValidator = new MockValidatorBuilder<RewardDescription>().Build();
             List<RewardDescription> etalon = new List<RewardDescription>() { new RewardDescription("A", "B", 0), new RewardDescription("B", "C", 2) };
             DataLimiter etalon_d = new DataLimiter(10, 10);
-            _repository.Setup(x => x.GetAllRewardDescriptions(It.IsAny<DataLimiter>()))
-                .Callback<DataLimiter>((d) => Assert.Equal(etalon_d, d)).ReturnsAsync(etalon);
+            _repository.Setup(x => x.GetAllRewardDescriptions(etalon_d)).ReturnsAsync(etalon);
+            var _service = new RewardDescriptionService(_repository.Object, _imageProcessor.Object, _rdValidator);
+
+            // Act
             var r = await _service.GetAllRewardDescriptions(etalon_d);
+
+            // Assert
             Assert.Equal(etalon, r);
         }
         [Fact]
         public async Task RewardDescriptionServiceTests_CreateRewardDescription()
         {
+            // Arrange
             RewardDescription d = new RewardDescription("A", "B", 5);
-            _rdValidator.Reset(d);
-            _repository.Setup(x => x.CreateRewardDescription(It.IsAny<RewardDescription>()))
-                .Callback<RewardDescription>((rw) =>
-                {
-                    Assert.Equal(d.Name, rw.Name);
-                    Assert.Equal(d.Description, rw.Description);
-                    Assert.Equal(d.Id, rw.Id);
-                });
+            MockValidator<RewardDescription> _rdValidator = new MockValidatorBuilder<RewardDescription>().Build();
+            _repository.Setup(x => x.CreateRewardDescription(d));
+            var _service = new RewardDescriptionService(_repository.Object, _imageProcessor.Object, _rdValidator);
+
+            // Act
             await _service.CreateRewardDescription(d);
-            _rdValidator.Check();
+
+            // Assert
+            _rdValidator.CheckWasCalled();
         }
         [Fact]
         public async Task RewardDescriptionServiceTests_CreateRewardDescription_Failure()
         {
+            // Arrange
             RewardDescription d = new RewardDescription("A", "B", 5);
-            _rdValidator.Reset(d, true);
-            _repository.Setup(x => x.CreateRewardDescription(It.IsAny<RewardDescription>()))
-                .Callback<RewardDescription>((rw) =>
-                {
-                    Assert.Fail("Please do not update DB with incorrect data");
-                });
+            MockValidator<RewardDescription> _rdValidator = new MockValidatorBuilder<RewardDescription>().FailByDefault().Build();
+            var _service = new RewardDescriptionService(_repository.Object, _imageProcessor.Object, _rdValidator);
+
+            // Act
             await Assert.ThrowsAsync<InvalidArgumentsException>(async () => await _service.CreateRewardDescription(d));
-            _rdValidator.Check();
+
+            // Assert
+            _rdValidator.CheckWasCalled();
+            _repository.Verify(x => x.CreateRewardDescription(It.IsAny<RewardDescription>()), Times.Never);
         }
         [Fact]
         public async Task RewardDescriptionServiceTests_UpdateRewardDescription_Ok()
         {
+            // Arrange
             RewardDescription d = new RewardDescription("A", "B", 5);
             RewardDescription etalon = new RewardDescription("C", "D", 5);
-            _rdValidator.Reset(etalon);
+            MockValidator<RewardDescription> _rdValidator = new MockValidatorBuilder<RewardDescription>()
+                .WithConstraint((x) => WeakRDCheck(x, etalon))
+                .Build();
             _repository.Setup(x => x.GetRewardDescription(5)).ReturnsAsync(d);
-            _repository.Setup(x => x.UpdateRewardDescription(It.IsAny<RewardDescription>()))
-                        .Callback<RewardDescription>((rw) =>
-                        {
-                            Assert.Equal(etalon.Name, rw.Name);
-                            Assert.Equal(etalon.Description, rw.Description);
-                            Assert.Equal(etalon.Id, rw.Id);
-                        });
+            var _service = new RewardDescriptionService(_repository.Object, _imageProcessor.Object, _rdValidator);
+
+            // Act
             await _service.UpdateRewardDescription(5, "C", "D");
-            _rdValidator.Check();
+
+            // Assert
+            _rdValidator.CheckWasCalled();
+            _repository.Verify(x => x.UpdateRewardDescription(It.IsAny<RewardDescription>()), Times.Once);
+        }
+        private bool WeakRDCheck(RewardDescription a, RewardDescription b)
+        {
+            return a.Name == b.Name && a.Id == b.Id && a.Description == b.Description;
         }
         [Fact]
         public async Task RewardDescriptionServiceTests_UpdateRewardDescription_Ok2()
         {
+            // Arrange
             RewardDescription d = new RewardDescription("A", "B", 4);
             RewardDescription etalon = new RewardDescription("C", "B", 4);
-            _rdValidator.Reset(etalon);
+            MockValidator<RewardDescription> _rdValidator = new MockValidatorBuilder<RewardDescription>()
+                .WithConstraint((x) => WeakRDCheck(x, etalon))
+                .Build();
             _repository.Setup(x => x.GetRewardDescription(4)).ReturnsAsync(d);
-            _repository.Setup(x => x.UpdateRewardDescription(It.IsAny<RewardDescription>()))
-                        .Callback<RewardDescription>((rw) =>
-                        {
-                            Assert.Equal(etalon.Name, rw.Name);
-                            Assert.Equal(etalon.Description, rw.Description);
-                            Assert.Equal(etalon.Id, rw.Id);
-                        });
+            _repository.Setup(x => x.UpdateRewardDescription(It.IsAny<RewardDescription>()));
+            var _service = new RewardDescriptionService(_repository.Object, _imageProcessor.Object, _rdValidator);
+
+            // Act
             await _service.UpdateRewardDescription(4, "C", null);
-            _rdValidator.Check();
+
+            // Assert
+            _rdValidator.CheckWasCalled();
         }
         [Fact]
         public async Task RewardDescriptionServiceTests_UpdateRewardDescription_Failure()
         {
+            // Arrange
             RewardDescription d = new RewardDescription("A", "B");
             RewardDescription etalon = new RewardDescription("C", "B", 4);
-            _rdValidator.Reset(etalon, true);
+            MockValidator<RewardDescription> _rdValidator = new MockValidatorBuilder<RewardDescription>().FailByDefault().Build();
             _repository.Setup(x => x.GetRewardDescription(4)).ReturnsAsync(d);
-            _repository.Setup(x => x.UpdateRewardDescription(It.IsAny<RewardDescription>()))
-                        .Callback<RewardDescription>((rw) =>
-                        {
-                            Assert.Fail("Please do not update DB with incorrect data");
-                        });
+            var _service = new RewardDescriptionService(_repository.Object, _imageProcessor.Object, _rdValidator);
+            // Act
             await Assert.ThrowsAsync<InvalidArgumentsException>(async () => await _service.UpdateRewardDescription(4, "C", null));
-            _rdValidator.Check();
+            // Assert
+            _rdValidator.CheckWasCalled();
+            _repository.Verify(x => x.UpdateRewardDescription(It.IsAny<RewardDescription>()), Times.Never);
         }
     }
 }

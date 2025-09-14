@@ -32,52 +32,54 @@ namespace ServicesUnitTests.ServiceTests
         [Fact]
         public async Task CompetitionRewardSchedulerTests_OnCompetitionUpdated()
         {
+            // Arrange
             DateTime dt = DateTime.Now;
             Competition c = new Competition("Sample", "descr", dt, dt + TimeSpan.FromSeconds(10), 5);
-            bool called = false;
-            _timeScheduler.Setup(x => x.AddOrUpdateScheduledTask(It.IsAny<TimeScheduledTaskData>()))
-                .Callback<TimeScheduledTaskData>((x) =>
-                {
-                    Assert.Equal(5, x.Identifier);
-                    Assert.Equal(new DateTimeOffset(c.EndDate), x.FireTime);
-                    called = true;
-                });
+
+            // Act
             await scheduler.OnCompetitionUpdated(c);
-            Assert.True(called, "Why it is not adding things?");
+            
+            // Assert
+            _timeScheduler.Verify(x => x.AddOrUpdateScheduledTask(It.Is<TimeScheduledTaskData>(
+                 p => p.Identifier == 5 && p.FireTime.Equals(new DateTimeOffset(c.EndDate)))), Times.Once);
         }
         [Fact]
         public async Task CompetitionRewardSchedulerTests_OnCompetitionCreated()
         {
+            // Arrange
             DateTime dt = DateTime.Now;
             Competition c = new Competition("Sample", "descr", dt, dt + TimeSpan.FromSeconds(10), 5);
-            bool called = false;
-            _timeScheduler.Setup(x => x.AddOrUpdateScheduledTask(It.IsAny<TimeScheduledTaskData>()))
-                .Callback<TimeScheduledTaskData>((x) =>
-                {
-                    Assert.Equal(5, x.Identifier);
-                    Assert.Equal(new DateTimeOffset(c.EndDate), x.FireTime);
-                    called = true;
-                });
+
+            // Act
             await scheduler.OnCompetitionCreated(c);
-            Assert.True(called, "Why it is not adding things?");
+
+            // Assert
+            _timeScheduler.Verify(x => x.AddOrUpdateScheduledTask(It.Is<TimeScheduledTaskData>(
+               p => p.Identifier == 5 && p.FireTime.Equals(new DateTimeOffset(c.EndDate)))), Times.Once);
         }
         [Fact]
         public async Task CompetitionRewardSchedulerTests_OnRecievedMessage_Ok()
         {
+            // Arrange
             TimeScheduledTaskData data = new TimeScheduledTaskData(0, "Competition", DateTimeOffset.Now, "Hello");
-            bool called = false;
-            _rewardRepo.Setup(x => x.GrantRewardsFor(0)).Callback(() => called = true);
+
+            // Act
             await scheduler.OnRecievedMessage(data);
-            Assert.True(called, "Should recieve messages within Competition category");
+
+            // Assert
+            _rewardRepo.Verify(x => x.GrantRewardsFor(0), Times.Once);
         }
         [Fact]
         public async Task CompetitionRewardSchedulerTests_OnRecievedMessage_Skip()
         {
+            // Arrange
             TimeScheduledTaskData data = new TimeScheduledTaskData(0, "Flexio", DateTimeOffset.Now, "Hello");
-            bool called = false;
-            _rewardRepo.Setup(x => x.GrantRewardsFor(0)).Callback(() => called = true);
+
+            // Act
             await scheduler.OnRecievedMessage(data);
-            Assert.False(called, "Should recieve messages only within Competition category (the category was Flexio)");
+
+            // Assert
+            _rewardRepo.Verify(x => x.GrantRewardsFor(0), Times.Never);
         }
     }
 }
