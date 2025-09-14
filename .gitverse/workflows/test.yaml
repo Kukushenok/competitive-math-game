@@ -9,7 +9,7 @@ on:
 jobs:
   unit-tests:
     name: Unit Tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-cloud-runner
     container:
       image: mcr.microsoft.com/dotnet/sdk:9.0
     steps:
@@ -35,7 +35,7 @@ jobs:
 
   integration-tests:
     name: Integration Tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-cloud-runner
     needs: unit-tests
     container:
       image: mcr.microsoft.com/dotnet/sdk:9.0
@@ -68,7 +68,7 @@ jobs:
 
   merge-allure:
     name: Merge Allure Results
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-cloud-runner
     needs: [unit-tests, integration-tests]
     steps:
       - name: Download Unit Test Results
