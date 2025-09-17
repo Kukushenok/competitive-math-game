@@ -9,7 +9,7 @@ variables:
 
 unit_tests:
   stage: unit
-  image: mcr.microsoft.com/dotnet/sdk:9.0
+  image: mcr.microsoft.com/dotnet/sdk:8.0
   script:
     - cd src/ServicesUnitTests
     - dotnet restore
@@ -23,7 +23,7 @@ unit_tests:
 
 integration_tests:
   stage: integration
-  image: mcr.microsoft.com/dotnet/sdk:9.0
+  image: mcr.microsoft.com/dotnet/sdk:8.0
   services:
     - docker:dind
   variables:
