@@ -25,11 +25,11 @@ integration_tests:
   stage: integration
   image: mcr.microsoft.com/dotnet/sdk:8.0
   services:
-    - docker:dind
+    - name: docker:dind
+      command: ["--host=tcp://0.0.0.0:2375", "--tls=false"]
   variables:
     DOCKER_HOST: "tcp://docker:2375"
     DOCKER_TLS_CERTDIR: ""
-    DOCKER_DRIVER: overlay2 
   script:
     - cd src/RepositoriesTests
     - dotnet restore -s 'https://api.nuget.org/v3/index.json' -s $NUGET_SOURCE
@@ -43,6 +43,8 @@ integration_tests:
   needs:
     - job: unit_tests
       artifacts: true
+  tags:
+    - docker
 
 merge_allure:
   stage: report
