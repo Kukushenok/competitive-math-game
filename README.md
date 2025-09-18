@@ -68,5 +68,5 @@
 | ![ER-диаграмма](./img/layout/3.svg) |
 |-|
 
-| ![ER-диаграмма](./img/layout4.svg) |
+| ![ER-диаграмма](./img/layout/4.svg) |
 |-|
