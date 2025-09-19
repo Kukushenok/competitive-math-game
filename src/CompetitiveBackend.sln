@@ -70,6 +70,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BenchmarkMeasurer", "Benchm
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolutionLurker", "SolutionLurker\SolutionLurker.csproj", "{AB14B407-C87A-4011-BA57-D3E38F5FAB4B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E2ETests", "E2ETests\E2ETests.csproj", "{54EAA675-3083-14FB-FBA6-175050B23CC3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -168,6 +170,10 @@ Global
 		{AB14B407-C87A-4011-BA57-D3E38F5FAB4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB14B407-C87A-4011-BA57-D3E38F5FAB4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB14B407-C87A-4011-BA57-D3E38F5FAB4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54EAA675-3083-14FB-FBA6-175050B23CC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54EAA675-3083-14FB-FBA6-175050B23CC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54EAA675-3083-14FB-FBA6-175050B23CC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54EAA675-3083-14FB-FBA6-175050B23CC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -194,6 +200,7 @@ Global
 		{6AA4A3CE-D2B1-4D8B-92AE-BF50B28AF588} = {EA607181-0EA7-4832-BF74-9739A0C8352C}
 		{2CFC4339-C6AD-44DC-A7C6-D44A23EFCC27} = {416BE033-8A77-419D-947E-E9E0B3B71BFD}
 		{27C02A39-7186-433F-97F1-FDF9376C1557} = {416BE033-8A77-419D-947E-E9E0B3B71BFD}
+		{54EAA675-3083-14FB-FBA6-175050B23CC3} = {4BC8A97E-5476-4038-9B06-4B5289555154}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A7EFF7A1-7D80-4BCC-8E4F-C0FC9FD3C830}
