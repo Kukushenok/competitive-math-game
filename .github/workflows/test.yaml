@@ -32,8 +32,7 @@ jobs:
         with:
           name: unit-test-results
           path: |
-            src/ServicesUnitTests/allure-results
-            src/ServicesUnitTests/TestResults
+            src/ServicesUnitTests/bin/Debug/net8.0/allure-results
 
   integration_tests:
     name: Integration Tests
@@ -61,8 +60,7 @@ jobs:
         with:
           name: integration-test-results
           path: |
-            src/RepositoriesTests/allure-results
-            src/RepositoriesTests/TestResults
+            src/RepositoriesTests/bin/Debug/net8.0/allure-results
 
   merge_allure:
     name: Merge Allure Results
@@ -85,3 +83,17 @@ jobs:
         with:
           name: merged-allure-results
           path: merged-allure-results
+      - name: Build test report
+        uses: simple-elf/allure-report-action@v1.7
+        if: always()
+        with:
+          gh_pages: gh-pages
+          allure_history: allure-history
+          allure_results: merged-allure-results
+      - name: Publish test report
+        uses: peaceiris/actions-gh-pages@v3
+        if: always()
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: allure-history
