@@ -21,14 +21,12 @@ namespace RepositoriesTests.RepositoriesTests
         [Fact]
         public async Task CreateSessionTokenFor_AdminSuccess()
         {
+
             // Arrange
             await ExecSQLFile("competitions.sql");
 
             // Act
-            var result = await Client.GetAsync($"/{APIConsts.ROOTV1}/{APIConsts.COMPETITIONS}/0");
-
-
-            var response = await Client.GetAsync("/swagger/v1/swagger.json");
+            var result = await Client.GetAsync($"{APIConsts.ROOTV1}/{APIConsts.COMPETITIONS}/1");
 
             // Assert
             result.IsSuccessStatusCode.Should().BeTrue();

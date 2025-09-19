@@ -43,6 +43,8 @@ namespace RepositoriesTests
                 });
             testDumper = new FileDumper(Path.Combine(CORE_PATH, "ResultDumps"));
             Client = _factory.CreateClient();
+
+            _factory.Server.Should().NotBeNull();
             return Task.CompletedTask;
         }
         protected ILogger Logger = null!;
