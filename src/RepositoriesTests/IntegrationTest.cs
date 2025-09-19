@@ -30,9 +30,9 @@ namespace RepositoriesTests
             coll.UseXUnitLogging(helper);
             AddMyRepositories(coll);
             ServiceProvider p = coll.BuildServiceProvider();
-            Testing = p.GetService<T>()!;
-            contextFactory = p.GetService<IDbContextFactory<BaseDbContext>>()!;
-            Logger = p.GetService<ILogger<IntegrationTest<T>>>()!;
+            Testing = p.GetRequiredService<T>();
+            contextFactory = p.GetRequiredService<IDbContextFactory<BaseDbContext>>();
+            Logger = p.GetRequiredService<ILogger<IntegrationTest<T>>>();
             Logger.LogInformation("Using connection string: " + ConnectionString);
             PostConfiguring(p);
             return Task.CompletedTask;

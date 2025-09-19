@@ -2,12 +2,12 @@
 -- Data for Name: account; Type: TABLE DATA; Schema: public; Owner: tester
 --
 COPY public.account (id, login, username, email, password_hash, privilegy_level, description, profile_image) FROM stdin;
-1	Klavdiya_Ilin41!0	Klavdiya_Ilin41!0	Ignatii_Terentev@hotmail.com	HASH	0	\N	\N
-2	Aleksandr35!1	Aleksandr35!1	Irina.Shestakov@yahoo.com	HASH	0	\N	\N
-3	Arina.Nosov63!9	Arina.Nosov63!9	Oksana.Kabanova20@yahoo.com	HASH	0	\N	\N
-4	Grigorii.Ryabova85!11	Grigorii.Ryabova85!11	Aleksandra82@ya.ru	HASH	0	\N	\N
-5	Georgii.Soloveva3!15	Georgii.Soloveva3!15	Rimma61@mail.ru	HASH	0	\N	\N
-6	Funnnn	Klavdiya_Ilin41!0	Ignatii_Terentev@hotmail.com	HASH	0	\N	\N
+1	Klavdiya_Ilin41_0	Klavdiya_Ilin41_0	Ignatii_Terentev@hotmail.com	HASH	0	\N	\N
+2	Aleksandr35_1	Aleksandr35_1	Irina.Shestakov@yahoo.com	HASH	0	\N	\N
+3	Arina.Nosov63_9	Arina.Nosov63_9	Oksana.Kabanova20@yahoo.com	HASH	0	\N	\N
+4	Grigorii.Ryabova85_11	Grigorii.Ryabova85_11	Aleksandra82@ya.ru	HASH	0	\N	\N
+5	Georgii.Soloveva3_15	Georgii.Soloveva3_15	Rimma61@mail.ru	HASH	0	\N	\N
+6	Funnnn	Klavdiya_Ilin41_0	Ignatii_Terentev@hotmail.com	HASH	0	\N	\N
 \.
 
 
