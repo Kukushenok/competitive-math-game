@@ -10,6 +10,9 @@ env:
   DOTNET_CLI_TELEMETRY_OPTOUT: "1"
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: "1"
 
+permissions:
+  contents: write 
+
 jobs:
   unit_tests:
     name: Unit Tests
@@ -28,30 +31,26 @@ jobs:
                       --results-directory ./TestResults \
                       --collect:"XPlat Code Coverage"
       - name: Upload Unit Test Results
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: unit-test-results
           path: |
-            src/ServicesUnitTests/allure-results
-            src/ServicesUnitTests/TestResults
+            src/ServicesUnitTests/bin/Debug/net8.0/allure-results
 
   integration_tests:
     name: Integration Tests
     runs-on: ubuntu-latest
-    container: mcr.microsoft.com/dotnet/sdk:8.0
-    needs: unit_tests
-    services:
-      docker:
-        image: docker:dind
-        options: >-
-          --privileged
-          --host=tcp://0.0.0.0:2375
-          --tls=false
+    needs: unit_tests 
     env:
-      DOCKER_HOST: tcp://docker:2375
-      DOCKER_TLS_CERTDIR: ""
+      DOTNET_TESTCONTAINERS_ENABLED: true
+      TESTCONTAINERS_RYUK_DISABLED: true
     steps:
       - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
       - name: Restore
         run: |
           cd src/RepositoriesTests
@@ -62,31 +61,47 @@ jobs:
           dotnet test --logger "trx;LogFileName=integration-tests.trx" \
                       --results-directory ./TestResults
       - name: Upload Integration Test Results
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: integration-test-results
           path: |
-            src/RepositoriesTests/allure-results
-            src/RepositoriesTests/TestResults
+            src/RepositoriesTests/bin/Debug/net8.0/allure-results
 
   merge_allure:
     name: Merge Allure Results
     runs-on: ubuntu-latest
     container: alpine:latest
     needs: [unit_tests, integration_tests]
+    if: always()   # <-- ensures this job always runs, even if tests fail
     steps:
       - uses: actions/download-artifact@v4
         with:
           path: artifacts
       - name: Install dependencies
-        run: apk add --no-cache bash
+        run: apk add --no-cache bash git
       - name: Merge Allure Results
         run: |
           mkdir -p merged-allure-results
-          cp -r artifacts/unit-test-results/allure-results/* merged-allure-results/ || true
-          cp -r artifacts/integration-test-results/allure-results/* merged-allure-results/ || true
+          cp -r artifacts/unit-test-results/* merged-allure-results/ || true
+          cp -r artifacts/integration-test-results/* merged-allure-results/ || true
       - name: Upload Merged Allure
         uses: actions/upload-artifact@v4
         with:
           name: merged-allure-results
           path: merged-allure-results
+      - name: Build test report
+        uses: simple-elf/allure-report-action@v1.7
+        if: always()
+        with:
+          gh_pages: gh-pages
+          allure_history: allure-history
+          allure_results: merged-allure-results
+      - name: Publish test report
+        uses: peaceiris/actions-gh-pages@v3
+        if: always()
+        with:
+          external_repository: Kukushenok/competitive-math-game-tests
+          personal_token: ${{ secrets.PAGES_PUBLISH_REPO }}
+          publish_branch: gh-pages
+          publish_dir: allure-history
