@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using CompetitiveBackend;
 using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.BackendUsage.Objects;
-namespace RepositoriesTests.RepositoriesTests
+namespace E2ETests
 {
     public class CompetitionE2ETests : E2ETest
     {

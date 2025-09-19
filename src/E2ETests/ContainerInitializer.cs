@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Testcontainers.PostgreSql;
 
-namespace RepositoriesTests
+namespace E2ETests
 {
     public class ContainerInitializer: IAsyncLifetime
     {

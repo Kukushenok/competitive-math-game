@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 using Xunit.Abstractions;
 using XUnitLoggingProvider;
 
-namespace RepositoriesTests
+namespace E2ETests
 {
     public class E2ETest(ITestOutputHelper helper, WebApplicationFactory<Program> factory) : ContainerInitializer, IClassFixture<WebApplicationFactory<Program>>
     {

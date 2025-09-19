@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RepositoriesTests
+namespace E2ETests
 {
     internal class FileDumper
     {
