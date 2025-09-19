@@ -38,20 +38,15 @@ jobs:
   integration_tests:
     name: Integration Tests
     runs-on: ubuntu-latest
-    container: mcr.microsoft.com/dotnet/sdk:8.0
-    needs: unit_tests
-    services:
-      docker:
-        image: docker:dind
-        options: >-
-          --privileged
-          --host=tcp://0.0.0.0:2375
-          --tls=false
     env:
-      DOCKER_HOST: tcp://docker:2375
-      DOCKER_TLS_CERTDIR: ""
+      DOTNET_TESTCONTAINERS_ENABLED: true
+      TESTCONTAINERS_RYUK_DISABLED: true
     steps:
       - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
       - name: Restore
         run: |
           cd src/RepositoriesTests
