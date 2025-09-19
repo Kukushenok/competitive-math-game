@@ -89,5 +89,28 @@ namespace E2ETests
             obj.Should().NotBeNull();
             return obj!;
         }
+        public async Task<Result> Post<In, Result>(string path, In obj)
+        {
+            var response = await Post(path, obj);
+            response.Should().NotBeNull();
+            return await GetObject<Result>(response);
+        }
+        public StringContent GetContent<T>(T obj)
+        {
+            var json = JsonConvert.SerializeObject(obj);
+            return new StringContent(json, Encoding.UTF8, "application/json");
+        }
+        public async Task<HttpResponseMessage> Post<In>(string path, In obj)
+        {
+            var json = JsonConvert.SerializeObject(obj);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await Client.PostAsync(path, content);
+            return response;
+        }
+        public void SetAuth(string token)
+        {
+            // TODO: the WebServer should support K Authorization V Bearer XXXXX
+            Client.DefaultRequestHeaders.Add("Bearer", token);
+        }
     }
 }
