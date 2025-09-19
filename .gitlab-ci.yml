@@ -43,8 +43,6 @@ integration_tests:
   needs:
     - job: unit_tests
       artifacts: true
-  tags:
-    - docker
 
 merge_allure:
   stage: report

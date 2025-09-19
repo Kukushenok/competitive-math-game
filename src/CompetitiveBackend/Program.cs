@@ -12,7 +12,7 @@ using ServicesRealisation;
 
 namespace CompetitiveBackend
 {
-    public class Program
+    public partial class Program
     {
         public static void Main(string[] args)
         {
@@ -67,4 +67,6 @@ namespace CompetitiveBackend
             app.Run();
         }
     }
+    // chatgpt told me to do this
+    public partial class Program { }
 }
