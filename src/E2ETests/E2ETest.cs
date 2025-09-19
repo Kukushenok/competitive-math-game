@@ -1,11 +1,15 @@
 ﻿using CompetitiveBackend;
+using CompetitiveBackend.Controllers;
+using CompetitiveBackend.Core.Objects;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using RepositoriesRealisation;
 using System;
 using System.Collections.Generic;
@@ -18,13 +22,12 @@ using XUnitLoggingProvider;
 
 namespace RepositoriesTests
 {
-    public class E2ETest(ITestOutputHelper helper) : ContainerInitializer
+    public class E2ETest(ITestOutputHelper helper, WebApplicationFactory<Program> factory) : ContainerInitializer, IClassFixture<WebApplicationFactory<Program>>
     {
-        private WebApplicationFactory<Program> _factory;
         public HttpClient Client { get; private set; }
         protected override Task AfterDockerInit()
         {
-            _factory = new WebApplicationFactory<Program>()
+            factory = factory
                 .WithWebHostBuilder(builder =>
                 {
                     builder.UseEnvironment("Testing");
@@ -32,19 +35,25 @@ namespace RepositoriesTests
                     {
                         config.AddInMemoryCollection(new Dictionary<string, string?>
                         {
-                            ["ConnectionStrings:postgres"] = ConnectionString
+                            ["ConnectionStrings:postgres"] = ConnectionString,
+                            ["ConnectionStrings:Player"] = ConnectionString,
+                            ["ConnectionStrings:Admin"] = ConnectionString,
+                            ["ConnectionStrings:Guest"] = ConnectionString,
+                            ["ConnectionStrings:RewardScheduler"] = ConnectionString
                         });
                         
                     });
                     builder.ConfigureServices(x =>
                     {
                         x.UseXUnitLogging(helper);
+                        x.AddControllers()
+                            .AddApplicationPart(typeof(CompetitionController).Assembly);
                     });
                 });
             testDumper = new FileDumper(Path.Combine(CORE_PATH, "ResultDumps"));
-            Client = _factory.CreateClient();
+            Client = factory.CreateClient();
 
-            _factory.Server.Should().NotBeNull();
+            factory.Server.Should().NotBeNull();
             return Task.CompletedTask;
         }
         protected ILogger Logger = null!;
@@ -70,8 +79,15 @@ namespace RepositoriesTests
         }
         public override async Task DisposeAsync()
         {
-            await _factory.DisposeAsync();
+            //await factory.DisposeAsync();
             await base.DisposeAsync();
+        }
+        public async Task<T> GetObject<T>(HttpResponseMessage response)
+        {
+            var json = await response.Content.ReadAsStringAsync();
+            var obj = JsonConvert.DeserializeObject<T>(json);
+            obj.Should().NotBeNull();
+            return obj!;
         }
     }
 }
