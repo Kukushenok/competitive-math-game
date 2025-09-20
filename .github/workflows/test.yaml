@@ -97,37 +97,56 @@ jobs:
           name: e2e-test-results
           path: |
             src/E2ETests/bin/Debug/net8.0/allure-results
-
   merge_allure:
     name: Merge Allure Results
     runs-on: ubuntu-latest
     container: alpine:latest
     needs: [unit_tests, integration_tests, e2e_tests]
-    if: always()   # <-- ensures this job always runs, even if tests fail
+    if: always()
     steps:
       - uses: actions/download-artifact@v4
         with:
           path: artifacts
+
       - name: Install dependencies
         run: apk add --no-cache bash git
+
       - name: Merge Allure Results
         run: |
           mkdir -p merged-allure-results
           cp -r artifacts/unit-test-results/* merged-allure-results/ || true
           cp -r artifacts/integration-test-results/* merged-allure-results/ || true
           cp -r artifacts/e2e-test-results/* merged-allure-results/ || true
+
+      - name: Checkout gh-pages (external repo)
+        uses: actions/checkout@v4
+        with:
+          repository: Kukushenok/competitive-math-game-tests
+          ref: gh-pages
+          path: gh-pages
+          token: ${{ secrets.PAGES_PUBLISH_REPO }}
+
+      - name: Copy history from previous report
+        run: |
+          mkdir -p allure-history
+          if [ -d gh-pages/last_history ]; then
+            cp -r gh-pages/last_history allure-history/
+          fi
+
       - name: Upload Merged Allure
         uses: actions/upload-artifact@v4
         with:
           name: merged-allure-results
           path: merged-allure-results
+
       - name: Build test report
         uses: simple-elf/allure-report-action@v1.7
         if: always()
         with:
           gh_pages: gh-pages
-          allure_history: allure-history
+          allure_history: allure-history   # 👈 keeps history
           allure_results: merged-allure-results
+
       - name: Publish test report
         uses: peaceiris/actions-gh-pages@v3
         if: always()
