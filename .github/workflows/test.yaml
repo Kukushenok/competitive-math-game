@@ -39,7 +39,7 @@ jobs:
             src/ServicesUnitTests/bin/Debug/net8.0/allure-results
 
   component_tests:
-    name: Integration Tests
+    name: Component Tests
     runs-on: ubuntu-latest
     needs: unit_tests 
     env:
@@ -55,21 +55,21 @@ jobs:
         run: |
           cd src/RepositoriesTests
           dotnet restore -s "https://api.nuget.org/v3/index.json" -s $NUGET_SOURCE
-      - name: Run Integration Tests
+      - name: Run Component Tests
         run: |
           cd src/RepositoriesTests
           dotnet test --logger "trx;LogFileName=integration-tests.trx" \
                       --results-directory ./TestResults
-      - name: Upload Integration Test Results
+      - name: Upload Component Test Results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: integration-test-results
+          name: component-test-results
           path: |
             src/RepositoriesTests/bin/Debug/net8.0/allure-results
 
   integration_tests:
-    name: Integrational Tests
+    name: Integration Tests
     runs-on: ubuntu-latest
     needs: component_tests 
     env:
@@ -82,7 +82,9 @@ jobs:
         with:
           dotnet-version: '8.0.x'
       - name: Start the application
-        run: docker compose -f docker-compose.integration.yml up -d
+        run: |
+          cd src/
+          docker compose -f docker-compose.integration.yml up -d
       - name: Wait for services to be healthy
         run: |
           echo "Waiting for services..."
@@ -92,7 +94,7 @@ jobs:
         run: |
           cd src/IntegrationalTests
           dotnet restore -s "https://api.nuget.org/v3/index.json" -s $NUGET_SOURCE
-      - name: Run E2E Tests
+      - name: Run Integration Tests
         run: |
           cd src/IntegrationalTests
           dotnet test --logger "trx;LogFileName=e2e-tests.trx" \
@@ -123,7 +125,9 @@ jobs:
         with:
           dotnet-version: '8.0.x'
       - name: Start the application
-        run: docker compose -f docker-compose.integration.yml up -d
+        run: |
+          cd src/
+          docker compose -f docker-compose.integration.yml up -d
       - name: Wait for services to be healthy
         run: |
           echo "Waiting for services..."
