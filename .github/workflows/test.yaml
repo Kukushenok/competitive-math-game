@@ -101,7 +101,9 @@ jobs:
                       --results-directory ./TestResults
       - name: Stop services
         if: always()
-        run: docker compose -f docker-compose.integration.yml down -v
+        run: |
+          cd src/
+          docker compose -f docker-compose.integration.yml down -v
       - name: Upload E2E Test Results
         if: always()
         uses: actions/upload-artifact@v4
@@ -144,7 +146,9 @@ jobs:
                       --results-directory ./TestResults
       - name: Stop services
         if: always()
-        run: docker compose -f docker-compose.integration.yml down -v
+        run: |
+          cd src/
+          docker compose -f docker-compose.integration.yml down -v
       - name: Upload E2E Test Results
         if: always()
         uses: actions/upload-artifact@v4
