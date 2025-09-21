@@ -38,7 +38,7 @@ jobs:
           path: |
             src/ServicesUnitTests/bin/Debug/net8.0/allure-results
 
-  integration_tests:
+  component_tests:
     name: Integration Tests
     runs-on: ubuntu-latest
     needs: unit_tests 
@@ -68,6 +68,47 @@ jobs:
           path: |
             src/RepositoriesTests/bin/Debug/net8.0/allure-results
 
+  integration_tests:
+    name: Integrational Tests
+    runs-on: ubuntu-latest
+    needs: component_tests 
+    env:
+      DOTNET_TESTCONTAINERS_ENABLED: true
+      TESTCONTAINERS_RYUK_DISABLED: true
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Start the application
+        run: docker compose -f docker-compose.integration.yml up -d
+      - name: Wait for services to be healthy
+        run: |
+          echo "Waiting for services..."
+          sleep 20
+          docker ps -a
+      - name: Restore test project
+        run: |
+          cd src/IntegrationalTests
+          dotnet restore -s "https://api.nuget.org/v3/index.json" -s $NUGET_SOURCE
+      - name: Run E2E Tests
+        run: |
+          cd src/IntegrationalTests
+          dotnet test --logger "trx;LogFileName=e2e-tests.trx" \
+                      --results-directory ./TestResults
+      - name: Stop services
+        if: always()
+        run: docker compose -f docker-compose.integration.yml down -v
+      - name: Upload E2E Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: integration-test-results
+          path: |
+            src/IntegrationalTests/bin/Debug/net8.0/allure-results
+
+
   e2e_tests:
     name: E2E Tests
     runs-on: ubuntu-latest
@@ -81,22 +122,35 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
-      - name: Restore
+      - name: Start the application
+        run: docker compose -f docker-compose.integration.yml up -d
+      - name: Wait for services to be healthy
+        run: |
+          echo "Waiting for services..."
+          sleep 20
+          docker ps -a
+      - name: Restore test project
         run: |
           cd src/E2ETests
           dotnet restore -s "https://api.nuget.org/v3/index.json" -s $NUGET_SOURCE
-      - name: Run Integration Tests
+      - name: Run E2E Tests
         run: |
           cd src/E2ETests
           dotnet test --logger "trx;LogFileName=e2e-tests.trx" \
                       --results-directory ./TestResults
-      - name: Upload Integration Test Results
+      - name: Stop services
+        if: always()
+        run: docker compose -f docker-compose.integration.yml down -v
+      - name: Upload E2E Test Results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: e2e-test-results
           path: |
             src/E2ETests/bin/Debug/net8.0/allure-results
+
+
+
   merge_allure:
     name: Merge Allure Results
     runs-on: ubuntu-latest
@@ -115,6 +169,7 @@ jobs:
         run: |
           mkdir -p merged-allure-results
           cp -r artifacts/unit-test-results/* merged-allure-results/ || true
+          cp -r artifacts/component-test-results/* merged-allure-results/ || true
           cp -r artifacts/integration-test-results/* merged-allure-results/ || true
           cp -r artifacts/e2e-test-results/* merged-allure-results/ || true
 

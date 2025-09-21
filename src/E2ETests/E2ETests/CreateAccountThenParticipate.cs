@@ -16,42 +16,61 @@ using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.BackendUsage.Objects;
 using Allure.Xunit.Attributes.Steps;
 using Newtonsoft.Json;
+using IntegrationalTests;
+using System.Net.Http.Json;
+using RepositoriesRealisation.Models;
+using Bogus;
+using Microsoft.EntityFrameworkCore;
 namespace E2ETests
 {
-    public class CreateAccountThenParticipateE2ETest : E2ETest
+    public class CreateAccountThenParticipateE2ETest : IntegrationalTest
     {
-        public CreateAccountThenParticipateE2ETest(ITestOutputHelper helper, WebApplicationFactory<Program> p) : base(helper, p)
+        public CreateAccountThenParticipateE2ETest(IntegrationalFixture f) : base(f)
         {
-            
+
         }
+
         [Fact]
         public async Task CompetitionFetchOne()
         {
-            await ExecSQLFile("mix_no_rewards.sql");
-
+            
             var acc = await CreateAccount();
             var comp = await GetCompetition();
             await Participate(comp);
             await GetLeaderboard(comp, acc);
+
+            await RemoveAccount(acc);
         }
         [AllureStep("Create account")]
         private async Task<AuthSuccessResultDTO> CreateAccount()
         {
             
-            var x = await Post<AccountCreationDTO, AuthSuccessResultDTO>("/api/v1/auth/register", new AccountCreationDTO(
-                "kukushenok",
+            var x = await Client.PostAsJsonAsync("/api/v1/auth/register", new AccountCreationDTO(
+                Faker.Internet.UserName(),
                 "MySuperLongPassword",
                 "mrcoolmoder@gmail.com"
             ));
-            SetAuth(x.Token);
-            return x;
+            var result = await x.FromJSONAsync<AuthSuccessResultDTO>();
+            Client.DefaultRequestHeaders.Add("Bearer", result.Token);
+            return result;
         }
+
+        [AllureStep("Cleanup")]
+        private async Task RemoveAccount(AuthSuccessResultDTO dto)
+        {
+            int idx = dto.AccountID;
+            await Context.PlayerParticipation.Where(x => x.AccountID == idx).ExecuteDeleteAsync();
+            var accs = await Context.AccountsReadOnly.Where(x => x.Id == idx).ToListAsync();
+            Context.AccountsReadOnly.RemoveRange(accs);
+            await Context.SaveChangesAsync();
+        }
+
         [AllureStep("Get competition")]
         private async Task<CompetitionDTO> GetCompetition()
         {
             var result = await Client.GetAsync("/api/v1/competitions/?count=1");
             result.IsSuccessStatusCode.Should().BeTrue();
-            var obj = await GetObject<CompetitionDTO[]>(result);
+            var obj = await result.FromJSONAsync<CompetitionDTO[]>();
             obj.Should().ContainSingle();
             return obj[0];
         }
@@ -65,8 +84,12 @@ namespace E2ETests
         private async Task GetLeaderboard(CompetitionDTO dto, AuthSuccessResultDTO login)
         {
             var result = await Client.GetAsync($"/api/v1/competitions/{dto.ID}/participations");
-            var L = await GetObject<PlayerParticipationDTO[]>(result);
+            var L = await result.FromJSONAsync<PlayerParticipationDTO[]>();
             L.Should().ContainSingle().Which.AccountID.Should().Be(login.AccountID);
+        }
+        protected override async Task Init()
+        {
+            await Instantiate(new CompetitionModel("A", "B", DateTime.UtcNow, DateTime.UtcNow.AddDays(2)));
         }
     }
 }

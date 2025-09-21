@@ -2,15 +2,15 @@
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
-EXPOSE 80
+EXPOSE 8080
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY ["CompetitiveBackend.csproj", "."]
-RUN dotnet restore "./CompetitiveBackend.csproj"
 COPY . .
-WORKDIR "/src/."
+WORKDIR /src/CompetitiveBackend
+RUN dotnet restore "./CompetitiveBackend.csproj"
+
 RUN dotnet build "CompetitiveBackend.csproj" -c Release -o /app/build
 
 FROM build AS publish

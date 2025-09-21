@@ -24,11 +24,12 @@
     <PackageReference Include="Testcontainers.PostgreSql" Version="4.3.0" />
     <PackageReference Include="xunit" Version="2.5.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
+	<PackageReference Include="Bogus" Version="35.6.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\CompetitiveBackend\CompetitiveBackend.csproj" />
-    <ProjectReference Include="..\IntegrationalTestsBase\IntegrationalTestsBase.csproj" />
+    <ProjectReference Include="..\RepositoriesRealisation\RepositoriesRealisation.csproj" />
     <ProjectReference Include="..\XUnitLoggingProvider\XUnitLoggingProvider.csproj" />
   </ItemGroup>
 
