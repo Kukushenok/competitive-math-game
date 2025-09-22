@@ -49,7 +49,7 @@
 2. frontend - TypeScript + React
 3. БД - PostgreSQL для хранения данных
 #### Диаграмма БД
-![BPMN-диаграмма](./img/db.png)
+![BPMN-диаграмма](./img/db.svg)
 
 #### Компонентная диаграмма
 ![toplevel](./img/components.svg)
