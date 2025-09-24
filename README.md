@@ -54,28 +54,16 @@
 #### Компонентная диаграмма
 ![toplevel](./img/components.svg)
 
-#### Диаграммы
+#### Экраны
 
-| ![ER-диаграмма](./img/layout/0.svg) |
-|-|
+[Дизайн Figma](https://www.figma.com/design/u3cwzouwcNuMqz9DbHhPEJ/IdkFigma?node-id=0-1&t=L29h0HDqzmGNNvPT-1)
 
-| ![ER-диаграмма](./img/layout/1.svg) |
-|-|
-
-| ![ER-диаграмма](./img/layout/2.svg) |
-|-|
-
-| ![ER-диаграмма](./img/layout/3.svg) |
-|-|
-
-| ![ER-диаграмма](./img/layout/4.svg) |
-|-|
-
-#### TODO
-
+<!---
+TODO
 BPMN второй случай: игрок начинает соревнование заранее и потом ОШИБКА.
 
 Компонентная диаграмма НЕ РАБОТАЕТ
 
 Навигация в экранах для Web-приложения.
 
+-->
