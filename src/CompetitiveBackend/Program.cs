@@ -54,7 +54,12 @@ namespace CompetitiveBackend
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(
+                //    x=>
+                //{
+                //    x.RoutePrefix = "/api/v1";
+                //}
+                );
 
             }
 

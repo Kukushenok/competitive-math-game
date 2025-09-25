@@ -14,7 +14,7 @@ namespace CompetitiveBackend.Controllers
 {
     [ApiController]
     [Produces("application/json")]
-    [Route($"{APIConsts.ROOTV1}/player/")]
+    [Route($"{APIConsts.ROOTV1}/{APIConsts.PLAYERS}/")]
     public class SelfPlayerController : ControllerBase
     {
         private ISelfUseCase _selfUseCase;
@@ -26,7 +26,7 @@ namespace CompetitiveBackend.Controllers
         /// Получить данные своего профиля
         /// </summary>
         /// <returns>Данные профиля</returns>
-        [HttpGet("self")]
+        [HttpGet($"{APIConsts.SELF}")]
         public async Task<ActionResult<PlayerProfileDTO>> GetPlayerProfile()
         {
             using var self = await _selfUseCase.Auth(HttpContext);
@@ -39,7 +39,7 @@ namespace CompetitiveBackend.Controllers
         /// <param name="name">Имя</param>
         /// <param name="description">Описание профиля</param>
         /// <returns></returns>
-        [HttpPatch("self")]
+        [HttpPatch($"{APIConsts.SELF}")]
         public async Task<ActionResult> SetPlayerProfile(PlayerProfileDTO dto)
         {
             using var self = await _selfUseCase.Auth(HttpContext);
@@ -50,7 +50,7 @@ namespace CompetitiveBackend.Controllers
         /// Получить изображение своего профиля
         /// </summary>
         /// <returns></returns>
-        [HttpGet("self/image")]
+        [HttpGet($"{APIConsts.SELF}/image")]
         public async Task<FileResult> GetPlayerImage()
         {
             using var self = await _selfUseCase.Auth(HttpContext);
@@ -62,7 +62,7 @@ namespace CompetitiveBackend.Controllers
         /// </summary>
         /// <param name="file"></param>
         /// <returns></returns>
-        [HttpPost("self/image")]
+        [HttpPut($"{APIConsts.SELF}/image")]
         public async Task<ActionResult> SetPlayerImage(IFormFile file)
         {
             using var self = await _selfUseCase.Auth(HttpContext);

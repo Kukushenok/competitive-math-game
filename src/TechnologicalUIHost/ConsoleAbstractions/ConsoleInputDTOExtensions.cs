@@ -26,7 +26,7 @@ namespace TechnologicalUIHost.ConsoleAbstractions
             return new CompetitionDTO(null, name, description, startDate, endDate);
         }
 
-        public static CompetitionUpdateRequestDTO ReadCompetitionUpdateRequestDTO(this IConsoleInput input, string prompt = "> ")
+        public static CompetitionPatchRequestDTO ReadCompetitionUpdateRequestDTO(this IConsoleInput input, string prompt = "> ")
         {
             int id = input.ReadInt($"Введите ID соревнования {prompt}");
             string? name = input.PromtInput($"Имя (если нужно изменить) {prompt}");
@@ -38,7 +38,7 @@ namespace TechnologicalUIHost.ConsoleAbstractions
             DateTime? startDate = input.ReadNullableDateTime($"Дата начала (если нужно изменить) {prompt}");
             DateTime? endDate = input.ReadNullableDateTime($"Дата конца (если нужно изменить) {prompt}");
 
-            return new CompetitionUpdateRequestDTO(id, name, description, startDate, endDate);
+            return new CompetitionPatchRequestDTO(id, name, description, startDate, endDate);
         }
         public static LevelDataInfoDTO ReadLevelDataInfoDTOWithoutID(this IConsoleInput input, string prompt)
         {

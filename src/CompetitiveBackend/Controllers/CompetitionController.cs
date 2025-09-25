@@ -31,7 +31,7 @@ namespace CompetitiveBackend.Controllers
             else dtos = (await watchUseCase.GetAllCompetitions(new DataLimiterDTO(page, count))).ToArray();
             return dtos;
         }
-        [HttpPut("")]
+        [HttpPost("")]
         public async Task<ActionResult> CreateCompetition(CompetitionDTO dto)
         {
             using var self = await editUseCase.Auth(HttpContext);
@@ -39,7 +39,7 @@ namespace CompetitiveBackend.Controllers
             return NoContent();
         }
         [HttpPatch("{id}")]
-        public async Task<ActionResult> UpdateCompetition(int id, CompetitionUpdateRequestDTO dto)
+        public async Task<ActionResult> UpdateCompetition(int id, CompetitionPatchRequestDTO dto)
         {
             using var self = await editUseCase.Auth(HttpContext);
             dto.ID = id;

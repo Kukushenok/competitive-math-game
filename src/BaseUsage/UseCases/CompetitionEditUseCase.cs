@@ -19,7 +19,7 @@ namespace CompetitiveBackend.BaseUsage.UseCases
             await _service.CreateCompetition(competition.Convert());
         }
 
-        public async Task UpdateCompetition(CompetitionUpdateRequestDTO competition)
+        public async Task UpdateCompetition(CompetitionPatchRequestDTO competition)
         {
             AdminAuthCheck(out _);
             await _service.UpdateCompetition(competition.ID!.Value, competition.Name, competition.Description, competition.StartDate, competition.EndDate);
