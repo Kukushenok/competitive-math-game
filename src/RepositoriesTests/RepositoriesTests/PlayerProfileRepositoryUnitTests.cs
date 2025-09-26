@@ -3,6 +3,7 @@ using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Repositories.Exceptions;
 using FluentAssertions;
 using RepositoriesRealisation.DatabaseObjects;
+using RepositoriesRealisation.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
