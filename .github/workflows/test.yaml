@@ -84,7 +84,6 @@ jobs:
       - name: Start the application
         run: |
           cd src/
-          mkdir -p postgres/data
           docker compose -f docker-compose.integration.yml up -d
       - name: Wait for services to be healthy
         run: |
@@ -130,7 +129,6 @@ jobs:
       - name: Start the application
         run: |
           cd src/
-          mkdir -p postgres/data
           docker compose -f docker-compose.integration.yml up -d
       - name: Wait for services to be healthy
         run: |
