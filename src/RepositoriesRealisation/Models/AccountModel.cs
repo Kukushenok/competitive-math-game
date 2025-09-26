@@ -1,10 +1,10 @@
 ﻿using CompetitiveBackend.Core.Auth;
 using CompetitiveBackend.Core.Objects;
-using RepositoriesRealisation.Models;
+using RepositoriesRealisation.DatabaseObjects;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RepositoriesRealisation.DatabaseObjects
+namespace RepositoriesRealisation.Models
 {
     [Table("account")]
     public class AccountModel
