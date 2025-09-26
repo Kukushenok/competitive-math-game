@@ -28,14 +28,14 @@ namespace CompetitiveBackend.Controllers
             return (await self.GetAllRewardsOf(playerID, new DataLimiterDTO(page, count))).ToArray();
         }
         [HttpPut($"{{playerID}}/{APIConsts.REWARDS}")]
-        public async Task<ActionResult> GrantRewardTo(int playerID, int rewardDescriptionID)
+        public async Task<NoContentResult> GrantRewardTo(int playerID, int rewardDescriptionID)
         {
             using var self = await _useCase.Auth(HttpContext);
             await self.GrantRewardToPlayer(playerID, rewardDescriptionID);
             return NoContent();
         }
         [HttpDelete($"{{playerID}}/{APIConsts.REWARDS}/{{rewardID}}")]
-        public async Task<ActionResult> RemoveReward(int rewardID)
+        public async Task<NoContentResult> RemoveReward(int rewardID)
         {
             using var self = await _useCase.Auth(HttpContext);
             await self.DeleteReward(rewardID);

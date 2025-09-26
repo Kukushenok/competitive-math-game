@@ -38,21 +38,21 @@ namespace CompetitiveBackend.Controllers
         //    return (await watchUseCase.GetRewardGameAsset(id)).ToFileResult($"reward_{id}_asset.bytes");
         //}
         [HttpPost("")]
-        public async Task<ActionResult> CreateReward(RewardDescriptionDTO dto)
+        public async Task<NoContentResult> CreateReward(RewardDescriptionDTO dto)
         {
             using var self = await editUseCase.Auth(HttpContext);
             await self.CreateRewardDescription(dto);
             return NoContent();
         }
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateRewardDescription(RewardDescriptionDTO dto)
+        public async Task<NoContentResult> UpdateRewardDescription(RewardDescriptionDTO dto)
         {
             using var self = await editUseCase.Auth(HttpContext);
             await self.UpdateRewardDescription(dto);
             return NoContent();
         }
         [HttpPut($"{{id}}/{APIConsts.IMAGE}")]
-        public async Task<ActionResult> UpdateRewardDescriptionIcon(int id, IFormFile file)
+        public async Task<NoContentResult> UpdateRewardDescriptionIcon(int id, IFormFile file)
         {
             using var self = await editUseCase.Auth(HttpContext);
             await self.SetRewardIcon(id, await file.ToLargeData());

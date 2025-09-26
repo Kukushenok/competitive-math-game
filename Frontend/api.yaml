@@ -1,0 +1,1281 @@
+openapi: 3.0.1
+info:
+  title: CompetitiveBackend
+  version: '1.0'
+paths:
+  /api/v1/auth/login:
+    post:
+      tags:
+        - Authorization
+      summary: Логин
+      requestBody:
+        description: Данные для входа в аккаунт
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/AccountLoginDTO'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountLoginDTO'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/AccountLoginDTO'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/AccountLoginDTO'
+      responses:
+        '200':
+          description: Успешный вход в аккаунт
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/AuthSuccessResultDTO'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthSuccessResultDTO'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/AuthSuccessResultDTO'
+        '404':
+          description: Пароль не подошёл или логин не найден
+        default:
+          description: Ошибка сервера
+  /api/v1/auth/register:
+    post:
+      summary: Регистрация нового аккаунта
+      tags:
+        - Authorization
+      requestBody:
+        description: Данные для регистрации
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/AccountCreationDTO'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountCreationDTO'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/AccountCreationDTO'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/AccountCreationDTO'
+      responses:
+        '200':
+          description: Успешная регистрация
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/AuthSuccessResultDTO'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthSuccessResultDTO'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/AuthSuccessResultDTO'
+        '409':
+          description: Такой логин уже занят
+        default:
+          description: Ошибка сервера
+  '/api/v1/competitions/{id}':
+    get:
+      tags:
+        - Competition
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/CompetitionDTO'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompetitionDTO'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CompetitionDTO'
+    patch:
+      tags:
+        - Competition
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/CompetitionPatchRequestDTO'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompetitionPatchRequestDTO'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CompetitionPatchRequestDTO'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CompetitionPatchRequestDTO'
+      responses:
+        '200':
+          description: Success
+  /api/v1/competitions:
+    get:
+      tags:
+        - Competition
+      parameters:
+        - name: page
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: count
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: filter
+          in: query
+          style: form
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CompetitionDTO'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CompetitionDTO'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CompetitionDTO'
+    post:
+      tags:
+        - Competition
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/CompetitionDTO'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompetitionDTO'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CompetitionDTO'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CompetitionDTO'
+      responses:
+        '200':
+          description: Success
+  '/api/v1/competitions/{id}/level_file':
+    get:
+      tags:
+        - Competition
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+        - name: platform
+          in: query
+          style: form
+          schema:
+            type: string
+        - name: maxVersion
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+  '/api/v1/competitions/{id}/levels':
+    post:
+      tags:
+        - CompetitionLevel
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                Platform:
+                  type: string
+                VersionKey:
+                  type: integer
+                  format: int32
+                File:
+                  type: string
+                  format: binary
+            encoding:
+              Platform:
+                style: form
+              VersionKey:
+                style: form
+              File:
+                style: form
+      responses:
+        '200':
+          description: Success
+    get:
+      tags:
+        - CompetitionLevel
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LevelDataInfoDTO'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LevelDataInfoDTO'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LevelDataInfoDTO'
+  '/api/v1/competitions/{compID}/levels/{id}':
+    put:
+      tags:
+        - CompetitionLevel
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+        - name: compID
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/LevelDataInfoDTO'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LevelDataInfoDTO'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/LevelDataInfoDTO'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/LevelDataInfoDTO'
+      responses:
+        '200':
+          description: Success
+    delete:
+      tags:
+        - CompetitionLevel
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+        - name: compID
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+    get:
+      tags:
+        - CompetitionLevel
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+        - name: compID
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/LevelDataInfoDTO'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LevelDataInfoDTO'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/LevelDataInfoDTO'
+  '/api/v1/competitions/{compID}/levels/{id}/level_file':
+    put:
+      tags:
+        - CompetitionLevel
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+        - name: compID
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+            encoding:
+              file:
+                style: form
+      responses:
+        '200':
+          description: Success
+    get:
+      tags:
+        - CompetitionLevel
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+        - name: compID
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+  '/api/v1/competitions/{compID}/rewards':
+    get:
+      tags:
+        - CompetitionReward
+      parameters:
+        - name: compID
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CompetitionRewardDTO'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CompetitionRewardDTO'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CompetitionRewardDTO'
+    post:
+      tags:
+        - CompetitionReward
+      parameters:
+        - name: compID
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompetitionRewardDTO'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompetitionRewardDTO'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompetitionRewardDTO'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompetitionRewardDTO'
+      responses:
+        '200':
+          description: Success
+  '/api/v1/competitions/{compID}/rewards/{rewardID}':
+    delete:
+      tags:
+        - CompetitionReward
+      parameters:
+        - name: compID
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+        - name: rewardID
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+    patch:
+      tags:
+        - CompetitionReward
+      parameters:
+        - name: compID
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+        - name: rewardID
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompetitionRewardDTO'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompetitionRewardDTO'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompetitionRewardDTO'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompetitionRewardDTO'
+      responses:
+        '200':
+          description: Success
+  '/api/v1/players/{profileID}':
+    get:
+      tags:
+        - Player
+      summary: Получить информацию о профиле
+      parameters:
+        - name: profileID
+          in: path
+          description: Идентификатор игрока
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayerProfileDTO'
+  '/api/v1/players/{profileID}/image':
+    get:
+      tags:
+        - Player
+      summary: Получить информацию о изображении
+      parameters:
+        - name: profileID
+          in: path
+          description: Идентификатор игрока
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+  '/api/v1/competitions/{compID}/participations':
+    get:
+      tags:
+        - PlayerParticipation
+      parameters:
+        - name: compID
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+        - name: page
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: count
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+            default: 0
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlayerParticipationDTO'
+    put:
+      tags:
+        - PlayerParticipation
+      parameters:
+        - name: compID
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+        - name: score
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+  '/api/v1/competitions/{compID}/participations/{profileID}':
+    get:
+      tags:
+        - PlayerParticipation
+      parameters:
+        - name: profileID
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+        - name: compID
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayerParticipationDTO'
+    delete:
+      tags:
+        - PlayerParticipation
+      parameters:
+        - name: profileID
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+        - name: compID
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+  /api/v1/players/me/participations:
+    get:
+      tags:
+        - PlayerParticipation
+      parameters:
+        - name: page
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: count
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+            default: 0
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlayerParticipationDTO'
+  /api/v1/players/me/rewards:
+    get:
+      tags:
+        - PlayerRewards
+      parameters:
+        - name: page
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: count
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlayerRewardDTO'
+  '/api/v1/players/{playerID}/rewards':
+    get:
+      tags:
+        - PlayerRewards
+      parameters:
+        - name: playerID
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+        - name: page
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: count
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlayerRewardDTO'
+    put:
+      tags:
+        - PlayerRewards
+      parameters:
+        - name: playerID
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+        - name: rewardDescriptionID
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+  '/api/v1/players/{playerID}/rewards/{rewardID}':
+    delete:
+      tags:
+        - PlayerRewards
+      parameters:
+        - name: rewardID
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+        - name: playerID
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+  '/api/v1/reward_descriptions/{id}':
+    get:
+      tags:
+        - RewardDescription
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/RewardDescriptionDTO'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RewardDescriptionDTO'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/RewardDescriptionDTO'
+    put:
+      tags:
+        - RewardDescription
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/RewardDescriptionDTO'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RewardDescriptionDTO'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/RewardDescriptionDTO'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/RewardDescriptionDTO'
+      responses:
+        '200':
+          description: Success
+  /api/v1/reward_descriptions:
+    get:
+      tags:
+        - RewardDescription
+      parameters:
+        - name: page
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: count
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RewardDescriptionDTO'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RewardDescriptionDTO'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RewardDescriptionDTO'
+    post:
+      tags:
+        - RewardDescription
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/RewardDescriptionDTO'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RewardDescriptionDTO'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/RewardDescriptionDTO'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/RewardDescriptionDTO'
+      responses:
+        '200':
+          description: Success
+  '/api/v1/reward_descriptions/{id}/image':
+    get:
+      tags:
+        - RewardDescription
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+    put:
+      tags:
+        - RewardDescription
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+            encoding:
+              file:
+                style: form
+      responses:
+        '200':
+          description: Success
+  /api/v1/players/me:
+    get:
+      tags:
+        - SelfPlayer
+      summary: Получить данные своего профиля
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayerProfileDTO'
+    patch:
+      tags:
+        - SelfPlayer
+      summary: Обновить данные своего профиля
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/PlayerProfileDTO'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlayerProfileDTO'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/PlayerProfileDTO'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/PlayerProfileDTO'
+      responses:
+        '200':
+          description: Success
+  /api/v1/players/me/image:
+    get:
+      tags:
+        - SelfPlayer
+      summary: Получить изображение своего профиля
+      responses:
+        '200':
+          description: Success
+    put:
+      tags:
+        - SelfPlayer
+      summary: Обновить изображение своего профиля
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+            encoding:
+              file:
+                style: form
+      responses:
+        '200':
+          description: Success
+components:
+  schemas:
+    AccountCreationDTO:
+      type: object
+      properties:
+        login:
+          type: string
+          nullable: true
+        password:
+          type: string
+          nullable: true
+        email:
+          type: string
+          nullable: true
+      additionalProperties: false
+    AccountLoginDTO:
+      type: object
+      properties:
+        login:
+          type: string
+          nullable: true
+        password:
+          type: string
+          nullable: true
+      additionalProperties: false
+    AuthSuccessResultDTO:
+      type: object
+      properties:
+        token:
+          type: string
+          nullable: true
+        roleName:
+          type: string
+          nullable: true
+        accountID:
+          type: integer
+          format: int32
+      additionalProperties: false
+    CompetitionDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+      additionalProperties: false
+    CompetitionPatchRequestDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        startDate:
+          type: string
+          format: date-time
+          nullable: true
+        endDate:
+          type: string
+          format: date-time
+          nullable: true
+      additionalProperties: false
+    CompetitionRewardDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          nullable: true
+        rewardDescriptionID:
+          type: integer
+          format: int32
+        conditionByRank:
+          $ref: '#/components/schemas/RankRewardConditionDTO'
+        conditionByPlace:
+          $ref: '#/components/schemas/PlaceRewardConditionDTO'
+        competitionID:
+          type: integer
+          format: int32
+        name:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+      additionalProperties: false
+    LevelDataInfoDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          nullable: true
+        competitionID:
+          type: integer
+          format: int32
+        platform:
+          type: string
+          nullable: true
+        versionKey:
+          type: integer
+          format: int32
+      additionalProperties: false
+    PlaceRewardConditionDTO:
+      type: object
+      properties:
+        minPlace:
+          type: integer
+          format: int32
+        maxPlace:
+          type: integer
+          format: int32
+      additionalProperties: false
+    PlayerParticipationDTO:
+      type: object
+      properties:
+        accountID:
+          type: integer
+          format: int32
+        competition:
+          type: integer
+          format: int32
+        score:
+          type: integer
+          format: int32
+        lastUpdateTime:
+          type: string
+          format: date-time
+        profileInfo:
+          $ref: '#/components/schemas/PlayerProfileDTO'
+        competitionInfo:
+          $ref: '#/components/schemas/CompetitionDTO'
+      additionalProperties: false
+    PlayerProfileDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+      additionalProperties: false
+    PlayerRewardDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          nullable: true
+        playerID:
+          type: integer
+          format: int32
+        rewardDescriptionID:
+          type: integer
+          format: int32
+        grantedCompetitionID:
+          type: integer
+          format: int32
+          nullable: true
+        grantDate:
+          type: string
+          format: date-time
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+      additionalProperties: false
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        status:
+          type: integer
+          format: int32
+          nullable: true
+        detail:
+          type: string
+          nullable: true
+        instance:
+          type: string
+          nullable: true
+      additionalProperties: { }
+    RankRewardConditionDTO:
+      type: object
+      properties:
+        minRank:
+          type: number
+          format: float
+        maxRank:
+          type: number
+          format: float
+      additionalProperties: false
+    RewardDescriptionDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+      additionalProperties: false
+    UpdateCompetitionRewardDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          nullable: true
+        rewardDescriptionID:
+          type: integer
+          format: int32
+        conditionByRank:
+          $ref: '#/components/schemas/RankRewardConditionDTO'
+        conditionByPlace:
+          $ref: '#/components/schemas/PlaceRewardConditionDTO'
+      additionalProperties: false
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      description: Put **_ONLY_** your JWT Bearer token on textbox below!
+      name: Bearer
+      in: header
+security:
+  - Bearer: [ ]

@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.OpenApi.Models;
 using RepositoriesRealisation;
 using ServicesRealisation;
+using System.Reflection;
 
 namespace CompetitiveBackend
 {
@@ -46,6 +47,15 @@ namespace CompetitiveBackend
                 {
                     { jwtSecurityScheme, Array.Empty<string>() }
                 });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+
+                if (File.Exists(xmlPath))
+                {
+                    setup.IncludeXmlComments(xmlPath);
+                }
+
             });
 
             var app = builder.Build();

@@ -28,14 +28,14 @@ namespace CompetitiveBackend.Controllers
             return (await _watchUseCase.GetParticipation(compID, profileID));
         }
         [HttpDelete($"{APIConsts.COMPETITIONS}/{{compID}}/{APIConsts.COMP_PARTICIPATIONS}/{{profileID}}")]
-        public async Task<ActionResult> DeleteParticipation(int profileID, int compID)
+        public async Task<NoContentResult> DeleteParticipation(int profileID, int compID)
         {
             using var self = await _editUseCase.Auth(HttpContext);
             await self.DeleteParticipation(compID, profileID);
             return NoContent(); 
         }
         [HttpPut($"{APIConsts.COMPETITIONS}/{{compID}}/{APIConsts.COMP_PARTICIPATIONS}")]
-        public async Task<ActionResult> ApplyInCompetition(int compID, int score)
+        public async Task<NoContentResult> ApplyInCompetition(int compID, int score)
         {
             using var self = await _editUseCase.Auth(HttpContext);
             await self.SubmitScoreTo(compID, score);

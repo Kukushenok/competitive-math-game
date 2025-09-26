@@ -32,14 +32,14 @@ namespace CompetitiveBackend.Controllers
             return dtos;
         }
         [HttpPost("")]
-        public async Task<ActionResult> CreateCompetition(CompetitionDTO dto)
+        public async Task<NoContentResult> CreateCompetition(CompetitionDTO dto)
         {
             using var self = await editUseCase.Auth(HttpContext);
             await self.CreateCompetition(dto);
             return NoContent();
         }
         [HttpPatch("{id}")]
-        public async Task<ActionResult> UpdateCompetition(int id, CompetitionPatchRequestDTO dto)
+        public async Task<NoContentResult> UpdateCompetition(int id, CompetitionPatchRequestDTO dto)
         {
             using var self = await editUseCase.Auth(HttpContext);
             dto.ID = id;

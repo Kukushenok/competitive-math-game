@@ -40,7 +40,7 @@ namespace CompetitiveBackend.Controllers
         /// <param name="description">Описание профиля</param>
         /// <returns></returns>
         [HttpPatch($"{APIConsts.SELF}")]
-        public async Task<ActionResult> SetPlayerProfile(PlayerProfileDTO dto)
+        public async Task<NoContentResult> SetPlayerProfile(PlayerProfileDTO dto)
         {
             using var self = await _selfUseCase.Auth(HttpContext);
             await self.UpdateMyPlayerProfile(dto);
@@ -63,7 +63,7 @@ namespace CompetitiveBackend.Controllers
         /// <param name="file"></param>
         /// <returns></returns>
         [HttpPut($"{APIConsts.SELF}/image")]
-        public async Task<ActionResult> SetPlayerImage(IFormFile file)
+        public async Task<NoContentResult> SetPlayerImage(IFormFile file)
         {
             using var self = await _selfUseCase.Auth(HttpContext);
             await self.UpdateMyImage(await file.ToLargeData());
