@@ -10,6 +10,7 @@ using RepositoriesRealisation.DatabaseObjects;
 using Xunit.Abstractions;
 using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories.Exceptions;
+using RepositoriesRealisation.Models;
 namespace RepositoriesTests.RepositoriesTests
 {
     [Collection("sample2")]

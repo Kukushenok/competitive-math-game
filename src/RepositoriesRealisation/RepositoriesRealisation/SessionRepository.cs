@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RepositoriesRealisation;
 using RepositoriesRealisation.DatabaseObjects;
+using RepositoriesRealisation.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 namespace CompetitiveBackend.Repositories

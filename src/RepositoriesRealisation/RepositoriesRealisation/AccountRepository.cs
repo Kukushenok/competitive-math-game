@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RepositoriesRealisation;
 using RepositoriesRealisation.DatabaseObjects;
+using RepositoriesRealisation.Models;
 using RepositoriesRealisation.RepositoriesRealisation;
 using System.Data.Common;
 
