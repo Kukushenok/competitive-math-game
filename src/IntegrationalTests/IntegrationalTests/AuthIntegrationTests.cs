@@ -77,6 +77,7 @@ namespace IntegrationalTests
         [InlineData("")]
         [InlineData("thats my login!")]
         [InlineData("****")]
+        [InlineData("_")]
         public async Task CreateAccount_BadNickname(string name)
         {
             // Act

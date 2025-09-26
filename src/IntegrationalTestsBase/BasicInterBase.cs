@@ -10,22 +10,31 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Newtonsoft.Json;
+using Repositories.Repositories;
 using RepositoriesRealisation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
+using Xunit.Abstractions;
 using XUnitLoggingProvider;
 
 namespace IntegrationalTests
 {
+
     public class IntegrationalFixture : IDisposable
     {
+        internal class DummyConnectionStringGetter : IConnectionStringGetter
+        {
+            public string GetConnectionString() => _connectionString;
+        }
         protected const string CORE_PATH = "../../../";
         protected const string TEST_INIT_PATH = "TestInitScripts";
         public HttpClient Client { get; }
@@ -37,13 +46,11 @@ namespace IntegrationalTests
             Client = new HttpClient { BaseAddress = new Uri("http://localhost:8080") };
             var services = new ServiceCollection();
 
-            services.AddDbContext<BaseDbContext>(options =>
-            {
-                options.UseNpgsql(_connectionString);
-            });
-
+            services.AddDbContextFactory<BaseDbContext, BaseContextFactory>(lifetime: ServiceLifetime.Scoped);
+            services.AddSingleton<IConnectionStringGetter>(new DummyConnectionStringGetter());
+            services.AddSingleton<ILoggerFactory>(new NullLoggerFactory());
             var s = services.BuildServiceProvider();
-            Context = s.GetRequiredService<BaseDbContext>();
+            Context = s.GetRequiredService<IDbContextFactory<BaseDbContext>>().CreateDbContext();
         }
         public async Task ExecSQL(string text)
         {
