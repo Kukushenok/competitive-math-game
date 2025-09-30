@@ -14,18 +14,22 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AccountLoginDTO'
+              $ref: '#/components/schemas/AccountLogin'
       responses:
         '200':
           description: Успешный вход в аккаунт
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AuthSuccessResultDTO'
+                $ref: '#/components/schemas/AuthSuccessResult'
         '404':
           description: Пароль не подошёл или логин не найден
         '500':
           description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
   /api/v1/auth/register:
     post:
       summary: Регистрация нового аккаунта
@@ -36,20 +40,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AccountCreationDTO'
+              $ref: '#/components/schemas/AccountCreation'
       responses:
         '200':
           description: Успешная регистрация
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AuthSuccessResultDTO'
+                $ref: '#/components/schemas/AuthSuccessResult'
         '409':
           description: Такой логин уже занят
         '500':
           description: Ошибка сервера
   '/api/v1/competitions/{id}':
     get:
+      summary: Информация о конкретном соревновании
       tags:
         - Competition
       parameters:
@@ -57,19 +62,26 @@ paths:
           in: path
           required: true
           style: simple
+          description: Идентификатор соревнования
           schema:
-            type: integer
-            format: int32
+            type: string
       responses:
         '200':
-          description: Success
+          description: Успешное получение информации
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CompetitionDTO'
+                $ref: '#/components/schemas/Competition'
+        '404':
+          description: Соревнование не найдено
         '500':
           description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
     patch:
+      summary: Частичное обновление соревнования
       tags:
         - Competition
       parameters:
@@ -77,61 +89,94 @@ paths:
           in: path
           required: true
           style: simple
+          description: Идентификатор соревнования
           schema:
-            type: integer
-            format: int32
+            type: string
       requestBody:
+        description: Описание частичного изменения соревнования
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CompetitionPatchRequestDTO'
+              $ref: '#/components/schemas/CompetitionPatchRequest'
       responses:
-        '200':
-          description: Success
+        '204':
+          description: Успешное изменение
+        '400':
+          description: Некорректные данные запроса
+        '500':
+          description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
   /api/v1/competitions:
     get:
+      summary: Получить информацию о множестве соревнований
       tags:
         - Competition
       parameters:
         - name: page
           in: query
           style: form
+          description: Индекс страницы
           schema:
             type: integer
             format: int32
+            default: 0
         - name: count
           in: query
           style: form
+          description: Количество соревнований на одной странице
           schema:
             type: integer
             format: int32
+            default: 0
         - name: filter
+          description: Параметры фильтрации (active для действующих соревнований)
           in: query
           style: form
           schema:
             type: string
-      security:
-      - Bearer: [ Admin ]
+            format: active
       responses:
         '200':
-          description: Success
+          description: Успешное выполнение
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CompetitionDTO'
+                  $ref: '#/components/schemas/Competition'
+        '500':
+          description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
     post:
+      summary: Добавить новое соревнование
       tags:
         - Competition
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CompetitionDTO'
+              $ref: '#/components/schemas/Competition'
+      security:
+        - Bearer: [ Admin ]
       responses:
         '200':
-          description: Success
+          description: Успешное выполнение
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Competition'
+        '400':
+          description: Некорректные данные запроса
+        '403':
+          description: Пользователь не имеет прав админинстратора
+        '500':
+          description: Ошибка сервера
   '/api/v1/competitions/{id}/level_file':
     get:
       tags:
@@ -219,7 +264,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/LevelDataInfoDTO'
+                  $ref: '#/components/schemas/LevelDataInfo'
         '500':
           description: Ошибка сервера
   '/api/v1/competitions/{compID}/levels/{id}':
@@ -245,7 +290,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LevelDataInfoDTO'
+              $ref: '#/components/schemas/LevelDataInfo'
       responses:
         '200':
           description: Success
@@ -296,7 +341,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LevelDataInfoDTO'
+                $ref: '#/components/schemas/LevelDataInfo'
   '/api/v1/competitions/{compID}/levels/{id}/level_file':
     put:
       tags:
@@ -354,44 +399,65 @@ paths:
           description: Success
   '/api/v1/competitions/{compID}/rewards':
     get:
+      summary: Получить информацию о выдаваемых наградах
       tags:
         - CompetitionReward
       parameters:
         - name: compID
+          description: Идентификатор сорневнования
           in: path
           required: true
           style: simple
           schema:
-            type: integer
-            format: int32
+            type: string
       responses:
         '200':
-          description: Success
+          description: Успешное выполнение
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CompetitionRewardDTO'
+                  $ref: '#/components/schemas/CompetitionReward'
+        '404':
+          description: Соревнование с таким ID не найдено
+        '500':
+          description: Ошибка сервера
     post:
+      summary: Добавить выдаваемую награду
       tags:
         - CompetitionReward
       parameters:
         - name: compID
           in: path
           required: true
+          description: Идентификатор соревнования
           style: simple
           schema:
-            type: integer
-            format: int32
+            type: string
+      security:
+        - Bearer: [ Admin ]
       requestBody:
+        description: Описание выдаваемой награды
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateCompetitionRewardDTO'
+              $ref: '#/components/schemas/UpdateCompetitionReward'
       responses:
         '200':
-          description: Success
+          description: Успешное добавление
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompetitionReward'
+        '403':
+          description: Пользователь не авторизован как админинстратор
+        '500':
+          description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
   '/api/v1/competitions/{compID}/content':
     get:
       tags:
@@ -402,10 +468,7 @@ paths:
           required: true
           style: simple
           schema:
-            type: integer
-            format: int32
-      security:
-        - Bearer: []
+            type: string
       responses:
         '200':
           description: ОК ВСЁ
@@ -414,61 +477,92 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/PlayerParticipationDTO'
+                  $ref: '#/components/schemas/PlayerParticipation'
         '404':
           description: Соревнование с таким ID не найдено
         '500':
           description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
 
 
   '/api/v1/competitions/{compID}/rewards/{rewardID}':
     delete:
+      summary: Удалить выдаваемую награду
       tags:
         - CompetitionReward
       parameters:
         - name: compID
+          description: Идентификатор соревнования
           in: path
           required: true
           style: simple
           schema:
-            type: integer
-            format: int32
+            type: string
         - name: rewardID
+          description: Идентификатор выдаваемой награды
           in: path
           required: true
           style: simple
           schema:
-            type: integer
-            format: int32
+            type: string
+      security:
+        - Bearer: [ Admin ]
+      
       responses:
-        '200':
-          description: Success
+        '204':
+          description: Успешное удаление
+        '403':
+          description: Пользователь не авторизован как админинстратор
+        '404':
+          description: Награда или соревнование с таким ID не найдены
+        '500':
+          description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
     patch:
+      summary: Частичное обновление выдаваемой награды
       tags:
         - CompetitionReward
       parameters:
         - name: compID
+          description: Идентификатор соревнования
           in: path
           required: true
           style: simple
           schema:
-            type: integer
-            format: int32
+            type: string
         - name: rewardID
           in: path
+          description: Идентификатор выдаваемой награды
           required: true
           style: simple
           schema:
-            type: integer
-            format: int32
+            type: string
+      security:
+        - Bearer: [ Admin ]
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateCompetitionRewardDTO'
+              $ref: '#/components/schemas/UpdateCompetitionReward'
       responses:
-        '200':
-          description: Success
+        '204':
+          description: Успешное обновление
+        '400':
+          description: Некорректное обновление
+        '403':
+          description: Пользователь не авторизован как админинстратор
+        '500':
+          description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
   '/api/v1/players/{profileID}':
     get:
       tags:
@@ -489,7 +583,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PlayerProfileDTO'
+                $ref: '#/components/schemas/PlayerProfile'
         '500':
           description: Ошибка сервера
   '/api/v1/players/{profileID}/image':
@@ -513,6 +607,7 @@ paths:
           description: Ошибка сервера
   '/api/v1/competitions/{compID}/participations':
     get:
+      summary: Получить таблицу лидеров соревнования
       tags:
         - PlayerParticipation
       parameters:
@@ -520,12 +615,13 @@ paths:
           in: path
           required: true
           style: simple
+          description: Идентификатор соревнования
           schema:
-            type: integer
-            format: int32
+            type: string
         - name: page
           in: query
           style: form
+          description: Индекс страницы
           schema:
             type: integer
             format: int32
@@ -533,20 +629,30 @@ paths:
         - name: count
           in: query
           style: form
+          description: Количество соревнований на одной странице
           schema:
             type: integer
             format: int32
             default: 0
       responses:
         '200':
-          description: Success
+          description: Успешное выполнение
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/PlayerParticipationDTO'
+                  $ref: '#/components/schemas/PlayerParticipation'
+        '404':
+          description: Соревнование с таким ID не найдено
+        '500':
+          description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
     put:
+      summary: Участвовать в соревновании
       tags:
         - PlayerParticipation
       parameters:
@@ -555,8 +661,7 @@ paths:
           required: true
           style: simple
           schema:
-            type: integer
-            format: int32
+            type: string
         - name: score
           in: query
           style: form
@@ -566,35 +671,21 @@ paths:
       security:
         - Bearer: [ Player ]
       responses:
-        '200':
-          description: Success
-  '/api/v1/competitions/{compID}/participations/{profileID}':
-    get:
-      tags:
-        - PlayerParticipation
-      parameters:
-        - name: profileID
-          in: path
-          required: true
-          style: simple
-          schema:
-            type: integer
-            format: int32
-        - name: compID
-          in: path
-          required: true
-          style: simple
-          schema:
-            type: integer
-            format: int32
-      responses:
-        '200':
-          description: Success
+        '204':
+          description: Успешное выполнение
+        '404':
+          description: Соревнование с таким ID не найдено
+        '403':
+          description: Пользователь не авторизован от имени игрока
+        '500':
+          description: Ошибка сервера
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PlayerParticipationDTO'
-    delete:
+                $ref: '#/components/schemas/ProblemDetails'
+  '/api/v1/competitions/{compID}/participations/{profileID}':
+    get:
+      summary: Получить полную информации об участии в соревновании
       tags:
         - PlayerParticipation
       parameters:
@@ -603,28 +694,70 @@ paths:
           required: true
           style: simple
           schema:
-            type: integer
-            format: int32
+            type: string
         - name: compID
           in: path
           required: true
           style: simple
           schema:
-            type: integer
-            format: int32
+            type: string
+      responses:
+        '200':
+          description: Успешное выполнение
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayerParticipation'
+        '404':
+          description: Участие пользователя profileID в соревновании compID не найдено
+        '500':
+          description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    delete:
+      summary: Удалить участие в соревновании
+      tags:
+        - PlayerParticipation
+      parameters:
+        - name: profileID
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+        - name: compID
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
       security:
         - Bearer: [ Admin ]
       responses:
-        '200':
-          description: Success
+        '204':
+          description: Успешное выполнение
+        '403':
+          description: Пользователь не авторизован как админинстратор
+        '404':
+          description: Участие пользователя profileID в соревновании compID не найдено
+        '500':
+          description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
   /api/v1/players/me/participations:
     get:
+      summary: Получить информацию о своих участиях в различных соревнованиях
       tags:
         - PlayerParticipation
       parameters:
         - name: page
           in: query
           style: form
+          description: Индекс страницы
           schema:
             type: integer
             format: int32
@@ -632,6 +765,7 @@ paths:
         - name: count
           in: query
           style: form
+          description: Количество соревнований на одной странице
           schema:
             type: integer
             format: int32
@@ -640,142 +774,209 @@ paths:
         - Bearer: [ Player ]
       responses:
         '200':
-          description: Success
+          description: Успешное выполнение
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/PlayerParticipationDTO'
-  /api/v1/players/me/rewards:
-    get:
-      tags:
-        - PlayerRewards
-      parameters:
-        - name: page
-          in: query
-          style: form
-          schema:
-            type: integer
-            format: int32
-        - name: count
-          in: query
-          style: form
-          schema:
-            type: integer
-            format: int32
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/PlayerRewardDTO'
-  '/api/v1/players/{playerID}/rewards':
-    get:
-      tags:
-        - PlayerRewards
-      parameters:
-        - name: playerID
-          in: path
-          required: true
-          style: simple
-          schema:
-            type: integer
-            format: int32
-        - name: page
-          in: query
-          style: form
-          schema:
-            type: integer
-            format: int32
-        - name: count
-          in: query
-          style: form
-          schema:
-            type: integer
-            format: int32
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/PlayerRewardDTO'
+                  $ref: '#/components/schemas/PlayerParticipation'
+        '403':
+          description: Пользователь не авторизован как игрок
         '500':
           description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /api/v1/players/me/rewards:
+    get:
+      summary: Получить информацию о своих наградах
+      tags:
+        - PlayerRewards
+      parameters:
+        - name: page
+          in: query
+          style: form
+          description: Индекс страницы
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: count
+          in: query
+          style: form
+          description: Количество соревнований на одной странице
+          schema:
+            type: integer
+            format: int32
+            default: 0
+      responses:
+        '200':
+          description: Успешное выполнение
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlayerReward'
+        '403':
+          description: Пользователь не авторизован как игрок
+        '500':
+          description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  '/api/v1/players/{playerID}/rewards':
+    get:
+      summary: Получить информацию о наградах игрока
+      tags:
+        - PlayerRewards
+      parameters:
+        - name: playerID
+          in: path
+          description: Идентификатор игрока
+          required: true
+          style: simple
+          schema:
+            type: string
+        - name: page
+          in: query
+          style: form
+          description: Индекс страницы
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: count
+          in: query
+          style: form
+          description: Количество соревнований на одной странице
+          schema:
+            type: integer
+            format: int32
+            default: 0
+      responses:
+        '200':
+          description: Успешное выполнение
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlayerReward'
+        '404':
+          description: Пользователь с таким ID не найден
+        '500':
+          description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
     put:
+      summary: Наградить игрока
       tags:
         - PlayerRewards
       parameters:
         - name: playerID
           in: path
           required: true
+          description: Идентификатор игрока
           style: simple
           schema:
-            type: integer
-            format: int32
+            type: string
         - name: rewardDescriptionID
           in: query
+          description: Идентификатор типа награды
+          required: true
           style: form
           schema:
-            type: integer
-            format: int32
+            type: string
       security:
         - Bearer: [ Admin ]
       responses:
         '200':
-          description: Success
+          description: Успешное награждение
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayerReward'
+        '404':
+          description: Игрок с таким ID не найден
+        '400':
+          description: Некорректный идентификатор типа награды
+        '403':
+          description: Пользователь не авторизован как админинстратор
         '500':
           description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
   '/api/v1/players/{playerID}/rewards/{rewardID}':
     delete:
+      summary: Отозвать награду у игрока
       tags:
         - PlayerRewards
       parameters:
         - name: rewardID
           in: path
           required: true
+          description: Идентификатор игрока
           style: simple
           schema:
-            type: integer
-            format: int32
+            type: string
         - name: playerID
           in: path
           required: true
+          description: Идентификатор награды
           style: simple
           schema:
-            type: integer
-            format: int32
+            type: string
+      security:
+        - Bearer: [ Admin ]
       responses:
-        '200':
-          description: Success
+        '204':
+          description: Успешное выполнение
+        '404':
+          description: Такая награда не найдена
+        '403':
+          description: Пользователь не авторизован как админинстратор
         '500':
           description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
   '/api/v1/reward_descriptions/{id}':
     get:
+      summary: Получить описание награды
       tags:
         - RewardDescription
       parameters:
         - name: id
+          description: Идентификатор описания награды
           in: path
           required: true
           style: simple
           schema:
-            type: integer
-            format: int32
+            type: string
       responses:
         '200':
-          description: Success
+          description: Успешное выполнение
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RewardDescriptionDTO'
+                $ref: '#/components/schemas/RewardDescription'
+        '500':
+          description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
     put:
+      summary: Полностью обновить описание награды
       tags:
         - RewardDescription
       parameters:
@@ -789,77 +990,121 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RewardDescriptionDTO'
+              $ref: '#/components/schemas/RewardDescription'
+      security:
+        - Bearer: [ Admin ]
       responses:
-        '200':
-          description: Success
+        '204':
+          description: Успешное обновление
+        '403':
+          description: Пользователь не авторизован как админинстратор
+        '500':
+          description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
   /api/v1/reward_descriptions:
     get:
+      summary: Получить список всех описаний наград
       tags:
         - RewardDescription
       parameters:
         - name: page
           in: query
           style: form
+          description: Индекс страницы
           schema:
             type: integer
             format: int32
+            default: 0
         - name: count
           in: query
           style: form
+          description: Количество наград на одной странице
           schema:
             type: integer
             format: int32
+            default: 0
       security:
         - Bearer: [ Admin ]
       responses:
         '200':
-          description: Success
+          description: Успешное выполнение
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/RewardDescriptionDTO'
+                  $ref: '#/components/schemas/RewardDescription'
+        '403':
+          description: Пользователь не авторизован как админинстратор
+        '500':
+          description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
     post:
+      summary: Добавить новое описание награды
       tags:
         - RewardDescription
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RewardDescriptionDTO'
+              $ref: '#/components/schemas/RewardDescription'
       security:
         - Bearer: [ Admin ]
       responses:
         '200':
-          description: Success
+          description: Успешное выполнение
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RewardDescription'
+        '403':
+          description: Пользователь не авторизован как админинстратор
+        '500':
+          description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
   '/api/v1/reward_descriptions/{id}/image':
     get:
+      summary: Получить изображение описания награды
       tags:
         - RewardDescription
       parameters:
         - name: id
+          description: Идентификатор описания награды
           in: path
           required: true
           style: simple
           schema:
-            type: integer
-            format: int32
+            type: string
       responses:
         '200':
-          description: Success
+          description: Файл изображения
+          content:
+            image/jpg:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: Описание награды с таким ID не найдено
     put:
       tags:
         - RewardDescription
       parameters:
         - name: id
           in: path
+          description: Идентификатор описания награды
           required: true
           style: simple
           schema:
-            type: integer
-            format: int32
+            type: string
       requestBody:
         content:
           multipart/form-data:
@@ -875,8 +1120,19 @@ paths:
       security:
         - Bearer: [ Admin ]
       responses:
-        '200':
-          description: Success
+        '204':
+          description: Успешное обновление
+        '400':
+          description: Файл не является корректным изображением
+        '403':
+          description: Пользователь не авторизован как админинстратор
+        '500':
+          description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+
   /api/v1/players/me:
     get:
       tags:
@@ -886,13 +1142,19 @@ paths:
         - Bearer: [ Player ]
       responses:
         '200':
-          description: Success
+          description: Успешное выполнение
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PlayerProfileDTO'
+                $ref: '#/components/schemas/PlayerProfile'
+        '403':
+          description: Пользователь не авторизован как игрок
         '500':
           description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
     patch:
       tags:
         - SelfPlayer
@@ -901,14 +1163,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PlayerProfileDTO'
+              $ref: '#/components/schemas/PlayerProfile'
       security:
         - Bearer: [ Player ]
       responses:
-        '200':
-          description: Success
+        '204':
+          description: Успешное обновление
+        '403':
+          description: Пользователь не авторизован как игрок
         '500':
           description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
   /api/v1/players/me/image:
     get:
       tags:
@@ -918,9 +1186,20 @@ paths:
         - Bearer: [ Player ]
       responses:
         '200':
-          description: Success
+          description: Файл изображения
+          content:
+            image/jpg:
+              schema:
+                type: string
+                format: binary
+        '403':
+          description: Пользователь не авторизован как игрок
         '500':
           description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
     put:
       tags:
         - SelfPlayer
@@ -940,13 +1219,21 @@ paths:
       security:
         - Bearer: [ Player ]
       responses:
-        '200':
-          description: Success
+        '204':
+          description: Успешное обновление
+        '400':
+          description: Файл не является корректным изображением
+        '403':
+          description: Пользователь не авторизован как игрок
         '500':
           description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
 components:
   schemas:
-    AccountCreationDTO:
+    AccountCreation:
       type: object
       properties:
         login:
@@ -959,7 +1246,7 @@ components:
           type: string
           nullable: true
       additionalProperties: false
-    AccountLoginDTO:
+    AccountLogin:
       type: object
       properties:
         login:
@@ -969,7 +1256,7 @@ components:
           type: string
           nullable: true
       additionalProperties: false
-    AuthSuccessResultDTO:
+    AuthSuccessResult:
       type: object
       properties:
         token:
@@ -979,14 +1266,14 @@ components:
           type: string
           nullable: true
         accountID:
-          type: integer
+          type: string
           format: int32
       additionalProperties: false
-    CompetitionDTO:
+    Competition:
       type: object
       properties:
         id:
-          type: integer
+          type: string
           format: int32
           nullable: true
         name:
@@ -1002,11 +1289,11 @@ components:
           type: string
           format: date-time
       additionalProperties: false
-    CompetitionPatchRequestDTO:
+    CompetitionPatchRequest:
       type: object
       properties:
         id:
-          type: integer
+          type: string
           format: int32
           nullable: true
         name:
@@ -1024,22 +1311,22 @@ components:
           format: date-time
           nullable: true
       additionalProperties: false
-    CompetitionRewardDTO:
+    CompetitionReward:
       type: object
       properties:
         id:
-          type: integer
+          type: string
           format: int32
           nullable: true
         rewardDescriptionID:
-          type: integer
-          format: int32
+          type: string
+          format: string
         conditionByRank:
-          $ref: '#/components/schemas/RankRewardConditionDTO'
+          $ref: '#/components/schemas/RankRewardCondition'
         conditionByPlace:
-          $ref: '#/components/schemas/PlaceRewardConditionDTO'
+          $ref: '#/components/schemas/PlaceRewardCondition'
         competitionID:
-          type: integer
+          type: string
           format: int32
         name:
           type: string
@@ -1048,15 +1335,15 @@ components:
           type: string
           nullable: true
       additionalProperties: false
-    LevelDataInfoDTO:
+    LevelDataInfo:
       type: object
       properties:
         id:
-          type: integer
+          type: string
           format: int32
           nullable: true
         competitionID:
-          type: integer
+          type: string
           format: int32
         platform:
           type: string
@@ -1065,7 +1352,7 @@ components:
           type: integer
           format: int32
       additionalProperties: false
-    PlaceRewardConditionDTO:
+    PlaceRewardCondition:
       type: object
       properties:
         minPlace:
@@ -1075,11 +1362,11 @@ components:
           type: integer
           format: int32
       additionalProperties: false
-    PlayerParticipationDTO:
+    PlayerParticipation:
       type: object
       properties:
         accountID:
-          type: integer
+          type: string
           format: int32
         competition:
           type: integer
@@ -1091,15 +1378,15 @@ components:
           type: string
           format: date-time
         profileInfo:
-          $ref: '#/components/schemas/PlayerProfileDTO'
+          $ref: '#/components/schemas/PlayerProfile'
         competitionInfo:
-          $ref: '#/components/schemas/CompetitionDTO'
+          $ref: '#/components/schemas/Competition'
       additionalProperties: false
-    PlayerProfileDTO:
+    PlayerProfile:
       type: object
       properties:
         id:
-          type: integer
+          type: string
           format: int32
           nullable: true
         name:
@@ -1109,21 +1396,21 @@ components:
           type: string
           nullable: true
       additionalProperties: false
-    PlayerRewardDTO:
+    PlayerReward:
       type: object
       properties:
         id:
-          type: integer
+          type: string
           format: int32
           nullable: true
         playerID:
-          type: integer
+          type: string
           format: int32
         rewardDescriptionID:
-          type: integer
+          type: string
           format: int32
         grantedCompetitionID:
-          type: integer
+          type: string
           format: int32
           nullable: true
         grantDate:
@@ -1157,7 +1444,7 @@ components:
           type: string
           nullable: true
       additionalProperties: { }
-    RankRewardConditionDTO:
+    RankRewardCondition:
       type: object
       properties:
         minRank:
@@ -1167,11 +1454,11 @@ components:
           type: number
           format: float
       additionalProperties: false
-    RewardDescriptionDTO:
+    RewardDescription:
       type: object
       properties:
         id:
-          type: integer
+          type: string
           format: int32
           nullable: true
         name:
@@ -1181,20 +1468,20 @@ components:
           type: string
           nullable: true
       additionalProperties: false
-    UpdateCompetitionRewardDTO:
+    UpdateCompetitionReward:
       type: object
       properties:
         id:
-          type: integer
+          type: string
           format: int32
           nullable: true
         rewardDescriptionID:
           type: integer
           format: int32
         conditionByRank:
-          $ref: '#/components/schemas/RankRewardConditionDTO'
+          $ref: '#/components/schemas/RankRewardCondition'
         conditionByPlace:
-          $ref: '#/components/schemas/PlaceRewardConditionDTO'
+          $ref: '#/components/schemas/PlaceRewardCondition'
       additionalProperties: false
   securitySchemes:
     Bearer:
