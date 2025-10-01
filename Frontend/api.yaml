@@ -131,13 +131,13 @@ paths:
             type: integer
             format: int32
             default: 0
-        - name: filter
-          description: Параметры фильтрации (active для действующих соревнований)
+        - name: only_active
+          description: Выбрать только те соревнования, которые на данный момент времени активны
           in: query
           style: form
           schema:
             type: string
-            format: active
+            format: bool
       responses:
         '200':
           description: Успешное выполнение
@@ -177,226 +177,216 @@ paths:
           description: Пользователь не имеет прав админинстратора
         '500':
           description: Ошибка сервера
-  '/api/v1/competitions/{id}/level_file':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  '/api/v1/competitions/{id}/riddles':
     get:
+      summary: Возвращает правила игры и требуемый набор загадок для решения
       tags:
-        - Competition
+        - CompetitionRiddle
+      parameters:
+        - name: id
+          in: path
+          description: Идентификатор соревнования
+          required: true
+          style: simple
+          schema:
+            type: string
+        - name: rules_only
+          in: query
+          style: form
+          description: При указании true список требуемых задач не будет возвращён
+          schema:
+            type: string
+            format: bool
+      security:
+        - Bearer: [ Player, Admin ]
+      responses:
+        '200':
+          description: Успешное выполнение
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompetitionRiddleSet"
+        '404':
+          description: Соревнование с таким ID не найдено
+        '403':
+          description: Не зарегистрирован в системе
+        '500':
+          description: Ошибка сервера
+    put:
+      summary: Задать правила для выбора загадок
+      tags:
+        - CompetitionRiddle
+      parameters:
+        - name: id
+          in: path
+          description: Идентификатор соревнования
+          required: true
+          style: simple
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CompetitionRiddleSetPutRequest"
+      security:
+        - Bearer: [ Admin ]
+      responses:
+        '204':
+          description: Успешное выполнение
+        '404':
+          description: Соревнование с таким ID не найдено
+        '403':
+          description: Нет прав админинстратора
+        '500':
+          description: Ошибка сервера
+  '/api/v1/competitions/{id}/riddle_set/riddles':
+    post:
+      summary: "Добавить задачи"
+      tags:
+        - CompetitionRiddle
       parameters:
         - name: id
           in: path
           required: true
+          description: Идентификатор соревнования
           style: simple
           schema:
-            type: integer
-            format: int32
-        - name: platform
-          in: query
-          style: form
-          schema:
             type: string
-        - name: maxVersion
-          in: query
-          style: form
-          schema:
-            type: integer
-            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CompetitionRiddleArray"
       security:
         - Bearer: [ Admin ]
       responses:
         '200':
-          description: Success
+          description: Успешное выполнение
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompetitionRiddleArray"
+        '404':
+          description: Соревнование с таким ID не найдено
+        '403':
+          description: Нет прав админинстратора
         '500':
           description: Ошибка сервера
-  '/api/v1/competitions/{id}/levels':
-    post:
+    patch:
+      summary: "Изменить некоторые задачи"
       tags:
-        - CompetitionLevel
+        - CompetitionRiddle
       parameters:
         - name: id
           in: path
           required: true
+          description: Идентификатор соревнования
           style: simple
           schema:
-            type: integer
-            format: int32
+            type: string
       requestBody:
         content:
-          multipart/form-data:
+          application/json:
             schema:
-              type: object
-              properties:
-                Platform:
-                  type: string
-                VersionKey:
-                  type: integer
-                  format: int32
-                File:
-                  type: string
-                  format: binary
-            encoding:
-              Platform:
-                style: form
-              VersionKey:
-                style: form
-              File:
-                style: form
+              $ref: "#/components/schemas/CompetitionRiddleArray"
+      security:
+        - Bearer: [ Admin ]
       responses:
-        '200':
-          description: Success
+        '204':
+          description: Успешное выполнение
+        '400':
+          description: Некорректный запрос на обновление, некоторые задачи невозможно найти
+        '404':
+          description: Соревнование с таким ID не найдено
+        '403':
+          description: Нет прав админинстратора
+        '500':
+          description: Ошибка сервера
+    delete:
+      summary: "Удалить задачи"
+      tags:
+        - CompetitionRiddle
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Идентификатор соревнования
+          style: simple
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CompetitionRiddleArray"
+      security:
+        - Bearer: [ Admin ]
+      responses:
+        '204':
+          description: Успешное выполнение
+        '400':
+          description: Некорректный запрос на удаление, некоторые задачи невозможно найти
+        '404':
+          description: Соревнование с таким ID не найдено
+        '403':
+          description: Нет прав админинстратора
         '500':
           description: Ошибка сервера
     get:
+      summary: "Получить весь список задач"
       tags:
-        - CompetitionLevel
+        - CompetitionRiddle
       parameters:
         - name: id
           in: path
           required: true
+          description: Идентификатор соревнования
           style: simple
           schema:
             type: integer
             format: int32
+        - name: page
+          in: query
+          style: form
+          description: Индекс страницы
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: count
+          in: query
+          style: form
+          description: Количество задач на одной странице
+          schema:
+            type: integer
+            format: int32
+            default: 0
+      security:
+        - Bearer: [ Admin ]
       responses:
         '200':
-          description: Success
+          description: Успешное выполнение
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/LevelDataInfo'
+                  $ref: '#/components/schemas/CompetitionRiddle'
+        '404':
+          description: Соревнование с таким ID не найдено
+        '403':
+          description: Нет прав админинстратора
         '500':
           description: Ошибка сервера
-  '/api/v1/competitions/{compID}/levels/{id}':
-    put:
-      tags:
-        - CompetitionLevel
-      parameters:
-        - name: id
-          in: path
-          required: true
-          style: simple
-          schema:
-            type: integer
-            format: int32
-        - name: compID
-          in: path
-          required: true
-          style: simple
-          schema:
-            type: integer
-            format: int32
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LevelDataInfo'
-      responses:
-        '200':
-          description: Success
-    delete:
-      tags:
-        - CompetitionLevel
-      parameters:
-        - name: id
-          in: path
-          required: true
-          style: simple
-          schema:
-            type: integer
-            format: int32
-        - name: compID
-          in: path
-          required: true
-          style: simple
-          schema:
-            type: integer
-            format: int32
-      security:
-        - Bearer: [ Admin ]  
-      responses:
-        '200':
-          description: Success
-    get:
-      tags:
-        - CompetitionLevel
-      parameters:
-        - name: id
-          in: path
-          required: true
-          style: simple
-          schema:
-            type: integer
-            format: int32
-        - name: compID
-          in: path
-          required: true
-          style: simple
-          schema:
-            type: integer
-            format: int32
-      responses:
-        '200':
-          description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LevelDataInfo'
-  '/api/v1/competitions/{compID}/levels/{id}/level_file':
-    put:
-      tags:
-        - CompetitionLevel
-      parameters:
-        - name: id
-          in: path
-          required: true
-          style: simple
-          schema:
-            type: integer
-            format: int32
-        - name: compID
-          in: path
-          required: true
-          style: simple
-          schema:
-            type: integer
-            format: int32
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                file:
-                  type: string
-                  format: binary
-            encoding:
-              file:
-                style: form
-      responses:
-        '200':
-          description: Success
-    get:
-      tags:
-        - CompetitionLevel
-      parameters:
-        - name: id
-          in: path
-          required: true
-          style: simple
-          schema:
-            type: integer
-            format: int32
-        - name: compID
-          in: path
-          required: true
-          style: simple
-          schema:
-            type: integer
-            format: int32
-      responses:
-        '200':
-          description: Success
+                $ref: '#/components/schemas/ProblemDetails'
   '/api/v1/competitions/{compID}/rewards':
     get:
       summary: Получить информацию о выдаваемых наградах
@@ -458,36 +448,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
-  '/api/v1/competitions/{compID}/content':
-    get:
-      tags:
-        - CompetitionRiddle
-      parameters:
-        - name: compID
-          in: path
-          required: true
-          style: simple
-          schema:
-            type: string
-      responses:
-        '200':
-          description: ОК ВСЁ
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/PlayerParticipation'
-        '404':
-          description: Соревнование с таким ID не найдено
-        '500':
-          description: Ошибка сервера
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-
-
   '/api/v1/competitions/{compID}/rewards/{rewardID}':
     delete:
       summary: Удалить выдаваемую награду
@@ -874,7 +834,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
-    put:
+    post:
       summary: Наградить игрока
       tags:
         - PlayerRewards
@@ -1238,10 +1198,8 @@ components:
       properties:
         login:
           type: string
-          nullable: true
         password:
           type: string
-          nullable: true
         email:
           type: string
           nullable: true
@@ -1251,30 +1209,24 @@ components:
       properties:
         login:
           type: string
-          nullable: true
         password:
           type: string
-          nullable: true
       additionalProperties: false
     AuthSuccessResult:
       type: object
       properties:
         token:
           type: string
-          nullable: true
         roleName:
           type: string
-          nullable: true
         accountID:
           type: string
-          format: int32
       additionalProperties: false
     Competition:
       type: object
       properties:
         id:
           type: string
-          format: int32
           nullable: true
         name:
           type: string
@@ -1294,7 +1246,6 @@ components:
       properties:
         id:
           type: string
-          format: int32
           nullable: true
         name:
           type: string
@@ -1316,7 +1267,6 @@ components:
       properties:
         id:
           type: string
-          format: int32
           nullable: true
         rewardDescriptionID:
           type: string
@@ -1327,30 +1277,12 @@ components:
           $ref: '#/components/schemas/PlaceRewardCondition'
         competitionID:
           type: string
-          format: int32
         name:
           type: string
           nullable: true
         description:
           type: string
           nullable: true
-      additionalProperties: false
-    LevelDataInfo:
-      type: object
-      properties:
-        id:
-          type: string
-          format: int32
-          nullable: true
-        competitionID:
-          type: string
-          format: int32
-        platform:
-          type: string
-          nullable: true
-        versionKey:
-          type: integer
-          format: int32
       additionalProperties: false
     PlaceRewardCondition:
       type: object
@@ -1362,15 +1294,62 @@ components:
           type: integer
           format: int32
       additionalProperties: false
+    CompetitionRiddleSet:
+      type: object
+      properties:
+        competitionID:
+          type: string
+        riddleUseCount:
+          type: integer
+          format: int32
+        riddleGrantScore:
+          type: integer
+          format: int32
+        riddleStrapheScore:
+          type: integer
+          format: int32
+        riddles:
+          $ref: "#/components/schemas/CompetitionRiddleArray"
+          nullable: true
+    CompetitionRiddleSetPutRequest:
+      type: object
+      properties:
+        competitionID:
+          type: string
+        riddleUseCount:
+          type: integer
+          format: int32
+        riddleGrantScore:
+          type: integer
+          format: int32
+        riddleStrapheScore:
+          type: integer
+          format: int32
+    CompetitionRiddle:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        riddleQuestion:
+          type: string
+        answer:
+          type: string
+        alternativeAnswers:
+          type: array
+          items: 
+            type: string
+    CompetitionRiddleArray:
+      type: array
+      items:
+        $ref: "#/components/schemas/CompetitionRiddle"
     PlayerParticipation:
       type: object
       properties:
         accountID:
           type: string
-          format: int32
-        competition:
-          type: integer
-          format: int32
+        competitionID:
+          type: string
         score:
           type: integer
           format: int32
@@ -1387,7 +1366,6 @@ components:
       properties:
         id:
           type: string
-          format: int32
           nullable: true
         name:
           type: string
@@ -1401,17 +1379,13 @@ components:
       properties:
         id:
           type: string
-          format: int32
           nullable: true
         playerID:
           type: string
-          format: int32
         rewardDescriptionID:
           type: string
-          format: int32
         grantedCompetitionID:
           type: string
-          format: int32
           nullable: true
         grantDate:
           type: string
@@ -1459,7 +1433,6 @@ components:
       properties:
         id:
           type: string
-          format: int32
           nullable: true
         name:
           type: string
@@ -1473,11 +1446,9 @@ components:
       properties:
         id:
           type: string
-          format: int32
           nullable: true
         rewardDescriptionID:
           type: integer
-          format: int32
         conditionByRank:
           $ref: '#/components/schemas/RankRewardCondition'
         conditionByPlace:
