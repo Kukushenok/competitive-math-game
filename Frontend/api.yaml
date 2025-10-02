@@ -65,6 +65,7 @@ paths:
           description: Идентификатор соревнования
           schema:
             type: string
+            format: uuid
       responses:
         '200':
           description: Успешное получение информации
@@ -92,6 +93,7 @@ paths:
           description: Идентификатор соревнования
           schema:
             type: string
+            format: uuid
       requestBody:
         description: Описание частичного изменения соревнования
         content:
@@ -173,6 +175,8 @@ paths:
                 $ref: '#/components/schemas/Competition'
         '400':
           description: Некорректные данные запроса
+        '401':
+          description: Пользователь не авторизован
         '403':
           description: Пользователь не имеет прав админинстратора
         '500':
@@ -181,19 +185,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
-  '/api/v1/competitions/{id}/riddles':
+  '/api/v1/competitions/{compID}/riddle_set':
     get:
       summary: Возвращает правила игры и требуемый набор загадок для решения
       tags:
         - CompetitionRiddle
       parameters:
-        - name: id
+        - name: compID
           in: path
           description: Идентификатор соревнования
           required: true
           style: simple
           schema:
             type: string
+            format: uuid
         - name: rules_only
           in: query
           style: form
@@ -212,6 +217,8 @@ paths:
                 $ref: "#/components/schemas/CompetitionRiddleSet"
         '404':
           description: Соревнование с таким ID не найдено
+        '401':
+          description: Пользователь не авторизован
         '403':
           description: Не зарегистрирован в системе
         '500':
@@ -221,13 +228,14 @@ paths:
       tags:
         - CompetitionRiddle
       parameters:
-        - name: id
+        - name: compID
           in: path
           description: Идентификатор соревнования
           required: true
           style: simple
           schema:
             type: string
+            format: uuid
       requestBody:
         content:
           application/json:
@@ -240,28 +248,31 @@ paths:
           description: Успешное выполнение
         '404':
           description: Соревнование с таким ID не найдено
+        '401':
+          description: Пользователь не авторизован
         '403':
           description: Нет прав админинстратора
         '500':
           description: Ошибка сервера
-  '/api/v1/competitions/{id}/riddle_set/riddles':
+  '/api/v1/competitions/{compID}/riddle_set/riddles':
     post:
-      summary: "Добавить задачи"
+      summary: "Добавить задачу"
       tags:
         - CompetitionRiddle
       parameters:
-        - name: id
+        - name: compID
           in: path
           required: true
           description: Идентификатор соревнования
           style: simple
           schema:
             type: string
+            format: uuid
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CompetitionRiddleArray"
+              $ref: "#/components/schemas/CompetitionRiddle"
       security:
         - Bearer: [ Admin ]
       responses:
@@ -270,69 +281,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CompetitionRiddleArray"
+                $ref: "#/components/schemas/CompetitionRiddle"
         '404':
           description: Соревнование с таким ID не найдено
-        '403':
-          description: Нет прав админинстратора
-        '500':
-          description: Ошибка сервера
-    patch:
-      summary: "Изменить некоторые задачи"
-      tags:
-        - CompetitionRiddle
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: Идентификатор соревнования
-          style: simple
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/CompetitionRiddleArray"
-      security:
-        - Bearer: [ Admin ]
-      responses:
-        '204':
-          description: Успешное выполнение
-        '400':
-          description: Некорректный запрос на обновление, некоторые задачи невозможно найти
-        '404':
-          description: Соревнование с таким ID не найдено
-        '403':
-          description: Нет прав админинстратора
-        '500':
-          description: Ошибка сервера
-    delete:
-      summary: "Удалить задачи"
-      tags:
-        - CompetitionRiddle
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: Идентификатор соревнования
-          style: simple
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/CompetitionRiddleArray"
-      security:
-        - Bearer: [ Admin ]
-      responses:
-        '204':
-          description: Успешное выполнение
-        '400':
-          description: Некорректный запрос на удаление, некоторые задачи невозможно найти
-        '404':
-          description: Соревнование с таким ID не найдено
+        '401':
+          description: Пользователь не авторизован
         '403':
           description: Нет прав админинстратора
         '500':
@@ -342,14 +295,14 @@ paths:
       tags:
         - CompetitionRiddle
       parameters:
-        - name: id
+        - name: compID
           in: path
           required: true
           description: Идентификатор соревнования
           style: simple
           schema:
-            type: integer
-            format: int32
+            type: string
+            format: uuid
         - name: page
           in: query
           style: form
@@ -379,6 +332,8 @@ paths:
                   $ref: '#/components/schemas/CompetitionRiddle'
         '404':
           description: Соревнование с таким ID не найдено
+        '401':
+          description: Пользователь не авторизован
         '403':
           description: Нет прав админинстратора
         '500':
@@ -387,6 +342,80 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+  '/api/v1/competitions/{compID}/riddle_set/riddles/{id}':
+    put:
+      summary: "Заменить задачи"
+      tags:
+        - CompetitionRiddle
+      parameters:
+        - name: compID
+          in: path
+          required: true
+          description: Идентификатор соревнования
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: id
+          in: path
+          required: true
+          description: Идентификатор задачи
+          style: simple
+          schema: 
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CompetitionRiddleArray"
+      security:
+        - Bearer: [ Admin ]
+      responses:
+        '204':
+          description: Успешное выполнение
+        '404':
+          description: Соревнование с таким ID не найдено
+        '401':
+          description: Пользователь не авторизован
+        '403':
+          description: Нет прав админинстратора
+        '500':
+          description: Ошибка сервера
+    delete:
+      summary: "Удалить задачу"
+      tags:
+        - CompetitionRiddle
+      parameters:
+        - name: compID
+          in: path
+          required: true
+          description: Идентификатор соревнования
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: id
+          in: path
+          required: true
+          description: Идентификатор задачи
+          style: simple
+          schema: 
+            type: string
+            format: uuid
+      security:
+        - Bearer: [ Admin ]
+      responses:
+        '204':
+          description: Успешное выполнение
+        '401':
+          description: Пользователь не авторизован
+        '403':
+          description: Нет прав админинстратора
+        '404':
+          description: Соревнование или задача с таким ID не найдены
+        '500':
+          description: Ошибка сервера
   '/api/v1/competitions/{compID}/rewards':
     get:
       summary: Получить информацию о выдаваемых наградах
@@ -400,6 +429,7 @@ paths:
           style: simple
           schema:
             type: string
+            format: uuid
       responses:
         '200':
           description: Успешное выполнение
@@ -425,6 +455,7 @@ paths:
           style: simple
           schema:
             type: string
+            format: uuid
       security:
         - Bearer: [ Admin ]
       requestBody:
@@ -440,6 +471,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CompetitionReward'
+        '401':
+          description: Пользователь не авторизован
         '403':
           description: Пользователь не авторизован как админинстратор
         '500':
@@ -461,6 +494,7 @@ paths:
           style: simple
           schema:
             type: string
+            format: uuid
         - name: rewardID
           description: Идентификатор выдаваемой награды
           in: path
@@ -468,12 +502,15 @@ paths:
           style: simple
           schema:
             type: string
+            format: uuid
       security:
         - Bearer: [ Admin ]
       
       responses:
         '204':
           description: Успешное удаление
+        '401':
+          description: Пользователь не авторизован
         '403':
           description: Пользователь не авторизован как админинстратор
         '404':
@@ -496,6 +533,7 @@ paths:
           style: simple
           schema:
             type: string
+            format: uuid
         - name: rewardID
           in: path
           description: Идентификатор выдаваемой награды
@@ -503,6 +541,7 @@ paths:
           style: simple
           schema:
             type: string
+            format: uuid
       security:
         - Bearer: [ Admin ]
       requestBody:
@@ -515,6 +554,8 @@ paths:
           description: Успешное обновление
         '400':
           description: Некорректное обновление
+        '401':
+          description: Пользователь не авторизован
         '403':
           description: Пользователь не авторизован как админинстратор
         '500':
@@ -535,8 +576,8 @@ paths:
           required: true
           style: simple
           schema:
-            type: integer
-            format: int32
+            type: string
+            format: uuid
       responses:
         '200':
           description: Success
@@ -558,8 +599,8 @@ paths:
           required: true
           style: simple
           schema:
-            type: integer
-            format: int32
+            type: string
+            format: uuid
       responses:
         '200':
           description: Success
@@ -578,6 +619,7 @@ paths:
           description: Идентификатор соревнования
           schema:
             type: string
+            format: uuid
         - name: page
           in: query
           style: form
@@ -622,6 +664,7 @@ paths:
           style: simple
           schema:
             type: string
+            format: uuid
         - name: score
           in: query
           style: form
@@ -635,6 +678,8 @@ paths:
           description: Успешное выполнение
         '404':
           description: Соревнование с таким ID не найдено
+        '401':
+          description: Пользователь не авторизован
         '403':
           description: Пользователь не авторизован от имени игрока
         '500':
@@ -650,17 +695,21 @@ paths:
         - PlayerParticipation
       parameters:
         - name: profileID
+          description: Идентификатор профиля
           in: path
           required: true
           style: simple
           schema:
             type: string
+            format: uuid
         - name: compID
+          description: Идентификатор соревнования
           in: path
           required: true
           style: simple
           schema:
             type: string
+            format: uuid
       responses:
         '200':
           description: Успешное выполнение
@@ -698,6 +747,8 @@ paths:
       responses:
         '204':
           description: Успешное выполнение
+        '401':
+          description: Пользователь не авторизован
         '403':
           description: Пользователь не авторизован как админинстратор
         '404':
@@ -741,6 +792,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/PlayerParticipation'
+        '401':
+          description: Пользователь не авторизован
         '403':
           description: Пользователь не авторизован как игрок
         '500':
@@ -780,6 +833,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/PlayerReward'
+        '401':
+          description: Пользователь не авторизован
         '403':
           description: Пользователь не авторизован как игрок
         '500':
@@ -801,6 +856,7 @@ paths:
           style: simple
           schema:
             type: string
+            format: uuid
         - name: page
           in: query
           style: form
@@ -866,6 +922,8 @@ paths:
           description: Игрок с таким ID не найден
         '400':
           description: Некорректный идентификатор типа награды
+        '401':
+          description: Пользователь не авторизован
         '403':
           description: Пользователь не авторизован как админинстратор
         '500':
@@ -887,6 +945,7 @@ paths:
           style: simple
           schema:
             type: string
+            format: uuid
         - name: playerID
           in: path
           required: true
@@ -894,6 +953,7 @@ paths:
           style: simple
           schema:
             type: string
+            format: uuid
       security:
         - Bearer: [ Admin ]
       responses:
@@ -901,6 +961,8 @@ paths:
           description: Успешное выполнение
         '404':
           description: Такая награда не найдена
+        '401':
+          description: Пользователь не авторизован
         '403':
           description: Пользователь не авторизован как админинстратор
         '500':
@@ -922,6 +984,7 @@ paths:
           style: simple
           schema:
             type: string
+            format: uuid
       responses:
         '200':
           description: Успешное выполнение
@@ -946,6 +1009,7 @@ paths:
           style: simple
           schema:
             type: string
+            format: uuid
       requestBody:
         content:
           application/json:
@@ -956,6 +1020,8 @@ paths:
       responses:
         '204':
           description: Успешное обновление
+        '401':
+          description: Пользователь не авторизован
         '403':
           description: Пользователь не авторизован как админинстратор
         '500':
@@ -997,6 +1063,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/RewardDescription'
+        '401':
+          description: Пользователь не авторизован
         '403':
           description: Пользователь не авторизован как админинстратор
         '500':
@@ -1023,6 +1091,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RewardDescription'
+        '401':
+          description: Пользователь не авторизован
         '403':
           description: Пользователь не авторизован как админинстратор
         '500':
@@ -1065,6 +1135,7 @@ paths:
           style: simple
           schema:
             type: string
+            format: uuid
       requestBody:
         content:
           multipart/form-data:
@@ -1084,6 +1155,8 @@ paths:
           description: Успешное обновление
         '400':
           description: Файл не является корректным изображением
+        '401':
+          description: Пользователь не авторизован
         '403':
           description: Пользователь не авторизован как админинстратор
         '500':
@@ -1107,6 +1180,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PlayerProfile'
+        '401':
+          description: Пользователь не авторизован
         '403':
           description: Пользователь не авторизован как игрок
         '500':
@@ -1129,6 +1204,8 @@ paths:
       responses:
         '204':
           description: Успешное обновление
+        '401':
+          description: Пользователь не авторизован
         '403':
           description: Пользователь не авторизован как игрок
         '500':
@@ -1152,6 +1229,8 @@ paths:
               schema:
                 type: string
                 format: binary
+        '401':
+          description: Пользователь не авторизован
         '403':
           description: Пользователь не авторизован как игрок
         '500':
@@ -1183,6 +1262,8 @@ paths:
           description: Успешное обновление
         '400':
           description: Файл не является корректным изображением
+        '401':
+          description: Пользователь не авторизован
         '403':
           description: Пользователь не авторизован как игрок
         '500':
@@ -1228,6 +1309,7 @@ components:
         id:
           type: string
           nullable: true
+          format: uuid
         name:
           type: string
           nullable: true
@@ -1247,6 +1329,7 @@ components:
         id:
           type: string
           nullable: true
+          format: uuid
         name:
           type: string
           nullable: true
@@ -1267,10 +1350,11 @@ components:
       properties:
         id:
           type: string
+          format: uuid
           nullable: true
         rewardDescriptionID:
           type: string
-          format: string
+          format: uuid
         conditionByRank:
           $ref: '#/components/schemas/RankRewardCondition'
         conditionByPlace:
@@ -1299,6 +1383,7 @@ components:
       properties:
         competitionID:
           type: string
+          format: uuid
         riddleUseCount:
           type: integer
           format: int32
@@ -1314,8 +1399,6 @@ components:
     CompetitionRiddleSetPutRequest:
       type: object
       properties:
-        competitionID:
-          type: string
         riddleUseCount:
           type: integer
           format: int32
@@ -1348,8 +1431,10 @@ components:
       properties:
         accountID:
           type: string
+          format: uuid
         competitionID:
           type: string
+          format: uuid
         score:
           type: integer
           format: int32
@@ -1366,6 +1451,7 @@ components:
       properties:
         id:
           type: string
+          format: uuid
           nullable: true
         name:
           type: string
@@ -1379,6 +1465,7 @@ components:
       properties:
         id:
           type: string
+          format: uuid
           nullable: true
         playerID:
           type: string
@@ -1433,6 +1520,7 @@ components:
       properties:
         id:
           type: string
+          format: uuid
           nullable: true
         name:
           type: string
@@ -1446,6 +1534,7 @@ components:
       properties:
         id:
           type: string
+          format: uuid
           nullable: true
         rewardDescriptionID:
           type: integer
