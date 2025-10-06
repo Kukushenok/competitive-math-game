@@ -31,15 +31,15 @@ namespace CompetitiveBackend.Controllers
             else dtos = (await watchUseCase.GetAllCompetitions(new DataLimiterDTO(page, count))).ToArray();
             return dtos;
         }
-        [HttpPut("")]
-        public async Task<ActionResult> CreateCompetition(CompetitionDTO dto)
+        [HttpPost("")]
+        public async Task<NoContentResult> CreateCompetition(CompetitionDTO dto)
         {
             using var self = await editUseCase.Auth(HttpContext);
             await self.CreateCompetition(dto);
             return NoContent();
         }
         [HttpPatch("{id}")]
-        public async Task<ActionResult> UpdateCompetition(int id, CompetitionUpdateRequestDTO dto)
+        public async Task<NoContentResult> UpdateCompetition(int id, CompetitionPatchRequestDTO dto)
         {
             using var self = await editUseCase.Auth(HttpContext);
             dto.ID = id;

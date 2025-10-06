@@ -21,8 +21,8 @@ namespace CompetitiveBackend.Controllers
             this.competitionLevelEditUseCase = competitionLevelEditUseCase;
         }
 
-        [HttpPut($"{{id}}/{APIConsts.LEVELS}")]
-        public async Task<ActionResult> AddCompetitionLevel(int id, [FromForm] LevelAddRequestDTO requestDTO)
+        [HttpPost($"{{id}}/{APIConsts.LEVELS}")]
+        public async Task<NoContentResult> AddCompetitionLevel(int id, [FromForm] LevelAddRequestDTO requestDTO)
         {
             using var self = await competitionLevelEditUseCase.Auth(HttpContext);
             LevelDataInfoDTO dto = new LevelDataInfoDTO(id, requestDTO.Platform, requestDTO.VersionKey, null);
@@ -37,36 +37,36 @@ namespace CompetitiveBackend.Controllers
             using var self = await competitionLevelEditUseCase.Auth(HttpContext);
             return (await self.GetLevelInfos(id)).ToArray();
         }
-        [HttpPatch($"{{unused}}/{APIConsts.LEVELS}/{{id}}/{APIConsts.INFO}")]
-        public async Task<ActionResult> ChangeCompetitionLevelData(int id, LevelDataInfoDTO levelDataInfoDTO, int unused = 0)
+        [HttpPut($"{{compID}}/{APIConsts.LEVELS}/{{id}}")]
+        public async Task<NoContentResult> ChangeCompetitionLevelData(int id, LevelDataInfoDTO levelDataInfoDTO, int compID)
         {
             levelDataInfoDTO.ID = id;
             using var self = await competitionLevelEditUseCase.Auth(HttpContext);
             await self.UpdateLevelDataInfo(levelDataInfoDTO);
             return NoContent();
         }
-        [HttpPatch($"{{unused}}/{APIConsts.LEVELS}/{{id}}/{APIConsts.LEVEL_FILE}")]
-        public async Task<ActionResult> ChangeCompetitionLevel(int id, IFormFile file, int unused = 0)
+        [HttpPut($"{{compID}}/{APIConsts.LEVELS}/{{id}}/{APIConsts.LEVEL_FILE}")]
+        public async Task<NoContentResult> ChangeCompetitionLevel(int id, IFormFile file, int compID)
         {
             using var self = await competitionLevelEditUseCase.Auth(HttpContext);
             await self.UpdateLevelData(id, await file.ToLargeData());
             return NoContent();
         }
-        [HttpDelete($"{{unused}}/{APIConsts.LEVELS}/{{id}}")]
-        public async Task<ActionResult> RemoveCompetitionLevel(int id, int unused = 0)
+        [HttpDelete($"{{compID}}/{APIConsts.LEVELS}/{{id}}")]
+        public async Task<NoContentResult> RemoveCompetitionLevel(int id, int compID)
         {
             using var self = await competitionLevelEditUseCase.Auth(HttpContext);
             await self.DeleteLevel(id);
             return NoContent();
         }
-        [HttpGet($"{{unused}}/{APIConsts.LEVELS}/{{id}}/{APIConsts.LEVEL_FILE}")]
-        public async Task<FileContentResult> GetSpecificCompetitionLevel(int id, int unused = 0)
+        [HttpGet($"{{compID}}/{APIConsts.LEVELS}/{{id}}/{APIConsts.LEVEL_FILE}")]
+        public async Task<FileContentResult> GetSpecificCompetitionLevel(int id, int compID)
         {
             using var self = await competitionLevelEditUseCase.Auth(HttpContext);
             return (await self.GetSpecificCompetitionData(id)).ToFileResult($"level_{id}.bytes");
         }
-        [HttpGet($"{{unused}}/{APIConsts.LEVELS}/{{id}}/{APIConsts.INFO}")]
-        public async Task<ActionResult<LevelDataInfoDTO>> GetSpecificCompetitionLevelInfo(int id, int unused = 0)
+        [HttpGet($"{{compID}}/{APIConsts.LEVELS}/{{id}}")]
+        public async Task<ActionResult<LevelDataInfoDTO>> GetSpecificCompetitionLevelInfo(int id, int compID)
         {
             using var self = await competitionLevelEditUseCase.Auth(HttpContext);
             return await self.GetSpecificCompetitionInfo(id);

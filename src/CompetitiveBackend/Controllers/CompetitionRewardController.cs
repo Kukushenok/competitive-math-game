@@ -20,23 +20,23 @@ namespace CompetitiveBackend.Controllers
         {
             return await _watchRewards.GetRewardsFor(compID);
         }
-        [HttpPut($"{{compID}}/{APIConsts.REWARDS}")]
-        public async Task<ActionResult> CreateCompetitionReward(int compID, UpdateCompetitionRewardDTO rewardDTO)
+        [HttpPost($"{{compID}}/{APIConsts.REWARDS}")]
+        public async Task<NoContentResult> CreateCompetitionReward(int compID, UpdateCompetitionRewardDTO rewardDTO)
         {
             CreateCompetitionRewardDTO creating = new CreateCompetitionRewardDTO(null, rewardDTO.RewardDescriptionID, compID, rewardDTO.ConditionByRank, rewardDTO.ConditionByPlace);
             using var self = await _editRewards.Auth(HttpContext);
             await self.CreateCompetitionReward(creating);
             return NoContent();
         }
-        [HttpDelete($"{APIConsts.REWARDS}/{{rewardID}}")]
-        public async Task<ActionResult> DeleteCompetitionReward(int rewardID)
+        [HttpDelete($"{{compID}}/{APIConsts.REWARDS}/{{rewardID}}")]
+        public async Task<NoContentResult> DeleteCompetitionReward(int compID, int rewardID)
         {
             using var self = await _editRewards.Auth(HttpContext);
             await self.RemoveCompetitionReward(rewardID);
             return NoContent();
         }
-        [HttpPatch($"{APIConsts.REWARDS}/{{rewardID}}")]
-        public async Task<ActionResult> UpdateCompetitionReward(int rewardID, UpdateCompetitionRewardDTO rewardDTO)
+        [HttpPatch($"{{compID}}/{APIConsts.REWARDS}/{{rewardID}}")]
+        public async Task<NoContentResult> UpdateCompetitionReward(int compID, int rewardID, UpdateCompetitionRewardDTO rewardDTO)
         {
             UpdateCompetitionRewardDTO dto = new UpdateCompetitionRewardDTO(rewardID, rewardDTO.RewardDescriptionID, rewardDTO.ConditionByRank, rewardDTO.ConditionByPlace);
             using var self = await _editRewards.Auth(HttpContext);

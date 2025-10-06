@@ -1,9 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI/sample.uss?fileID=7433441132597879392&amp;guid=f552583ebecfd0a44a09c1f9689b56f4&amp;type=3#sample" />
-    <ui:VisualElement name="MyElement" style="flex-grow: 1; -unity-background-scale-mode: stretch-to-fill; align-items: auto;">
-        <ui:VisualElement style="flex-grow: 1; justify-content: flex-start; align-items: stretch; width: 600px; align-self: center; align-content: stretch; max-width: none; min-width: initial; padding-top: 0; margin-top: 200px; margin-bottom: 200px; text-overflow: clip; background-image: url(&quot;project://database/Assets/Sprites/Sample.png?fileID=2800000&amp;guid=88e44f80fbcace64d91fba77afb329cc&amp;type=3#Sample&quot;);">
-            <ui:Button text="Button" style="justify-content: space-evenly;" />
-            <ui:Button text="Button" name="Button" class="sample-button" />
-        </ui:VisualElement>
-    </ui:VisualElement>
-</ui:UXML>

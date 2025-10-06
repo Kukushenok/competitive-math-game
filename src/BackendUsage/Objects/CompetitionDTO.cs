@@ -21,14 +21,14 @@ namespace CompetitiveBackend.BackendUsage.Objects
         }
     }
     [Serializable]
-    public class CompetitionUpdateRequestDTO : IntIdentifiableDTO
+    public class CompetitionPatchRequestDTO : IntIdentifiableDTO
     {
         public string? Name { get; set; }
         public string? Description { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
 
-        public CompetitionUpdateRequestDTO(int id, string? name, string? description,
+        public CompetitionPatchRequestDTO(int id, string? name, string? description,
                                           DateTime? startDate, DateTime? endDate)
             : base(id)
         {
