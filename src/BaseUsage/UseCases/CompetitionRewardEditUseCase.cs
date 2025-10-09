@@ -37,7 +37,7 @@ namespace CompetitiveBackend.BaseUsage.UseCases
             if (reward.ID == null) throw new InvalidInputDataException("The ID for patched reward is null");
             await _service.UpdateCompetitionReward(reward.ID!.Value, reward.RewardDescriptionID, reward.GetCondition());
         }
-
+        
         async Task<ICompetitionRewardEditUseCase> IAuthableUseCase<ICompetitionRewardEditUseCase>.Auth(string token) => await Auth(token);
     }
 }

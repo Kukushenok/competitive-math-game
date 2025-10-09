@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace CompetitiveBackend.BackendUsage.UseCases
 {
+    [System.Obsolete("Changed API")]
     public interface ICompetitionLevelEditUseCase: IAuthableUseCase<ICompetitionLevelEditUseCase>
     {
         public Task<IEnumerable<LevelDataInfoDTO>> GetLevelInfos(int competitionID);

@@ -74,8 +74,6 @@ namespace CompetitiveBackend.Repositories
                 model.Answer = riddle.TrueAnswer.TextAnswer;
                 model.OtherAnswers = JsonSerializer.Serialize(
                     riddle.PossibleAnswers
-                        .Where(a => a.TextAnswer != riddle.TrueAnswer.TextAnswer)
-                        .ToList()
                 );
 
                 context.CompetitionRiddles.Update(model);

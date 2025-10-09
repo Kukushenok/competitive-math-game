@@ -3,6 +3,7 @@ using RepositoriesRealisation.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace CompetitiveBackend.Repositories
 {
@@ -40,9 +41,7 @@ namespace CompetitiveBackend.Repositories
                 Question = riddle.Question,
                 Answer = riddle.TrueAnswer?.TextAnswer ?? string.Empty,
                 OtherAnswers = JsonSerializer.Serialize(
-                    riddle.PossibleAnswers
-                        .Where(a => a.TextAnswer != riddle.TrueAnswer?.TextAnswer)
-                        .ToList()
+                    riddle.PossibleAnswers.Select(x=>x.TextAnswer).ToArray()
                 )
             };
         }
@@ -54,7 +53,8 @@ namespace CompetitiveBackend.Repositories
             {
                 try
                 {
-                    otherAnswers = JsonSerializer.Deserialize<List<RiddleAnswer>>(OtherAnswers!) ?? new();
+                    var x = JsonSerializer.Deserialize<string[]>(OtherAnswers!) ?? Array.Empty<string>();
+                    otherAnswers = x.Select(x => new RiddleAnswer(x)).ToList();
                 }
                 catch
                 {
@@ -64,9 +64,6 @@ namespace CompetitiveBackend.Repositories
 
             var trueAnswer = new RiddleAnswer(Answer);
             var possibleAnswers = new List<RiddleAnswer>(otherAnswers);
-            if (!possibleAnswers.Any(a => a.TextAnswer == trueAnswer.TextAnswer))
-                possibleAnswers.Add(trueAnswer);
-
             return new RiddleInfo(CompetitionID, Question, possibleAnswers, trueAnswer, ID);
         }
     }

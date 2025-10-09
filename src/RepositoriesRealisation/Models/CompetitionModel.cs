@@ -29,6 +29,7 @@ namespace RepositoriesRealisation.Models
         public DateTime EndTime { get; set; }
         [Column("has_ended")]
         public bool HasEnded { get; set; } = false;
+        public virtual RiddleGameSettingsModel RiddleGameSettings { get; set; }
         public CompetitionModel(int id, string name, string? description, DateTime startTime, DateTime endTime)
         {
             Id = id;

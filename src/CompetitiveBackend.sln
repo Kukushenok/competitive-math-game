@@ -78,6 +78,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationalTestsBase", "I
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E2ETests", "E2ETests\E2ETests.csproj", "{E7346ADF-A762-7498-A470-BF3B128284B8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SessionManager", "SessionManager", "{A9E6E26F-1C43-4935-A43F-D12A4F0ED5EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InMemorySessionManager", "InMemorySessionManager\InMemorySessionManager.csproj", "{4AEB96D9-EC4D-4982-94DF-3F800B7ACF02}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -188,6 +192,10 @@ Global
 		{E7346ADF-A762-7498-A470-BF3B128284B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7346ADF-A762-7498-A470-BF3B128284B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7346ADF-A762-7498-A470-BF3B128284B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AEB96D9-EC4D-4982-94DF-3F800B7ACF02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AEB96D9-EC4D-4982-94DF-3F800B7ACF02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AEB96D9-EC4D-4982-94DF-3F800B7ACF02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AEB96D9-EC4D-4982-94DF-3F800B7ACF02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -217,6 +225,7 @@ Global
 		{A01C5546-7557-C8F0-7DB1-DE73F1EE43D9} = {8ADF2D06-996C-4138-9981-598B160F70EE}
 		{17BA04A8-7B04-E3BA-969D-4CD02DCCDC6D} = {8ADF2D06-996C-4138-9981-598B160F70EE}
 		{E7346ADF-A762-7498-A470-BF3B128284B8} = {8ADF2D06-996C-4138-9981-598B160F70EE}
+		{4AEB96D9-EC4D-4982-94DF-3F800B7ACF02} = {A9E6E26F-1C43-4935-A43F-D12A4F0ED5EB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A7EFF7A1-7D80-4BCC-8E4F-C0FC9FD3C830}

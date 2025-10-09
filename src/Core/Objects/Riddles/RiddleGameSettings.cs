@@ -5,9 +5,9 @@
         public int ScoreOnRightAnswer;
         public int ScoreOnBadAnswer;
         public int TotalRiddles;
-        public DateTime TimeLimit;
+        public TimeSpan? TimeLimit;
         public int TimeLinearBonus;
-        public RiddleGameSettings(int scoreOnRightAnswer, int scoreOnBadAnswer, int totalRiddles, DateTime timeLimit, int timeLinearBonus)
+        public RiddleGameSettings(int scoreOnRightAnswer, int scoreOnBadAnswer, int totalRiddles, TimeSpan? timeLimit, int timeLinearBonus)
         {
             ScoreOnRightAnswer = scoreOnRightAnswer;
             ScoreOnBadAnswer = scoreOnBadAnswer;

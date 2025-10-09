@@ -30,7 +30,7 @@ namespace CompetitiveBackend.Services.RewardDescriptionService
         }
         private UserRiddleInfo CastToUser(RiddleInfo info)
         {
-            List<RiddleAnswer> answers = new List<RiddleAnswer>(info.PossibleAnswers);
+            List<RiddleAnswer> answers = new(info.PossibleAnswers);
             if(answers.Count > 0)
             {
                 answers.Add(info.TrueAnswer);
@@ -100,7 +100,12 @@ namespace CompetitiveBackend.Services.RewardDescriptionService
                 if (CompareAnswers(req.Answers[i], gameInfo.Riddles[i].TrueAnswer)) rightAnswCount++;
             }
             int totalCount = gameInfo.Riddles.Count;
-            double ratio = (DateTime.UtcNow - gameInfo.StartTime).TotalSeconds / settings.TimeLimit.Second;
+            double ratio = 0;
+            if (settings.TimeLimit != null)
+            {
+                ratio = 1.0 - (DateTime.UtcNow - gameInfo.StartTime).TotalSeconds / settings.TimeLimit.Value.TotalSeconds;
+                if (ratio < 0) ratio = 0;
+            }
             int score = (int)(Math.Round(settings.TimeLinearBonus * ratio));
             score += rightAnswCount * settings.ScoreOnRightAnswer + (totalCount - rightAnswCount) * settings.ScoreOnBadAnswer;
             return new ParticipationFeedback(
@@ -111,7 +116,7 @@ namespace CompetitiveBackend.Services.RewardDescriptionService
         }
         public async Task<ParticipationFeedback> DoSubmit(CompetitionParticipationRequest request)
         {
-            var sess = await sessionManager.RetrieveSession(request);
+            var sess = await sessionManager.RetrieveSession(request.SessionID);
             int compID = sess.GameInfo.CompetitionID;
             var x = await Calculate(sess.GameInfo, request);
             await SubmitParticipation(request.PlayerID, compID, x.Score);

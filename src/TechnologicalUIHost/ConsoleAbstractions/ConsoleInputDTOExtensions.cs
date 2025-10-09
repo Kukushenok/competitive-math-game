@@ -125,5 +125,36 @@ namespace TechnologicalUIHost.ConsoleAbstractions
             string description = input.PromtInput($"Описание награды {prompt}");
             return new RewardDescriptionDTO(name, description, null);
         }
+        public static RiddleGameSettingsDTO ReadRiddleGameSettingsDTO(this IConsoleInput input, string prompt = "> ")
+        {
+            int count = input.ReadInt($"Кол-во заданий {prompt}");
+            int pScore = input.ReadInt($"Кол-во очков за правильный ответ {prompt}");
+            int fScore = input.ReadInt($"Кол-во очков за неправильный ответ {prompt}");
+            TimeSpan? totalTime = input.ReadNullableTimeSpan($"Время игры (если предусматривается) {prompt}");
+            int timeScore = input.ReadInt($"Очки за время {prompt}");
+            return new RiddleGameSettingsDTO(pScore, fScore, count, totalTime, timeScore);
+        }
+        public static RiddleInfoDTO ReadRiddleInfoDTO(this IConsoleInput input, string promt = "> ")
+        {
+            int? ID = input.ReadNullableInt($"ID {promt}");
+            int compID = input.ReadInt($"ID соревнования: {promt}");
+            string question = input.PromtInput($"Вопрос {promt}");
+            string answer = input.PromtInput($"Ответ {promt}");
+            string? otherAnswer = null;
+            List<string> otherAnswers = new List<string>();
+            do
+            {
+                otherAnswer = input.PromtInput($"+ Альтернативный ответ (возможно скип) {promt}");
+                otherAnswer = string.IsNullOrWhiteSpace(otherAnswer) ? null : otherAnswer;
+                if (otherAnswer != null) otherAnswers.Add(otherAnswer);
+            } while (otherAnswer != null);
+            return new RiddleInfoDTO(
+                compID,
+                question,
+                (from s in otherAnswers select new RiddleAnswerDTO(s)).ToList(),
+                new RiddleAnswerDTO(answer),
+                ID
+            );
+        }
     }
 }

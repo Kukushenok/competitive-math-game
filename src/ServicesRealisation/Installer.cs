@@ -3,6 +3,7 @@ using CompetitiveBackend.Services;
 using CompetitiveBackend.Services.AuthService;
 using CompetitiveBackend.Services.CompetitionRewardService;
 using CompetitiveBackend.Services.CompetitionService;
+using CompetitiveBackend.Services.ExtraTools;
 using CompetitiveBackend.Services.Objects;
 using CompetitiveBackend.Services.PlayerParticipationService;
 using CompetitiveBackend.Services.PlayerProfileService;
@@ -15,6 +16,14 @@ using ServicesRealisation.ServicesRealisation.Validator;
 
 namespace ServicesRealisation
 {
+    public class BasicRandom : IRandom
+    {
+        private Random random = new Random();
+        public int Next(int minInclusive, int maxExclusive)
+        {
+            return random.Next(minInclusive, maxExclusive);
+        }
+    }
     public static class ServicesInstaller
     {
         public static IServiceCollection AddCompetitiveServices(this IServiceCollection container)
@@ -28,6 +37,9 @@ namespace ServicesRealisation
             container.AddScoped<IRewardDescriptionService, RewardDescriptionService>();
             container.AddSingleton<ICompetitionRewardScheduler, CompetitionRewardScheduler>();
             container.AddScoped<ICompetitionLevelService, CompetitionLevelService>();
+            container.AddScoped<IGameProviderService, GameProviderService>();
+            container.AddScoped<IGameManagementService, GameManagementService>();
+            container.AddTransient<IRandom, BasicRandom>();
             return container;
         }
         public static IServiceCollection AddAuthService(this IServiceCollection container)

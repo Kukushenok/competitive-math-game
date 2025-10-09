@@ -26,6 +26,7 @@ namespace RepositoriesRealisation
         public DbSet<PlayerRewardModel> PlayerReward { get; set; } = null!;
         public DbSet<CompetitionRewardModel> CompetitionReward { get; set; } = null!;
         public DbSet<CompetitionRiddleModel> CompetitionRiddles { get; set; } = null!;
+        public DbSet<RiddleGameSettingsModel> RiddleGameSettings { get; set; } = null!;
         protected BaseDbContext()
         {
         }
@@ -40,6 +41,7 @@ namespace RepositoriesRealisation
             ConnectOneToOne<CompetitionLevelDataModel, CompetitionLevelDataModelData>(modelBuilder, nameof(CompetitionLevelDataModel.LevelData));
             ConnectOneToOne<RewardDescriptionModel, RewardDescriptionModelIconImage>(modelBuilder, nameof(RewardDescriptionModel.IconImage));
             ConnectOneToOne<AccountModel, AccountModelProfileImage>(modelBuilder, nameof(AccountModel.ProfileImage));
+            ConnectOneToOne<CompetitionModel, RiddleGameSettingsModel>(modelBuilder, nameof(CompetitionModel.RiddleGameSettings));
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<CompetitionRiddleModel>(entity =>
             {
