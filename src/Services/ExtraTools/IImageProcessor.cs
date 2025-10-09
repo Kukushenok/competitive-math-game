@@ -1,4 +1,5 @@
-﻿using CompetitiveBackend.Services.Objects;
+﻿using CompetitiveBackend.Core.Objects;
+using CompetitiveBackend.Services.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;

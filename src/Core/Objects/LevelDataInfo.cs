@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace CompetitiveBackend.Core.Objects
 {
+    [System.Obsolete("We're determined not to do this")]
     public class LevelDataInfo: IntIdentifiable
     {
         public int CompetitionID;

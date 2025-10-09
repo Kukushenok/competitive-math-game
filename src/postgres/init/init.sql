@@ -31,12 +31,12 @@ create table if not exists competition(
 
 alter table competition add constraint start_end_coherency check (end_time > start_time); 
 
-create table if not exists competition_level(
+create table if not exists competition_riddle(
 	id int generated always as identity primary key,
 	competition_id int references competition(id) not null,
-	version_key int not null,
-	platform varchar(32) not null,
-	level_data bytea not null
+	question varchar(256) not null,
+	answer varchar(256) not null
+	other_answers jsonb
 );
 
 create table if not exists player_participation(

@@ -12,7 +12,8 @@ namespace CompetitiveBackend.Services
         /// <param name="competitionID">Идентификатор соревнования</param>
         /// <param name="score">Результат</param>
         /// <returns></returns>
-        public Task SubmitParticipation(int playerID, int competitionID, int score);
+        [System.Obsolete("Stupid API, should use other service.")]
+        public Task SubmitParticipation(int playerID, int competitionID, int score) => Task.CompletedTask;
         /// <summary>
         /// Удалить участие игрока
         /// </summary>

@@ -34,29 +34,6 @@ namespace CompetitiveBackend.Services.PlayerParticipationService
         {
             return await _playerParticipationRepository.GetPlayerParticipations(userID, limiter);
         }
-
-        public async Task SubmitParticipation(int userID, int competitionID, int score)
-        {
-            PlayerParticipation? participation = null;
-            Competition c = await _competitionRepository.GetCompetition(competitionID);
-            DateTime current = DateTime.UtcNow;
-            if (current < c.StartDate || current > c.EndDate)
-            {
-                throw new ChronologicalException("Could not participate; competition " + (current > c.EndDate ? "has ended" : "is not started yet"));
-            }
-            try
-            {
-                participation = await _playerParticipationRepository.GetParticipation(userID, competitionID);
-            }
-            catch (MissingDataException)
-            {
-                await _playerParticipationRepository.CreateParticipation(new PlayerParticipation(competitionID, userID, score, current));
-            }
-            if (participation != null && participation.Score < score)
-            {
-                await _playerParticipationRepository.UpdateParticipation(new PlayerParticipation(competitionID, userID, score, current));
-            }
-        }
     }
 
 }
