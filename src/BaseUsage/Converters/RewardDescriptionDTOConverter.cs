@@ -40,11 +40,11 @@ namespace CompetitiveBackend.BaseUsage.Converters
         }
         public static CompetitionParticipationRequestDTO Convert(this CompetitionParticipationRequest request)
         {
-            return new CompetitionParticipationRequestDTO(request.PlayerID, request.SessionID, (from r in request.Answers select r.Convert()).ToList());
+            return new CompetitionParticipationRequestDTO(request.SessionID, (from r in request.Answers select r.Convert()).ToList());
         }
-        public static CompetitionParticipationRequest Convert(this CompetitionParticipationRequestDTO request)
+        public static CompetitionParticipationRequest Convert(this CompetitionParticipationRequestDTO request, int playerID)
         {
-            return new CompetitionParticipationRequest(request.PlayerID, request.SessionID, (from r in request.Answers select r.Convert()).ToList());
+            return new CompetitionParticipationRequest(playerID, request.SessionID, (from r in request.Answers select r.Convert()).ToList());
         }
         public static ParticipationFeedbackDTO Convert(this ParticipationFeedback feedback)
         {

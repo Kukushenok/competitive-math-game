@@ -6,6 +6,7 @@ using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Services;
 using CompetitiveBackend.Services.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json.Serialization;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -25,7 +26,16 @@ namespace CompetitiveBackend.Controllers
         /// <summary>
         /// Получить данные своего профиля
         /// </summary>
-        /// <returns>Данные профиля</returns>
+        /// <returns>Успешное выполнение</returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="401">Пользователь не авторизован</response>
+        /// <response code="403">Пользователь не авторизован как игрок</response>
+        /// <response code="500">Ошибка сервера</response>
+        [Authorize(Roles = "Player")]
+        [ProducesResponseType(typeof(PlayerProfile), 200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
+        [ProducesResponseType(typeof(ProblemDetails), 500)]
         [HttpGet($"{APIConsts.SELF}")]
         public async Task<ActionResult<PlayerProfileDTO>> GetPlayerProfile()
         {

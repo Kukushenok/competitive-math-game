@@ -19,24 +19,36 @@ namespace CompetitiveBackend.Controllers
             AuthUseCase = service;
         }
         /// <summary>
-        /// Login request
+        /// Логин
         /// </summary>
-        /// <param name="dto">Data for login request</param>
-        /// <response code="200">Returns the information about session</response>
-        /// <response code="404">Could not find the user and password</response>
+        /// <param name="accountLogin">Данные для входа в аккаунт</param>
+        /// <returns>Успешный вход в аккаунт</returns>
+        /// <response code="200">Успешный вход в аккаунт</response>
+        /// <response code="404">Пароль не подошёл или логин не найден</response>
+        /// <response code="500">Ошибка сервера</response>
         [HttpPost(APIConsts.LOGIN)]
-        [ProducesResponseType(typeof(AuthSuccessResultDTO), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Login(AccountLoginDTO dto)
+        [ProducesResponseType(typeof(AuthSuccessResult), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(typeof(ProblemDetails), 500)]
+        public async Task<IActionResult> Login([FromBody] AccountLoginDTO accountLogin)
         {
-            return Ok(await AuthUseCase.Login(dto));
+            return Ok(await AuthUseCase.Login(accountLogin));
         }
+        /// <summary>
+        /// Регистрация нового аккаунта
+        /// </summary>
+        /// <param name="accountCreation">Данные для регистрации</param>
+        /// <returns>Успешная регистрация</returns>
+        /// <response code="200">Успешная регистрация</response>
+        /// <response code="409">Такой логин уже занят</response>
+        /// <response code="500">Ошибка сервера</response>
         [HttpPost(APIConsts.REGISTER)]
-        [ProducesResponseType(typeof(AuthSuccessResultDTO), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public async Task<ActionResult<AuthSuccessResultDTO>> Register(AccountCreationDTO dto)
+        [ProducesResponseType(typeof(AuthSuccessResult), 200)]
+        [ProducesResponseType(409)]
+        [ProducesResponseType(500)]
+        public async Task<ActionResult<AuthSuccessResultDTO>> Register(AccountCreationDTO accountCreation)
         {
-            return Ok(await AuthUseCase.Register(dto));
+            return Ok(await AuthUseCase.Register(accountCreation));
         }
     }
 }

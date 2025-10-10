@@ -23,8 +23,7 @@ namespace CompetitiveBackend.BaseUsage.UseCases
         public async Task<ParticipationFeedbackDTO> DoSubmit(CompetitionParticipationRequestDTO request)
         {
             PlayerAuthCheck(out int idx);
-            request.PlayerID = idx;
-            var task = await providerService.DoSubmit(request.Convert());
+            var task = await providerService.DoSubmit(request.Convert(idx));
             return task.Convert();
         }
 
