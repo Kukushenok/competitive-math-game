@@ -21,8 +21,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BenchmarkMeasurerHost\BenchmarkMeasurerHost.csproj" />
-    <ProjectReference Include="..\RepositoriesRealisation\RepositoriesRealisation.csproj" />
-    <ProjectReference Include="..\XUnitLoggingProvider\XUnitLoggingProvider.csproj" />
+    <ProjectReference Include="..\..\..\RepositoriesRealisation\RepositoriesRealisation.csproj" />
+    <ProjectReference Include="..\..\..\XUnitLoggingProvider\XUnitLoggingProvider.csproj" />
   </ItemGroup>
 
   <ItemGroup>

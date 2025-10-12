@@ -4,6 +4,8 @@ services:
     build:
       context: .
       dockerfile: CompetitiveBackend/Dockerfile
+    ports:
+      - "8080:8080"
     depends_on:
       - postgres
     networks:
@@ -17,13 +19,62 @@ services:
       POSTGRES_DB: maindb
       PGDATA: /data/postgres
     volumes:
-        - ./postgres/data:/var/lib/postgresql/data
+        - database-data:/var/lib/postgresql/data
         - ./postgres/init:/docker-entrypoint-initdb.d/ 
     ports:
         - 5432:5432
     networks:
       - my_persistent_network
 
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/console_templates'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    networks:
+      - my_persistent_network
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    networks:
+      - my_persistent_network
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    ports:
+      - "8081:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    privileged: true
+    devices:
+      - /dev/kmsg
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+    networks:
+      - my_persistent_network
+volumes:
+  grafana-storage:
+  database-data:
 networks:
   my_persistent_network:
     driver: bridge

@@ -1,12 +1,13 @@
 
 using CompetitiveBackend.Controllers;
 using CompetitiveBackend.SolutionInstaller;
-using ImageProcessorRealisation;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.OpenApi.Models;
+using PrometheusCollectorSetupper;
+using Repositories.Objects;
 using RepositoriesRealisation;
 using ServicesRealisation;
 using System.Reflection;
@@ -24,6 +25,7 @@ namespace CompetitiveBackend
             builder.Services.AddProblemDetails();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddPrometheusMetrics();
             builder.Services.AddControllers().AddNewtonsoftJson();
             builder.Services.AddSwaggerGen(setup =>
             {
@@ -58,7 +60,7 @@ namespace CompetitiveBackend
 
             });
 
-            var app = builder.Build();
+            WebApplication app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -72,10 +74,12 @@ namespace CompetitiveBackend
                 );
 
             }
-
+            app.MapPost("/competition_ensurance/{minutes}", async (int minutes) => await BenchmarkFakerSetupper.BenchmarkBypass(app.Services, minutes));
             //app.UseHttpsRedirection();
             //app.UseAuthentication();
             //app.UseAuthorization();
+            app.UsePrometheusMetrics();
+
             app.UseExceptionHandler();
             app.MapControllers();
             app.Services.InitializeCompetitiveBackendSolution();
