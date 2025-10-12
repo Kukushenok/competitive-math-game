@@ -131,18 +131,18 @@ export const options = {
                 { target: 20, duration: '30s' },
 
                 // Linearly ramp-up to starting 600 iterations per `timeUnit` over the following two minutes.
-                { target: 40, duration: '30s' },
+                { target: 30, duration: '30s' },
 
                 // Continue starting 600 iterations per `timeUnit` for the following four minutes.
-                { target: 80, duration: '30s' },
+                { target: 40, duration: '30s' },
 
                 // Linearly ramp-down to starting 60 iterations per `timeUnit` over the last two minutes.
-                { target: 160, duration: '30s' },
-                { target: 320, duration: '30s' },
-                { target: 640, duration: '30s' },
-                { target: 1280, duration: '30s' },
-                { target: 2560, duration: '30s' },
-                { target: 5120, duration: '1m' },
+                { target: 50, duration: '30s' },
+                { target: 60, duration: '30s' },
+                { target: 70, duration: '30s' },
+                { target: 80, duration: '30s' },
+                { target: 90, duration: '30s' },
+                { target: 100, duration: '1m' },
             ],
         },
     },

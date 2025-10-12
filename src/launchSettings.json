@@ -5,9 +5,8 @@
       "commandVersion": "1.0",
       "serviceActions": {
         "competitivebackend": "StartWithoutDebugging",
-        "cadvisor": "StartWithoutDebugging",
         "grafana": "StartWithoutDebugging",
-        "k6": "DoNotStart",
+        "k6": "StartWithoutDebugging",
         "postgres": "StartWithoutDebugging",
         "prometheus": "StartWithoutDebugging"
       }
