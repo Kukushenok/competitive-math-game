@@ -1,4 +1,6 @@
-﻿namespace CompetitiveBackend.Core.Objects
+﻿
+global using IDType = int;
+namespace CompetitiveBackend.Core.Objects
 {
     public abstract class Identifiable<T> where T : struct
     {
@@ -11,8 +13,8 @@
     /// <summary>
     /// Базовый класс для объектов, поддерживающие идентификацию по целому числу
     /// </summary>
-    public abstract class IntIdentifiable : Identifiable<int>
+    public abstract class IntIdentifiable : Identifiable<IDType>
     {
-        public IntIdentifiable(int? id = null) : base(id) { }
+        public IntIdentifiable(IDType? id = null) : base(id) { }
     }
 }

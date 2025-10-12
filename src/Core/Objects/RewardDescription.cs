@@ -1,4 +1,5 @@
-﻿namespace CompetitiveBackend.Core.Objects
+﻿
+namespace CompetitiveBackend.Core.Objects
 {
     public class RewardDescription : IntIdentifiable, IEquatable<RewardDescription>
     {

@@ -26,17 +26,22 @@ create table if not exists competition(
 	description varchar(128),
 	start_time timestamp not null,
 	end_time timestamp not null,
-	has_ended bool not null default(false)
+	has_ended bool not null default(false),
+	score_on_right_answer int not null default(0),
+    score_on_bad_answer int not null default(0),
+    total_riddles int not null default(0),
+    time_limit interval,
+    time_linear_bonus int not null default(0)
 );
 
 alter table competition add constraint start_end_coherency check (end_time > start_time); 
 
-create table if not exists competition_level(
+create table if not exists competition_riddle(
 	id int generated always as identity primary key,
 	competition_id int references competition(id) not null,
-	version_key int not null,
-	platform varchar(32) not null,
-	level_data bytea not null
+	question varchar(256) not null,
+	answer varchar(256) not null,
+	other_answers jsonb
 );
 
 create table if not exists player_participation(
@@ -203,7 +208,7 @@ $$ language plpgsql security definer;
 
 revoke select, update, delete on account from public;
 create role guest with login password 'guest_password';
-grant select on competition, competition_reward, player_participation, reward_description, competition_level to guest;
+grant select on competition, competition_reward, player_participation, reward_description to guest;
 grant select (id, login, username, email, privilegy_level, description, profile_image) on account to guest;
 grant insert (login, username, email, password_hash, privilegy_level) on account to guest;
 grant execute on function check_password_hash(varchar, varchar) to guest;
@@ -215,6 +220,7 @@ create role player with login password 'player_password';
 grant guest to player;
 grant update (username, description, profile_image) on account to player;
 grant select, insert, update on player_participation to player;
+grant select on competition_riddle to player;
 grant select on player_reward to player;
 alter role player inherit;
 
@@ -223,7 +229,7 @@ alter role player inherit;
 create role admin with login password 'admin_password';
 grant guest to admin;
 grant select, delete on player_participation to admin;
-grant select, insert, update, delete on player_reward, competition_level to admin;
+grant select, insert, update, delete on player_reward, competition_riddle to admin;
 grant insert, update on competition, competition_reward, reward_description to admin;
 alter role admin inherit;
 

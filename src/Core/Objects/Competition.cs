@@ -24,6 +24,6 @@ namespace CompetitiveBackend.Core.Objects
                 (StartDate == x.StartDate) &&
                 (EndDate == x.EndDate) &&
                 (Id == x.Id);
-        }
+        } 
     }
 }

@@ -13,7 +13,7 @@ namespace TechnologicalUI
 
         public ILogger CreateLogger(string categoryName)
         {
-            return new FileLogger(categoryName, _filePath);
+            return new FileLogger(_filePath);
         }
 
         public void Dispose()
@@ -28,7 +28,11 @@ namespace TechnologicalUI
         public FileLogger(string path)
         {
             _filePath = path;
-            Directory.CreateDirectory(Path.GetDirectoryName(_filePath)!);
+            string? d = Path.GetDirectoryName(_filePath);
+            if (!string.IsNullOrEmpty(d))
+            {
+                Directory.CreateDirectory(d);
+            }
         }
 
         public IDisposable BeginScope<TState>(TState state) => null!;

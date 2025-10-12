@@ -1,5 +1,4 @@
-﻿using CompetitiveBackend.BackendUsage.Objects;
-using CompetitiveBackend.BackendUsage.UseCases;
+﻿using CompetitiveBackend.BackendUsage.UseCases;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,16 +36,16 @@ namespace TechnologicalUIHost.Commands
     class PlayerParticipationUseCaseCommands: AuthRequiringCommands 
     {
         private IPlayerParticipationUseCase _playerParticipationUseCase;
-        public PlayerParticipationUseCaseCommands(IAuthCache cache, IPlayerParticipationUseCase playerParticipationUseCase): base("Изменение заявок", cache)
+        public PlayerParticipationUseCaseCommands(IAuthCache cache, IPlayerParticipationUseCase playerParticipationUseCase): base("Просмотр участников", cache)
         {
             this._playerParticipationUseCase = playerParticipationUseCase;
         }
 
-        private async Task SubmitScoreTo(IConsole console)
-        {
-            using var self = await Auth(_playerParticipationUseCase);
-            self.SubmitScoreTo(console.ReadInt("Введите ID соревнования: "), console.ReadInt("Введите свой результат: ")).GetAwaiter().GetResult();
-        }
+        //private async Task SubmitScoreTo(IConsole console)
+        //{
+        //    using var self = await Auth(_playerParticipationUseCase);
+        //    self.SubmitScoreTo(console.ReadInt("Введите ID соревнования: "), console.ReadInt("Введите свой результат: ")).GetAwaiter().GetResult();
+        //}
         private async Task DeleteParticipation(IConsole console)
         {
             using var self = await Auth(_playerParticipationUseCase);
@@ -60,7 +59,7 @@ namespace TechnologicalUIHost.Commands
 
         protected override IEnumerable<IConsoleMenuCommand> GetCommands()
         {
-            yield return new CallbackConsoleMenuCommand("Подать заявку на соревнование", TaskDecorator.Sync(SubmitScoreTo), IsAuthed);
+            //yield return new CallbackConsoleMenuCommand("Подать заявку на соревнование", TaskDecorator.Sync(SubmitScoreTo), IsAuthed);
             yield return new CallbackConsoleMenuCommand("Удалить заявку на соревнование", TaskDecorator.Sync(DeleteParticipation), IsAuthed);
             yield return new CallbackConsoleMenuCommand("Получить свои заявки на соревнования", TaskDecorator.Sync(GetMyParticipations), IsAuthed);
         }

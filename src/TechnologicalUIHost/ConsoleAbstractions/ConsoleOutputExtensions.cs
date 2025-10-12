@@ -130,6 +130,31 @@ namespace TechnologicalUIHost.ConsoleAbstractions
             if (participation.ProfileInfo != null) output.Print(participation.ProfileInfo);
             if (participation.CompetitionInfo != null) output.Print(participation.CompetitionInfo);
         }
+        public static void Print(this IConsoleOutput output, RiddleInfoDTO dto)
+        {
+            output.PromtOutput("=== Загадка ===");
+            output.Print((IntIdentifiableDTO)dto);
+            output.PromtOutput($"ID соревнования: {dto.CompetitionID}");
+            output.PromtOutput($"Вопрос: {dto.Question}");
+            output.PromtOutput($"Ответ: {dto.TrueAnswer.TextAnswer}");
+            if (dto.PossibleAnswers.Count > 0)
+            {
+                output.PromtOutput($"Альтернативные ответы:");
+                foreach (var x in dto.PossibleAnswers)
+                {
+                    output.PromtOutput($"- {x.TextAnswer}");
+                }
+            }
+        }
+        public static void Print(this IConsoleOutput output, RiddleGameSettingsDTO settings)
+        {
+            output.PromtOutput("=== Настройки игры ===");
+            output.PrintIfNotNull("Ограничение по времени:", settings.TimeLimit);
+            output.PromtOutput($"Кол-во вопросов в одной игре: {settings.TotalRiddles}");
+            output.PromtOutput($"Награждаемые очки: {settings.ScoreOnRightAnswer}");
+            output.PromtOutput($"Штрафные очки: {settings.ScoreOnBadAnswer}");
+            output.PromtOutput($"Очки за время: {settings.TimeLinearBonus}");
+        }
         public static void PrintEnumerable<T>(this IConsoleOutput output, IEnumerable<T> result, Action<IConsoleOutput, T> printCmd)
         {
             T[] results = result.ToArray();

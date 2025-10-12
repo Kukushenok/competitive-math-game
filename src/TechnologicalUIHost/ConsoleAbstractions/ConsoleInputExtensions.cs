@@ -32,5 +32,10 @@
             string inputStr = input.PromtInput(promt);
             return string.IsNullOrWhiteSpace(inputStr) ? null : Convert.ToDateTime(inputStr);
         }
+        public static TimeSpan? ReadNullableTimeSpan(this IConsoleInput input, string promt = "> ")
+        {
+            string inputStr = input.PromtInput(promt);
+            return string.IsNullOrWhiteSpace(inputStr) ? null : TimeSpan.Parse(inputStr);
+        }
     }
 }

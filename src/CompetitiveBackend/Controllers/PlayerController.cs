@@ -25,8 +25,12 @@ namespace CompetitiveBackend.Controllers
         /// Получить информацию о профиле
         /// </summary>
         /// <param name="profileID">Идентификатор игрока</param>
-        /// <returns>Данные о профиле</returns>
-        [HttpGet("{profileID}")]
+        /// <returns>Информация о профиле</returns>
+        /// <response code="200">Success</response>
+        /// <response code="500">Ошибка сервера</response>
+        [HttpGet("{profileID:int}")]
+        [ProducesResponseType(typeof(PlayerProfile), 200)]
+        [ProducesResponseType(500)]
         public async Task<ActionResult<PlayerProfileDTO>> GetPlayerProfile(int profileID)
         {
             return await _profileUseCase.GetProfile(profileID);
@@ -36,7 +40,7 @@ namespace CompetitiveBackend.Controllers
         /// </summary>
         /// <param name="profileID">Идентификатор игрока</param>
         /// <returns></returns>
-        [HttpGet($"{{profileID}}/{APIConsts.IMAGE}")]
+        [HttpGet($"{{profileID:int}}/{APIConsts.IMAGE}")]
         public async Task<FileResult> GetPlayerImage(int profileID)
         {
             var data = await _profileUseCase.GetProfileImage(profileID);

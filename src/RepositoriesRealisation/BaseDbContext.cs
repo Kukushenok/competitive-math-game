@@ -1,4 +1,5 @@
 ﻿using CompetitiveBackend.Core.Objects;
+using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Repositories.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using RepositoriesRealisation.DatabaseObjects;
@@ -24,6 +25,8 @@ namespace RepositoriesRealisation
         public DbSet<PlayerParticipationModel> PlayerParticipation { get; set; } = null!;
         public DbSet<PlayerRewardModel> PlayerReward { get; set; } = null!;
         public DbSet<CompetitionRewardModel> CompetitionReward { get; set; } = null!;
+        public DbSet<CompetitionRiddleModel> CompetitionRiddles { get; set; } = null!;
+        public DbSet<RiddleGameSettingsModel> RiddleGameSettings { get; set; } = null!;
         protected BaseDbContext()
         {
         }
@@ -38,7 +41,24 @@ namespace RepositoriesRealisation
             ConnectOneToOne<CompetitionLevelDataModel, CompetitionLevelDataModelData>(modelBuilder, nameof(CompetitionLevelDataModel.LevelData));
             ConnectOneToOne<RewardDescriptionModel, RewardDescriptionModelIconImage>(modelBuilder, nameof(RewardDescriptionModel.IconImage));
             ConnectOneToOne<AccountModel, AccountModelProfileImage>(modelBuilder, nameof(AccountModel.ProfileImage));
+            ConnectOneToOne<CompetitionModel, RiddleGameSettingsModel>(modelBuilder, nameof(CompetitionModel.RiddleGameSettings));
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<CompetitionRiddleModel>(entity =>
+            {
+                entity.ToTable("competition_riddle");
+
+                entity.HasKey(e => e.ID);
+                entity.Property(e => e.ID).HasColumnName("id");
+
+                entity.HasOne(e => e.Competition)
+                    .WithMany()
+                    .HasForeignKey(e => e.CompetitionID)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.Property(e => e.Question).HasMaxLength(256);
+                entity.Property(e => e.Answer).HasMaxLength(256);
+                entity.Property(e => e.OtherAnswers).HasColumnType("jsonb");
+            });
         }
         private void ConnectOneToOne<T, Q>(ModelBuilder builder, string propertyName) where Q: OneToOneEntity<T>
                                                                  where T : class

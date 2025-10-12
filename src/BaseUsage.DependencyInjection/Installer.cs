@@ -20,6 +20,8 @@ namespace CompetitiveBackend.BaseUsage.DependencyInjection
             coll.AddScoped<ICompetitionRewardEditUseCase, CompetitionRewardEditUseCase>();
             coll.AddScoped<IPlayerRewardUseCase, PlayerRewardUseCase>();
             coll.AddScoped<ICompetitionLevelEditUseCase, CompetitionLevelEditUseCase>();
+            coll.AddScoped<IGamePlayUseCase, GamePlayUseCase>();
+            coll.AddScoped<IGameManagementUseCase, GameManagementUseCase>();
             return coll;
         }
     }

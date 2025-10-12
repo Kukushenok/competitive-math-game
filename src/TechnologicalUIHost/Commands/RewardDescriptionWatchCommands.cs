@@ -24,10 +24,10 @@ namespace TechnologicalUIHost.Commands
         {
             console.Print(await _watchUseCase.GetRewardIcon(console.ReadInt("Введите ID описания награды: ")));
         }
-        private async Task GetRewardGameAsset(IConsole console)
-        {
-            console.Print(await _watchUseCase.GetRewardGameAsset(console.ReadInt("Введите ID описания награды: ")));
-        }
+        //private async Task GetRewardGameAsset(IConsole console)
+        //{
+        //    console.Print(await _watchUseCase.GetRewardGameAsset(console.ReadInt("Введите ID описания награды: ")));
+        //}
         private async Task GetRewardDescription(IConsole console)
         {
             console.Print(await _watchUseCase.GetRewardDescription(console.ReadInt("Введите ID описания награды: ")));
@@ -36,7 +36,7 @@ namespace TechnologicalUIHost.Commands
         {
             yield return new CallbackConsoleMenuCommand("Получить все описания наград", TaskDecorator.Sync(GetAllRewards));
             yield return new CallbackConsoleMenuCommand("Получить иконку награды", TaskDecorator.Sync(GetRewardIcon));
-            yield return new CallbackConsoleMenuCommand("Получить игровое представление награды", TaskDecorator.Sync(GetRewardGameAsset));
+            //yield return new CallbackConsoleMenuCommand("Получить игровое представление награды", TaskDecorator.Sync(GetRewardGameAsset));
             yield return new CallbackConsoleMenuCommand("Получить описание награды", TaskDecorator.Sync(GetRewardDescription));
         }
     }

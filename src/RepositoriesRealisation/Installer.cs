@@ -19,6 +19,8 @@ namespace RepositoriesRealisation
             container.AddScoped<IPlayerRewardRepository, PlayerRewardRepository>();
             container.AddScoped<IPlayerParticipationRepository, PlayerParticipationRepository>();
             container.AddScoped<SessionRepositoryConfiguration>();
+            container.AddScoped<IRiddleRepository, RiddleRepository>();
+            container.AddScoped<IRiddleSettingsRepository, RiddleSettingsRepository>();
             container.AddDbContextFactory<BaseDbContext, BaseContextFactory>(lifetime: ServiceLifetime.Scoped);
             opt?.Invoke(myOptions);
             if (!myOptions.SetUpRewardGranter) myOptions.GrantRewardsWithDefaultCalls();

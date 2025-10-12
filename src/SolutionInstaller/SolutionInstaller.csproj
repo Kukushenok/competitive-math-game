@@ -10,6 +10,7 @@
     <ProjectReference Include="..\BaseUsage.DependencyInjection\BaseUsage.DependencyInjection.csproj" />
     <ProjectReference Include="..\ChronoServiceRealisation\ChronoServiceRealisation.csproj" />
     <ProjectReference Include="..\ImageProcessorRealisation\ImageProcessorRealisation.csproj" />
+    <ProjectReference Include="..\InMemorySessionManager\InMemorySessionManager.csproj" />
     <ProjectReference Include="..\RepositoriesRealisation\RepositoriesRealisation.csproj" />
     <ProjectReference Include="..\ServicesRealisation\ServicesRealisation.csproj" />
   </ItemGroup>

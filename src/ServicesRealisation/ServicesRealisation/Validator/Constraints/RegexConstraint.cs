@@ -10,8 +10,8 @@ namespace ServicesRealisation.ServicesRealisation.Validator.Constraints
 {
     internal class RegexConstraint : IValidator<string>, IConfigReadable
     {
-        private string pattern = "*";
-        public RegexConstraint(string pattern = "*")
+        private string pattern = ".*";
+        public RegexConstraint(string pattern = ".*")
         {
             this.pattern = pattern;
         }
