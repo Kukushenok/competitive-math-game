@@ -10,6 +10,11 @@ services:
       - postgres
     networks:
       - my_persistent_network
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 1g
   postgres:
     container_name: database
     image: postgres
@@ -32,6 +37,7 @@ services:
       - "9090:9090"
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -39,6 +45,8 @@ services:
       - '--web.console.templates=/etc/prometheus/console_templates'
       - '--storage.tsdb.retention.time=200h'
       - '--web.enable-lifecycle'
+      - '--web.enable-remote-write-receiver'
+      - '--enable-feature=native-histograms'
     networks:
       - my_persistent_network
   grafana:
@@ -72,9 +80,27 @@ services:
           memory: 512M
     networks:
       - my_persistent_network
+  k6:
+    image: grafana/k6:latest
+    container_name: k6
+    volumes:
+      - ./Benchmark/Advanced/K6Scenarios:/scripts
+      - ./k6-output:/output
+    environment:
+      - K6_PROMETHEUS_RW_SERVER_URL=http://prometheus:9090/api/v1/write
+      - K6_PROMETHEUS_RW_TREND_AS_NATIVE_HISTOGRAM=true
+    command: run /scripts/scenario1.js --out experimental-prometheus-rw
+    ports:
+       - 6565:6565
+    networks:
+      - my_persistent_network
+    depends_on:
+      - prometheus
+      - competitivebackend
 volumes:
   grafana-storage:
   database-data:
+  prometheus-data:
 networks:
   my_persistent_network:
     driver: bridge

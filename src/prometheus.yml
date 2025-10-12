@@ -13,3 +13,8 @@ scrape_configs:
     static_configs:
       - targets: ['cadvisor:8080']
     scrape_interval: 5s
+
+  - job_name: 'k6'
+    static_configs:
+      - targets: ['k6:6565']
+    scrape_interval: 1s
