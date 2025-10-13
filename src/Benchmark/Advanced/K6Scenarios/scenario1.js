@@ -118,14 +118,10 @@ export const options = {
     },
     scenarios: {
     my_scenario1: {
-         executor: 'ramping-arrival-rate',
-      startRate: 20,
-
-      // Start `startRate` iterations per minute
-      timeUnit: '1s',
+         executor: 'ramping-vus',
+      startVUs: 10,
 
       // Pre-allocate necessary VUs.
-      preAllocatedVUs: 300,
       stages: [
                 // Start 300 iterations per `timeUnit` for the first minute.
                 { target: 20, duration: '30s' },
@@ -153,7 +149,6 @@ export default function (data) {
    
   const competitionId = data.competitionId;
   let token;
-  console.log(`Registration successful for: ${data.competitionId}`);
   // 1. Регистрация с retry
   const registrationSuccess = retryRequest((attempt) => {
     const login = generateUniqueLogin(__VU, __ITER, attempt);

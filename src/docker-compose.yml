@@ -55,8 +55,11 @@ services:
       - "3000:3000"
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_PATH_PROVISIONING=/etc/grafana/provisioning
+      - GF_DASHBOARDS_JSON_ENABLED=true
     volumes:
-      - grafana-storage:/var/lib/grafana
+      - ./Benchmark/grafana/provisioning:/etc/grafana/provisioning
+      - ./Benchmark/grafana/dashboards:/var/lib/grafana/dashboards
     networks:
       - my_persistent_network
   #cadvisor:
@@ -98,7 +101,6 @@ services:
       - prometheus
       - competitivebackend
 volumes:
-  grafana-storage:
   database-data:
   prometheus-data:
 networks:
