@@ -8,11 +8,6 @@ using System.Threading.Tasks;
 
 namespace CompetitiveBackend.Services.CompetitionService
 {
-    public interface ICompetitionRewardScheduler
-    {
-        public Task OnCompetitionCreated(Competition c);
-        public Task OnCompetitionUpdated(Competition c);
-    }
     public class CompetitionRewardScheduler : ICompetitionRewardScheduler, ITimeScheduledTaskSubscriber
     {
         private const string SCHED_CATEGORY = "Competition";

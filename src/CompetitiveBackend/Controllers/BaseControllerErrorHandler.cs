@@ -23,6 +23,7 @@ namespace CompetitiveBackend.Controllers
                 if (ex is BadImageException) rslt = Results.Problem(statusCode: 400, detail: ex.Message, title: "Bad image");
                 else if (ex is IncorrectPasswordException) rslt = Results.Problem(statusCode: 400, detail: ex.Message);
                 else if (ex is BadLoginException) rslt = Results.Problem(statusCode: 400, detail: ex.Message);
+                else if (ex is ChronologicalException) rslt = Results.Problem(statusCode: 400, detail: ex.Message, title: "Chronological error");
                 else if (ex is InvalidArgumentsException invx) rslt = Results.Problem(statusCode: 400, detail: invx.Message, title: "Invalid arguments");
             }
             else if (ex is UseCaseException)

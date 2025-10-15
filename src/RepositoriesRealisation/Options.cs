@@ -31,7 +31,7 @@ namespace RepositoriesRealisation
         public Options UseDefaultConnectionString(string connectionString = "postgres")
         {
             SetUpConnectionStringGetter = true;
-            coll.AddSingleton<DummyRepositorySettings>();
+            coll.AddSingleton<IRepositoryPrivilegySetting, DummyRepositoryPrivilegySettings>();
             coll.AddSingleton<IConnectionStringGetter>((IServiceProvider p) => new ConfigurationConnectionStringGetter(p.GetService<IConfiguration>()!, connectionString));
             return this;
         }
@@ -47,7 +47,7 @@ namespace RepositoriesRealisation
             return this;
         }
     }
-    public class DummyRepositorySettings : IRepositoryPrivilegySetting
+    public class DummyRepositoryPrivilegySettings : IRepositoryPrivilegySetting
     {
         public void SetPrivilegies(string privilegy)
         {

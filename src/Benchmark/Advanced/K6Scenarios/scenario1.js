@@ -11,20 +11,50 @@ const retryCounter = new Counter('k6_retries_total');
 const activeUsers = new Gauge('k6_vus_active');
 
 // Конфигурируемые параметры
-const PAUSE_MIN = 1;
-const PAUSE_MAX = 10;
+const PAUSE_MIN = 1.0;
+const PAUSE_MAX = 3.5;
 const RETRY_DELAY = 2;
 const MAX_RETRIES = 3;
+
+// Competition configuration
+const NUM_COMPETITIONS = 6; // Number of competitions to create
+const COMPETITION_DELAY = 1; // Delay between competition creation in seconds
+
 export function setup() {
-    console.log('SLEEPING')
-    sleep(10)
-    const competitionRes = http.post('http://competitivebackend:8080/competition_ensurance/5');
-    let competitionId = '1';
-    if(competitionRes.success) {
-        competitionId = competitionRes.body.trim();
-        console.log(`Created competition with ID: ${competitionId}`);
+    sleep(15); // Endpoint fora...
+    console.log('Starting competition setup...');
+    const competitions = [];
+    
+    for (let i = 0; i < NUM_COMPETITIONS; i++) {
+        const minutes = i + 1; // 1 min, 2 min, 3 min, etc.
+        
+        const competitionRes = http.post(`http://competitivebackend:8080/competition_ensurance/${minutes}`);
+        
+        if (competitionRes.status == 200) {
+            const competitionId = competitionRes.body.trim();
+            const creationTime = Date.now();
+            const expirationTime = creationTime + (minutes * 60 * 1000); // Convert minutes to milliseconds
+            
+            competitions.push({
+                id: competitionId,
+                creationTime: creationTime,
+                expirationTime: expirationTime,
+                durationMinutes: minutes
+            });
+            
+            console.log(`Created competition ${i + 1}/${NUM_COMPETITIONS}: ID=${competitionId}, duration=${minutes}min`);
+        } else {
+            console.log(`Failed to create competition ${i + 1}/${NUM_COMPETITIONS}: ${competitionRes.status}`);
+        }
+        
+        // Add delay between competition creation
+        if (i < NUM_COMPETITIONS - 1) {
+            sleep(COMPETITION_DELAY);
+        }
     }
-    return { competitionId: competitionId };
+    
+    console.log(`Setup completed. Created ${competitions.length} competitions.`);
+    return { competitions: competitions };
 }
 
 // Генерация уникального логина
@@ -111,6 +141,26 @@ function retryRequest(requestFn, maxRetries = MAX_RETRIES) {
   return { success: false };
 }
 
+// Function to get a non-expired competition ID
+function getNonExpiredCompetitionId(competitions) {
+    const now = Date.now();
+    const availableCompetitions = competitions.filter(comp => now < comp.expirationTime);
+    
+    if (availableCompetitions.length === 0) {
+        console.log('No non-expired competitions available');
+        return null;
+    }
+    
+    // Select a random competition from available ones
+    const randomIndex = Math.floor(Math.random() * availableCompetitions.length);
+    const selectedCompetition = availableCompetitions[randomIndex];
+    
+    const timeRemaining = Math.ceil((selectedCompetition.expirationTime - now) / 1000);
+    console.log(`Selected competition ${selectedCompetition.id} with ${timeRemaining}s remaining`);
+    
+    return selectedCompetition.id;
+}
+
 export const options = {
     thresholds: {
         http_req_failed: ['rate<0.01'], // http errors should be less than 1%
@@ -124,21 +174,21 @@ export const options = {
       // Pre-allocate necessary VUs.
       stages: [
                 // Start 300 iterations per `timeUnit` for the first minute.
-                { target: 20, duration: '30s' },
-
-                // Linearly ramp-up to starting 600 iterations per `timeUnit` over the following two minutes.
-                { target: 30, duration: '30s' },
-
-                // Continue starting 600 iterations per `timeUnit` for the following four minutes.
                 { target: 40, duration: '30s' },
 
-                // Linearly ramp-down to starting 60 iterations per `timeUnit` over the last two minutes.
-                { target: 50, duration: '30s' },
+                // Linearly ramp-up to starting 600 iterations per `timeUnit` over the following two minutes.
                 { target: 60, duration: '30s' },
-                { target: 70, duration: '30s' },
+
+                // Continue starting 600 iterations per `timeUnit` for the following four minutes.
                 { target: 80, duration: '30s' },
-                { target: 90, duration: '30s' },
-                { target: 100, duration: '1m' },
+
+                // Linearly ramp-down to starting 60 iterations per `timeUnit` over the last two minutes.
+                { target: 100, duration: '30s' },
+                { target: 120, duration: '30s' },
+                { target: 140, duration: '30s' },
+                { target: 160, duration: '30s' },
+                { target: 180, duration: '30s' },
+                { target: 200, duration: '1m' },
             ],
         },
     },
@@ -147,7 +197,14 @@ export const options = {
 export default function (data) {
   activeUsers.add(1);
    
-  const competitionId = data.competitionId;
+  // Select a non-expired competition
+  const competitionId = getNonExpiredCompetitionId(data.competitions);
+  if (!competitionId) {
+      console.log('No available competition, skipping VU');
+      activeUsers.add(-1);
+      return;
+  }
+
   let token;
   // 1. Регистрация с retry
   const registrationSuccess = retryRequest((attempt) => {
@@ -200,6 +257,12 @@ export default function (data) {
       { headers: { 'Bearer': `${token}` } }
     );
     
+    // Handle 400 response specifically - competition might be expired
+    if (questionsRes.status === 400) {
+      console.log(`Competition ${competitionId} might be expired (400 response), skipping VU`);
+      return { success: false, retry: false };
+    }
+    
     if (check(questionsRes, { 
       'get questions status 200': (r) => r.status === 200,
       'got session ID': (r) => r.json('sessionID') !== undefined
@@ -237,6 +300,12 @@ export default function (data) {
         'Bearer': `${token}`
       } }
     );
+    
+    // Handle 400 response specifically - competition might be expired
+    if (submitRes.status === 400) {
+      console.log(`Competition ${competitionId} might be expired (400 response) during submission, skipping`);
+      return { success: true, retry: false };
+    }
     
     if (check(submitRes, { 'submit answers status 200': (r) => r.status === 200 })) {
       submitAnswersTime.add(submitRes.timings.duration);
