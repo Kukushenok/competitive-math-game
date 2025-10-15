@@ -6,7 +6,7 @@ const constants = {
   PAUSE_MAX: 3.5,
   MAX_RETRIES: 3,
   RETRY_DELAY: 2,
-  NUM_COMPETITIONS: 6,
+  NUM_COMPETITIONS: 8,
   COMPETITION_DELAY: 1
 };
 
@@ -26,6 +26,10 @@ const opts = {
         { target: 230, duration: '30s' },
         { target: 260, duration: '30s' },
         { target: 300, duration: '30s' },
+        { target: 350, duration: '30s' },
+        { target: 400, duration: '30s' },
+        { target: 450, duration: '30s' },
+        { target: 500, duration: '30s' },
       ],
     },
   },
