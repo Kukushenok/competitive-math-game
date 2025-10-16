@@ -50,7 +50,6 @@ namespace TechnologicalUIHost.Commands
                 answers.Add(new RiddleAnswerDTO(answer));
             }
             CompetitionParticipationRequestDTO dto = new CompetitionParticipationRequestDTO(
-                0,
                 gameplay.SessionID,
                 answers
                 );
