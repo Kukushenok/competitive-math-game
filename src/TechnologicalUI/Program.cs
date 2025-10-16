@@ -1,4 +1,5 @@
-﻿using CompetitiveBackend.SolutionInstaller;
+﻿using ClientUsage.Installer;
+using CompetitiveBackend.SolutionInstaller;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -14,13 +15,33 @@ namespace TechnologicalUI
     {
         static void Main(string[] args)
         {
+
             HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
             builder.Services.AddLogging(conf => conf.AddProvider(new FileLoggerProvider("log.log")));
-            builder.Services.AddCompetitiveBackendSolution();
+            bool local = Decide(builder.Services);
             builder.Services.AddTechnologicalUIHostWithConsole<ConsoleInOut>();
             IHost hst = builder.Build();
-            hst.Services.InitializeCompetitiveBackendSolution();
+            if(local) hst.Services.InitializeCompetitiveBackendSolution();
             hst.Run();
+        }
+        static bool Decide(IServiceCollection coll)
+        {
+            Console.Write("Введите HTTP-адрес сервера (по умолчанию http://localhost:8080/). (Напишите host, чтобы не использовать): ");
+            var input = Console.ReadLine()?.Trim();
+            if (string.IsNullOrEmpty(input))
+            {
+                input = "http://localhost:8080/";
+            }
+            bool hosted = input.ToLower() == "host";
+            if(hosted) 
+            {
+                coll.AddCompetitiveBackendSolution();
+            } 
+            else
+            {
+                coll.AddRemoteUseCases(input);
+            }
+            return hosted;
         }
     }
 }

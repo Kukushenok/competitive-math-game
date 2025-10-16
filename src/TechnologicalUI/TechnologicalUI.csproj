@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ClientUsage\ClientUsage.csproj" />
     <ProjectReference Include="..\TechnologicalUIHost\TechnologicalUIHost.csproj" />
     <ProjectReference Include="..\SolutionInstaller\SolutionInstaller.csproj" />
   </ItemGroup>

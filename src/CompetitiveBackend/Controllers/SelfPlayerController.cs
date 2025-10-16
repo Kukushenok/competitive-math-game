@@ -46,8 +46,7 @@ namespace CompetitiveBackend.Controllers
         /// <summary>
         /// Обновить данные своего профиля
         /// </summary>
-        /// <param name="name">Имя</param>
-        /// <param name="description">Описание профиля</param>
+        /// <param name="dto">Профиль</param>
         /// <returns></returns>
         [HttpPatch($"{APIConsts.SELF}")]
         public async Task<NoContentResult> SetPlayerProfile(PlayerProfileDTO dto)

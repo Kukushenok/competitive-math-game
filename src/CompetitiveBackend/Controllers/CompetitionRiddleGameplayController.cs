@@ -41,7 +41,6 @@ namespace CompetitiveBackend.Controllers
         /// Выполнить задание на игру
         /// </summary>
         /// <param name="compID">Идентификатор соревнования</param>
-        /// <param name="session">Идентификатор игровой сессии</param>
         /// <param name="answers">Ответы на вопросы</param>
         /// <returns>Успешное выполнение</returns>
         /// <response code="200">Успешное выполнение</response>
@@ -49,7 +48,7 @@ namespace CompetitiveBackend.Controllers
         /// <response code="401">Пользователь не авторизован</response>
         /// <response code="403">Не игрок</response>
         /// <response code="500">Ошибка сервера</response>
-        [HttpPost("{compID:int}/game_session/{session:guid}")]
+        [HttpPost("{compID:int}/game_session/")]
 
         [ProducesResponseType(typeof(ParticipationFeedbackDTO), 200)]
         [ProducesResponseType(404)]
@@ -58,11 +57,10 @@ namespace CompetitiveBackend.Controllers
         [ProducesResponseType(500)]
         public async Task<ActionResult<ParticipationFeedbackDTO>> DoPlay(
             int compID,
-            string session,
-            [FromBody] List<RiddleAnswerDTO> answers)
+            [FromBody] CompetitionParticipationRequestDTO answers)
         {
             using var self = await gamePlay.Auth(HttpContext);
-            return await self.DoSubmit(new CompetitionParticipationRequestDTO(session, answers));
+            return await self.DoSubmit(answers);
         }
     }
 }
