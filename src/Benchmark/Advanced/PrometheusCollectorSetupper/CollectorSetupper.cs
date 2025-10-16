@@ -21,6 +21,7 @@ namespace PrometheusCollectorSetupper
             // Включаем сбор метрик HTTP запросов
             app.UseMetricServer();
             app.UseHttpMetrics();
+            app.UseMiddleware<ThrottlingMonitoringMiddleware>();
             return app;
         }
     }

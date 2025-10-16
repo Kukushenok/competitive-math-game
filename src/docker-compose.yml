@@ -62,27 +62,34 @@ services:
       - ./Benchmark/grafana/dashboards:/var/lib/grafana/dashboards
     networks:
       - my_persistent_network
-  #cadvisor:
-  # image: gcr.io/cadvisor/cadvisor:latest
-  #  container_name: cadvisor
-  #  ports:
-  #    - "8081:8080"
-  #  volumes:
-  #    - /:/rootfs:ro
-  #    - /var/run:/var/run:ro
-  #    - /sys:/sys:ro
-  #    - /var/lib/docker/:/var/lib/docker:ro
-  #    - /dev/disk/:/dev/disk:ro
-  #  privileged: true
-  #  devices:
-  #    - /dev/kmsg
-  #  deploy:
-  #    resources:
-  #      limits:
-  #        cpus: '0.5'
-  #        memory: 512M
-  #  networks:
-  #    - my_persistent_network
+  # cadvisor:
+  #   image: gcr.io/cadvisor/cadvisor:latest
+  #   container_name: cadvisor
+  #   platform: linux/aarch64
+  #   ports:
+  #     - "8081:8080"
+  #   volumes:
+  #     - /:/rootfs:ro
+  #     - /var/run:/var/run:rw
+  #     - /sys:/sys:ro
+  #     - /var/lib/docker/:/var/lib/docker:ro
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #     - /dev/disk/:/dev/disk:ro
+  #   privileged: true
+  #   devices:
+  #     - /dev/kmsg
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         cpus: '0.5'
+  #         memory: 512M
+  #   networks:
+  #     - my_persistent_network
+  #   command:
+  #   - --logtostderr=true 
+  #   - --docker_only=true
+  #   - --log_cadvisor_usage=false
+  #   - --store_container_labels=true
   k6:
     image: grafana/k6:latest
     container_name: k6
