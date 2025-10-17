@@ -1,7 +1,7 @@
 {
   "id": null,
-  "uid": "http-monitoring-dashboard",
-  "title": "HTTP Service Monitoring",
+  "uid": "http-monitoring-dashboard-v1",
+  "title": "HTTP Service Monitoring v1",
   "tags": ["http", "performance", "k6", "dotnet"],
   "timezone": "browser",
   "panels": [

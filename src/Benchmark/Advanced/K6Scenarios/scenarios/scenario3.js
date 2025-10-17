@@ -6,7 +6,7 @@ const constants = {
   PAUSE_MAX: 3.5,
   MAX_RETRIES: 3,
   RETRY_DELAY: 2,
-  NUM_COMPETITIONS: 5,
+  NUM_COMPETITIONS: 6,
   COMPETITION_DELAY: 1
 };
 
@@ -15,10 +15,11 @@ const opts = {
   scenarios: {
     ramping_scenario: {
       executor: 'ramping-vus',
-      startVUs: 0,
+      startVUs: 700,
       stages: [
-         { target: 700, duration: '30s' },
-         { target: 700, duration: '3m' },
+         { target: 2000, duration: '30s' },
+         { target: 400, duration: '30s' },
+         { target: 400, duration: '3m' },
          { target: 0, duration: '30s' },
       ],
     },

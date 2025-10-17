@@ -12,3 +12,57 @@ services:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+  k6-s1:
+    image: grafana/k6:latest
+    container_name: k6
+    profiles: ["scenario1"]
+    volumes:
+      - ./Benchmark/Advanced/K6Scenarios:/scripts
+      - ./k6-output:/output
+    environment:
+      - K6_PROMETHEUS_RW_SERVER_URL=http://prometheus:9090/api/v1/write
+      - K6_PROMETHEUS_RW_TREND_AS_NATIVE_HISTOGRAM=true
+    command: run /scripts/scenarios/scenario1.js --out experimental-prometheus-rw
+    ports:
+       - 6565:6565
+    networks:
+      - my_persistent_network
+    depends_on:
+      - prometheus
+      - competitivebackend
+  k6-s2:
+    image: grafana/k6:latest
+    container_name: k6
+    profiles: ["scenario2"]
+    volumes:
+      - ./Benchmark/Advanced/K6Scenarios:/scripts
+      - ./k6-output:/output
+    environment:
+      - K6_PROMETHEUS_RW_SERVER_URL=http://prometheus:9090/api/v1/write
+      - K6_PROMETHEUS_RW_TREND_AS_NATIVE_HISTOGRAM=true
+    command: run /scripts/scenarios/scenario2.js --out experimental-prometheus-rw
+    ports:
+       - 6565:6565
+    networks:
+      - my_persistent_network
+    depends_on:
+      - prometheus
+      - competitivebackend
+  k6-s3:
+    image: grafana/k6:latest
+    container_name: k6
+    profiles: ["scenario3"]
+    volumes:
+      - ./Benchmark/Advanced/K6Scenarios:/scripts
+      - ./k6-output:/output
+    environment:
+      - K6_PROMETHEUS_RW_SERVER_URL=http://prometheus:9090/api/v1/write
+      - K6_PROMETHEUS_RW_TREND_AS_NATIVE_HISTOGRAM=true
+    command: run /scripts/scenarios/scenario3.js --out experimental-prometheus-rw
+    ports:
+       - 6565:6565
+    networks:
+      - my_persistent_network
+    depends_on:
+      - prometheus
+      - competitivebackend
