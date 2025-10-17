@@ -17,7 +17,7 @@ namespace CompetitiveBackend.Controllers
             _editRewards = editRewards;
             _watchRewards = service;
         }
-        // <summary>
+        /// <summary>
         /// Получить информацию о выдаваемых наградах
         /// </summary>
         /// <param name="compID">Идентификатор соревнования</param>
@@ -81,6 +81,21 @@ namespace CompetitiveBackend.Controllers
             await self.RemoveCompetitionReward(rewardID);
             return NoContent();
         }
+        /// <summary>
+        /// Обновить выдаваемую награду
+        /// </summary>
+        /// <param name="compID">Идентификатор соревнования</param>
+        /// <param name="rewardID">Идентификатор выдаваемой награды</param>
+        /// <returns>Успешное обновление</returns>
+        /// <response code="204">Успешное удаление</response>
+        /// <response code="401">Пользователь не авторизован</response>
+        /// <response code="403">Пользователь не авторизован как администратор</response>
+        /// <response code="404">Награда или соревнование с таким ID не найдены</response>
+        /// <response code="500">Ошибка сервера</response>
+        [ProducesResponseType(204)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
+        [ProducesResponseType(404)]
         [HttpPatch($"{{compID}}/{APIConsts.REWARDS}/{{rewardID}}")]
         public async Task<NoContentResult> UpdateCompetitionReward(int compID, int rewardID, UpdateCompetitionRewardDTO rewardDTO)
         {

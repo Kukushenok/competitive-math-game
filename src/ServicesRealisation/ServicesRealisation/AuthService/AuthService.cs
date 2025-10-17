@@ -1,6 +1,7 @@
 ﻿using CompetitiveBackend.Core.Auth;
 using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
+using CompetitiveBackend.Repositories.Exceptions;
 using CompetitiveBackend.Services.Exceptions;
 using CompetitiveBackend.Services.Objects;
 using Repositories.Objects;
@@ -57,7 +58,14 @@ namespace CompetitiveBackend.Services.AuthService
             if (!_validator.IsValid(new AccountCreationData(data, password), out string? msg))
                 throw new InvalidArgumentsException(msg!);
             string passwordHash = _hashAlgorithm.Hash(password);
-            await _accountRepository.CreateAccount(new Account(data.Login, data.Email, data.Id), passwordHash, _roleCreator.Create(data));
+            try
+            {
+                await _accountRepository.CreateAccount(new Account(data.Login, data.Email, data.Id), passwordHash, _roleCreator.Create(data));
+            } 
+            catch(FailedOperationException exp)
+            {
+                throw new ConflictLoginException("Conflicting login", exp);
+            }
         }
     }
 }
