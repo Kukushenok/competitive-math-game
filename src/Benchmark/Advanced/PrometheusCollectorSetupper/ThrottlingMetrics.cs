@@ -19,4 +19,5 @@ namespace PrometheusCollectorSetupper
         public static readonly Counter MemoryAllocationFailures = Metrics
             .CreateCounter("app_memory_allocation_failures", "Memory allocation failures indicating memory pressure");
     }
+
 }

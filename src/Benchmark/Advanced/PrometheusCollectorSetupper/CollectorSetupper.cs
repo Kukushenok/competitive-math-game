@@ -12,6 +12,7 @@ namespace PrometheusCollectorSetupper
         {
             services.UseHttpClientMetrics();
             services.AddSystemMetrics();
+            services.AddHostedService<CpuPressureMonitor>();
             return services;
         }
 
