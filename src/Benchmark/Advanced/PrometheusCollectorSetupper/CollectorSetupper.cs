@@ -12,7 +12,7 @@ namespace PrometheusCollectorSetupper
         {
             services.UseHttpClientMetrics();
             services.AddSystemMetrics();
-            services.AddHostedService<CpuPressureMonitor>();
+           // services.AddHostedService<CpuPressureMonitor>();
             return services;
         }
 
@@ -22,7 +22,7 @@ namespace PrometheusCollectorSetupper
             // Включаем сбор метрик HTTP запросов
             app.UseMetricServer();
             app.UseHttpMetrics();
-            app.UseMiddleware<ThrottlingMonitoringMiddleware>();
+           // app.UseMiddleware<ThrottlingMonitoringMiddleware>();
             return app;
         }
     }

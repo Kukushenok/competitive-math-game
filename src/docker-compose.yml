@@ -30,6 +30,11 @@ services:
         - 5432:5432
     networks:
       - my_persistent_network
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2g
 
   prometheus:
     image: prom/prometheus
@@ -90,6 +95,24 @@ services:
   #   - --docker_only=true
   #   - --log_cadvisor_usage=false
   #   - --store_container_labels=true
+  netdata:
+    image: netdata/netdata
+    container_name: netdata
+    hostname: netdata # The hostname Netdata will use
+    ports:
+      - 19999:19999 # Netdata web UI
+    environment:
+      - NETDATA_PROMETHEUS_WEB=yes
+    cap_add:
+      - SYS_PTRACE # Required for process monitoring
+      - SYS_ADMIN # Required for various system metrics
+    volumes:
+      - /proc:/host/proc:ro # Mount /proc for process metrics
+      - /sys:/host/sys:ro # Mount /sys for system metrics
+      - /var/run/docker.sock:/var/run/docker.sock:ro # For Docker container monitoring
+    networks:
+      - my_persistent_network  # Добавьте это!
+    restart: always
 volumes:
   database-data:
   prometheus-data:

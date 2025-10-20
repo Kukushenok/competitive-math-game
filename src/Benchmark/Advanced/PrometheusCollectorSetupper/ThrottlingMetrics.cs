@@ -1,5 +1,5 @@
 ﻿using Prometheus;
-
+#if DISABLED
 namespace PrometheusCollectorSetupper
 {
     public class ThrottlingMetrics
@@ -21,3 +21,4 @@ namespace PrometheusCollectorSetupper
     }
 
 }
+#endif

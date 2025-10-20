@@ -9,10 +9,14 @@ scrape_configs:
     metrics_path: '/metrics'
     scrape_interval: 5s
 
-  - job_name: 'cadvisor'
+  - job_name: 'netdata'
     static_configs:
-      - targets: ['cadvisor:8080']
+      - targets: ['netdata:19999']
+    metrics_path: '/api/v1/allmetrics'  # Правильный путь для Netdata
+    params:
+      format: ['prometheus']  # Формат Prometheus
     scrape_interval: 5s
+    honor_labels: true  # Важно для Netdata
 
   - job_name: 'k6'
     static_configs:

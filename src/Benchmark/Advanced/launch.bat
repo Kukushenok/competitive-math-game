@@ -1,11 +1,17 @@
 @echo off
 setlocal enabledelayedexpansion
 
+REM Сохраняем текущую директорию
+set "MAIN_DIR=%CD%"
+
 REM Переходим в папку с батниками
 cd Launchers || (
     echo Ошибка: папка Launchers не найдена!
     exit /b 1
 )
+
+REM Сохраняем путь к папке Launchers
+set "LAUNCHERS_DIR=%CD%"
 
 REM Цикл по всем батникам в папке
 for %%f in (*.bat) do (
@@ -13,6 +19,9 @@ for %%f in (*.bat) do (
     echo ========================================
     echo Running %%f
     echo ========================================
+
+    REM Возвращаемся в папку Launchers перед каждым запуском
+    cd /d "%LAUNCHERS_DIR%"
 
     call "%%f"
 
@@ -31,7 +40,12 @@ for %%f in (*.bat) do (
     )
 
     REM Останавливаем основные сервисы docker-compose
-    docker compose -f "%CD%\..\..\..\docker-compose.yml" -f "%CD%\..\..\..\docker-compose.k6.yml" down --remove-orphans
+    REM Возвращаемся в основную директорию для docker-compose
+    cd /d "%MAIN_DIR%"
+    docker compose -f "docker-compose.yml" -f "docker-compose.k6.yml" down --remove-orphans
+
+    REM Возвращаемся в папку Launchers для продолжения цикла
+    cd /d "%LAUNCHERS_DIR%"
 
     REM Удаляем сети k6
     for /f "tokens=*" %%i in ('docker network ls --filter "name=k6" -q 2^>nul') do (

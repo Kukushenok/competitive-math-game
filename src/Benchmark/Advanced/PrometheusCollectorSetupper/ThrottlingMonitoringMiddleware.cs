@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
-
+#if DISABLED
 namespace PrometheusCollectorSetupper
 {
     // In your middleware or controller
@@ -48,3 +48,4 @@ namespace PrometheusCollectorSetupper
         }
     }
 }
+#endif

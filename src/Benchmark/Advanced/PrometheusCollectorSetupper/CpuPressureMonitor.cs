@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Prometheus;
 using System.Diagnostics;
-
+#if DISABLED
 namespace PrometheusCollectorSetupper
 {
     public class CpuPressureMonitor : BackgroundService
@@ -68,3 +68,4 @@ namespace PrometheusCollectorSetupper
     }
 
 }
+#endif
