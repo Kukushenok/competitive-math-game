@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    :root {
+      --main-v: 30%;
+      --other-v: 90%;
+      --border-v: 5px;
+      --tile-size: 70px;
+      --image-padding: 20px; /* Добавим переменную для паддинга */
+    }
+
+    #mogus {
+      position: relative;
+      cursor: pointer;
+      background-color:powderblue;
+    }
+    h1 { 
+      font-size: 120%; 
+      font-family: Verdana; 
+      color: white;
+      z-index: 10;
+      text-align:center;
+      text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;  
+    }
+    
+    .all-browsers {
+      margin: 0;
+      padding: 20px;
+      background-color: black;
+    }
+
+    .all-browsers > h1, .browser {
+      margin: 20px;
+      padding: 5px;
+    }
+
+    .browser {
+      border: var(--border-v) solid white;
+      background: white;
+      display: inline-block; /* Изменено для лучшего позиционирования */
+      margin: 10px; /* Добавлен отступ между элементами */
+    }
+    
+    /* Добавим контейнер для изображения с паддингом */
+    .image-container {
+      padding: var(--image-padding);
+      display: inline-block;
+      background: white;
+    }
+    
+    .browser:hover{
+      border: var(--border-v) solid;
+      animation: backgroundColorLoop 0.5s linear infinite, tileShift 2s linear infinite;
+      background-image: url("CONTENT/backgroundtile.gif");
+      background-size: var(--tile-size);
+      transition: border-width 0.1s ease-in-out;
+    }
+    
+    .browser > h2, p {
+      margin: 4px;
+      font-size: 90%;
+    }
+    
+    .browser > span {
+      font-family: Marker Felt;
+    }
+    
+    body {
+      animation: backgroundColorLoopMain 30s linear infinite;
+    }
+    
+    @keyframes hueRotate {
+      from { filter: hue-rotate(0deg); }
+      to { filter: hue-rotate(360deg); }
+    }
+
+    .specimen{
+      will-change: transform;
+      animation: simplerot 8s linear infinite;
+      transition: all 0.5s ease-in-out;
+    }
+    
+    @keyframes simplerot {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    .specimen:hover {
+      animation-play-state: paused;
+    }
+
+    @keyframes filterColorLoop {
+      from { filter: hue-rotate(0deg); }
+      to { filter: hue-rotate(360deg); }
+    }
+    
+    @keyframes backgroundColorLoop {
+      0% { border-color: hsl(0, 100%, var(--other-v)); }
+      10% { border-color: hsl(36, 100%, var(--other-v)); }
+      20% { border-color:  hsl(72, 100%, var(--other-v)); }
+      30% { border-color:  hsl(108, 100%, var(--other-v)); }
+      40% { border-color:  hsl(144, 100%, var(--other-v)); }
+      50% { border-color:  hsl(180, 100%, var(--other-v)); }
+      60% { border-color:  hsl(216, 100%, var(--other-v)); }
+      70% { border-color:  hsl(252, 100%, var(--other-v)); }
+      80% { border-color:  hsl(288, 100%, var(--other-v)); }
+      90% { border-color:  hsl(324, 100%, var(--other-v)); }
+      100% { border-color: hsl(360, 100%, var(--other-v)); }
+    }
+    
+    @keyframes backgroundColorLoopMain {
+      0% { background-color: hsl(0, 100%, var(--main-v)); }
+      10% { background-color: hsl(36, 100%, var(--main-v)); }
+      20% { background-color: hsl(72, 100%, var(--main-v)); }
+      30% { background-color: hsl(108, 100%, var(--main-v)); }
+      40% { background-color: hsl(144, 100%, var(--main-v)); }
+      50% { background-color: hsl(180, 100%, var(--main-v)); }
+      60% { background-color: hsl(216, 100%, var(--main-v)); }
+      70% { background-color: hsl(252, 100%, var(--main-v)); }
+      80% { background-color: hsl(288, 100%, var(--main-v)); }
+      90% { background-color: hsl(324, 100%, var(--main-v)); }
+      100% { background-color: hsl(360, 100%, var(--main-v)); }
+    }
+    
+    @keyframes tileShift {
+      0% { background-position: 0 0; }
+      100% { background-position: calc(var(--tile-size) * 2) calc(var(--tile-size) * 2); }
+    }
+    
+    /* Добавим стили для контейнера с изображениями */
+    .images-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  </style>
+  <title>
+    Статический сайт
+  </title>
+  <link rel="icon" type="image/png" href="CONTENT/intruder.png">
+</head>
+<body>
+<p id="background" style="z-index:-100">
+<script type="text/javascript" src="basic.js"> </script> 
+</p>
+
+<p id="pagemain">
+<article id="maincontent">
+  <h1>Информация о проекте</h1>
+  <div class="images-container">
+    <!-- Оригинальный элемент -->
+    <article class="browser">
+      <div class="image-container">
+        <img
+          src="CONTENT/layout/0.svg"
+          alt="triangle with all three sides equal"
+          height="500"/>
+      </div>
+    </article>
+    
+    <!-- Копии для 1.svg - 5.svg -->
+    <article class="browser">
+      <div class="image-container">
+        <img
+          src="CONTENT/layout/1.svg"
+          alt="triangle with all three sides equal"
+          height="500"/>
+      </div>
+    </article>
+    
+    <article class="browser">
+      <div class="image-container">
+        <img
+          src="CONTENT/layout/2.svg"
+          alt="triangle with all three sides equal"
+          height="500"/>
+      </div>
+    </article>
+    
+    <article class="browser">
+      <div class="image-container">
+        <img
+          src="CONTENT/layout/3.svg"
+          alt="triangle with all three sides equal"
+          height="500"/>
+      </div>
+    </article>
+    
+    <article class="browser">
+      <div class="image-container">
+        <img
+          src="CONTENT/layout/4.svg"
+          alt="triangle with all three sides equal"
+          height="500"/>
+      </div>
+    </article>
+    
+  </div>
+</article>
+</p>
+
+</body>
+</html>

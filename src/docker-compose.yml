@@ -23,7 +23,28 @@ services:
         - 5432:5432
     networks:
       - my_persistent_network
-
+  adminer:
+    image: adminer:4.8.1
+    container_name: db_adminer
+    restart: always
+    environment:
+      - ADMINER_DEFAULT_SERVER=postgres
+    depends_on:
+      - postgres
+    networks:
+      - my_persistent_network
+  nginx:
+    build:
+      context: ..
+      dockerfile: nginx/Dockerfile
+    container_name: nginx_gateway
+    ports:
+      - "8080:80"  
+    depends_on:
+      - competitivebackend
+      - adminer
+    networks:
+      - my_persistent_network
 networks:
   my_persistent_network:
     driver: bridge
