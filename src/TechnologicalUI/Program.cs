@@ -1,5 +1,5 @@
 ﻿using ClientUsage.Installer;
-using CompetitiveBackend.SolutionInstaller;
+//using CompetitiveBackend.SolutionInstaller;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -21,7 +21,7 @@ namespace TechnologicalUI
             bool local = Decide(builder.Services);
             builder.Services.AddTechnologicalUIHostWithConsole<ConsoleInOut>();
             IHost hst = builder.Build();
-            if(local) hst.Services.InitializeCompetitiveBackendSolution();
+            //if(local) hst.Services.InitializeCompetitiveBackendSolution();
             hst.Run();
         }
         static bool Decide(IServiceCollection coll)
@@ -32,16 +32,14 @@ namespace TechnologicalUI
             {
                 input = "http://localhost:8080/";
             }
-            bool hosted = input.ToLower() == "host";
-            if(hosted) 
-            {
-                coll.AddCompetitiveBackendSolution();
-            } 
-            else
-            {
-                coll.AddRemoteUseCases(input);
-            }
-            return hosted;
+            //{
+            //    coll.AddCompetitiveBackendSolution();
+            //} 
+            //else
+            //{
+            coll.AddRemoteUseCases(input);
+            //}
+            return false;
         }
     }
 }
