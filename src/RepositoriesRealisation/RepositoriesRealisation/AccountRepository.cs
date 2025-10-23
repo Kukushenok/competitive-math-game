@@ -77,7 +77,7 @@ namespace CompetitiveBackend.Repositories
             {
                 var command = conn.CreateCommand();
                 command.CommandText = $"SELECT * FROM check_password_hash('{accountLogin}', '{passwordHash}')";
-                result = (await command.ExecuteScalarAsync() as bool?)!.Value;
+                result = (await command.ExecuteScalarAsync() as bool?) ?? false;
             }
             catch(Exception ex) when (ex.IsDBException())
             {

@@ -45,6 +45,11 @@ services:
       - adminer
     networks:
       - my_persistent_network
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 512M
 networks:
   my_persistent_network:
     driver: bridge
