@@ -10,42 +10,48 @@ namespace RepositoriesTests.RepositoriesTests
     [Collection("sample")]
     public class PlayerRewardRepositoryBasicTests : IntegrationTest<IPlayerRewardRepository>
     {
-        public PlayerRewardRepositoryBasicTests(ITestOutputHelper helper) : base(helper)
+        public PlayerRewardRepositoryBasicTests(ITestOutputHelper helper)
+            : base(helper)
         {
         }
+
         [Fact]
-        public async Task AddReward_Success()
+        public async Task AddRewardSuccess()
         {
             await ExecSQLFile("mix_no_rewards.sql");
-            await Testing.CreateReward(new PlayerReward(1, 1, "hi", "deo", null));
-            using var context = await GetContext();
+            await testing.CreateReward(new PlayerReward(1, 1, "hi", "deo", null));
+            using RepositoriesRealisation.BaseDbContext context = await GetContext();
             context.PlayerReward.ToList().Should().ContainSingle().Which.Should().Satisfy((PlayerRewardModel x) =>
             {
                 x.PlayerID.Should().Be(1);
                 x.RewardDescriptionID.Should().Be(1);
             });
         }
+
         [Fact]
-        public async Task AddReward_Failure()
+        public async Task AddRewardFailure()
         {
             await ExecSQLFile("mix_no_rewards.sql");
-            await Assert.ThrowsAsync<FailedOperationException>(async () => await Testing.CreateReward(new PlayerReward(8, 1, "hi", "deo", null)));
+            await (async () => await testing.CreateReward(new PlayerReward(8, 1, "hi", "deo", null))).Should().ThrowExactlyAsync<FailedOperationException>();
         }
+
         [Fact]
-        public async Task DeleteReward_Success()
+        public async Task DeleteRewardSuccess()
         {
             await ExecSQLFile("mix_player_rewards.sql");
-            await Testing.DeleteReward(1);
-            using var context = await GetContext();
+            await testing.DeleteReward(1);
+            using RepositoriesRealisation.BaseDbContext context = await GetContext();
             context.PlayerReward.ToList().Should().NotContain(x => x.Id == 1);
         }
+
         [Fact]
-        public async Task DeleteReward_Failure()
+        public async Task DeleteRewardFailure()
         {
             await ExecSQLFile("mix_no_rewards.sql");
-            await Assert.ThrowsAsync<MissingDataException>(async () => await Testing.DeleteReward(1));
+            await (async () => await testing.DeleteReward(1)).Should().ThrowExactlyAsync<MissingDataException>();
         }
-        public static object[][] limiters = [
+
+        public static object[][] Limiters = [
                 [new DataLimiter(0, 3)],
                 [new DataLimiter(0, 2)],
                 [new DataLimiter(0, 1)],
@@ -54,13 +60,17 @@ namespace RepositoriesTests.RepositoriesTests
                 [DataLimiter.NoLimit]
         ];
         [Theory]
-        [MemberData(nameof(limiters))]
-        public async Task GetPlayerRewards_Success(DataLimiter dt)
+        [MemberData(nameof(Limiters))]
+        public async Task GetPlayerRewardsSuccess(DataLimiter dt)
         {
             await ExecSQLFile("mix_player_rewards.sql");
-            IEnumerable<PlayerReward> c = await Testing.GetAllRewardsOf(1, dt);
+            IEnumerable<PlayerReward> c = await testing.GetAllRewardsOf(1, dt);
             int cnt = dt.Partition;
-            if (dt.HasNoLimit) cnt = 3;
+            if (dt.HasNoLimit)
+            {
+                cnt = 3;
+            }
+
             c.ToList().Should().HaveCount(cnt);
         }
     }

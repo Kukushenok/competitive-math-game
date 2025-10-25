@@ -1,65 +1,73 @@
 ﻿using ServicesRealisation.ServicesRealisation.Validator;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ServicesUnitTests.ServiceTests
 {
-    internal class MockValidator<T> : IValidator<T> where T: class
+    internal sealed class MockValidator<T> : IValidator<T>
+        where T : class
     {
-        private bool WasCalled;
-        private T? CompareObject;
-        private bool _fail;
-        private List<Func<T, bool>> constraints;
-        public MockValidator(T? NewObject = null, bool fail = false, List<Func<T, bool>> constraints = null)
+        private bool wasCalled;
+        private readonly T? compareObject;
+        private bool fail;
+        private readonly List<Func<T, bool>> constraints;
+        public MockValidator(T? newObject = null, bool fail = false, List<Func<T, bool>>? constraints = null)
         {
-            CompareObject = NewObject;
-            WasCalled = false;
-            _fail = fail;
-            this.constraints = constraints ?? new List<Func<T, bool>>();
+            compareObject = newObject;
+            wasCalled = false;
+            this.fail = fail;
+            this.constraints = constraints ?? [];
         }
+
         public bool IsValid(T value, out string? msg)
         {
-            msg = "";
-            WasCalled = true;
-            if (CompareObject != null)
+            msg = string.Empty;
+            wasCalled = true;
+            if (compareObject != null)
             {
-                _fail = !(CompareObject!.Equals(value));
+                fail = !compareObject!.Equals(value);
             }
-            foreach (var constraint in constraints)
+
+            foreach (Func<T, bool> constraint in constraints)
             {
-                if(!constraint(value))
+                if (!constraint(value))
                 {
-                    _fail = true;
+                    fail = true;
                     break;
                 }
             }
-            return !_fail;
+
+            return !fail;
         }
-        public void CheckWasCalled() => Assert.True(WasCalled, "Validator should be called, not ignored!");
+
+        public void CheckWasCalled()
+        {
+            Assert.True(wasCalled, "Validator should be called, not ignored!");
+        }
     }
-    internal class MockValidatorBuilder<T> where T: class
+
+    internal sealed class MockValidatorBuilder<T>
+        where T : class
     {
-        private bool shouldFail = false;
-        private T? compareObj = null;
-        private List<Func<T, bool>> constraints = new List<Func<T, bool>>();
+        private bool shouldFail;
+        private T? compareObj;
+        private readonly List<Func<T, bool>> constraints = [];
         public MockValidatorBuilder<T> CheckEtalon(T etalon)
         {
             compareObj = etalon;
             return this;
         }
+
         public MockValidatorBuilder<T> FailByDefault()
         {
             shouldFail = true;
             return this;
         }
+
         public MockValidatorBuilder<T> WithConstraint(Func<T, bool> func)
         {
             constraints.Add(func);
             return this;
         }
+
         public MockValidator<T> Build()
         {
             return new MockValidator<T>(compareObj, shouldFail, constraints);

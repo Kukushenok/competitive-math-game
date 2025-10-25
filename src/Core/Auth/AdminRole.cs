@@ -2,9 +2,19 @@
 {
     public class AdminRole : Role
     {
-        public override bool IsAdmin() => true;
-        public override bool IsPlayer() => false;
-        public override string ToString() => "Admin";
-    }
+        public override bool IsAdmin()
+        {
+            return true;
+        }
 
+        public override bool IsPlayer()
+        {
+            return false;
+        }
+
+        public override string ToString()
+        {
+            return "Admin";
+        }
+    }
 }

@@ -5,11 +5,6 @@ using Microsoft.Extensions.Logging;
 using RepositoriesRealisation;
 using RepositoriesRealisation.Models;
 using RepositoriesRealisation.RepositoriesRealisation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CompetitiveBackend.Repositories
 {
@@ -17,13 +12,14 @@ namespace CompetitiveBackend.Repositories
     {
         public static DateTime EnsureUTC(this DateTime dateTime)
         {
-            if (dateTime.Kind == DateTimeKind.Utc) { return dateTime; }
-            return dateTime.ToUniversalTime();
+            return dateTime.Kind == DateTimeKind.Utc ? dateTime : dateTime.ToUniversalTime();
         }
     }
-    internal class CompetitionRepository : BaseRepository<CompetitionRepository>, ICompetitionRepository
+
+    internal sealed class CompetitionRepository : BaseRepository<CompetitionRepository>, ICompetitionRepository
     {
-        public CompetitionRepository(IDbContextFactory<BaseDbContext> contextFactory, ILogger<CompetitionRepository> logger) : base(contextFactory, logger)
+        public CompetitionRepository(IDbContextFactory<BaseDbContext> contextFactory, ILogger<CompetitionRepository> logger)
+            : base(contextFactory, logger)
         {
         }
 
@@ -38,10 +34,9 @@ namespace CompetitiveBackend.Repositories
             }
             catch (Exception ex) when (ex.IsDBException())
             {
-                _logger.LogError(ex, "Could not create Competition");
-                throw new Exceptions.FailedOperationException("Could not create Competition",ex);
+                logger.LogError(ex, "Could not create Competition");
+                throw new Exceptions.FailedOperationException("Could not create Competition", ex);
             }
-
         }
 
         public async Task<IEnumerable<Competition>> GetActiveCompetitions()
@@ -50,15 +45,15 @@ namespace CompetitiveBackend.Repositories
             try
             {
                 DateTime dt = DateTime.UtcNow;
-                var q = await context.Competition.Where(x => (x.StartTime <= dt && dt <= x.EndTime))
+                List<Competition> q = await context.Competition.Where(x => x.StartTime <= dt && dt <= x.EndTime)
                                                  .OrderByDescending(x => x.StartTime)
-                                                 .Select(x=>x.ToCoreModel())
+                                                 .Select(x => x.ToCoreModel())
                                                  .ToListAsync();
                 return q;
             }
-            catch(OperationCanceledException ex)
+            catch (OperationCanceledException ex)
             {
-                _logger.LogError(ex, "Could not aquire active competitions");
+                logger.LogError(ex, "Could not aquire active competitions");
                 throw new Exceptions.FailedOperationException("Could not aquire active competitions", ex);
             }
         }
@@ -71,15 +66,16 @@ namespace CompetitiveBackend.Repositories
                 IQueryable<CompetitionModel> md = context.Competition.OrderByDescending((x) => x.StartTime);
                 if (!dataLimiter.HasNoLimit)
                 {
-                    //_logger.LogInformation($"Skipping {dataLimiter.FirstIndex} and taking {dataLimiter.Partition}");
+                    // _logger.LogInformation($"Skipping {dataLimiter.FirstIndex} and taking {dataLimiter.Partition}");
                     md = md.Skip(dataLimiter.FirstIndex).Take(dataLimiter.Partition);
                 }
-                var models = await md.Select(x=>x.ToCoreModel()).ToListAsync();
+
+                List<Competition> models = await md.Select(x => x.ToCoreModel()).ToListAsync();
                 return models;
             }
-            catch(OperationCanceledException ex)
+            catch (OperationCanceledException ex)
             {
-                _logger.LogError(ex, "Could not aquire competitions");
+                logger.LogError(ex, "Could not aquire competitions");
                 throw new Exceptions.FailedOperationException("Could not aquire competitions", ex);
             }
         }
@@ -90,14 +86,15 @@ namespace CompetitiveBackend.Repositories
             CompetitionModel? comp = await context.Competition.FindAsync(competitionID);
             if (comp == null)
             {
-                _logger.LogError($"Could not find competition with ID {competitionID}");
+                logger.LogError($"Could not find competition with ID {competitionID}");
                 throw new Exceptions.MissingDataException($"Could not find competition with ID {competitionID}");
             }
+
             return comp.ToCoreModel();
         }
 
-        //public async Task<LargeData> GetCompetitionLevel(int competitionID)
-        //{
+        // public async Task<LargeData> GetCompetitionLevel(int competitionID)
+        // {
         //    using BaseDbContext context = await GetDbContext();
         //    CompetitionLevelDataModelData? comp = await context.CompetitionLevelData.FindAsync(competitionID);
         //    if (comp == null)
@@ -106,10 +103,10 @@ namespace CompetitiveBackend.Repositories
         //        throw new Exceptions.MissingDataException($"Could not find competition with ID {competitionID}");
         //    }
         //    return new LargeData(comp.LevelData ?? Array.Empty<byte>());
-        //}
-        
-        //public async Task SetCompetitionLevel(int competitionID, LargeData levelData)
-        //{
+        // }
+
+        // public async Task SetCompetitionLevel(int competitionID, LargeData levelData)
+        // {
         //    using BaseDbContext context = await GetDbContext();
         //    CompetitionLevelDataModelData? comp = await context.CompetitionLevelData.FindAsync(competitionID);
         //    if(comp == null)
@@ -127,19 +124,22 @@ namespace CompetitiveBackend.Repositories
         //        _logger.LogError("Could not update Competition");
         //        throw new Exceptions.FailedOperationException("Could not update Competition",ex);
         //    }
-        //}
-
+        // }
         public async Task UpdateCompetition(Competition c)
         {
-            if (c.Id == null) 
+            if (c.Id == null)
+            {
                 throw new Exceptions.IncorrectOperationException("Competition ID is null");
+            }
+
             using BaseDbContext context = await GetDbContext();
             CompetitionModel? comp = await context.Competition.FindAsync(c.Id);
             if (comp == null)
             {
-                _logger.LogError($"Could not find competition with ID {c.Id}");
+                logger.LogError($"Could not find competition with ID {c.Id}");
                 throw new Exceptions.MissingDataException($"Could not find competition with ID {c.Id}");
             }
+
             comp.StartTime = c.StartDate.EnsureUTC();
             comp.EndTime = c.EndDate.EnsureUTC();
             comp.Description = c.Description;
@@ -149,9 +149,9 @@ namespace CompetitiveBackend.Repositories
                 context.Update(comp);
                 await context.SaveChangesAsync();
             }
-            catch(Exception ex) when (ex.IsDBException())
+            catch (Exception ex) when (ex.IsDBException())
             {
-                _logger.LogError("Could not update Competition");
+                logger.LogError("Could not update Competition");
                 throw new Exceptions.FailedOperationException("Could not update Competition", ex);
             }
         }

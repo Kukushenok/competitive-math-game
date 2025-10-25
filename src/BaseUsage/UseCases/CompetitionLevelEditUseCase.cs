@@ -1,61 +1,66 @@
 ﻿using CompetitiveBackend.BackendUsage.Objects;
 using CompetitiveBackend.BackendUsage.UseCases;
 using CompetitiveBackend.BaseUsage.Converters;
-using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Services;
 
 namespace CompetitiveBackend.BaseUsage.UseCases
 {
+    [Obsolete("Defunct")]
     public class CompetitionLevelEditUseCase : BaseAuthableUseCase<CompetitionLevelEditUseCase>, ICompetitionLevelEditUseCase
     {
-        private ICompetitionLevelService _competitionLevelService;
-        public CompetitionLevelEditUseCase(IAuthService authService, ICompetitionLevelService competitionLevelService) : base(authService)
+        private readonly ICompetitionLevelService competitionLevelService;
+        public CompetitionLevelEditUseCase(IAuthService authService, ICompetitionLevelService competitionLevelService)
+            : base(authService)
         {
-            _competitionLevelService = competitionLevelService;
+            this.competitionLevelService = competitionLevelService;
         }
 
         public async Task AddLevelToCompetition(LevelDataInfoDTO levelDataInfo, LargeDataDTO levelContents)
         {
             AdminAuthCheck(out _);
-            await _competitionLevelService.CreateLevelData(levelDataInfo.Convert(), levelContents.Convert());
+            await competitionLevelService.CreateLevelData(levelDataInfo.Convert(), levelContents.Convert());
         }
 
         public async Task DeleteLevel(int levelId)
         {
             AdminAuthCheck(out _);
-            await _competitionLevelService.DeleteLevelData(levelId);
+            await competitionLevelService.DeleteLevelData(levelId);
         }
 
         public async Task<IEnumerable<LevelDataInfoDTO>> GetLevelInfos(int competitionID)
         {
             AdminAuthCheck(out _);
-            return from a in await _competitionLevelService.GetAllLevelData(competitionID) select a.Convert();
+            return from a in await competitionLevelService.GetAllLevelData(competitionID) select a.Convert();
         }
 
         public async Task<LargeDataDTO> GetSpecificCompetitionData(int levelID)
         {
             AdminAuthCheck(out _);
-            return (await _competitionLevelService.GetSpecificCompetitionLevel(levelID)).Convert();
+            return (await competitionLevelService.GetSpecificCompetitionLevel(levelID)).Convert();
         }
 
         public async Task<LevelDataInfoDTO> GetSpecificCompetitionInfo(int levelID)
         {
             AdminAuthCheck(out _);
-            return (await _competitionLevelService.GetSpecificCompetitionLevelInfo(levelID)).Convert();
+            return (await competitionLevelService.GetSpecificCompetitionLevelInfo(levelID)).Convert();
         }
 
         public async Task UpdateLevelData(int levelId, LargeDataDTO levelContents)
         {
             AdminAuthCheck(out _);
-            await _competitionLevelService.UpdateCompetitionLevelData(levelId, levelContents.Convert());
+            await competitionLevelService.UpdateCompetitionLevelData(levelId, levelContents.Convert());
         }
 
         public async Task UpdateLevelDataInfo(LevelDataInfoDTO levelDataInfo)
         {
             AdminAuthCheck(out _);
-            await _competitionLevelService.UpdateCompetitionLevelInfo(levelDataInfo.Convert());
+            await competitionLevelService.UpdateCompetitionLevelInfo(levelDataInfo.Convert());
         }
 
-        async Task<ICompetitionLevelEditUseCase> IAuthableUseCase<ICompetitionLevelEditUseCase>.Auth(string token) => await Auth(token);
+        [Obsolete]
+        async Task<ICompetitionLevelEditUseCase> IAuthableUseCase<ICompetitionLevelEditUseCase>.Auth(string token)
+        {
+            return await Auth(token);
+        }
     }
 }

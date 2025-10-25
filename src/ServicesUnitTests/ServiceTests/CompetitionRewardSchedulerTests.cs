@@ -5,81 +5,87 @@ using CompetitiveBackend.Services.ExtraTools;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Repositories.Objects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ServicesUnitTests.ServiceTests
 {
-    public class CompetitionRewardSchedulerTests
+    public class CompetitionRewardSchedulerTests : IDisposable
     {
-        private Mock<ITimeScheduler> _timeScheduler;
-        private Mock<IPlayerRewardRepository> _rewardRepo;
-        private Mock<IRepositoryPrivilegySetting> _setting;
-        private CompetitionRewardScheduler scheduler;
+        private readonly Mock<ITimeScheduler> timeScheduler;
+        private readonly Mock<IPlayerRewardRepository> rewardRepo;
+        private readonly Mock<IRepositoryPrivilegySetting> setting;
+        private readonly CompetitionRewardScheduler scheduler;
         public CompetitionRewardSchedulerTests()
         {
-            _rewardRepo = new Mock<IPlayerRewardRepository>();
-            _timeScheduler = new Mock<ITimeScheduler>();
-            _setting = new Mock<IRepositoryPrivilegySetting>();
-            ServiceCollection p = new ServiceCollection();
-            p.AddScoped((p) => _rewardRepo.Object);
-            p.AddScoped((p) => _setting.Object);
-            scheduler = new CompetitionRewardScheduler(p.BuildServiceProvider(), _timeScheduler.Object);
+            rewardRepo = new Mock<IPlayerRewardRepository>();
+            timeScheduler = new Mock<ITimeScheduler>();
+            setting = new Mock<IRepositoryPrivilegySetting>();
+            var p = new ServiceCollection();
+            p.AddScoped((p) => rewardRepo.Object);
+            p.AddScoped((p) => setting.Object);
+            scheduler = new CompetitionRewardScheduler(p.BuildServiceProvider(), timeScheduler.Object);
         }
+
         [Fact]
-        public async Task CompetitionRewardSchedulerTests_OnCompetitionUpdated()
+        public async Task CompetitionRewardSchedulerTestsOnCompetitionUpdated()
         {
             // Arrange
             DateTime dt = DateTime.Now;
-            Competition c = new Competition("Sample", "descr", dt, dt + TimeSpan.FromSeconds(10), 5);
+            var c = new Competition("Sample", "descr", dt, dt + TimeSpan.FromSeconds(10), 5);
 
             // Act
             await scheduler.OnCompetitionUpdated(c);
-            
+
             // Assert
-            _timeScheduler.Verify(x => x.AddOrUpdateScheduledTask(It.Is<TimeScheduledTaskData>(
+            timeScheduler.Verify(
+                x => x.AddOrUpdateScheduledTask(It.Is<TimeScheduledTaskData>(
                  p => p.Identifier == 5 && p.FireTime.Equals(new DateTimeOffset(c.EndDate)))), Times.Once);
         }
+
         [Fact]
-        public async Task CompetitionRewardSchedulerTests_OnCompetitionCreated()
+        public async Task CompetitionRewardSchedulerTestsOnCompetitionCreated()
         {
             // Arrange
             DateTime dt = DateTime.Now;
-            Competition c = new Competition("Sample", "descr", dt, dt + TimeSpan.FromSeconds(10), 5);
+            var c = new Competition("Sample", "descr", dt, dt + TimeSpan.FromSeconds(10), 5);
 
             // Act
             await scheduler.OnCompetitionCreated(c);
 
             // Assert
-            _timeScheduler.Verify(x => x.AddOrUpdateScheduledTask(It.Is<TimeScheduledTaskData>(
+            timeScheduler.Verify(
+                x => x.AddOrUpdateScheduledTask(It.Is<TimeScheduledTaskData>(
                p => p.Identifier == 5 && p.FireTime.Equals(new DateTimeOffset(c.EndDate)))), Times.Once);
         }
+
         [Fact]
-        public async Task CompetitionRewardSchedulerTests_OnRecievedMessage_Ok()
+        public async Task CompetitionRewardSchedulerTestsOnRecievedMessageOk()
         {
             // Arrange
-            TimeScheduledTaskData data = new TimeScheduledTaskData(0, "Competition", DateTimeOffset.Now, "Hello");
+            var data = new TimeScheduledTaskData(0, "Competition", DateTimeOffset.Now, "Hello");
 
             // Act
             await scheduler.OnRecievedMessage(data);
 
             // Assert
-            _rewardRepo.Verify(x => x.GrantRewardsFor(0), Times.Once);
+            rewardRepo.Verify(x => x.GrantRewardsFor(0), Times.Once);
         }
+
         [Fact]
-        public async Task CompetitionRewardSchedulerTests_OnRecievedMessage_Skip()
+        public async Task CompetitionRewardSchedulerTestsOnRecievedMessageSkip()
         {
             // Arrange
-            TimeScheduledTaskData data = new TimeScheduledTaskData(0, "Flexio", DateTimeOffset.Now, "Hello");
+            var data = new TimeScheduledTaskData(0, "Flexio", DateTimeOffset.Now, "Hello");
 
             // Act
             await scheduler.OnRecievedMessage(data);
 
             // Assert
-            _rewardRepo.Verify(x => x.GrantRewardsFor(0), Times.Never);
+            rewardRepo.Verify(x => x.GrantRewardsFor(0), Times.Never);
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }

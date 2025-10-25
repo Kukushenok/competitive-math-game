@@ -1,174 +1,185 @@
-﻿using CompetitiveBackend.Core.Objects;
+﻿using System.Collections;
+using CompetitiveBackend.Core.Objects;
 using Microsoft.Extensions.Configuration;
 using ServicesRealisation.Objects;
 using ServicesRealisation.ServicesRealisation.Validator;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ServicesUnitTests.ValidatorTests
 {
     public class PlayerProfileValidatorTests
     {
-        PlayerAccountValidator dt;
+        private readonly PlayerAccountValidator dt;
         public PlayerProfileValidatorTests()
         {
-            var Dict = new Dictionary<string, string?>
+            var dict = new Dictionary<string, string?>
             {
-               {"Constraints:Player:descriptionLength:min", "0"},
-               {"Constraints:Player:descriptionLength:max", "16"},
-               {"Constraints:Player:NameLength:min", "4"},
-               {"Constraints:Player:NameLength:max", "16"},
-               {"Constraints:Player:Password:MinLength", "8"},
-               {"Constraints:Player:Password:RequiresLetters", "true"},
-               {"Constraints:Player:NameRegex:pattern", ".*"},
-               {"Constraints:Player:EmailRegex:pattern", ".*"},
+               { "Constraints:Player:descriptionLength:min", "0" },
+               { "Constraints:Player:descriptionLength:max", "16" },
+               { "Constraints:Player:NameLength:min", "4" },
+               { "Constraints:Player:NameLength:max", "16" },
+               { "Constraints:Player:Password:MinLength", "8" },
+               { "Constraints:Player:Password:RequiresLetters", "true" },
+               { "Constraints:Player:NameRegex:pattern", ".*" },
+               { "Constraints:Player:EmailRegex:pattern", ".*" },
             };
-            var conf = new ConfigurationBuilder().AddInMemoryCollection(Dict).Build();
+            IConfigurationRoot conf = new ConfigurationBuilder().AddInMemoryCollection(dict).Build();
             dt = new PlayerAccountValidator(conf);
         }
 
-        #region PlayerProfileTests
-        class PlayerProfileValues : IEnumerable<object[]>
+        private sealed class PlayerProfileValues : IEnumerable<object[]>
         {
             public IEnumerator<object[]> GetEnumerator()
             {
-                yield return new object[] {
+                yield return new object[]
+                {
                     new PlayerProfile(new string('*', 10), new string('*', 1), 0),
-                    true
+                    true,
                 };
-                yield return new object[] {
+                yield return new object[]
+                {
                     new PlayerProfile(new string('*', 17), new string('*', 1), 0),
-                    false
+                    false,
                 };
-                yield return new object[] {
+                yield return new object[]
+                {
                     new PlayerProfile(new string('*', 16), new string('*', 1), 0),
-                    true
+                    true,
                 };
-                yield return new object[] {
+                yield return new object[]
+                {
                     new PlayerProfile(new string('*', 16), new string('*', 17), 0),
-                    false
+                    false,
                 };
-                yield return new object[] {
+                yield return new object[]
+                {
                     new PlayerProfile(new string('*', 16), new string('*', 16), 0),
-                    true
+                    true,
                 };
-                yield return new object[] {
+                yield return new object[]
+                {
                     new PlayerProfile(new string('*', 3), new string('*', 16), 0),
-                    false
+                    false,
                 };
-                yield return new object[] {
+                yield return new object[]
+                {
                     new PlayerProfile(new string('*', 4), new string('*', 16), 0),
-                    true
+                    true,
                 };
             }
+
             IEnumerator IEnumerable.GetEnumerator()
             {
                 return GetEnumerator();
             }
         }
+
         [Theory]
+
         // Arrange
         [ClassData(typeof(PlayerProfileValues))]
         public void CheckPlayerProfile(PlayerProfile comp, bool expected)
         {
             // Act
-            var result = dt.IsValid(comp, out _);
+            bool result = dt.IsValid(comp, out _);
+
             // Assert
             Assert.Equal(expected, result);
         }
-        #endregion
-        #region AccountTests
-        class AccountValues : IEnumerable<object[]>
+
+        private sealed class AccountValues : IEnumerable<object[]>
         {
             public IEnumerator<object[]> GetEnumerator()
             {
                 yield return new object[]
                 {
-                    new Account(null!, null!, null), false
+                    new Account(null!, null!, null), false,
                 };
                 yield return new object[]
                 {
-                    new Account("", ""), false
+                    new Account(string.Empty, string.Empty), false,
                 };
                 yield return new object[]
                 {
-                    new Account("amo", "modus ponens"), false
+                    new Account("amo", "modus ponens"), false,
                 };
                 yield return new object[]
                 {
-                    new Account("amog", null!, null), true
+                    new Account("amog", null!, null), true,
                 };
                 yield return new object[]
                 {
-                    new Account("amogus", ""), true
+                    new Account("amogus", string.Empty), true,
                 };
                 yield return new object[]
                 {
-                    new Account(new string('*', 17), ""), false
+                    new Account(new string('*', 17), string.Empty), false,
                 };
             }
+
             IEnumerator IEnumerable.GetEnumerator()
             {
                 return GetEnumerator();
             }
         }
+
         [Theory]
+
         // Arrange
         [ClassData(typeof(AccountValues))]
         public void CheckAccount(Account comp, bool expected)
         {
             // Act
-            var result = dt.IsValid(comp, out _);
+            bool result = dt.IsValid(comp, out _);
+
             // Assert
             Assert.Equal(expected, result);
         }
-        #endregion
-        #region AccountCreationTests
-        class AccountCreationValues : IEnumerable<object[]>
+
+        private sealed class AccountCreationValues : IEnumerable<object[]>
         {
-            public IEnumerable<(string,bool)> Passwords()
+            public static IEnumerable<(string, bool)> Passwords()
             {
                 yield return ("1234", false);
-                yield return ("", false);
+                yield return (string.Empty, false);
                 yield return ("12345678", false);
                 yield return ("123a5678", true);
                 yield return ("12345678a", true);
                 yield return ("123456a", false);
             }
+
             public IEnumerator<object[]> GetEnumerator()
             {
                 foreach (object[] data in new AccountValues())
                 {
-                    Account acc = (Account)data[0];
+                    var acc = (Account)data[0];
                     bool validness = (bool)data[1];
-                    foreach((string password, bool valid) a in Passwords())
+                    foreach ((string password, bool valid) a in Passwords())
                     {
                         yield return new object[]
                         {
-                            new AccountCreationData(acc, a.password), a.valid && validness
+                            new AccountCreationData(acc, a.password), a.valid && validness,
                         };
                     }
                 }
             }
+
             IEnumerator IEnumerable.GetEnumerator()
             {
                 return GetEnumerator();
             }
         }
+
         [Theory]
+
         // Arrange
         [ClassData(typeof(AccountCreationValues))]
         public void CheckAccountCreation(AccountCreationData comp, bool expected)
         {
             // Act
-            var result = dt.IsValid(comp, out _);
+            bool result = dt.IsValid(comp, out _);
+
             // Assert
             Assert.Equal(expected, result);
         }
-        #endregion
     }
 }

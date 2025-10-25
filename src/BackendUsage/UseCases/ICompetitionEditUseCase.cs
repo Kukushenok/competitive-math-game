@@ -1,11 +1,11 @@
-﻿using CompetitiveBackend.BackendUsage.Objects;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using CompetitiveBackend.BackendUsage.Objects;
 
 namespace CompetitiveBackend.BackendUsage.UseCases
 {
     public interface ICompetitionEditUseCase : IAuthableUseCase<ICompetitionEditUseCase>
     {
-        public Task CreateCompetition(CompetitionDTO competition);
-        public Task UpdateCompetition(CompetitionPatchRequestDTO competition);
+        Task CreateCompetition(CompetitionDTO competition);
+        Task UpdateCompetition(CompetitionPatchRequestDTO competition);
     }
 }

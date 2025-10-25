@@ -1,6 +1,6 @@
-﻿using CompetitiveBackend.Core.Objects.Riddles;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using CompetitiveBackend.Core.Objects.Riddles;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RepositoriesRealisation.Models
 {
@@ -43,8 +43,7 @@ namespace RepositoriesRealisation.Models
                 ScoreOnBadAnswer,
                 TotalRiddles,
                 TimeLimit,
-                TimeLinearBonus
-            );
+                TimeLinearBonus);
         }
 
         public void UpdateFromCoreModel(RiddleGameSettings settings)

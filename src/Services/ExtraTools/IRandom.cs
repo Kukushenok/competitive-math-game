@@ -2,6 +2,6 @@
 {
     public interface IRandom
     {
-        public int Next(int minInclusive, int maxExclusive);
+        int NextNumber(int minInclusive, int maxExclusive);
     }
 }

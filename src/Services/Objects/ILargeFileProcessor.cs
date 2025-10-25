@@ -4,6 +4,6 @@ namespace CompetitiveBackend.Services.Objects
 {
     public interface ILargeFileProcessor
     {
-        public Task<LargeData> Process(LargeData data);
+        Task<LargeData> Process(LargeData data);
     }
 }

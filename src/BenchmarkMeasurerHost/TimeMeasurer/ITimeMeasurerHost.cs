@@ -1,11 +1,11 @@
-﻿using BenchmarkMeasurerHost.DataGenerator;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using BenchmarkMeasurerHost.DataGenerator;
 
 namespace BenchmarkMeasurerHost.TimeMeasurer
 {
     public interface ITimeMeasurerHost
     {
-        public Task<Stopwatch> Measure(EnvironmentSettings settings);
-        public Task<Stopwatch> Measure();
+        Task<Stopwatch> Measure(EnvironmentSettings settings);
+        Task<Stopwatch> Measure();
     }
 }

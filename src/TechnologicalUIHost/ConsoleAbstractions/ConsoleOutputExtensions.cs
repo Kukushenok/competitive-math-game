@@ -1,32 +1,43 @@
 ﻿using CompetitiveBackend.BackendUsage.Objects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TechnologicalUIHost.ConsoleAbstractions
 {
     public static class ConsoleOutputExtensions
     {
-        public static void PrintIfNotNull<T>(this IConsoleOutput output, string label, T? value) where T : struct
+        public static void PrintIfNotNull<T>(this IConsoleOutput output, string label, T? value)
+            where T : struct
         {
             if (value.HasValue)
+            {
                 output.PromtOutput($"{label}: {value.Value}");
-            else output.PromtOutput($"{label}: <отсутствует>");
+            }
+            else
+            {
+                output.PromtOutput($"{label}: <отсутствует>");
+            }
         }
 
         public static void PrintIfNotNull(this IConsoleOutput output, string label, string? value)
         {
             if (!string.IsNullOrWhiteSpace(value))
+            {
                 output.PromtOutput($"{label}: {value}");
-            else output.PromtOutput($"{label}: <отсутствует>");
+            }
+            else
+            {
+                output.PromtOutput($"{label}: <отсутствует>");
+            }
         }
+
         public static void Print(this IConsoleOutput output, string label, DateTime? dt)
         {
             TimeZoneInfo timeInfo = TimeZoneInfo.Local;
-            if(dt != null) dt = TimeZoneInfo.ConvertTimeFromUtc(dt!.Value, timeInfo);
-            output.PrintIfNotNull(label,dt?.ToString("dddd, dd MMMM yyyy HH:mm:ss"));
+            if (dt != null)
+            {
+                dt = TimeZoneInfo.ConvertTimeFromUtc(dt!.Value, timeInfo);
+            }
+
+            output.PrintIfNotNull(label, dt?.ToString("dddd, dd MMMM yyyy HH:mm:ss"));
         }
     }
 
@@ -87,7 +98,7 @@ namespace TechnologicalUIHost.ConsoleAbstractions
         {
             output.PromtOutput("=== Большие бинарные данные ===");
             output.PromtOutput($"Размер данных: {dto.Data.Length} байт");
-            output.SaveData(dto.Data, "");
+            output.SaveData(dto.Data, string.Empty);
         }
 
         public static void Print(this IConsoleOutput output, PlayerProfileDTO dto)
@@ -124,12 +135,21 @@ namespace TechnologicalUIHost.ConsoleAbstractions
             output.PrintIfNotNull("Название", dto.Name);
             output.PrintIfNotNull("Описание", dto.Description);
         }
+
         public static void Print(this IConsoleOutput output, PlayerParticipationDTO participation)
         {
             output.PromtOutput($"Игрок\t{participation.AccountID,5}\tСорев.\t{participation.Competition,5}\tОчки\t{participation.Score,5}");
-            if (participation.ProfileInfo != null) output.Print(participation.ProfileInfo);
-            if (participation.CompetitionInfo != null) output.Print(participation.CompetitionInfo);
+            if (participation.ProfileInfo != null)
+            {
+                output.Print(participation.ProfileInfo);
+            }
+
+            if (participation.CompetitionInfo != null)
+            {
+                output.Print(participation.CompetitionInfo);
+            }
         }
+
         public static void Print(this IConsoleOutput output, RiddleInfoDTO dto)
         {
             output.PromtOutput("=== Загадка ===");
@@ -140,12 +160,13 @@ namespace TechnologicalUIHost.ConsoleAbstractions
             if (dto.PossibleAnswers.Count > 0)
             {
                 output.PromtOutput($"Альтернативные ответы:");
-                foreach (var x in dto.PossibleAnswers)
+                foreach (RiddleAnswerDTO x in dto.PossibleAnswers)
                 {
                     output.PromtOutput($"- {x.TextAnswer}");
                 }
             }
         }
+
         public static void Print(this IConsoleOutput output, RiddleGameSettingsDTO settings)
         {
             output.PromtOutput("=== Настройки игры ===");
@@ -155,13 +176,20 @@ namespace TechnologicalUIHost.ConsoleAbstractions
             output.PromtOutput($"Штрафные очки: {settings.ScoreOnBadAnswer}");
             output.PromtOutput($"Очки за время: {settings.TimeLinearBonus}");
         }
+
         public static void PrintEnumerable<T>(this IConsoleOutput output, IEnumerable<T> result, Action<IConsoleOutput, T> printCmd)
         {
-            T[] results = result.ToArray();
-            if (results.Length == 0) output.PromtOutput("Список пуст!");
+            T[] results = [.. result];
+            if (results.Length == 0)
+            {
+                output.PromtOutput("Список пуст!");
+            }
             else
             {
-                foreach (T val in results) printCmd(output, val);
+                foreach (T val in results)
+                {
+                    printCmd(output, val);
+                }
             }
         }
     }

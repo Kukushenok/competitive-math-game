@@ -3,22 +3,23 @@ using ServicesRealisation.ServicesRealisation.Validator.Constraints;
 
 namespace ServicesRealisation.ServicesRealisation.Validator
 {
-    public abstract class ConfigurationValidator<T>: IValidator<T> 
+    public abstract class ConfigurationValidator<T> : IValidator<T>
     {
         public const string CONSTRAINTS = "Constraints";
-        private string START_STR;
-        private IConfiguration _configuration;
+        private readonly string sTARTSTR;
+        private readonly IConfiguration configuration;
         public ConfigurationValidator(IConfiguration configuration, string? typeName = null)
         {
-            this._configuration = configuration;
+            this.configuration = configuration;
             typeName ??= typeof(T).Name;
-            START_STR = $"{CONSTRAINTS}:{typeName}:";
+            sTARTSTR = $"{CONSTRAINTS}:{typeName}:";
         }
 
         public abstract bool IsValid(T value, out string? msg);
-        protected B Read<B>(in B data, string keyIdx) where B: IConfigReadable
+        protected TOther Read<TOther>(in TOther data, string keyIdx)
+            where TOther : IConfigReadable
         {
-            data.Read(_configuration.GetSection(START_STR + keyIdx));
+            data.Read(configuration.GetSection(sTARTSTR + keyIdx));
             return data;
         }
     }

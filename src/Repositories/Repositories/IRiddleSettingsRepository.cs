@@ -3,7 +3,7 @@ namespace CompetitiveBackend.Repositories
 {
     public interface IRiddleSettingsRepository
     {
-        public Task<RiddleGameSettings> GetRiddleSettings(int competitionID);
-        public Task UpdateRiddleSettings(int competitionID, RiddleGameSettings settings);
+        Task<RiddleGameSettings> GetRiddleSettings(int competitionID);
+        Task UpdateRiddleSettings(int competitionID, RiddleGameSettings settings);
     }
 }

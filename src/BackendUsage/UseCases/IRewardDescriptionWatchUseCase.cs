@@ -1,16 +1,13 @@
-﻿using CompetitiveBackend.BackendUsage.Objects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using CompetitiveBackend.BackendUsage.Objects;
 
 namespace CompetitiveBackend.BackendUsage.UseCases
 {
     public interface IRewardDescriptionWatchUseCase
     {
-        public Task<LargeDataDTO> GetRewardIcon(int id);
-        public Task<RewardDescriptionDTO> GetRewardDescription(int id);
-        public Task<IEnumerable<RewardDescriptionDTO>> GetAllRewardDescriptions(DataLimiterDTO dataLimiter);
+        Task<LargeDataDTO> GetRewardIcon(int id);
+        Task<RewardDescriptionDTO> GetRewardDescription(int id);
+        Task<IEnumerable<RewardDescriptionDTO>> GetAllRewardDescriptions(DataLimiterDTO dataLimiter);
     }
 }

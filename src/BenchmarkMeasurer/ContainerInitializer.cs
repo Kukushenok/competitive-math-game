@@ -1,44 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Testcontainers.PostgreSql;
+﻿using Testcontainers.PostgreSql;
 
 namespace BenchmarkMeasurer
 {
-    public class ContainerInitializer: IAsyncLifetime
+    public class ContainerInitializer : IAsyncLifetime
     {
-        public const string CORE_PATH = "../../../";
+        public const string COREPATH = "../../../";
         protected const string USERNAME = "tester";
         protected const string PASSWORD = "tester";
         protected const string DATABASE = "tester";
-        protected const string TEST_INIT_PATH = "TestInitScripts";
-        protected const string BASE_INIT_PATH = "../postgres/init";
-        protected const string DUMMY_INIT_PATH = "dummy";
+        protected const string TESTINITPATH = "TestInitScripts";
+        protected const string BASEINITPATH = "../postgres/init";
+        protected const string DUMMYINITPATH = "dummy";
 
-        protected PostgreSqlContainer Container;
-        protected string ConnectionString => Container.GetConnectionString();
+        protected PostgreSqlContainer? container;
+        protected string ConnectionString => container.GetConnectionString();
 
         public async Task DisposeAsync()
         {
-            await Container.StopAsync();
+            await container.StopAsync();
         }
 
         public async Task InitializeAsync()
         {
-            Container = new PostgreSqlBuilder()
+            container = new PostgreSqlBuilder()
                 .WithImage("postgres:latest")
-                .WithResourceMapping(Path.Combine(CORE_PATH, CustomInitPath() ?? BASE_INIT_PATH), "/docker-entrypoint-initdb.d/")
+                .WithResourceMapping(Path.Combine(COREPATH, CustomInitPath() ?? BASEINITPATH), "/docker-entrypoint-initdb.d/")
                 .WithUsername(USERNAME)
                 .WithPassword(PASSWORD)
                 .WithDatabase(DATABASE)
                 .Build();
-            await Container.StartAsync();
+            await container.StartAsync();
             await AfterDockerInit();
         }
 
-        protected virtual Task AfterDockerInit() => Task.CompletedTask;
-        protected virtual string? CustomInitPath() => null;
+        protected virtual Task AfterDockerInit()
+        {
+            return Task.CompletedTask;
+        }
+
+        protected virtual string? CustomInitPath()
+        {
+            return null;
+        }
     }
 }

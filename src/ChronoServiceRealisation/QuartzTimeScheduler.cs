@@ -1,43 +1,44 @@
-﻿using CompetitiveBackend.Services.ExtraTools;
+﻿using System.Collections;
+using CompetitiveBackend.Services.ExtraTools;
 using Microsoft.Extensions.Logging;
 using Quartz;
-using System.Collections;
 
 namespace ChronoServiceRealisation
 {
-
-    internal class QuartzTimeScheduler: ITimeScheduler
+    internal sealed class QuartzTimeScheduler : ITimeScheduler
     {
-        public class QuartzSimpleJob : IJob
+        public sealed class QuartzSimpleJob : IJob
         {
             public async Task Execute(IJobExecutionContext context)
             {
                 QuartzTimeScheduler sc = (context.Scheduler.Context[nameof(QuartzTimeScheduler)] as QuartzTimeScheduler)!;
-                TimeScheduledTaskData task = (TimeScheduledTaskData)context.JobDetail.JobDataMap.Get(nameof(TimeScheduledTaskData))!;
+                var task = (TimeScheduledTaskData)context.JobDetail.JobDataMap.Get(nameof(TimeScheduledTaskData))!;
                 await sc?.FireEvent(task)!;
             }
         }
-        private List<ITimeScheduledTaskSubscriber> _subscribers;
-        ILogger<QuartzTimeScheduler> logger;
-        ISchedulerFactory _schedFactory;
+
+        private readonly List<ITimeScheduledTaskSubscriber> subscribers;
+        private readonly ILogger<QuartzTimeScheduler> logger;
+        private readonly ISchedulerFactory schedFactory;
         public QuartzTimeScheduler(ISchedulerFactory sched, ILogger<QuartzTimeScheduler> logger)
         {
-            _schedFactory = sched;
+            schedFactory = sched;
             this.logger = logger;
-            _subscribers = new List<ITimeScheduledTaskSubscriber>();
-
+            subscribers = [];
         }
+
         public async Task AddOrUpdateScheduledTask(TimeScheduledTaskData task)
         {
-            IScheduler sched = await _schedFactory.GetScheduler();
+            IScheduler sched = await schedFactory.GetScheduler();
             if (!sched.IsStarted)
             {
                 await sched.Start();
                 sched.Context.TryAdd(nameof(QuartzTimeScheduler), this);
             }
-            Dictionary<string, object> data = new Dictionary<string, object>
+
+            var data = new Dictionary<string, object>
             {
-                {nameof(TimeScheduledTaskData), task}
+                { nameof(TimeScheduledTaskData), task },
             };
             IJobDetail mt = JobBuilder.Create<QuartzSimpleJob>()
                 .WithIdentity(GetJobKey(task))
@@ -51,39 +52,42 @@ namespace ChronoServiceRealisation
             await sched.ScheduleJob(mt, [trigger], true);
             logger.LogInformation($"Added job for task with ID {task.Identifier} at time {task.FireTime}", task);
         }
-        private TriggerKey GetTriggerKey(TimeScheduledTaskData task)
+
+        private static TriggerKey GetTriggerKey(TimeScheduledTaskData task)
         {
             return new TriggerKey($"{task.Identifier}_{task.Category}", task.Category + "_Task");
         }
-        private JobKey GetJobKey(TimeScheduledTaskData task)
+
+        private static JobKey GetJobKey(TimeScheduledTaskData task)
         {
             return new JobKey($"{task.Identifier}_{task.Category}", task.Category + "_Job");
         }
-        protected async Task FireEvent(TimeScheduledTaskData task)
+
+        private async Task FireEvent(TimeScheduledTaskData task)
         {
             logger.LogInformation($"Scheduled task {task.Identifier} has fired! Suspected time: {task.FireTime}");
-            await Parallel.ForEachAsync(_subscribers, async (i, token) => await i.OnRecievedMessage(task));
+            await Parallel.ForEachAsync(subscribers, async (i, token) => await i.OnRecievedMessage(task));
         }
 
         async Task ITimeScheduler.RemoveScheduledTask(TimeScheduledTaskData task)
         {
-            IScheduler sched = await _schedFactory.GetScheduler();
+            IScheduler sched = await schedFactory.GetScheduler();
             await sched.DeleteJob(GetJobKey(task));
         }
 
         public void AddSubscriber(ITimeScheduledTaskSubscriber subscriber)
         {
-            _subscribers.Add(subscriber);
+            subscribers.Add(subscriber);
         }
 
         public void RemoveSubscriber(ITimeScheduledTaskSubscriber subscriber)
         {
-            _subscribers.Remove(subscriber);
+            subscribers.Remove(subscriber);
         }
 
         public async Task Initialize()
         {
-            IScheduler sched = await _schedFactory.GetScheduler();
+            IScheduler sched = await schedFactory.GetScheduler();
             sched.Context.TryAdd(nameof(QuartzTimeScheduler), this);
             if (!sched.IsStarted)
             {

@@ -1,53 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SQLite;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.SQLite;
+using System.Globalization;
 
 namespace ChronoServiceRealisation
 {
-    static class SQLiteEnsurance
+    internal static class SQLiteEnsurance
     {
         /// <summary>
-        /// Initializes QUARTZ SQLite database if one does not exist
+        /// Initializes QUARTZ SQLite database if one does not exist.
         /// </summary>
-        /// <param name="connString"></param>
+        /// <param name="connString">Connection string.</param>
         public static void Ensure(string connString)
         {
-            using(SQLiteConnection conn = new SQLiteConnection(connString))
+            using var conn = new SQLiteConnection(connString);
+            conn.Open();
+            bool isEmpty = false;
+            using (var command = new SQLiteCommand(
+                "SELECT count(*) FROM sqlite_master WHERE type='table';",
+                conn))
             {
-                conn.Open();
-                bool isEmpty = false;
-                using (SQLiteCommand command = new SQLiteCommand(
-                    "SELECT count(*) FROM sqlite_master WHERE type='table';",
-                    conn))
+                int tableCount = Convert.ToInt32(command.ExecuteScalar(), CultureInfo.InvariantCulture);
+                isEmpty = tableCount == 0;
+            }
+
+            if (isEmpty)
+            {
+                using SQLiteTransaction transaction = conn.BeginTransaction();
+                try
                 {
-                    int tableCount = Convert.ToInt32(command.ExecuteScalar());
-                    isEmpty = (tableCount == 0);
-                }
-                if (isEmpty)
-                {
-                    using (SQLiteTransaction transaction = conn.BeginTransaction())
+                    using (var command = new SQLiteCommand(QUARTZINITSCRIPT, conn, transaction))
                     {
-                        try
-                        {
-                            using (SQLiteCommand command = new SQLiteCommand(QUARTZ_INIT_SCRIPT, conn, transaction))
-                            {
-                                command.ExecuteNonQuery();
-                            }
-                            transaction.Commit();
-                        }
-                        catch (Exception ex)
-                        {
-                            transaction.Rollback();
-                            Console.WriteLine($"Error executing script: {ex.Message}");
-                        }
+                        command.ExecuteNonQuery();
                     }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    Console.WriteLine($"Error executing script: {ex.Message}");
                 }
             }
         }
-        static string QUARTZ_INIT_SCRIPT = """
+
+        private static readonly string QUARTZINITSCRIPT = """
             ﻿DROP TABLE IF EXISTS QRTZ_FIRED_TRIGGERS;
             DROP TABLE IF EXISTS QRTZ_PAUSED_TRIGGER_GRPS;
             DROP TABLE IF EXISTS QRTZ_SCHEDULER_STATE;
@@ -64,14 +59,14 @@ namespace ChronoServiceRealisation
             CREATE TABLE QRTZ_JOB_DETAILS
               (
                 SCHED_NAME NVARCHAR(100) NOT NULL,
-            	JOB_NAME NVARCHAR(150) NOT NULL,
+                JOB_NAME NVARCHAR(150) NOT NULL,
                 JOB_GROUP NVARCHAR(150) NOT NULL,
                 DESCRIPTION NVARCHAR(250) NULL,
                 JOB_CLASS_NAME   NVARCHAR(250) NOT NULL,
                 IS_DURABLE BIT NOT NULL,
                 IS_NONCONCURRENT BIT NOT NULL,
                 IS_UPDATE_DATA BIT  NOT NULL,
-            	REQUESTS_RECOVERY BIT NOT NULL,
+                REQUESTS_RECOVERY BIT NOT NULL,
                 JOB_DATA BLOB NULL,
                 PRIMARY KEY (SCHED_NAME,JOB_NAME,JOB_GROUP)
             );
@@ -79,7 +74,7 @@ namespace ChronoServiceRealisation
             CREATE TABLE QRTZ_TRIGGERS
               (
                 SCHED_NAME NVARCHAR(100) NOT NULL,
-            	TRIGGER_NAME NVARCHAR(150) NOT NULL,
+                TRIGGER_NAME NVARCHAR(150) NOT NULL,
                 TRIGGER_GROUP NVARCHAR(150) NOT NULL,
                 JOB_NAME NVARCHAR(150) NOT NULL,
                 JOB_GROUP NVARCHAR(150) NOT NULL,
@@ -102,7 +97,7 @@ namespace ChronoServiceRealisation
             CREATE TABLE QRTZ_SIMPLE_TRIGGERS
               (
                 SCHED_NAME NVARCHAR(100) NOT NULL,
-            	TRIGGER_NAME NVARCHAR(150) NOT NULL,
+                TRIGGER_NAME NVARCHAR(150) NOT NULL,
                 TRIGGER_GROUP NVARCHAR(150) NOT NULL,
                 REPEAT_COUNT BIGINT NOT NULL,
                 REPEAT_INTERVAL BIGINT NOT NULL,
@@ -114,7 +109,7 @@ namespace ChronoServiceRealisation
 
             CREATE TRIGGER DELETE_SIMPLE_TRIGGER DELETE ON QRTZ_TRIGGERS
             BEGIN
-            	DELETE FROM QRTZ_SIMPLE_TRIGGERS WHERE SCHED_NAME=OLD.SCHED_NAME AND TRIGGER_NAME=OLD.TRIGGER_NAME AND TRIGGER_GROUP=OLD.TRIGGER_GROUP;
+                DELETE FROM QRTZ_SIMPLE_TRIGGERS WHERE SCHED_NAME=OLD.SCHED_NAME AND TRIGGER_NAME=OLD.TRIGGER_NAME AND TRIGGER_GROUP=OLD.TRIGGER_GROUP;
             END
             ;
 
@@ -134,21 +129,21 @@ namespace ChronoServiceRealisation
                 DEC_PROP_2 NUMERIC NULL,
                 BOOL_PROP_1 BIT NULL,
                 BOOL_PROP_2 BIT NULL,
-            	PRIMARY KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),
-            	FOREIGN KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
+                PRIMARY KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),
+                FOREIGN KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
                     REFERENCES QRTZ_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP) ON DELETE CASCADE
             );
 
             CREATE TRIGGER DELETE_SIMPROP_TRIGGER DELETE ON QRTZ_TRIGGERS
             BEGIN
-            	DELETE FROM QRTZ_SIMPROP_TRIGGERS WHERE SCHED_NAME=OLD.SCHED_NAME AND TRIGGER_NAME=OLD.TRIGGER_NAME AND TRIGGER_GROUP=OLD.TRIGGER_GROUP;
+                DELETE FROM QRTZ_SIMPROP_TRIGGERS WHERE SCHED_NAME=OLD.SCHED_NAME AND TRIGGER_NAME=OLD.TRIGGER_NAME AND TRIGGER_GROUP=OLD.TRIGGER_GROUP;
             END
             ;
 
             CREATE TABLE QRTZ_CRON_TRIGGERS
               (
                 SCHED_NAME NVARCHAR(100) NOT NULL,
-            	TRIGGER_NAME NVARCHAR(150) NOT NULL,
+                TRIGGER_NAME NVARCHAR(150) NOT NULL,
                 TRIGGER_GROUP NVARCHAR(150) NOT NULL,
                 CRON_EXPRESSION NVARCHAR(250) NOT NULL,
                 TIME_ZONE_ID NVARCHAR(80),
@@ -159,14 +154,14 @@ namespace ChronoServiceRealisation
 
             CREATE TRIGGER DELETE_CRON_TRIGGER DELETE ON QRTZ_TRIGGERS
             BEGIN
-            	DELETE FROM QRTZ_CRON_TRIGGERS WHERE SCHED_NAME=OLD.SCHED_NAME AND TRIGGER_NAME=OLD.TRIGGER_NAME AND TRIGGER_GROUP=OLD.TRIGGER_GROUP;
+                DELETE FROM QRTZ_CRON_TRIGGERS WHERE SCHED_NAME=OLD.SCHED_NAME AND TRIGGER_NAME=OLD.TRIGGER_NAME AND TRIGGER_GROUP=OLD.TRIGGER_GROUP;
             END
             ;
 
             CREATE TABLE QRTZ_BLOB_TRIGGERS
               (
                 SCHED_NAME NVARCHAR(100) NOT NULL,
-            	TRIGGER_NAME NVARCHAR(150) NOT NULL,
+                TRIGGER_NAME NVARCHAR(150) NOT NULL,
                 TRIGGER_GROUP NVARCHAR(150) NOT NULL,
                 BLOB_DATA BLOB NULL,
                 PRIMARY KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),
@@ -176,14 +171,14 @@ namespace ChronoServiceRealisation
 
             CREATE TRIGGER DELETE_BLOB_TRIGGER DELETE ON QRTZ_TRIGGERS
             BEGIN
-            	DELETE FROM QRTZ_BLOB_TRIGGERS WHERE SCHED_NAME=OLD.SCHED_NAME AND TRIGGER_NAME=OLD.TRIGGER_NAME AND TRIGGER_GROUP=OLD.TRIGGER_GROUP;
+                DELETE FROM QRTZ_BLOB_TRIGGERS WHERE SCHED_NAME=OLD.SCHED_NAME AND TRIGGER_NAME=OLD.TRIGGER_NAME AND TRIGGER_GROUP=OLD.TRIGGER_GROUP;
             END
             ;
 
             CREATE TABLE QRTZ_CALENDARS
               (
                 SCHED_NAME NVARCHAR(100) NOT NULL,
-            	CALENDAR_NAME  NVARCHAR(200) NOT NULL,
+                CALENDAR_NAME  NVARCHAR(200) NOT NULL,
                 CALENDAR BLOB NOT NULL,
                 PRIMARY KEY (SCHED_NAME,CALENDAR_NAME)
             );
@@ -191,20 +186,20 @@ namespace ChronoServiceRealisation
             CREATE TABLE QRTZ_PAUSED_TRIGGER_GRPS
               (
                 SCHED_NAME NVARCHAR(100) NOT NULL,
-            	TRIGGER_GROUP NVARCHAR(150) NOT NULL, 
+                TRIGGER_GROUP NVARCHAR(150) NOT NULL, 
                 PRIMARY KEY (SCHED_NAME,TRIGGER_GROUP)
             );
 
             CREATE TABLE QRTZ_FIRED_TRIGGERS
               (
                 SCHED_NAME NVARCHAR(100) NOT NULL,
-            	ENTRY_ID NVARCHAR(95) NOT NULL,
+                ENTRY_ID NVARCHAR(95) NOT NULL,
                 TRIGGER_NAME NVARCHAR(150) NOT NULL,
                 TRIGGER_GROUP NVARCHAR(150) NOT NULL,
                 INSTANCE_NAME NVARCHAR(200) NOT NULL,
                 FIRED_TIME BIGINT NOT NULL,
                 SCHED_TIME BIGINT NOT NULL,
-            	PRIORITY INTEGER NOT NULL,
+                PRIORITY INTEGER NOT NULL,
                 STATE NVARCHAR(16) NOT NULL,
                 JOB_NAME NVARCHAR(150) NULL,
                 JOB_GROUP NVARCHAR(150) NULL,
@@ -216,7 +211,7 @@ namespace ChronoServiceRealisation
             CREATE TABLE QRTZ_SCHEDULER_STATE
               (
                 SCHED_NAME NVARCHAR(100) NOT NULL,
-            	INSTANCE_NAME NVARCHAR(200) NOT NULL,
+                INSTANCE_NAME NVARCHAR(200) NOT NULL,
                 LAST_CHECKIN_TIME BIGINT NOT NULL,
                 CHECKIN_INTERVAL BIGINT NOT NULL,
                 PRIMARY KEY (SCHED_NAME,INSTANCE_NAME)
@@ -225,7 +220,7 @@ namespace ChronoServiceRealisation
             CREATE TABLE QRTZ_LOCKS
               (
                 SCHED_NAME NVARCHAR(100) NOT NULL,
-            	LOCK_NAME  NVARCHAR(40) NOT NULL, 
+                LOCK_NAME  NVARCHAR(40) NOT NULL, 
                 PRIMARY KEY (SCHED_NAME,LOCK_NAME)
             );
             """;

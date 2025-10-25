@@ -17,8 +17,13 @@
                 identifier = GetAccountIdentifier();
                 return true;
             }
+
             return false;
         }
-        protected virtual int GetAccountIdentifier() => 0;
+
+        protected virtual int GetAccountIdentifier()
+        {
+            return 0;
+        }
     }
 }

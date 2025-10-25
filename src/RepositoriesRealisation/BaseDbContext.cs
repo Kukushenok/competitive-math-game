@@ -1,25 +1,25 @@
-﻿using CompetitiveBackend.Core.Objects;
-using CompetitiveBackend.Repositories;
+﻿using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Repositories.Exceptions;
 using Microsoft.EntityFrameworkCore;
-using RepositoriesRealisation.DatabaseObjects;
 using RepositoriesRealisation.Models;
-using System.Data.Common;
-using System.Xml;
 
 namespace RepositoriesRealisation
 {
     public class BaseDbContext : DbContext
     {
-        public BaseDbContext(DbContextOptions options) : base(options)
+        public BaseDbContext(DbContextOptions options)
+            : base(options)
         {
         }
+
         public DbSet<AccountModel> AccountsReadOnly { get; set; } = null!;
         public DbSet<PlayerProfileModel> PlayerProfiles { get; set; } = null!;
         public DbSet<AccountModelProfileImage> AccountsProfileImages { get; set; } = null!;
         public DbSet<RewardDescriptionModel> RewardDescription { get; set; } = null!;
         public DbSet<RewardDescriptionModelIconImage> RewardDescriptionIconImages { get; set; } = null!;
+        [Obsolete("Defunct")]
         public DbSet<CompetitionLevelDataModel> CompetitionLevelModel { get; set; } = null!;
+        [Obsolete("Defunct")]
         public DbSet<CompetitionLevelDataModelData> CompetitionLevelModelData { get; set; } = null!;
         public DbSet<CompetitionModel> Competition { get; set; } = null!;
         public DbSet<PlayerParticipationModel> PlayerParticipation { get; set; } = null!;
@@ -30,6 +30,7 @@ namespace RepositoriesRealisation
         protected BaseDbContext()
         {
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PlayerParticipationModel>().HasKey(table => new { table.AccountID, table.CompetitionID });
@@ -38,7 +39,8 @@ namespace RepositoriesRealisation
                 options.Ignore(x => x.PasswordHash); // the forbidden knowledge
             });
             ConnectOneToOne<AccountModel, PlayerProfileModel>(modelBuilder, nameof(AccountModel.Profile));
-            ConnectOneToOne<CompetitionLevelDataModel, CompetitionLevelDataModelData>(modelBuilder, nameof(CompetitionLevelDataModel.LevelData));
+
+            // ConnectOneToOne<CompetitionLevelDataModel, CompetitionLevelDataModelData>(modelBuilder, nameof(CompetitionLevelDataModel.LevelData));
             ConnectOneToOne<RewardDescriptionModel, RewardDescriptionModelIconImage>(modelBuilder, nameof(RewardDescriptionModel.IconImage));
             ConnectOneToOne<AccountModel, AccountModelProfileImage>(modelBuilder, nameof(AccountModel.ProfileImage));
             ConnectOneToOne<CompetitionModel, RiddleGameSettingsModel>(modelBuilder, nameof(CompetitionModel.RiddleGameSettings));
@@ -60,13 +62,15 @@ namespace RepositoriesRealisation
                 entity.Property(e => e.OtherAnswers).HasColumnType("jsonb");
             });
         }
-        private void ConnectOneToOne<T, Q>(ModelBuilder builder, string propertyName) where Q: OneToOneEntity<T>
-                                                                 where T : class
+
+        private static void ConnectOneToOne<T, TOther>(ModelBuilder builder, string propertyName)
+            where TOther : OneToOneEntity<T>
+            where T : class
         {
             builder.Entity<T>()
-                .HasOne(typeof(Q), propertyName)
+                .HasOne(typeof(TOther), propertyName)
                 .WithOne(nameof(OneToOneEntity<T>.Model))
-                .HasForeignKey(typeof(Q), "Id");
+                .HasForeignKey(typeof(TOther), "Id");
         }
 
         public async Task DoCreateAccount(AccountModel c)
@@ -74,10 +78,9 @@ namespace RepositoriesRealisation
             try
             {
                 await Database.ExecuteSqlAsync(
-                    $"INSERT INTO account (login, username, email, password_hash, privilegy_level) VALUES ({c.Login}, {c.Login}, {c.Email}, {c.PasswordHash}, {c.AccountPrivilegyLevel})"
-                    );
+                    $"INSERT INTO account (login, username, email, password_hash, privilegy_level) VALUES ({c.Login}, {c.Login}, {c.Email}, {c.PasswordHash}, {c.AccountPrivilegyLevel})");
             }
-            catch(Npgsql.PostgresException ex)
+            catch (Npgsql.PostgresException ex)
             {
                 throw new FailedOperationException(ex.Message);
             }

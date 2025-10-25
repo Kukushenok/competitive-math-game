@@ -9,16 +9,16 @@ namespace CompetitiveBackend.BackendUsage.Objects
         public int Competition { get; set; }
         public int Score { get; set; }
         public DateTime LastUpdateTime { get; set; }
-        public PlayerProfileDTO? ProfileInfo { get; set; } = null;
-        public CompetitionDTO? CompetitionInfo { get; set; } = null;
-        public PlayerParticipationDTO(int accountID, int competition, int score, DateTime LastUpdateTime, PlayerProfileDTO? profileInfo = null, CompetitionDTO? competitionInfo = null)
+        public PlayerProfileDTO? ProfileInfo { get; set; }
+        public CompetitionDTO? CompetitionInfo { get; set; }
+        public PlayerParticipationDTO(int accountID, int competition, int score, DateTime lastUpdateTime, PlayerProfileDTO? profileInfo = null, CompetitionDTO? competitionInfo = null)
         {
             AccountID = accountID;
             Competition = competition;
             Score = score;
             ProfileInfo = profileInfo;
             CompetitionInfo = competitionInfo;
-            this.LastUpdateTime = LastUpdateTime;
+            this.LastUpdateTime = lastUpdateTime;
         }
     }
 }

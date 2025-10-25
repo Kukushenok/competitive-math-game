@@ -1,16 +1,12 @@
-﻿using CompetitiveBackend.BackendUsage.Objects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using CompetitiveBackend.BackendUsage.Objects;
 
 namespace CompetitiveBackend.BackendUsage.UseCases
 {
-    public interface ICompetitionRewardEditUseCase: IAuthableUseCase<ICompetitionRewardEditUseCase>
+    public interface ICompetitionRewardEditUseCase : IAuthableUseCase<ICompetitionRewardEditUseCase>
     {
-        public Task CreateCompetitionReward(CreateCompetitionRewardDTO reward);
-        public Task UpdateCompetitionReward(UpdateCompetitionRewardDTO reward);
-        public Task RemoveCompetitionReward(int compRewardID);
+        Task CreateCompetitionReward(CreateCompetitionRewardDTO reward);
+        Task UpdateCompetitionReward(UpdateCompetitionRewardDTO reward);
+        Task RemoveCompetitionReward(int compRewardID);
     }
 }

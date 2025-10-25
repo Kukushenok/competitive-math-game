@@ -4,121 +4,140 @@ using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Repositories.Exceptions;
 using CompetitiveBackend.Services.Exceptions;
 using CompetitiveBackend.Services.ExtraTools;
-using Microsoft.AspNetCore.Server.HttpSys;
 
 namespace CompetitiveBackend.Services.RewardDescriptionService
 {
     public class GameProviderService : IGameProviderService
     {
-        private IRiddleRepository riddleRepository;
-        private IRiddleSettingsRepository riddleSettingsRepository;
-        private IRiddleSessionManager sessionManager;
-        private IPlayerParticipationRepository _playerParticipationRepository;
-        private ICompetitionRepository _competitionRepository;
-        private IRandom random;
-        public GameProviderService(IRiddleRepository riddleRepository, 
-            IRiddleSettingsRepository settngs, IRiddleSessionManager mng, 
-            IPlayerParticipationRepository serv, ICompetitionRepository competitionRepository,
+        private readonly IRiddleRepository riddleRepository;
+        private readonly IRiddleSettingsRepository riddleSettingsRepository;
+        private readonly IRiddleSessionManager sessionManager;
+        private readonly IPlayerParticipationRepository playerParticipationRepository;
+        private readonly ICompetitionRepository competitionRepository;
+        private readonly IRandom random;
+        public GameProviderService(
+            IRiddleRepository riddleRepository,
+            IRiddleSettingsRepository settngs,
+            IRiddleSessionManager mng,
+            IPlayerParticipationRepository serv,
+            ICompetitionRepository competitionRepository,
             IRandom rnd)
         {
             this.riddleRepository = riddleRepository;
             sessionManager = mng;
-            _playerParticipationRepository = serv;
+            playerParticipationRepository = serv;
             random = rnd;
             riddleSettingsRepository = settngs;
-            _competitionRepository = competitionRepository;
+            this.competitionRepository = competitionRepository;
         }
+
         private UserRiddleInfo CastToUser(RiddleInfo info)
         {
-            List<RiddleAnswer> answers = new(info.PossibleAnswers);
-            if(answers.Count > 0)
+            List<RiddleAnswer> answers = [.. info.PossibleAnswers];
+            if (answers.Count > 0)
             {
                 answers.Add(info.TrueAnswer);
-                answers = PickRandom(answers,answers.Count).ToList();
+                answers = [.. PickRandom(answers, answers.Count)];
             }
-            return new UserRiddleInfo(info.Question, answers.ToArray());
+
+            return new UserRiddleInfo(info.Question, [.. answers]);
         }
+
         private IEnumerable<T> PickRandom<T>(List<T> info, int count)
         {
             info = [.. info];
             for (int i = 0; i < count && info.Count > 0; i++)
             {
-                var idx = random.Next(0, info.Count);
+                int idx = random.NextNumber(0, info.Count);
                 yield return info[idx];
                 info.RemoveAt(idx);
             }
         }
+
         public async Task<CompetitionParticipationTask> DoPlay(int accountID, int competitionID)
         {
             var riddles = (await riddleRepository.GetRiddles(competitionID, DataLimiter.NoLimit)).ToList();
-            var settings = await riddleSettingsRepository.GetRiddleSettings(competitionID);
+            RiddleGameSettings settings = await riddleSettingsRepository.GetRiddleSettings(competitionID);
             var gameChosenRiddles = PickRandom(riddles, settings.TotalRiddles).ToList();
             var riddleGameInfo = new RiddleGameInfo(gameChosenRiddles, competitionID, DateTime.UtcNow);
-            var sess = await sessionManager.CreateSession(riddleGameInfo);
-            
+            RiddleSession sess = await sessionManager.CreateSession(riddleGameInfo);
+
             return new CompetitionParticipationTask(
                 sess.SessionID,
-                gameChosenRiddles.Select(CastToUser).ToList()
-                );
+                [.. gameChosenRiddles.Select(CastToUser)]);
         }
+
         private async Task SubmitParticipation(int userID, int competitionID, int score)
         {
             PlayerParticipation? participation = null;
-            Competition c = await _competitionRepository.GetCompetition(competitionID);
+            Competition c = await competitionRepository.GetCompetition(competitionID);
             DateTime current = DateTime.UtcNow;
             if (current < c.StartDate || current > c.EndDate)
             {
                 throw new ChronologicalException("Could not participate; competition " + (current > c.EndDate ? "has ended" : "is not started yet"));
             }
+
             try
             {
-                participation = await _playerParticipationRepository.GetParticipation(userID, competitionID);
+                participation = await playerParticipationRepository.GetParticipation(userID, competitionID);
             }
             catch (MissingDataException)
             {
-                await _playerParticipationRepository.CreateParticipation(new PlayerParticipation(competitionID, userID, score, current));
+                await playerParticipationRepository.CreateParticipation(new PlayerParticipation(competitionID, userID, score, current));
             }
+
             if (participation != null && participation.Score < score)
             {
-                await _playerParticipationRepository.UpdateParticipation(new PlayerParticipation(competitionID, userID, score, current));
+                await playerParticipationRepository.UpdateParticipation(new PlayerParticipation(competitionID, userID, score, current));
             }
         }
-        private bool CompareAnswers(RiddleAnswer givenAnswer, RiddleAnswer expectedAnswer)
+
+        private static bool CompareAnswers(RiddleAnswer givenAnswer, RiddleAnswer expectedAnswer)
         {
             return givenAnswer.TextAnswer.Trim() == expectedAnswer.TextAnswer.Trim();
         }
+
         private async Task<ParticipationFeedback> Calculate(RiddleGameInfo gameInfo, CompetitionParticipationRequest req)
         {
-            var settings = await riddleSettingsRepository.GetRiddleSettings(gameInfo.CompetitionID);
-            if(req.Answers.Count != gameInfo.Riddles.Count)
+            RiddleGameSettings settings = await riddleSettingsRepository.GetRiddleSettings(gameInfo.CompetitionID);
+            if (req.Answers.Count != gameInfo.Riddles.Count)
             {
                 throw new GameSessionInvalidException("riddle count is not preserved");
             }
+
             int rightAnswCount = 0;
-            for(int i = 0; i < req.Answers.Count; i++)
+            for (int i = 0; i < req.Answers.Count; i++)
             {
-                if (CompareAnswers(req.Answers[i], gameInfo.Riddles[i].TrueAnswer)) rightAnswCount++;
+                if (CompareAnswers(req.Answers[i], gameInfo.Riddles[i].TrueAnswer))
+                {
+                    rightAnswCount++;
+                }
             }
+
             int totalCount = gameInfo.Riddles.Count;
             double ratio = 0;
             if (settings.TimeLimit != null)
             {
-                ratio = 1.0 - (DateTime.UtcNow - gameInfo.StartTime).TotalSeconds / settings.TimeLimit.Value.TotalSeconds;
-                if (ratio < 0) ratio = 0;
+                ratio = 1.0 - ((DateTime.UtcNow - gameInfo.StartTime).TotalSeconds / settings.TimeLimit.Value.TotalSeconds);
+                if (ratio < 0)
+                {
+                    ratio = 0;
+                }
             }
-            int score = (int)(Math.Round(settings.TimeLinearBonus * ratio));
-            score += rightAnswCount * settings.ScoreOnRightAnswer + (totalCount - rightAnswCount) * settings.ScoreOnBadAnswer;
+
+            int score = (int)Math.Round(settings.TimeLinearBonus * ratio);
+            score += (rightAnswCount * settings.ScoreOnRightAnswer) + ((totalCount - rightAnswCount) * settings.ScoreOnBadAnswer);
             return new ParticipationFeedback(
                 score,
                 rightAnswCount,
-                totalCount
-                );
+                totalCount);
         }
+
         public async Task<ParticipationFeedback> DoSubmit(CompetitionParticipationRequest request)
         {
-            var sess = await sessionManager.RetrieveSession(request.SessionID);
+            RiddleSession sess = await sessionManager.RetrieveSession(request.SessionID);
             int compID = sess.GameInfo.CompetitionID;
-            var x = await Calculate(sess.GameInfo, request);
+            ParticipationFeedback x = await Calculate(sess.GameInfo, request);
             await SubmitParticipation(request.PlayerID, compID, x.Score);
             return x;
         }

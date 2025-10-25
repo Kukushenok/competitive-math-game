@@ -4,9 +4,10 @@
     {
         public string Name;
         public string? Description;
-        public PlayerProfile(string Name, string? description = null, int? id = null) : base(id)
+        public PlayerProfile(string name, string? description = null, int? id = null)
+            : base(id)
         {
-            this.Name = Name;
+            this.Name = name;
             Description = description;
         }
     }

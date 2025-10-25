@@ -9,6 +9,7 @@ namespace CompetitiveBackend.BaseUsage.Converters
         {
             return new CompetitionDTO(comp.Id, comp.Name, comp.Description, comp.StartDate, comp.EndDate);
         }
+
         public static Competition Convert(this CompetitionDTO comp)
         {
             return new Competition(comp.Name ?? string.Empty, comp.Description ?? string.Empty, comp.StartDate, comp.EndDate, comp.ID);

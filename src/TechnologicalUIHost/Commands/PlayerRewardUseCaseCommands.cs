@@ -1,44 +1,43 @@
-﻿using CompetitiveBackend.BackendUsage.Objects;
-using CompetitiveBackend.BackendUsage.UseCases;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CompetitiveBackend.BackendUsage.UseCases;
 using TechnologicalUIHost.Command;
-using TechnologicalUIHost.MenuCommand;
 using TechnologicalUIHost.ConsoleAbstractions;
+using TechnologicalUIHost.MenuCommand;
 
 namespace TechnologicalUIHost.Commands
 {
-    class PlayerRewardUseCaseCommands : AuthRequiringCommands
+    internal sealed class PlayerRewardUseCaseCommands : AuthRequiringCommands
     {
-        private IPlayerRewardUseCase _useCase;
-        public PlayerRewardUseCaseCommands(IAuthCache cache, IPlayerRewardUseCase playerRewardUseCase) : base("Награды игрока", cache)
+        private readonly IPlayerRewardUseCase useCase;
+        public PlayerRewardUseCaseCommands(IAuthCache cache, IPlayerRewardUseCase playerRewardUseCase)
+            : base("Награды игрока", cache)
         {
-            _useCase = playerRewardUseCase;
+            useCase = playerRewardUseCase;
         }
+
         private async Task GrantRewardToPlayer(IConsole console)
         {
-            using var self = await Auth(_useCase);
+            using IPlayerRewardUseCase self = await Auth(useCase);
             self.GrantRewardToPlayer(console.ReadInt("Введите ID игрока > "), console.ReadInt("Введите ID типа награды > ")).GetAwaiter().GetResult();
         }
 
         private async Task DeleteReward(IConsole console)
         {
-            using var self = await Auth(_useCase);
+            using IPlayerRewardUseCase self = await Auth(useCase);
             self.DeleteReward(console.ReadInt("Введите ID награды игрока > ")).GetAwaiter().GetResult();
         }
+
         private async Task GetAllRewardsOf(IConsole console)
         {
-            using var self = await Auth(_useCase);
+            using IPlayerRewardUseCase self = await Auth(useCase);
             console.PrintEnumerable(await self.GetAllRewardsOf(console.ReadInt("Введите ID игрока > "), console.ReadDataLimiterDTO()), (c, x) => c.Print(x));
         }
+
         private async Task GetAllMineRewards(IConsole console)
         {
-            using var self = await Auth(_useCase);
+            using IPlayerRewardUseCase self = await Auth(useCase);
             console.PrintEnumerable(await self.GetAllMineRewards(console.ReadDataLimiterDTO()), (c, x) => c.Print(x));
         }
+
         protected override IEnumerable<IConsoleMenuCommand> GetCommands()
         {
             yield return new CallbackConsoleMenuCommand("Наградить игрока", TaskDecorator.Sync(GrantRewardToPlayer), IsAuthed);

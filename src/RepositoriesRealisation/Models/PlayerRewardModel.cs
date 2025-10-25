@@ -1,11 +1,5 @@
-﻿using RepositoriesRealisation.DatabaseObjects;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RepositoriesRealisation.Models
 {
@@ -24,22 +18,24 @@ namespace RepositoriesRealisation.Models
         public int Id { get; set; }
         [Column("player_id")]
         public int PlayerID { get; set; }
-        [ForeignKey("competition_id"), Column("competition_id")]
+        [ForeignKey("competition_id")]
+        [Column("competition_id")]
         public int? CompetitionID { get; set; }
-        [ForeignKey("reward_description_id"), Column("reward_description_id")]
+        [ForeignKey("reward_description_id")]
+        [Column("reward_description_id")]
         public int RewardDescriptionID { get; set; }
         [Column("creation_date")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreationDate { get; set; }
-        public PlayerRewardModel(int playerID, int RewardDescription, int? CompetitionID = null)
+        public PlayerRewardModel(int playerID, int rewardDescription, int? competitionID = null)
         {
             PlayerID = playerID;
-            RewardDescriptionID = RewardDescription;
-            this.CompetitionID = CompetitionID;
+            RewardDescriptionID = rewardDescription;
+            this.CompetitionID = competitionID;
         }
+
         public PlayerRewardModel()
         {
-
         }
     }
 }

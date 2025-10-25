@@ -1,15 +1,11 @@
-﻿using CompetitiveBackend.BackendUsage.Objects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using CompetitiveBackend.BackendUsage.Objects;
 
 namespace CompetitiveBackend.BackendUsage.UseCases
 {
     public interface IPlayerProfileUseCase
     {
-        public Task<PlayerProfileDTO> GetProfile(int id);
-        public Task<LargeDataDTO> GetProfileImage(int id);
+        Task<PlayerProfileDTO> GetProfile(int id);
+        Task<LargeDataDTO> GetProfileImage(int id);
     }
 }

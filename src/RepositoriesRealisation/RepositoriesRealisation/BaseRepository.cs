@@ -6,13 +6,17 @@ namespace CompetitiveBackend.Repositories
 {
     internal class BaseRepository<T>
     {
-        private IDbContextFactory<BaseDbContext> contextFactory;
-        protected ILogger<T> _logger;
+        private readonly IDbContextFactory<BaseDbContext> contextFactory;
+        protected ILogger<T> logger;
         public BaseRepository(IDbContextFactory<BaseDbContext> contextFactory, ILogger<T> logger)
         {
             this.contextFactory = contextFactory;
-            _logger = logger;
+            this.logger = logger;
         }
-        protected async Task<BaseDbContext> GetDbContext() => await contextFactory.CreateDbContextAsync();
+
+        protected async Task<BaseDbContext> GetDbContext()
+        {
+            return await contextFactory.CreateDbContextAsync();
+        }
     }
 }

@@ -7,15 +7,12 @@ namespace RepositoriesRealisation.DatabaseObjects
     {
         public static int Resolve(Role rl)
         {
-            if (rl.IsPlayer()) return 0;
-            if (rl.IsAdmin()) return 1;
-            throw new FailedOperationException("No such role supported");
+            return rl.IsPlayer() ? 0 : rl.IsAdmin() ? 1 : throw new FailedOperationException("No such role supported");
         }
+
         public static Role Resolve(int rl)
         {
-            if (rl == 0) return new PlayerRole();
-            if (rl == 1) return new AdminRole();
-            throw new FailedOperationException("No such role supported");
+            return rl == 0 ? new PlayerRole() : rl == 1 ? (Role)new AdminRole() : throw new FailedOperationException("No such role supported");
         }
     }
 }

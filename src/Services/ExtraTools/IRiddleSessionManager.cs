@@ -4,8 +4,8 @@ namespace CompetitiveBackend.Services.ExtraTools
 {
     public interface IRiddleSessionManager
     {
-        public Task<RiddleSession> CreateSession(RiddleGameInfo gameInfo);
-        public Task<RiddleSession> RetrieveSession(string sessionID);
-        public Task<bool> DeleteSession(string sessionID);
+        Task<RiddleSession> CreateSession(RiddleGameInfo gameInfo);
+        Task<RiddleSession> RetrieveSession(string sessionID);
+        Task<bool> DeleteSession(string sessionID);
     }
 }

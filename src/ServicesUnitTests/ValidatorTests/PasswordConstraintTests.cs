@@ -1,5 +1,4 @@
 ﻿using ServicesRealisation.ServicesRealisation.Validator.Constraints;
-using System.Data;
 
 namespace ServicesUnitTests.ValidatorTests
 {
@@ -16,6 +15,7 @@ namespace ServicesUnitTests.ValidatorTests
             var cons = new PasswordConstraint(4, false);
             Assert.Equal(isValid, cons.IsValid(password, out _));
         }
+
         [Theory]
         [InlineData("1234__", false)]
         [InlineData("12345A", true)]
@@ -28,8 +28,10 @@ namespace ServicesUnitTests.ValidatorTests
         {
             // Arrange
             var cons = new PasswordConstraint(4, true);
+
             // Act
-            var result = cons.IsValid(password, out _);
+            bool result = cons.IsValid(password, out _);
+
             // Assert
             Assert.Equal(isValid, result);
         }

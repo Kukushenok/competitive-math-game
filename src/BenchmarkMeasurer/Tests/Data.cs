@@ -8,7 +8,7 @@ namespace BenchmarkMeasurer.Tests
         {
             for (int i = 0; i < 1; i++)
             {
-                foreach (string name in Directory.GetFiles(Path.Combine(ContainerInitializer.CORE_PATH, "Results", "Dumps")))
+                foreach (string name in Directory.GetFiles(Path.Combine(ContainerInitializer.COREPATH, "Results", "Dumps")))
                 {
                     yield return [name];
                 }

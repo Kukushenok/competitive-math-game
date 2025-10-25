@@ -1,20 +1,15 @@
-﻿using CompetitiveBackend.Core.Objects;
-using CompetitiveBackend.Core.RewardCondition;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+using CompetitiveBackend.Core.Objects;
+using CompetitiveBackend.Core.RewardCondition;
 
 namespace RepositoriesRealisation.Models
 {
-    public enum SupportedConditionType { 
+    public enum SupportedConditionType
+    {
         Rank,
-        Place
-    };
+        Place,
+    }
 
     [Table("competition_reward")]
     public class CompetitionRewardModel
@@ -42,16 +37,23 @@ namespace RepositoriesRealisation.Models
         public float? MinRank { get; set; }
         [Column("max_rank")]
         public float? MaxRank { get; set; }
-        public CompetitionRewardModel(int RewardDescriptionID, int CompetitionID, GrantCondition cnd)
+        public CompetitionRewardModel(int rewardDescriptionID, int competitionID, GrantCondition cnd)
         {
-            this.RewardDescriptionId = RewardDescriptionID;
-            this.CompetitionId = CompetitionID;
+            RewardDescriptionId = rewardDescriptionID;
+            CompetitionId = competitionID;
+            Competition = null!;
+            RewardDescription = null!;
             SetCondition(cnd);
         }
+
         public CompetitionRewardModel()
         {
-
+            RewardDescriptionId = 0;
+            CompetitionId = 0;
+            Competition = null!;
+            RewardDescription = null!;
         }
+
         public void SetCondition(GrantCondition cnd)
         {
             MinPlace = null;
@@ -61,36 +63,35 @@ namespace RepositoriesRealisation.Models
             if (cnd is RankGrantCondition ranked)
             {
                 ConditionType = SupportedConditionType.Rank;
-                MinRank = ranked.minRank;
-                MaxRank = ranked.maxRank;
+                MinRank = ranked.MinRank;
+                MaxRank = ranked.MaxRank;
             }
             else if (cnd is PlaceGrantCondition placed)
             {
                 ConditionType = SupportedConditionType.Place;
-                MinPlace = placed.minPlace;
-                MaxPlace = placed.maxPlace;
+                MinPlace = placed.MinPlace;
+                MaxPlace = placed.MaxPlace;
             }
             else
             {
                 throw new CompetitiveBackend.Repositories.Exceptions.IncorrectOperationException("Unspecified Grant Condition");
             }
         }
+
         public GrantCondition GetCondition()
         {
-            switch (ConditionType)
+            return ConditionType switch
             {
-                case SupportedConditionType.Place:
-                    return new PlaceGrantCondition(MinPlace!.Value, MaxPlace!.Value);
-                case SupportedConditionType.Rank:
-                    return new RankGrantCondition(MinRank!.Value, MaxRank!.Value);
-                default:
-                    throw new CompetitiveBackend.Repositories.Exceptions.IncorrectOperationException("Unspecified Grant Condition");
-            }
+                SupportedConditionType.Place => new PlaceGrantCondition(MinPlace!.Value, MaxPlace!.Value),
+                SupportedConditionType.Rank => new RankGrantCondition(MinRank!.Value, MaxRank!.Value),
+                _ => throw new CompetitiveBackend.Repositories.Exceptions.IncorrectOperationException("Unspecified Grant Condition"),
+            };
         }
+
         public CompetitionReward ToCoreModel()
         {
             GrantCondition cond = GetCondition();
-            return new CompetitionReward(RewardDescriptionId, CompetitionId, RewardDescription.Name, RewardDescription.Description ?? "", cond, Id);
+            return new CompetitionReward(RewardDescriptionId, CompetitionId, RewardDescription.Name, RewardDescription.Description ?? string.Empty, cond, Id);
         }
     }
 }

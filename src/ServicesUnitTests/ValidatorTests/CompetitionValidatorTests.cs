@@ -1,39 +1,46 @@
-﻿using CompetitiveBackend.Core.Objects;
+﻿using System.Collections;
+using CompetitiveBackend.Core.Objects;
 using Microsoft.Extensions.Configuration;
 using ServicesRealisation.ServicesRealisation.Validator;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ServicesUnitTests.ValidatorTests
 {
     public class CompetitionValidatorTests
     {
-        class Values : IEnumerable<object[]>
+        private sealed class Values : IEnumerable<object[]>
         {
             public IEnumerator<object[]> GetEnumerator()
             {
-                yield return new object[] {
+                yield return new object[]
+                {
                     new Competition("Abob", new string('*', 10), new DateTime(2025, 1, 1, 1, 1, 1), new DateTime(2025, 1, 1, 1, 10, 1)),
-                    true };
-                yield return new object[] {
-                    new Competition("Abo",new string('*', 10), new DateTime(2025, 1, 1, 1, 1, 1), new DateTime(2025, 1, 1, 1, 10, 1)),
-                    false };
-                yield return new object[] {
+                    true,
+                };
+                yield return new object[]
+                {
+                    new Competition("Abo", new string('*', 10), new DateTime(2025, 1, 1, 1, 1, 1), new DateTime(2025, 1, 1, 1, 10, 1)),
+                    false,
+                };
+                yield return new object[]
+                {
                     new Competition("Abondus", new string('*', 10), new DateTime(2025, 1, 1, 1, 1, 1), new DateTime(2024, 1, 1, 1, 10, 1)),
-                    false };
-                yield return new object[] {
+                    false,
+                };
+                yield return new object[]
+                {
                     new Competition("Colon", new string('*', 11), new DateTime(2025, 1, 1, 1, 1, 1), new DateTime(2025, 1, 1, 1, 10, 1)),
-                    true };
-                yield return new object[] {
+                    true,
+                };
+                yield return new object[]
+                {
                     new Competition("Colon", new string('*', 12), new DateTime(2025, 1, 1, 1, 1, 1), new DateTime(2025, 1, 1, 1, 10, 1)),
-                    false };
-                yield return new object[] {
+                    false,
+                };
+                yield return new object[]
+                {
                     new Competition("Colon", new string('*', 9), new DateTime(2025, 1, 1, 1, 1, 1), new DateTime(2025, 1, 1, 1, 10, 1)),
-                    false };
+                    false,
+                };
             }
 
             IEnumerator IEnumerable.GetEnumerator()
@@ -41,24 +48,28 @@ namespace ServicesUnitTests.ValidatorTests
                 return GetEnumerator();
             }
         }
-        CompetitionValidator dt;
+
+        private readonly CompetitionValidator dt;
         public CompetitionValidatorTests()
         {
-            var Dict = new Dictionary<string, string?>
+            var dict = new Dictionary<string, string?>
             {
-               {"Constraints:Competition:DescriptionLength:min", "10"},
-               {"Constraints:Competition:DescriptionLength:max", "11"},
+               { "Constraints:Competition:DescriptionLength:min", "10" },
+               { "Constraints:Competition:DescriptionLength:max", "11" },
             };
-            var conf = new ConfigurationBuilder().AddInMemoryCollection(Dict).Build();
+            IConfigurationRoot conf = new ConfigurationBuilder().AddInMemoryCollection(dict).Build();
             dt = new CompetitionValidator(conf);
         }
+
         [Theory]
+
         // Arrange
         [ClassData(typeof(Values))]
         public void CheckOK(Competition comp, bool expected)
         {
             // Act
-            var result = dt.IsValid(comp, out _);
+            bool result = dt.IsValid(comp, out _);
+
             // Assert
             Assert.Equal(expected, result);
         }

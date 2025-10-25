@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RepositoriesTests
+﻿namespace RepositoriesTests
 {
-    internal class FileDumper
+    internal sealed class FileDumper
     {
-        private string corePath;
+        private readonly string corePath;
         public FileDumper(string corePath)
         {
             this.corePath = corePath;
@@ -17,6 +11,7 @@ namespace RepositoriesTests
                 Directory.CreateDirectory(corePath);
             }
         }
+
         public async Task Dump(string name, string contents)
         {
             await File.WriteAllTextAsync(Path.Combine(corePath, $"{name}.txt"), contents);

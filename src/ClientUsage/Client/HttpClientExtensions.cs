@@ -1,33 +1,42 @@
 ﻿// File: IHttpClient.cs
-using ClientUsage.Objects;
-using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Text;
+using ClientUsage.Objects;
+using Newtonsoft.Json;
 
 // File: HttpClientExtensions.cs
-
 namespace ClientUsage.Client
 {
     public static class HttpClientExtensions
     {
         private static void AddHeadersTo(HttpRequestMessage req, IDictionary<string, string>? headers)
         {
-            if (headers == null) return;
-            foreach (var kv in headers)
+            if (headers == null)
+            {
+                return;
+            }
+
+            foreach (KeyValuePair<string, string> kv in headers)
             {
                 if (string.Equals(kv.Key, "Authorization", StringComparison.OrdinalIgnoreCase))
                 {
-                    var parts = kv.Value?.Split(' ', 2);
+                    string[]? parts = kv.Value?.Split(' ', 2);
                     if (parts?.Length == 2)
+                    {
                         req.Headers.Authorization = new AuthenticationHeaderValue(parts[0], parts[1]);
+                    }
                     else if (parts?.Length == 1)
+                    {
                         req.Headers.Authorization = new AuthenticationHeaderValue("Bearer", parts[0]);
+                    }
+
                     continue;
                 }
 
                 if (!req.Headers.TryAddWithoutValidation(kv.Key, kv.Value))
                 {
-                    if (req.Content == null) req.Content = new StringContent(string.Empty);
+                    req.Content ??= new StringContent(string.Empty);
+
                     req.Content.Headers.TryAddWithoutValidation(kv.Key, kv.Value);
                 }
             }
@@ -35,13 +44,16 @@ namespace ClientUsage.Client
 
         private static async Task HandleNonSuccess(HttpResponseMessage resp)
         {
-            if (resp.IsSuccessStatusCode) return;
+            if (resp.IsSuccessStatusCode)
+            {
+                return;
+            }
+
             string content = string.Empty;
             try
             {
-                
                 content = await resp.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var pd = JsonConvert.DeserializeObject<ProblemDetails>(content);
+                ProblemDetails? pd = JsonConvert.DeserializeObject<ProblemDetails>(content);
                 if (pd != null)
                 {
                     throw new ApiException(pd.Status ?? (int)resp.StatusCode, pd.Title, pd.Detail);
@@ -58,7 +70,7 @@ namespace ClientUsage.Client
 
         private static async Task<T> ReadAsJsonAsync<T>(HttpResponseMessage resp)
         {
-            var s = await resp.Content.ReadAsStringAsync().ConfigureAwait(false);
+            string s = await resp.Content.ReadAsStringAsync().ConfigureAwait(false);
             return JsonConvert.DeserializeObject<T>(s)!;
         }
 
@@ -66,7 +78,7 @@ namespace ClientUsage.Client
         {
             var req = new HttpRequestMessage(HttpMethod.Get, url);
             AddHeadersTo(req, headers);
-            var resp = await client.SendAsync(req, cancellationToken).ConfigureAwait(false);
+            HttpResponseMessage resp = await client.SendAsync(req, cancellationToken).ConfigureAwait(false);
             await HandleNonSuccess(resp).ConfigureAwait(false);
             return await ReadAsJsonAsync<T>(resp).ConfigureAwait(false);
         }
@@ -76,12 +88,13 @@ namespace ClientUsage.Client
             var req = new HttpRequestMessage(HttpMethod.Post, url);
             if (body != null)
             {
-                var json = JsonConvert.SerializeObject(body);
+                string json = JsonConvert.SerializeObject(body);
                 req.Content = new StringContent(json, Encoding.UTF8, "application/json");
             }
+
             AddHeadersTo(req, headers);
 
-            var resp = await client.SendAsync(req, cancellationToken).ConfigureAwait(false);
+            HttpResponseMessage resp = await client.SendAsync(req, cancellationToken).ConfigureAwait(false);
             await HandleNonSuccess(resp).ConfigureAwait(false);
             return await ReadAsJsonAsync<T>(resp).ConfigureAwait(false);
         }
@@ -91,12 +104,13 @@ namespace ClientUsage.Client
             var req = new HttpRequestMessage(HttpMethod.Post, url);
             if (body != null)
             {
-                var json = JsonConvert.SerializeObject(body);
+                string json = JsonConvert.SerializeObject(body);
                 req.Content = new StringContent(json, Encoding.UTF8, "application/json");
             }
+
             AddHeadersTo(req, headers);
 
-            var resp = await client.SendAsync(req, cancellationToken).ConfigureAwait(false);
+            HttpResponseMessage resp = await client.SendAsync(req, cancellationToken).ConfigureAwait(false);
             await HandleNonSuccess(resp).ConfigureAwait(false);
         }
 
@@ -105,12 +119,13 @@ namespace ClientUsage.Client
             var req = new HttpRequestMessage(HttpMethod.Put, url);
             if (body != null)
             {
-                var json = JsonConvert.SerializeObject(body);
+                string json = JsonConvert.SerializeObject(body);
                 req.Content = new StringContent(json, Encoding.UTF8, "application/json");
             }
+
             AddHeadersTo(req, headers);
 
-            var resp = await client.SendAsync(req, cancellationToken).ConfigureAwait(false);
+            HttpResponseMessage resp = await client.SendAsync(req, cancellationToken).ConfigureAwait(false);
             await HandleNonSuccess(resp).ConfigureAwait(false);
             return await ReadAsJsonAsync<T>(resp).ConfigureAwait(false);
         }
@@ -120,12 +135,13 @@ namespace ClientUsage.Client
             var req = new HttpRequestMessage(new HttpMethod("PATCH"), url);
             if (body != null)
             {
-                var json = JsonConvert.SerializeObject(body);
+                string json = JsonConvert.SerializeObject(body);
                 req.Content = new StringContent(json, Encoding.UTF8, "application/json");
             }
+
             AddHeadersTo(req, headers);
 
-            var resp = await client.SendAsync(req, cancellationToken).ConfigureAwait(false);
+            HttpResponseMessage resp = await client.SendAsync(req, cancellationToken).ConfigureAwait(false);
             await HandleNonSuccess(resp).ConfigureAwait(false);
         }
 
@@ -134,11 +150,12 @@ namespace ClientUsage.Client
             var req = new HttpRequestMessage(HttpMethod.Delete, url);
             AddHeadersTo(req, headers);
 
-            var resp = await client.SendAsync(req, cancellationToken).ConfigureAwait(false);
+            HttpResponseMessage resp = await client.SendAsync(req, cancellationToken).ConfigureAwait(false);
             await HandleNonSuccess(resp).ConfigureAwait(false);
         }
 
-        public static async Task PostMultipartNoContent(this IHttpClient client,
+        public static async Task PostMultipartNoContent(
+            this IHttpClient client,
             string url,
             Stream fileStream,
             string fileFieldName,
@@ -157,7 +174,7 @@ namespace ClientUsage.Client
 
             if (additionalFields != null)
             {
-                foreach (var kv in additionalFields)
+                foreach (KeyValuePair<string, string> kv in additionalFields)
                 {
                     multipart.Add(new StringContent(kv.Value ?? string.Empty), kv.Key);
                 }
@@ -166,21 +183,22 @@ namespace ClientUsage.Client
             req.Content = multipart;
             AddHeadersTo(req, headers);
 
-            var resp = await client.SendAsync(req, cancellationToken).ConfigureAwait(false);
+            HttpResponseMessage resp = await client.SendAsync(req, cancellationToken).ConfigureAwait(false);
             await HandleNonSuccess(resp).ConfigureAwait(false);
         }
+
         public static async Task PutNoContent(this IHttpClient client, string url, object? body = null, IDictionary<string, string>? headers = null, CancellationToken cancellationToken = default)
         {
             var req = new HttpRequestMessage(HttpMethod.Put, url);
             if (body != null)
             {
-                var json = JsonConvert.SerializeObject(body);
+                string json = JsonConvert.SerializeObject(body);
                 req.Content = new StringContent(json, Encoding.UTF8, "application/json");
             }
+
             AddHeadersTo(req, headers);
 
-
-            var resp = await client.SendAsync(req, cancellationToken).ConfigureAwait(false);
+            HttpResponseMessage resp = await client.SendAsync(req, cancellationToken).ConfigureAwait(false);
             await HandleNonSuccess(resp).ConfigureAwait(false);
         }
     }

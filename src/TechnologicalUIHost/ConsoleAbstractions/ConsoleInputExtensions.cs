@@ -6,10 +6,12 @@
         {
             return Convert.ToInt32(input.PromtInput(promt));
         }
+
         public static float ReadFloat(this IConsoleInput input, string promt = "> ")
         {
             return (float)Convert.ToDouble(input.PromtInput(promt));
         }
+
         public static DateTime ReadDateTime(this IConsoleInput input, string promt = "> ")
         {
             return Convert.ToDateTime(input.PromtInput(promt));
@@ -32,6 +34,7 @@
             string inputStr = input.PromtInput(promt);
             return string.IsNullOrWhiteSpace(inputStr) ? null : Convert.ToDateTime(inputStr);
         }
+
         public static TimeSpan? ReadNullableTimeSpan(this IConsoleInput input, string promt = "> ")
         {
             string inputStr = input.PromtInput(promt);

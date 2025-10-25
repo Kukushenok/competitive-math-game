@@ -1,13 +1,13 @@
-﻿using CompetitiveBackend.BackendUsage.Objects;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using CompetitiveBackend.BackendUsage.Objects;
 
 namespace CompetitiveBackend.BackendUsage.UseCases
 {
-    public interface ISelfUseCase: IAuthableUseCase<ISelfUseCase>
+    public interface ISelfUseCase : IAuthableUseCase<ISelfUseCase>
     {
-        public Task UpdateMyImage(LargeDataDTO data);
-        public Task<PlayerProfileDTO> GetMyProfile();
-        public Task<LargeDataDTO> GetMyImage();
-        public Task UpdateMyPlayerProfile(PlayerProfileDTO p);
+        Task UpdateMyImage(LargeDataDTO data);
+        Task<PlayerProfileDTO> GetMyProfile();
+        Task<LargeDataDTO> GetMyImage();
+        Task UpdateMyPlayerProfile(PlayerProfileDTO p);
     }
 }

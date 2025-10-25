@@ -1,9 +1,4 @@
 ﻿using CompetitiveBackend.Core.Objects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RepositoriesRealisation.Models
 {
@@ -19,6 +14,7 @@ namespace RepositoriesRealisation.Models
         {
             return new ContentDataModel(data.Data);
         }
+
         public static implicit operator LargeData(ContentDataModel model)
         {
             return new LargeData(model.Data);

@@ -4,28 +4,29 @@ using CompetitiveBackend.BackendUsage.Objects;
 using CompetitiveBackend.BackendUsage.UseCases;
 
 // File: HttpClientExtensions.cs
-
 namespace ClientUsage.UseCases
 {
-    internal class AuthUseCase : IAuthUseCase
+    internal sealed class AuthUseCase : IAuthUseCase
     {
-        private readonly IHttpClient _client;
+        private readonly IHttpClient client;
 
         public AuthUseCase(IHttpClient client)
         {
-            _client = client ?? throw new ArgumentNullException(nameof(client));
+            this.client = client ?? throw new ArgumentNullException(nameof(client));
         }
 
         public Task<AuthSuccessResultDTO> Register(AccountCreationDTO creation)
         {
-            if (creation == null) throw new ArgumentNullException(nameof(creation));
-            return _client.Post<AuthSuccessResultDTO>("/api/v1/auth/register", creation);
+            return creation == null
+                ? throw new ArgumentNullException(nameof(creation))
+                : client.Post<AuthSuccessResultDTO>("/api/v1/auth/register", creation);
         }
 
         public Task<AuthSuccessResultDTO> Login(AccountLoginDTO loginRequest)
         {
-            if (loginRequest == null) throw new ArgumentNullException(nameof(loginRequest));
-            return _client.Post<AuthSuccessResultDTO>("/api/v1/auth/login", loginRequest);
+            return loginRequest == null
+                ? throw new ArgumentNullException(nameof(loginRequest))
+                : client.Post<AuthSuccessResultDTO>("/api/v1/auth/login", loginRequest);
         }
     }
 }

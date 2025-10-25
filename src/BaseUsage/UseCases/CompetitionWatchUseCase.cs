@@ -1,52 +1,48 @@
-﻿using CompetitiveBackend.BackendUsage.Objects;
+﻿using System.Text;
+using CompetitiveBackend.BackendUsage.Objects;
 using CompetitiveBackend.BackendUsage.UseCases;
 using CompetitiveBackend.BaseUsage.Converters;
-using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CompetitiveBackend.BaseUsage.UseCases
 {
     public class CompetitionWatchUseCase : ICompetitionWatchUseCase
     {
-        private ICompetitionService _service;
-        private ICompetitionLevelService _competitionLevelService;
-        private ICompetitionRewardService _rewardService;
-        public CompetitionWatchUseCase(ICompetitionService service, ICompetitionLevelService levelService, ICompetitionRewardService rewardService)
+        private readonly ICompetitionService service;
+
+        // private readonly ICompetitionLevelService competitionLevelService;
+        private readonly ICompetitionRewardService rewardService;
+        public CompetitionWatchUseCase(ICompetitionService service, ICompetitionRewardService rewardService)
         {
-            _service = service;
-            _rewardService = rewardService;
-            _competitionLevelService = levelService;
+            this.service = service;
+            this.rewardService = rewardService;
         }
 
         public async Task<IEnumerable<CompetitionDTO>> GetActiveCompetitions()
         {
-            return from n in await _service.GetActiveCompetitions() select n.Convert();
+            return from n in await service.GetActiveCompetitions() select n.Convert();
         }
 
         public async Task<IEnumerable<CompetitionDTO>> GetAllCompetitions(DataLimiterDTO limiter)
         {
-            return from n in await _service.GetAllCompetitions(limiter.Convert()) select n.Convert();
+            return from n in await service.GetAllCompetitions(limiter.Convert()) select n.Convert();
         }
 
         public async Task<CompetitionDTO> GetCompetition(int competitionID)
         {
-            return (await _service.GetCompetition(competitionID)).Convert();
+            return (await service.GetCompetition(competitionID)).Convert();
         }
 
-        public async Task<LargeDataDTO> GetCompetitionLevel(int competitionID, string? Platform = null, int? maxVersion = null)
+        public Task<LargeDataDTO> GetCompetitionLevel(int competitionID, string? platform = null, int? maxVersion = null)
         {
-            return (await _competitionLevelService.GetCompetitionLevel(competitionID, Platform, maxVersion)).Convert();
+            throw new NotImplementedException();
+
+            // return (await competitionLevelService.GetCompetitionLevel(competitionID, platform, maxVersion)).Convert();
         }
 
         public async Task<IEnumerable<CompetitionRewardDTO>> GetRewardsFor(int competitionID)
         {
-            return from n in await _rewardService.GetCompetitionRewards(competitionID) select n.Convert();
+            return from n in await rewardService.GetCompetitionRewards(competitionID) select n.Convert();
         }
-
     }
 }

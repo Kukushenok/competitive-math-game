@@ -4,10 +4,11 @@
     {
         public readonly int CompetitionId;
         public readonly int PlayerProfileId;
+        public readonly PlayerProfile? BindedProfile;
+        public readonly Competition? BindedCompetition;
         public int Score;
         public DateTime LastUpdateTime;
-        public readonly PlayerProfile? BindedProfile = null;
-        public readonly Competition? BindedCompetition = null;
+
         // string PlayerDescription?
         public PlayerParticipation(int competitionId, int playerProfileId, int score, DateTime lastUpdateTime, PlayerProfile? profile = null, Competition? competition = null)
         {

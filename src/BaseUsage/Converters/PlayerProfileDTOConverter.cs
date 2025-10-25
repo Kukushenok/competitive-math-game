@@ -9,6 +9,7 @@ namespace CompetitiveBackend.BaseUsage.Converters
         {
             return new PlayerProfileDTO(p.Name, p.Description, p.Id);
         }
+
         public static PlayerProfile Convert(this PlayerProfileDTO dto)
         {
             return new PlayerProfile(dto.Name ?? string.Empty, dto.Description, dto.ID);

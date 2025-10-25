@@ -4,7 +4,7 @@ namespace CompetitiveBackend.Services
 {
     public interface IGameProviderService
     {
-        public Task<CompetitionParticipationTask> DoPlay(int accountID, int competitionID);
-        public Task<ParticipationFeedback> DoSubmit(CompetitionParticipationRequest request);
+        Task<CompetitionParticipationTask> DoPlay(int accountID, int competitionID);
+        Task<ParticipationFeedback> DoSubmit(CompetitionParticipationRequest request);
     }
 }

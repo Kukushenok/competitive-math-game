@@ -5,17 +5,18 @@ using Repositories.Repositories;
 
 namespace RepositoriesRealisation
 {
-    internal class PrivilegyConnectionStringGetter: IConnectionStringGetter, IRepositoryPrivilegySetting
+    internal sealed class PrivilegyConnectionStringGetter : IConnectionStringGetter, IRepositoryPrivilegySetting
     {
-        private IConfiguration conf;
-        private ILogger _logger;
+        private readonly IConfiguration conf;
+        private readonly ILogger logger;
         private string connStringName;
         public PrivilegyConnectionStringGetter(IConfiguration conf, string defaultConnStringName, ILogger<PrivilegyConnectionStringGetter> logger)
         {
             this.conf = conf;
             this.connStringName = defaultConnStringName;
-            _logger = logger;
+            this.logger = logger;
         }
+
         public string GetConnectionString()
         {
             return conf.GetConnectionString(connStringName)!;
@@ -23,7 +24,7 @@ namespace RepositoriesRealisation
 
         public void SetPrivilegies(string privilegy)
         {
-            _logger.LogInformation($"Using privilegies of {privilegy} for DB");
+            logger.LogInformation($"Using privilegies of {privilegy} for DB");
             connStringName = privilegy;
         }
     }

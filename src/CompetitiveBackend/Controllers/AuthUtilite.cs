@@ -1,7 +1,5 @@
 ﻿using CompetitiveBackend.BackendUsage.UseCases;
-using CompetitiveBackend.Core.Auth;
 using Microsoft.Extensions.Primitives;
-using System.Security.Claims;
 
 namespace CompetitiveBackend.Controllers
 {
@@ -9,24 +7,24 @@ namespace CompetitiveBackend.Controllers
     {
         public static bool TryGetTokenValue(this HttpRequest request, out string value)
         {
-            StringValues q;
             value = null!;
-            if ((request?.Headers.TryGetValue("Bearer", out q) ?? false) && q[0] != null)
+            if ((request?.Headers.TryGetValue("Bearer", out StringValues q) ?? false) && q[0] != null)
             {
                 value = q[0]!;
                 return true;
             }
+
             return false;
         }
-        public static async Task<T> Auth<T>(this T useCase, HttpRequest request) where T: IAuthableUseCase<T>
+
+        public static async Task<T> Auth<T>(this T useCase, HttpRequest request)
+            where T : IAuthableUseCase<T>
         {
-            if(TryGetTokenValue(request, out string value))
-            {
-                return await useCase.Auth(value);
-            }
-            return await useCase.Auth(string.Empty);
+            return TryGetTokenValue(request, out string value) ? await useCase.Auth(value) : await useCase.Auth(string.Empty);
         }
-        public static async Task<T> Auth<T>(this T useCase, HttpContext request) where T : IAuthableUseCase<T>
+
+        public static async Task<T> Auth<T>(this T useCase, HttpContext request)
+            where T : IAuthableUseCase<T>
         {
             return await useCase.Auth(request.Request);
         }

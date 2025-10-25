@@ -2,7 +2,7 @@
 {
     public interface IImageConfig
     {
-        public uint MinSize { get; }
-        public uint MaxSize { get; }
+        uint MinSize { get; }
+        uint MaxSize { get; }
     }
 }

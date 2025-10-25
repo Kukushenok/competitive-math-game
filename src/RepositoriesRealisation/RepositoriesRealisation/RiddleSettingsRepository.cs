@@ -7,7 +7,7 @@ using RepositoriesRealisation.RepositoriesRealisation;
 
 namespace CompetitiveBackend.Repositories
 {
-    internal class RiddleSettingsRepository : BaseRepository<RiddleSettingsRepository>, IRiddleSettingsRepository
+    internal sealed class RiddleSettingsRepository : BaseRepository<RiddleSettingsRepository>, IRiddleSettingsRepository
     {
         public RiddleSettingsRepository(IDbContextFactory<BaseDbContext> contextFactory, ILogger<RiddleSettingsRepository> logger)
             : base(contextFactory, logger)
@@ -19,20 +19,17 @@ namespace CompetitiveBackend.Repositories
             using BaseDbContext context = await GetDbContext();
             try
             {
-                var settings = await context.RiddleGameSettings
+                RiddleGameSettingsModel? settings = await context.RiddleGameSettings
                     .Where(s => s.Id == competitionID)
                     .FirstOrDefaultAsync();
 
-                if (settings == null)
-                {
-                    throw new ArgumentException($"Riddle settings for competition ID {competitionID} not found");
-                }
-
-                return settings.ToCoreModel();
+                return settings == null
+                    ? throw new ArgumentException($"Riddle settings for competition ID {competitionID} not found")
+                    : settings.ToCoreModel();
             }
             catch (Exception ex) when (ex.IsDBException())
             {
-                _logger.LogError(ex, "Could not retrieve riddle settings for competition ID {CompetitionID}", competitionID);
+                logger.LogError(ex, "Could not retrieve riddle settings for competition ID {CompetitionID}", competitionID);
                 throw new Exceptions.FailedOperationException("Could not retrieve riddle settings", ex);
             }
         }
@@ -42,7 +39,7 @@ namespace CompetitiveBackend.Repositories
             using BaseDbContext context = await GetDbContext();
             try
             {
-                var existingSettings = await context.RiddleGameSettings
+                RiddleGameSettingsModel? existingSettings = await context.RiddleGameSettings
                     .Where(s => s.Id == competitionID)
                     .FirstOrDefaultAsync();
 
@@ -61,7 +58,7 @@ namespace CompetitiveBackend.Repositories
             }
             catch (Exception ex) when (ex.IsDBException())
             {
-                _logger.LogError(ex, "Could not update riddle settings for competition ID {CompetitionID}", competitionID);
+                logger.LogError(ex, "Could not update riddle settings for competition ID {CompetitionID}", competitionID);
                 throw new Exceptions.FailedOperationException("Could not update riddle settings", ex);
             }
         }

@@ -1,37 +1,35 @@
-﻿using CompetitiveBackend.BackendUsage.Objects;
-using CompetitiveBackend.BackendUsage.UseCases;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CompetitiveBackend.BackendUsage.UseCases;
 using TechnologicalUIHost.Command;
-using TechnologicalUIHost.MenuCommand;
 using TechnologicalUIHost.ConsoleAbstractions;
+using TechnologicalUIHost.MenuCommand;
 
 namespace TechnologicalUIHost.Commands
 {
-    class CompetitionRewardEditCommands: AuthRequiringCommands
+    internal sealed class CompetitionRewardEditCommands : AuthRequiringCommands
     {
-        private ICompetitionRewardEditUseCase _rewardEditUseCase;
+        private readonly ICompetitionRewardEditUseCase rewardEditUseCase;
 
-        public CompetitionRewardEditCommands(IAuthCache cache, ICompetitionRewardEditUseCase useCase) : base("Изменение наград за соревнования", cache)
+        public CompetitionRewardEditCommands(IAuthCache cache, ICompetitionRewardEditUseCase useCase)
+            : base("Изменение наград за соревнования", cache)
         {
-            _rewardEditUseCase = useCase;
+            rewardEditUseCase = useCase;
         }
+
         private async Task CreateCompetitionReward(IConsole console)
         {
-            using var self = await Auth(_rewardEditUseCase);
+            using ICompetitionRewardEditUseCase self = await Auth(rewardEditUseCase);
             self.CreateCompetitionReward(console.ReadCreateCompetitionRewardDO()).GetAwaiter().GetResult();
         }
+
         private async Task UpdateCompetitionReward(IConsole console)
         {
-            using var self = await Auth(_rewardEditUseCase);
+            using ICompetitionRewardEditUseCase self = await Auth(rewardEditUseCase);
             self.UpdateCompetitionReward(console.ReadUpdateCompetitionRewardDTO()).GetAwaiter().GetResult();
         }
+
         private async Task RemoveCompetitionReward(IConsole console)
         {
-            using var self = await Auth(_rewardEditUseCase);
+            using ICompetitionRewardEditUseCase self = await Auth(rewardEditUseCase);
             self.RemoveCompetitionReward(console.ReadInt("Введите ID награды, которую нужно удалить: ")).GetAwaiter().GetResult();
         }
 

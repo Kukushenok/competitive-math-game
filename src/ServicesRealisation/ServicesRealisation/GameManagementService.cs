@@ -6,45 +6,45 @@ namespace CompetitiveBackend.Services.RewardDescriptionService
 {
     public class GameManagementService : IGameManagementService
     {
-        private readonly IRiddleRepository _riddleRepository;
-        private readonly IRiddleSettingsRepository _settingsRepository;
+        private readonly IRiddleRepository riddleRepository;
+        private readonly IRiddleSettingsRepository settingsRepository;
 
         public GameManagementService(
             IRiddleRepository riddleRepository,
             IRiddleSettingsRepository settingsRepository)
         {
-            _riddleRepository = riddleRepository;
-            _settingsRepository = settingsRepository;
+            this.riddleRepository = riddleRepository;
+            this.settingsRepository = settingsRepository;
         }
 
         public Task<IEnumerable<RiddleInfo>> GetRiddles(int competitionID, DataLimiter limiter)
         {
-            return _riddleRepository.GetRiddles(competitionID, limiter);
+            return riddleRepository.GetRiddles(competitionID, limiter);
         }
 
         public Task CreateRiddle(RiddleInfo riddle)
         {
-            return _riddleRepository.CreateRiddle(riddle);
+            return riddleRepository.CreateRiddle(riddle);
         }
 
         public Task UpdateRiddle(RiddleInfo riddle)
         {
-            return _riddleRepository.UpdateRiddle(riddle);
+            return riddleRepository.UpdateRiddle(riddle);
         }
 
         public Task DeleteRiddle(int riddleID)
         {
-            return _riddleRepository.DeleteRiddle(riddleID);
+            return riddleRepository.DeleteRiddle(riddleID);
         }
 
         public Task<RiddleGameSettings> GetSettings(int competitionID)
         {
-            return _settingsRepository.GetRiddleSettings(competitionID);
+            return settingsRepository.GetRiddleSettings(competitionID);
         }
 
         public Task UpdateSettings(int competitionID, RiddleGameSettings settings)
         {
-            return _settingsRepository.UpdateRiddleSettings(competitionID, settings);
+            return settingsRepository.UpdateRiddleSettings(competitionID, settings);
         }
     }
 }

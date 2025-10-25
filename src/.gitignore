@@ -479,3 +479,8 @@ $RECYCLE.BIN/
 # Testget
 _temp*
 allure-report/
+
+# Code Metrics reports
+*.Metrics.xml
+**/bin/**/*.Metrics.xml
+**/obj/**/*.Metrics.xml

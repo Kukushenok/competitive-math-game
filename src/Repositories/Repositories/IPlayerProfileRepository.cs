@@ -6,38 +6,42 @@ namespace CompetitiveBackend.Repositories
     {
         protected abstract void Write(StreamWriter stream);
     }
+
     /// <summary>
-    /// Хранилище профилей игроков
+    /// Хранилище профилей игроков.
     /// </summary>
     public interface IPlayerProfileRepository
     {
         /// <summary>
-        /// Найти профиль игрока по аккаунту
+        /// Найти профиль игрока по аккаунту.
         /// </summary>
-        /// <param name="accountId"></param>
-        /// <returns></returns>
-        public Task<PlayerProfile> GetPlayerProfile(int accountId);
+        /// <param name="accountId">ID аккаунта.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        Task<PlayerProfile> GetPlayerProfile(int accountId);
+
         /// <summary>
-        /// Обновить профиль игрока
+        /// Обновить профиль игрока.
         /// </summary>
-        /// <param name="p">Профиль игрока</param>
-        /// <returns></returns>
-        /// <exception cref="CompetitiveBackend.Repositories.Exceptions.IncorrectOperationException">Соответствующего игрока не существует</exception>
-        public Task UpdatePlayerProfile(PlayerProfile p);
+        /// <param name="p">Профиль игрока.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <exception cref="Exceptions.IncorrectOperationException">Соответствующего игрока не существует.</exception>
+        Task UpdatePlayerProfile(PlayerProfile p);
+
         /// <summary>
-        /// Получить изображение игрока
+        /// Получить изображение игрока.
         /// </summary>
-        /// <param name="accountId">Идентификатор аккаунта</param>
-        /// <returns>Данные изображения игрока</returns>
-        /// <exception cref="CompetitiveBackend.Repositories.Exceptions.MissingDataException">Игрок с таким идентификатором не найден</exception>
-        public Task<LargeData> GetPlayerProfileImage(int accountId);
+        /// <param name="accountId">Идентификатор аккаунта.</param>
+        /// <returns>Данные изображения игрока.</returns>
+        /// <exception cref="Exceptions.MissingDataException">Игрок с таким идентификатором не найден.</exception>
+        Task<LargeData> GetPlayerProfileImage(int accountId);
+
         /// <summary>
-        /// Обновить изображение у профиля игрока
+        /// Обновить изображение у профиля игрока.
         /// </summary>
-        /// <param name="accountId">Идентификатор аккаунта</param>
-        /// <param name="data">Изображение</param>
-        /// <returns></returns>
-        /// <exception cref="CompetitiveBackend.Repositories.Exceptions.MissingDataException">Соответствующего игрока не существует</exception>
-        public Task UpdatePlayerProfileImage(int accountId, LargeData data);
+        /// <param name="accountId">Идентификатор аккаунта.</param>
+        /// <param name="data">Изображение.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <exception cref="Exceptions.MissingDataException">Соответствующего игрока не существует.</exception>
+        Task UpdatePlayerProfileImage(int accountId, LargeData data);
     }
 }

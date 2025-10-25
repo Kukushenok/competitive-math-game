@@ -2,16 +2,16 @@
 {
     public interface ITimeScheduler
     {
-
-        public delegate Task EventFiredEvent(TimeScheduledTaskData tsk);
-        public Task AddOrUpdateScheduledTask(TimeScheduledTaskData task);
-        public Task RemoveScheduledTask(TimeScheduledTaskData task);
-        public void AddSubscriber(ITimeScheduledTaskSubscriber subscriber);
-        public void RemoveSubscriber(ITimeScheduledTaskSubscriber subscriber);
-        public Task Initialize();
+        private delegate Task EventFiredEvent(TimeScheduledTaskData tsk);
+        Task AddOrUpdateScheduledTask(TimeScheduledTaskData task);
+        Task RemoveScheduledTask(TimeScheduledTaskData task);
+        void AddSubscriber(ITimeScheduledTaskSubscriber subscriber);
+        void RemoveSubscriber(ITimeScheduledTaskSubscriber subscriber);
+        Task Initialize();
     }
-    public interface ITimeScheduledTaskSubscriber: IDisposable
+
+    public interface ITimeScheduledTaskSubscriber : IDisposable
     {
-        public Task OnRecievedMessage(TimeScheduledTaskData data);
+        Task OnRecievedMessage(TimeScheduledTaskData data);
     }
 }

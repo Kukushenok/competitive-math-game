@@ -8,37 +8,41 @@ namespace CompetitiveBackend.BaseUsage.UseCases
 {
     public class SelfPlayerProfileUseCase : BaseAuthableUseCase<SelfPlayerProfileUseCase>, ISelfUseCase
     {
-        private IPlayerProfileService _playerProfileService;
-        public SelfPlayerProfileUseCase(IAuthService authService, IPlayerProfileService playerProfileService) : base(authService)
+        private readonly IPlayerProfileService playerProfileService;
+        public SelfPlayerProfileUseCase(IAuthService authService, IPlayerProfileService playerProfileService)
+            : base(authService)
         {
-            _playerProfileService = playerProfileService;
+            this.playerProfileService = playerProfileService;
         }
 
         public async Task<LargeDataDTO> GetMyImage()
         {
             PlayerAuthCheck(out int id);
-            return (await _playerProfileService.GetPlayerProfileImage(id)).Convert();
+            return (await playerProfileService.GetPlayerProfileImage(id)).Convert();
         }
 
         public async Task<PlayerProfileDTO> GetMyProfile()
         {
             PlayerAuthCheck(out int id);
-            return (await _playerProfileService.GetPlayerProfile(id)).Convert();
+            return (await playerProfileService.GetPlayerProfile(id)).Convert();
         }
 
         public async Task UpdateMyImage(LargeDataDTO data)
         {
             PlayerAuthCheck(out int id);
-            await _playerProfileService.SetPlayerProfileImage(id, data.Convert());
+            await playerProfileService.SetPlayerProfileImage(id, data.Convert());
         }
 
         public async Task UpdateMyPlayerProfile(PlayerProfileDTO p)
         {
             PlayerAuthCheck(out int id);
-            PlayerProfile updating = new PlayerProfile(p.Name ?? string.Empty, p.Description, id);
-            await _playerProfileService.UpdatePlayerProfile(updating);
+            var updating = new PlayerProfile(p.Name ?? string.Empty, p.Description, id);
+            await playerProfileService.UpdatePlayerProfile(updating);
         }
 
-        async Task<ISelfUseCase> IAuthableUseCase<ISelfUseCase>.Auth(string token) => await Auth(token);
+        async Task<ISelfUseCase> IAuthableUseCase<ISelfUseCase>.Auth(string token)
+        {
+            return await Auth(token);
+        }
     }
 }

@@ -1,21 +1,20 @@
-﻿
-namespace ClientUsage.Client
+﻿namespace ClientUsage.Client
 {
-    internal class AuthenticatedHttpClient : IHttpClient
+    internal sealed class AuthenticatedHttpClient : IHttpClient
     {
-        private readonly IHttpClient _inner;
-        private readonly string _token;
+        private readonly IHttpClient inner;
+        private readonly string token;
 
         public AuthenticatedHttpClient(IHttpClient inner, string token)
         {
-            _inner = inner ?? throw new ArgumentNullException(nameof(inner));
-            _token = token ?? throw new ArgumentNullException(nameof(token));
+            this.inner = inner ?? throw new ArgumentNullException(nameof(inner));
+            this.token = token ?? throw new ArgumentNullException(nameof(token));
         }
 
         public Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken = default)
         {
-            request.Headers.Add("Bearer", _token);
-            return _inner.SendAsync(request, cancellationToken);
+            request.Headers.Add("Bearer", token);
+            return inner.SendAsync(request, cancellationToken);
         }
     }
 }

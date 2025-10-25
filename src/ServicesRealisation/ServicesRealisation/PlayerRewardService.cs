@@ -5,33 +5,34 @@ namespace CompetitiveBackend.Services.PlayerRewardService
 {
     public class PlayerRewardService : IPlayerRewardService
     {
-        private IPlayerRewardRepository _repository;
-        private IRewardDescriptionRepository _rewardDescriptionRepository;
+        private readonly IPlayerRewardRepository repository;
+        private readonly IRewardDescriptionRepository rewardDescriptionRepository;
         public PlayerRewardService(IPlayerRewardRepository repository, IRewardDescriptionRepository rewardDescriptionRepository)
         {
-            _repository = repository;
-            _rewardDescriptionRepository = rewardDescriptionRepository;
+            this.repository = repository;
+            this.rewardDescriptionRepository = rewardDescriptionRepository;
         }
 
         public async Task DeleteReward(int playerRewardID)
         {
-            await _repository.DeleteReward(playerRewardID);
+            await repository.DeleteReward(playerRewardID);
         }
 
         public async Task<IEnumerable<PlayerReward>> GetAllRewardsOf(int playerID, DataLimiter limiter)
         {
-            return await _repository.GetAllRewardsOf(playerID, limiter);
+            return await repository.GetAllRewardsOf(playerID, limiter);
         }
 
         public async Task GrantRewardToPlayer(int playerID, int rewardDescriptionID)
         {
-            RewardDescription rw = await _rewardDescriptionRepository.GetRewardDescription(rewardDescriptionID);
-            PlayerReward reward = new PlayerReward(playerID,
+            RewardDescription rw = await rewardDescriptionRepository.GetRewardDescription(rewardDescriptionID);
+            var reward = new PlayerReward(
+                playerID,
                 rewardDescriptionID,
                 rw.Name,
                 rw.Description,
                 rewardDate: DateTime.Now);
-            await _repository.CreateReward(reward);
+            await repository.CreateReward(reward);
         }
     }
 }

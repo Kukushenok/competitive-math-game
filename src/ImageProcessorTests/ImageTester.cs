@@ -4,30 +4,28 @@ using CompetitiveBackend.Services.ExtraTools;
 using ImageProcessorRealisation;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
-using System.Diagnostics;
 using Xunit.Abstractions;
 using XUnitLoggingProvider;
 
 namespace ImageProcessorTests
 {
-
     public class FuncTestInitFixture : IDisposable
     {
         public FuncTestInitFixture()
         {
             ImageTestingDataManager.InitFuncTestData();
         }
+
         public void Dispose()
         {
-            
         }
     }
+
     [Collection("Sequential")]
     public class ImageTester : IClassFixture<FuncTestInitFixture>
     {
-        private IImageProcessor processor;
-        private ILogger logger;
+        private readonly IImageProcessor processor;
+        private readonly ILogger logger;
         public ImageTester(FuncTestInitFixture fixture, ITestOutputHelper helper)
         {
             IServiceCollection coll = new ServiceCollection();
@@ -35,14 +33,14 @@ namespace ImageProcessorTests
             {
                 options.AddConstraints(
                     ImageTestingDataManager.MinSize,
-                    ImageTestingDataManager.MaxSize
-                    );
+                    ImageTestingDataManager.MaxSize);
             });
             coll.UseXUnitLogging(helper);
             ServiceProvider s = coll.BuildServiceProvider();
             processor = s.GetRequiredService<IImageProcessor>()!;
             logger = s.GetRequiredService<ILoggerProvider>().CreateLogger("Base");
         }
+
         [Theory(DisplayName = "FuncTestExecution")]
         [ClassData(typeof(ImageTestingDataManager))]
         public async Task ExecuteFuncTest(FuncTestStructure test)
