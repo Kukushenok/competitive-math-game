@@ -1,8 +1,8 @@
 ﻿using System.Net.Http.Json;
+using AwesomeAssertions;
 using CompetitiveBackend.BackendUsage.Objects;
 using CompetitiveBackend.Core.Auth;
 using CompetitiveBackend.Core.Objects;
-using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using RepositoriesRealisation.Models;
 namespace IntegrationalTests

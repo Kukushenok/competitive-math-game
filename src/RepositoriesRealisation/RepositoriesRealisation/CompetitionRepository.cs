@@ -28,7 +28,7 @@ namespace CompetitiveBackend.Repositories
             using BaseDbContext context = await GetDbContext();
             try
             {
-                EntityEntry<CompetitionModel> md = await context.Competition.AddAsync(new RepositoriesRealisation.Models.CompetitionModel(c.Name, c.Description, c.StartDate.EnsureUTC(), c.EndDate.EnsureUTC()));
+                EntityEntry<CompetitionModel> md = await context.Competition.AddAsync(new CompetitionModel(c.Name, c.Description, c.StartDate.EnsureUTC(), c.EndDate.EnsureUTC()));
                 await context.SaveChangesAsync();
                 return md.Entity.Id;
             }

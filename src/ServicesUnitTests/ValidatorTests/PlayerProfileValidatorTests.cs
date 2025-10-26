@@ -137,7 +137,7 @@ namespace ServicesUnitTests.ValidatorTests
 
         private sealed class AccountCreationValues : IEnumerable<object[]>
         {
-            public static IEnumerable<(string, bool)> Passwords()
+            public static IEnumerable<(string Password, bool Valid)> Passwords()
             {
                 yield return ("1234", false);
                 yield return (string.Empty, false);
@@ -153,11 +153,11 @@ namespace ServicesUnitTests.ValidatorTests
                 {
                     var acc = (Account)data[0];
                     bool validness = (bool)data[1];
-                    foreach ((string password, bool valid) a in Passwords())
+                    foreach ((string password, bool valid) in Passwords())
                     {
                         yield return new object[]
                         {
-                            new AccountCreationData(acc, a.password), a.valid && validness,
+                            new AccountCreationData(acc, password), valid && validness,
                         };
                     }
                 }

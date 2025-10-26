@@ -23,7 +23,7 @@
       "name": "check-cyclomatic-complexity",
       "command": "bash",
       "group": "pre-commit",
-      "args": [ "./scripts/check_complexity.sh" ]
+      "args": [ "./.husky/scripts/check_complexity.sh" ]
     }
   ]
 }

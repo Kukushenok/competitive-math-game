@@ -18,7 +18,7 @@ namespace CompetitiveBackend.BackendUsage.Objects
             Score = score;
             ProfileInfo = profileInfo;
             CompetitionInfo = competitionInfo;
-            this.LastUpdateTime = lastUpdateTime;
+            LastUpdateTime = lastUpdateTime;
         }
     }
 }

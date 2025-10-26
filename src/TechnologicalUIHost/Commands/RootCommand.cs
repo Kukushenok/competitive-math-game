@@ -19,13 +19,21 @@ namespace TechnologicalUIHost.Commands
         private readonly PlayerParticipationWatchUseCaseCommands playerParticipationWatchCommands;
         private readonly GameParticipationUseCaseCommands gameUseCaseCommands;
         private readonly GameManagementUseCaseCommands managementUseCaseCommands;
-        public RootCommand(IAuthUseCase authUseCase, ISelfUseCase selfUseCase,
-            IPlayerProfileUseCase playerProfileUseCase, IAuthCache authCache,
-            ICompetitionEditUseCase competitionEditUseCase, ICompetitionWatchUseCase competitionWatchUseCase,
-            IRewardDescriptionEditUseCase rewardDescriptionEditUseCase, IRewardDescriptionWatchUseCase rewardDescriptionWatchUseCase,
-            ICompetitionRewardEditUseCase competitionRewardEditUseCase, IPlayerRewardUseCase playerReward,
-            IPlayerParticipationUseCase playerParticipationUseCase, IPlayerParticipationWatchUseCase playerParticipationWatchUseCase,
-            IGamePlayUseCase gamePlayUseCase, IGameManagementUseCase gameManagementUseCase)
+        public RootCommand(
+            IAuthUseCase authUseCase,
+            ISelfUseCase selfUseCase,
+            IPlayerProfileUseCase playerProfileUseCase,
+            IAuthCache authCache,
+            ICompetitionEditUseCase competitionEditUseCase,
+            ICompetitionWatchUseCase competitionWatchUseCase,
+            IRewardDescriptionEditUseCase rewardDescriptionEditUseCase,
+            IRewardDescriptionWatchUseCase rewardDescriptionWatchUseCase,
+            ICompetitionRewardEditUseCase competitionRewardEditUseCase,
+            IPlayerRewardUseCase playerReward,
+            IPlayerParticipationUseCase playerParticipationUseCase,
+            IPlayerParticipationWatchUseCase playerParticipationWatchUseCase,
+            IGamePlayUseCase gamePlayUseCase,
+            IGameManagementUseCase gameManagementUseCase)
             : base("Основной интерфейс")
         {
             authCommands = new AuthCommands(authCache, authUseCase);

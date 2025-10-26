@@ -1,8 +1,8 @@
-﻿using CompetitiveBackend.Core.Objects;
+﻿using AwesomeAssertions;
+using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Core.RewardCondition;
 using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Repositories.Exceptions;
-using FluentAssertions;
 using RepositoriesRealisation.Models;
 using Xunit.Abstractions;
 
@@ -21,7 +21,7 @@ namespace RepositoriesTests.RepositoriesTests
         {
         }
 
-        public static object[][] GrantConditions = [
+        public static readonly object[][] GrantConditions = [
             [new RankGrantCondition(0, 1), 0],
             [new RankGrantCondition(0.5f, 1), 1],
             [new RankGrantCondition(0f, 0.5f), 2],
@@ -54,7 +54,7 @@ namespace RepositoriesTests.RepositoriesTests
             await ExecSQLFile("mix_no_rewards.sql");
             var reward = new CompetitionReward(1, 1, "Hi", "Deo", new AlienGrantCondition());
 
-            await (async () => await testing.CreateCompetitionReward(reward)).Should().ThrowExactlyAsync<IncorrectOperationException>();
+            await Assert.ThrowsAnyAsync<IncorrectOperationException>(async () => await testing.CreateCompetitionReward(reward));
         }
 
         [Theory]
@@ -80,7 +80,7 @@ namespace RepositoriesTests.RepositoriesTests
             await ExecSQLFile("mix_comp_rewards.sql");
             var reward = new CompetitionReward(1, 1, "Hi", "Deo", new AlienGrantCondition(), 2);
 
-            await (async () => await testing.UpdateCompetitionReward(reward)).Should().ThrowExactlyAsync<IncorrectOperationException>();
+            await Assert.ThrowsAnyAsync<IncorrectOperationException>(async () => await testing.UpdateCompetitionReward(reward));
         }
 
         [Theory]
@@ -98,7 +98,7 @@ namespace RepositoriesTests.RepositoriesTests
         public async Task DeleteCompetitionRewardFailure()
         {
             await ExecSQLFile("mix_comp_rewards.sql");
-            await (async () => await testing.RemoveCompetitionReward(10)).Should().ThrowExactlyAsync<MissingDataException>();
+            await Assert.ThrowsAnyAsync<MissingDataException>(async () => await testing.RemoveCompetitionReward(10));
         }
 
         [Theory]

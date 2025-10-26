@@ -16,6 +16,7 @@ namespace ServicesUnitTests.ServiceTests
         {
             profileRepo = new Mock<IPlayerProfileRepository>();
             fileProcessor = new Mock<IImageProcessor>();
+            validator = null!;
         }
 
         [Fact]
@@ -51,7 +52,8 @@ namespace ServicesUnitTests.ServiceTests
             validator.CheckWasCalled();
             profileRepo.Verify(
                 x => x.UpdatePlayerProfile(It.Is<PlayerProfile>(curr =>
-                (etalon.Name == curr.Name) && (etalon.Description == curr.Description) && (etalon.Id == curr.Id))), Times.Once);
+                (etalon.Name == curr.Name) && (etalon.Description == curr.Description) && (etalon.Id == curr.Id))),
+                Times.Once);
         }
 
         [Fact]

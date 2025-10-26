@@ -1,13 +1,13 @@
-﻿using CompetitiveBackend.BackendUsage.Objects;
+﻿using AwesomeAssertions;
+using CompetitiveBackend.BackendUsage.Objects;
 using CompetitiveBackend.Core.Auth;
-using FluentAssertions;
 using RepositoriesRealisation.Models;
 
 namespace IntegrationalTests
 {
     public class PlayerGetInfoTests(IntegrationalFixture f) : IntegrationalTest(f)
     {
-        private AccountModel? tracking;
+        private AccountModel tracking = null!;
         [Fact]
         public async Task GetAccountInfo()
         {
@@ -30,7 +30,8 @@ namespace IntegrationalTests
         {
             tracking = await Instantiate(new AccountModel(
                 new CompetitiveBackend.Core.Objects.Account(Faker.Internet.UserName()),
-                "PASSWORDHASH", new PlayerRole()));
+                "PASSWORDHASH",
+                new PlayerRole()));
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿using CompetitiveBackend.Core.Objects;
+﻿using AwesomeAssertions;
+using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Repositories.Exceptions;
-using FluentAssertions;
 using RepositoriesRealisation;
 using RepositoriesRealisation.Models;
 using Xunit.Abstractions;
@@ -50,7 +50,7 @@ namespace RepositoriesTests.RepositoriesTests
         public async Task GetCompetitionFailure()
         {
             await ExecSQLFile("competitions.sql");
-            await (async () => await testing.GetCompetition(6)).Should().ThrowExactlyAsync<MissingDataException>();
+            await Assert.ThrowsAnyAsync<MissingDataException>(async () => await testing.GetCompetition(6));
         }
 
         [Fact]
@@ -62,7 +62,7 @@ namespace RepositoriesTests.RepositoriesTests
             c.Should().BeEquivalentTo(etalon);
         }
 
-        public static object[][] Limiters = [
+        public static readonly object[][] Limiters = [
             [new DataLimiter(0, 3)],
             [new DataLimiter(0, 2)],
             [new DataLimiter(0, 1)],
@@ -115,16 +115,16 @@ namespace RepositoriesTests.RepositoriesTests
         public async Task UpdateCompetitionFailure()
         {
             DateTime core = DateTime.UtcNow;
-            await (async () => await testing.UpdateCompetition(
-                new Competition("a", "b", Offset(core, -1), Offset(core, 1), 10))).Should().ThrowExactlyAsync<MissingDataException>();
+            await Assert.ThrowsAnyAsync<MissingDataException>(async () => await testing.UpdateCompetition(
+                new Competition("a", "b", Offset(core, -1), Offset(core, 1), 10)));
         }
 
         [Fact]
         public async Task UpdateCompetitionFailure2()
         {
             DateTime core = DateTime.UtcNow;
-            await (async () => await testing.UpdateCompetition(
-                new Competition("a", "b", Offset(core, -1), Offset(core, 1)))).Should().ThrowExactlyAsync<IncorrectOperationException>();
+            await Assert.ThrowsAsync<IncorrectOperationException>(async () => await testing.UpdateCompetition(
+                new Competition("a", "b", Offset(core, -1), Offset(core, 1))));
         }
 
         [Fact]

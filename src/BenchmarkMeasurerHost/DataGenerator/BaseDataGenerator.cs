@@ -27,8 +27,12 @@ namespace BenchmarkMeasurerHost.DataGenerator
         private readonly ICompetitionRewardRepository competitionRewardRepository;
         private readonly ICompetitionRepository competitionRepository;
         private readonly IPlayerParticipationRepository playerParticipationRepository;
-        public BaseDataGenerator(IAccountRepository accountRepository, IRewardDescriptionRepository rewardDescriptionRepository,
-            ICompetitionRewardRepository competitionRewardRepository, ICompetitionRepository competitionRepository, IPlayerParticipationRepository playerParticipationRepository)
+        public BaseDataGenerator(
+            IAccountRepository accountRepository,
+            IRewardDescriptionRepository rewardDescriptionRepository,
+            ICompetitionRewardRepository competitionRewardRepository,
+            ICompetitionRepository competitionRepository,
+            IPlayerParticipationRepository playerParticipationRepository)
         {
             this.accountRepository = accountRepository;
             this.competitionRepository = competitionRepository;

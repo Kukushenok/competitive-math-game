@@ -7,8 +7,8 @@
         public float MaxRank;
         public RankGrantCondition(float minRank, float maxRank)
         {
-            this.MinRank = minRank;
-            this.MaxRank = maxRank;
+            MinRank = minRank;
+            MaxRank = maxRank;
         }
     }
 }

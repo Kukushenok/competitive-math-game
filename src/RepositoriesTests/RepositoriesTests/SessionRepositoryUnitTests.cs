@@ -1,7 +1,7 @@
-﻿using CompetitiveBackend.Core.Auth;
+﻿using AwesomeAssertions;
+using CompetitiveBackend.Core.Auth;
 using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Repositories.Exceptions;
-using FluentAssertions;
 using Xunit.Abstractions;
 
 namespace RepositoriesTests.RepositoriesTests
@@ -41,7 +41,7 @@ namespace RepositoriesTests.RepositoriesTests
         public async Task CreateSessionTokenForFailure()
         {
             await ExecSQLFile("accounts.sql");
-            await (async () => await testing.CreateSessionFor(6)).Should().ThrowExactlyAsync<MissingDataException>();
+            await Assert.ThrowsAsync<MissingDataException>(async () => await testing.CreateSessionFor(6));
         }
 
         [Fact]
@@ -53,12 +53,5 @@ namespace RepositoriesTests.RepositoriesTests
             token.Role.IsAdmin().Should().BeFalse();
             token.TryGetAccountIdentifier(out int _).Should().BeFalse();
         }
-
-        // [Fact]
-        // public async Task Dump()
-        // {
-        //    await Task.Delay(1000);
-        //    await DoDumpings("beloved_dump");
-        // }
     }
 }

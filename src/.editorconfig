@@ -72,6 +72,8 @@ dotnet_diagnostic.CA1848.severity = none # wants logger methods for each message
 dotnet_diagnostic.CA2254.severity = none # wants different format string. Yeah this would be better if I coded it that way right from the start.
 dotnet_diagnostic.SA1401.severity = none # HEHEHEHA
 dotnet_diagnostic.CA1051.severity = none # HEHEHEHA
+
+dotnet_diagnostic.FAA0002.severity = none
 #############################################
 # 🔹 Настройки для форматтера
 #############################################

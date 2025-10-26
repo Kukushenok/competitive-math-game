@@ -13,7 +13,7 @@ namespace RepositoriesRealisation
         public PrivilegyConnectionStringGetter(IConfiguration conf, string defaultConnStringName, ILogger<PrivilegyConnectionStringGetter> logger)
         {
             this.conf = conf;
-            this.connStringName = defaultConnStringName;
+            connStringName = defaultConnStringName;
             this.logger = logger;
         }
 

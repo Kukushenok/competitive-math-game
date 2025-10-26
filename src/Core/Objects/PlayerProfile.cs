@@ -7,7 +7,7 @@
         public PlayerProfile(string name, string? description = null, int? id = null)
             : base(id)
         {
-            this.Name = name;
+            Name = name;
             Description = description;
         }
     }

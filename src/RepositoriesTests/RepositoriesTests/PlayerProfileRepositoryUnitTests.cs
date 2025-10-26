@@ -1,7 +1,7 @@
-﻿using CompetitiveBackend.Core.Objects;
+﻿using AwesomeAssertions;
+using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Repositories.Exceptions;
-using FluentAssertions;
 using RepositoriesRealisation.Models;
 using Xunit.Abstractions;
 
@@ -27,7 +27,7 @@ namespace RepositoriesTests.RepositoriesTests
         public async Task GetPlayerProfileFailure()
         {
             await ExecSQLFile("accounts.sql");
-            await (async () => await testing.GetPlayerProfile(5)).Should().ThrowExactlyAsync<MissingDataException>();
+            await Assert.ThrowsAsync<MissingDataException>(async () => await testing.GetPlayerProfile(5));
         }
 
         [Fact]
@@ -52,14 +52,14 @@ namespace RepositoriesTests.RepositoriesTests
         {
             await ExecSQLFile("accounts.sql");
             var result = new PlayerProfile("munny", "munny_new_description", 9);
-            await (async () => await testing.UpdatePlayerProfile(result)).Should().ThrowExactlyAsync<MissingDataException>();
+            await Assert.ThrowsAsync<MissingDataException>(async () => await testing.UpdatePlayerProfile(result));
         }
 
         [Fact]
         public async Task GetPlayerProfileImageFailure()
         {
             await ExecSQLFile("accounts.sql");
-            await (async () => await testing.GetPlayerProfileImage(5)).Should().ThrowExactlyAsync<MissingDataException>();
+            await Assert.ThrowsAsync<MissingDataException>(async () => await testing.GetPlayerProfileImage(5));
         }
 
         [Fact]
@@ -83,7 +83,7 @@ namespace RepositoriesTests.RepositoriesTests
         {
             var dt = new LargeData([4, 5, 6]);
             await ExecSQLFile("accounts.sql");
-            await (async () => await testing.UpdatePlayerProfileImage(5, dt)).Should().ThrowExactlyAsync<MissingDataException>();
+            await Assert.ThrowsAsync<MissingDataException>(async () => await testing.UpdatePlayerProfileImage(5, dt));
         }
 
         [Fact]

@@ -1,7 +1,5 @@
 ﻿using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
-using CompetitiveBackend.Repositories.Exceptions;
-using CompetitiveBackend.Services.Exceptions;
 using CompetitiveBackend.Services.PlayerParticipationService;
 using Moq;
 
@@ -10,104 +8,11 @@ namespace ServicesUnitTests.ServiceTests
     public class PlayerParticipationServiceTests
     {
         private readonly Mock<IPlayerParticipationRepository> repository;
-        private readonly Mock<ICompetitionRepository> competitionRepo;
         private readonly PlayerParticipationService service;
         public PlayerParticipationServiceTests()
         {
             repository = new Mock<IPlayerParticipationRepository>();
-            competitionRepo = new Mock<ICompetitionRepository>();
-            service = new PlayerParticipationService(repository.Object, competitionRepo.Object);
-        }
-
-        private static Competition GetCompetition(int deltaStart, int deltaEnd, int id = 1)
-        {
-            _ = DateTime.UtcNow;
-            return new Competition("a", "b", DateTime.UtcNow + TimeSpan.FromSeconds(deltaStart), DateTime.UtcNow + TimeSpan.FromSeconds(deltaEnd), 1);
-        }
-
-        [Fact]
-        public async Task PlayerParticipationServiceTestsSubmitParticipationUPDATE()
-        {
-            // Arrange
-            competitionRepo.Setup(x => x.GetCompetition(1)).ReturnsAsync(GetCompetition(-5, 10));
-            repository.Setup(x => x.GetParticipation(0, 1, false, false)).ReturnsAsync(new PlayerParticipation(1, 0, 10, DateTime.UtcNow));
-            repository.Setup(x => x.UpdateParticipation(It.Is<PlayerParticipation>(p =>
-                (p.Score == 20) && p.PlayerProfileId == 0 && p.CompetitionId == 1)));
-
-            // .Callback<PlayerParticipation>((p) =>
-            // {
-            //    Assert.Equal(20, p.Score);
-            //    Assert.Equal(0, p.PlayerProfileId);
-            //    Assert.Equal(1, p.CompetitionId);
-            // });
-            // Act
-            await service.SubmitParticipation(0, 1, 20);
-
-            // Assert
-            repository.Verify(x => x.UpdateParticipation(It.IsAny<PlayerParticipation>()), Times.Once);
-        }
-
-        [Fact]
-        public async Task PlayerParticipationServiceTestsSubmitParticipationTOOEARLY()
-        {
-            // Arrange
-            competitionRepo.Setup(x => x.GetCompetition(1)).ReturnsAsync(GetCompetition(5, 10));
-            repository.Setup(x => x.GetParticipation(0, 1, false, false)).Throws(new MissingDataException());
-            repository.Setup(x => x.CreateParticipation(It.IsAny<PlayerParticipation>())).Throws(new FailedOperationException());
-
-            // Act Assert
-            await Assert.ThrowsAsync<ChronologicalException>(async () => await service.SubmitParticipation(0, 1, 20));
-            repository.Verify(x => x.CreateParticipation(It.IsAny<PlayerParticipation>()), Times.Never);
-        }
-
-        [Fact]
-        public async Task PlayerParticipationServiceTestsSubmitParticipationTOOLATE()
-        {
-            // Arrange
-            competitionRepo.Setup(x => x.GetCompetition(1)).ReturnsAsync(GetCompetition(-10, -5));
-            repository.Setup(x => x.GetParticipation(0, 1, false, false)).Throws(new MissingDataException());
-
-            // Act
-            await Assert.ThrowsAsync<ChronologicalException>(async () => await service.SubmitParticipation(0, 1, 20));
-
-            // Assert
-            repository.Verify(x => x.CreateParticipation(It.IsAny<PlayerParticipation>()), Times.Never);
-        }
-
-        [Fact]
-        public async Task PlayerParticipationServiceTestsSubmitParticipationDISCARD()
-        {
-            // Arrange
-            competitionRepo.Setup(x => x.GetCompetition(1)).ReturnsAsync(GetCompetition(-5, 10));
-            repository.Setup(x => x.GetParticipation(0, 1, false, false)).ReturnsAsync(new PlayerParticipation(1, 0, 10, DateTime.UtcNow));
-            repository.Setup(x => x.UpdateParticipation(It.IsAny<PlayerParticipation>()));
-
-            // Act
-            await service.SubmitParticipation(0, 1, 5);
-
-            // Assert
-            repository.Verify(x => x.UpdateParticipation(It.IsAny<PlayerParticipation>()), Times.Never);
-        }
-
-        [Fact]
-        public async Task PlayerParticipationServiceTestsSubmitParticipationCREATE()
-        {
-            // Arrange
-            competitionRepo.Setup(x => x.GetCompetition(1)).ReturnsAsync(GetCompetition(-5, 10));
-            repository.Setup(x => x.GetParticipation(0, 1, false, false)).Throws(new MissingDataException());
-            repository.Setup(x => x.CreateParticipation(It.IsAny<PlayerParticipation>()));
-
-            // .Callback<PlayerParticipation>((p) =>
-            // {
-            //    Assert.Equal(20, p.Score);
-            //    Assert.Equal(0, p.PlayerProfileId);
-            //    Assert.Equal(1, p.CompetitionId);
-            // });
-            // Act
-            await service.SubmitParticipation(0, 1, 20);
-
-            // Assert
-            repository.Verify(x => x.CreateParticipation(It.IsAny<PlayerParticipation>()), Times.Once);
+            service = new PlayerParticipationService(repository.Object);
         }
 
         [Fact]

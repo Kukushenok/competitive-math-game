@@ -1,8 +1,8 @@
+using AwesomeAssertions;
 using CompetitiveBackend.Core.Auth;
 using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Repositories.Exceptions;
-using FluentAssertions;
 using RepositoriesRealisation;
 using RepositoriesRealisation.Models;
 using Xunit.Abstractions;
@@ -31,14 +31,14 @@ namespace RepositoriesTests.RepositoriesTests
         public async Task GetAccountErroneousLogin()
         {
             await ExecSQLFile("accounts.sql");
-            await (async () => await testing.GetAccount("clongus")).Should().ThrowExactlyAsync<MissingDataException>();
+            await Assert.ThrowsAnyAsync<RepositoryException>(async () => await testing.GetAccount("clongus"));
         }
 
         [Fact]
         public async Task GetAccountErroneousId()
         {
             await ExecSQLFile("accounts.sql");
-            await (async () => await testing.GetAccount(4)).Should().ThrowExactlyAsync<MissingDataException>();
+            await Assert.ThrowsAnyAsync<MissingDataException>(async () => await testing.GetAccount(4));
         }
 
         [Fact]

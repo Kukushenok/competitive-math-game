@@ -13,8 +13,8 @@ namespace TechnologicalUIHost.MenuCommand
 
     public class AuthCache : IAuthCache
     {
-        private AuthSuccessResultDTO? resultDTO;
         private readonly IConsole console;
+        private AuthSuccessResultDTO? resultDTO;
         public AuthCache(IConsole console)
         {
             this.console = console;

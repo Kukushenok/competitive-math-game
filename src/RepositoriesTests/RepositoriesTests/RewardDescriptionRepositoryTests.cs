@@ -1,7 +1,7 @@
-﻿using CompetitiveBackend.Core.Objects;
+﻿using AwesomeAssertions;
+using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Repositories.Exceptions;
-using FluentAssertions;
 using RepositoriesRealisation.Models;
 using Xunit.Abstractions;
 
@@ -33,7 +33,7 @@ namespace RepositoriesTests.RepositoriesTests
         {
             await ExecSQLFile("reward_descriptions.sql");
             var dscr = new RewardDescription("Hello!", "Hai!", 8);
-            await (async () => await testing.UpdateRewardDescription(dscr)).Should().ThrowExactlyAsync<MissingDataException>();
+            await Assert.ThrowsAsync<MissingDataException>(async () => await testing.UpdateRewardDescription(dscr));
         }
 
         [Fact]
@@ -52,7 +52,7 @@ namespace RepositoriesTests.RepositoriesTests
         public async Task GetRewardIconFailure()
         {
             await ExecSQLFile("reward_descriptions.sql");
-            await (async () => await testing.GetRewardIcon(5)).Should().ThrowExactlyAsync<MissingDataException>();
+            await Assert.ThrowsAsync<MissingDataException>(async () => await testing.GetRewardIcon(5));
         }
 
         [Fact]
@@ -76,7 +76,7 @@ namespace RepositoriesTests.RepositoriesTests
         {
             var dt = new LargeData([4, 5, 6]);
             await ExecSQLFile("reward_descriptions.sql");
-            await (async () => await testing.SetRewardIcon(5, dt)).Should().ThrowExactlyAsync<MissingDataException>();
+            await Assert.ThrowsAsync<MissingDataException>(async () => await testing.SetRewardIcon(5, dt));
         }
 
         [Fact]

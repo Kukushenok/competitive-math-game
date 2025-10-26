@@ -12,7 +12,7 @@ namespace BenchmarkMeasurer
         protected const string BASEINITPATH = "../postgres/init";
         protected const string DUMMYINITPATH = "dummy";
 
-        protected PostgreSqlContainer? container;
+        protected PostgreSqlContainer container = null!;
         protected string ConnectionString => container.GetConnectionString();
 
         public async Task DisposeAsync()

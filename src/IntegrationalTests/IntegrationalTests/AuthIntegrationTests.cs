@@ -1,9 +1,9 @@
 ﻿using System.Net.Http.Json;
 using Allure.Net.Commons;
 using Allure.Xunit.Attributes.Steps;
+using AwesomeAssertions;
 using Bogus;
 using CompetitiveBackend.BackendUsage.Objects;
-using FluentAssertions;
 using RepositoriesRealisation;
 
 namespace IntegrationalTests

@@ -11,7 +11,7 @@ namespace RepositoriesTests
         protected const string TESTINITPATH = "TestInitScripts";
         protected const string BASEINITPATH = "../postgres/init";
 
-        protected PostgreSqlContainer? container;
+        protected PostgreSqlContainer container = null!;
         protected string ConnectionString => container.GetConnectionString();
 
         public async Task DisposeAsync()

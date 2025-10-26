@@ -8,7 +8,7 @@ namespace CompetitiveBackend.BackendUsage.Objects
         public byte[] Data { get; set; }
         public LargeDataDTO(byte[] data)
         {
-            this.Data = data;
+            Data = data;
         }
     }
 }

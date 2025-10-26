@@ -30,7 +30,7 @@ namespace BenchmarkMeasurer
             return Task.CompletedTask;
         }
 
-        protected ServiceProvider? serviceProvider;
+        protected ServiceProvider serviceProvider = null!;
         private readonly FileDumper testDumper = new(Path.Combine(COREPATH, "Results", "Dumps"));
         private IDbContextFactory<BaseDbContext> contextFactory = null!;
 

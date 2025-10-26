@@ -8,6 +8,7 @@ violations=0
 
 # Найти все .Metrics.xml
 find . -type f -name "*.Metrics.xml" | while read -r file; do
+    echo "Checking $file..."
     # Извлекаем пары "Name" и "CyclomaticComplexity" из XML
     while IFS= read -r line; do
         name=$(echo "$line" | sed -n 's/.*Name="\([^"]*\)".*/\1/p')

@@ -38,7 +38,8 @@ namespace ServicesUnitTests.ServiceTests
             // Assert
             timeScheduler.Verify(
                 x => x.AddOrUpdateScheduledTask(It.Is<TimeScheduledTaskData>(
-                 p => p.Identifier == 5 && p.FireTime.Equals(new DateTimeOffset(c.EndDate)))), Times.Once);
+                 p => p.Identifier == 5 && p.FireTime.Equals(new DateTimeOffset(c.EndDate)))),
+                Times.Once);
         }
 
         [Fact]
@@ -54,7 +55,8 @@ namespace ServicesUnitTests.ServiceTests
             // Assert
             timeScheduler.Verify(
                 x => x.AddOrUpdateScheduledTask(It.Is<TimeScheduledTaskData>(
-               p => p.Identifier == 5 && p.FireTime.Equals(new DateTimeOffset(c.EndDate)))), Times.Once);
+               p => p.Identifier == 5 && p.FireTime.Equals(new DateTimeOffset(c.EndDate)))),
+                Times.Once);
         }
 
         [Fact]

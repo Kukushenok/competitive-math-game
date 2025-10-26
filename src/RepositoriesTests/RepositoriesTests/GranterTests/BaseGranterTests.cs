@@ -1,8 +1,8 @@
-﻿using CompetitiveBackend.Core.Objects;
+﻿using AwesomeAssertions;
+using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Core.RewardCondition;
 using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Repositories.Exceptions;
-using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using RepositoriesRealisation.Models;
@@ -79,7 +79,7 @@ namespace RepositoriesTests.RepositoriesTests.GranterTests
             await DoDumpings(Name + $"rank_{minRank:f2}_{maxRank:f2}");
         }
 
-        public static object[][] Arguments = [
+        public static readonly object[][] Arguments = [
             [new GrantCondition[] { new PlaceGrantCondition(1, 1), new PlaceGrantCondition(2, 2) }],
             [new GrantCondition[] { new PlaceGrantCondition(1, 1), new RankGrantCondition(0.5f, 1.0f) }],
             [new GrantCondition[] { new RankGrantCondition(0.25f, 0.75f), new RankGrantCondition(0.5f, 1.0f) }],
@@ -125,14 +125,14 @@ namespace RepositoriesTests.RepositoriesTests.GranterTests
             await repo.CreateCompetitionReward(new CompetitionReward(1, 1, "X", "X", new PlaceGrantCondition(1, 3)));
 
             await testing.GrantRewardsFor(1);
-            await (async () => await testing.GrantRewardsFor(1)).Should().ThrowExactlyAsync<FailedOperationException>();
+            await Assert.ThrowsAsync<FailedOperationException>(async () => await testing.GrantRewardsFor(1));
         }
 
         [Fact]
         public async Task MissingCompetition()
         {
             await ExecSQLFile("faked_data_to_grant.sql");
-            await (async () => await testing.GrantRewardsFor(7)).Should().ThrowAsync<RepositoryException>();
+            await Assert.ThrowsAsync<RepositoryException>(async () => await testing.GrantRewardsFor(7));
         }
 
         [Fact]

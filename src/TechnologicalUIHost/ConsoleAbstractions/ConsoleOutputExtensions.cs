@@ -1,4 +1,5 @@
-﻿using CompetitiveBackend.BackendUsage.Objects;
+﻿using System.Globalization;
+using CompetitiveBackend.BackendUsage.Objects;
 
 namespace TechnologicalUIHost.ConsoleAbstractions
 {
@@ -37,7 +38,7 @@ namespace TechnologicalUIHost.ConsoleAbstractions
                 dt = TimeZoneInfo.ConvertTimeFromUtc(dt!.Value, timeInfo);
             }
 
-            output.PrintIfNotNull(label, dt?.ToString("dddd, dd MMMM yyyy HH:mm:ss"));
+            output.PrintIfNotNull(label, dt?.ToString("dddd, dd MMMM yyyy HH:mm:ss", CultureInfo.InvariantCulture));
         }
     }
 

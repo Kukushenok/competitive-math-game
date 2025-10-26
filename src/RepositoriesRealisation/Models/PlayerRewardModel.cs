@@ -31,7 +31,7 @@ namespace RepositoriesRealisation.Models
         {
             PlayerID = playerID;
             RewardDescriptionID = rewardDescription;
-            this.CompetitionID = competitionID;
+            CompetitionID = competitionID;
         }
 
         public PlayerRewardModel()

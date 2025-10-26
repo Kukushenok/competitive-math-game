@@ -57,7 +57,8 @@ namespace ServicesUnitTests.ServiceTests
             // Assert
             rewardRepo.Verify(
                 x => x.CreateReward(It.Is<PlayerReward>(
-                a => a.Name == "AAA" && a.Description == "BBB" && a.RewardDescriptionID == 0)), Times.Once);
+                a => a.Name == "AAA" && a.Description == "BBB" && a.RewardDescriptionID == 0)),
+                Times.Once);
         }
 
         [Fact]

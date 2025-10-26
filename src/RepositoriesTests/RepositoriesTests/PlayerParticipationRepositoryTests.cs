@@ -1,7 +1,7 @@
-﻿using CompetitiveBackend.Core.Objects;
+﻿using AwesomeAssertions;
+using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Repositories.Exceptions;
-using FluentAssertions;
 using RepositoriesRealisation.Models;
 using Xunit.Abstractions;
 
@@ -29,7 +29,7 @@ namespace RepositoriesTests.RepositoriesTests
         {
             await ExecSQLFile("participations.sql");
             var exp = new PlayerParticipationModel(1, 5, 100, DateTime.UtcNow);
-            await (async () => await testing.CreateParticipation(new PlayerParticipation(exp.CompetitionID, exp.AccountID, exp.Score, exp.LastUpdateTime))).Should().ThrowAsync<RepositoryException>();
+            await Assert.ThrowsAnyAsync<RepositoryException>(async () => await testing.CreateParticipation(new PlayerParticipation(exp.CompetitionID, exp.AccountID, exp.Score, exp.LastUpdateTime)));
         }
 
         [Fact]
@@ -48,7 +48,7 @@ namespace RepositoriesTests.RepositoriesTests
         {
             await ExecSQLFile("participations.sql");
             var exp = new PlayerParticipationModel(1, 6, 1000, DateTime.UtcNow);
-            await (async () => await testing.UpdateParticipation(new PlayerParticipation(exp.CompetitionID, exp.AccountID, exp.Score, exp.LastUpdateTime))).Should().ThrowAsync<RepositoryException>();
+            await Assert.ThrowsAnyAsync<RepositoryException>(async () => await testing.UpdateParticipation(new PlayerParticipation(exp.CompetitionID, exp.AccountID, exp.Score, exp.LastUpdateTime)));
         }
 
         [Fact]
@@ -64,11 +64,10 @@ namespace RepositoriesTests.RepositoriesTests
         public async Task DeleteParticipationFailure()
         {
             await ExecSQLFile("participations.sql");
-            await (async () =>
-            await testing.DeleteParticipation(6, 1)).Should().ThrowAsync<RepositoryException>();
+            await Assert.ThrowsAnyAsync<RepositoryException>(async () => await testing.DeleteParticipation(6, 1));
         }
 
-        public static object[][] BindCheck = [
+        public static readonly object[][] BindCheck = [
             [false, false],
             [true, false],
             [false, true],
@@ -96,10 +95,10 @@ namespace RepositoriesTests.RepositoriesTests
         public async Task GetParticipationMissing()
         {
             await ExecSQLFile("participations.sql");
-            await (async () => await testing.GetParticipation(2, 2)).Should().ThrowAsync<RepositoryException>();
+            await Assert.ThrowsAnyAsync<RepositoryException>(async () => await testing.GetParticipation(2, 2));
         }
 
-        public static object[][] DataLimitersAndCheck = [
+        public static readonly object[][] DataLimitersAndCheck = [
             [DataLimiter.NoLimit, false, false],
             [DataLimiter.NoLimit, true, false],
             [DataLimiter.NoLimit, false, true],

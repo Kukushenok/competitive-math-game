@@ -7,7 +7,6 @@ namespace BenchmarkMeasurer
     public class MeasurementData : DataAttribute
     {
         public int RepeatCount = 1;
-        public static int IterIncrement = 1;
         public MeasurementData(int repeatCount)
         {
             RepeatCount = repeatCount;

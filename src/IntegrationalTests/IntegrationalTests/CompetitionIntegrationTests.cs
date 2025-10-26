@@ -1,10 +1,10 @@
-﻿using CompetitiveBackend.BackendUsage.Objects;
-using FluentAssertions;
+﻿using AwesomeAssertions;
+using CompetitiveBackend.BackendUsage.Objects;
 namespace IntegrationalTests
 {
     public class CompetitionIntegrationTests(IntegrationalFixture f) : IntegrationalTest(f)
     {
-        private RepositoriesRealisation.Models.CompetitionModel? tracking;
+        private RepositoriesRealisation.Models.CompetitionModel tracking = null!;
 
         [Fact]
         public async Task CompetitionFetchOne()

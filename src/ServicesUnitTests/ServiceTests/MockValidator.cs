@@ -5,10 +5,11 @@ namespace ServicesUnitTests.ServiceTests
     internal sealed class MockValidator<T> : IValidator<T>
         where T : class
     {
-        private bool wasCalled;
         private readonly T? compareObject;
-        private bool fail;
         private readonly List<Func<T, bool>> constraints;
+        private bool wasCalled;
+        private bool fail;
+
         public MockValidator(T? newObject = null, bool fail = false, List<Func<T, bool>>? constraints = null)
         {
             compareObject = newObject;
@@ -47,9 +48,10 @@ namespace ServicesUnitTests.ServiceTests
     internal sealed class MockValidatorBuilder<T>
         where T : class
     {
+        private readonly List<Func<T, bool>> constraints = [];
         private bool shouldFail;
         private T? compareObj;
-        private readonly List<Func<T, bool>> constraints = [];
+
         public MockValidatorBuilder<T> CheckEtalon(T etalon)
         {
             compareObj = etalon;

@@ -1,11 +1,11 @@
-﻿using CompetitiveBackend.BackendUsage.Objects;
+﻿using AwesomeAssertions;
+using CompetitiveBackend.BackendUsage.Objects;
 using CompetitiveBackend.Core.RewardCondition;
-using FluentAssertions;
 namespace IntegrationalTests
 {
     public class CompetitionRewardsTest(IntegrationalFixture f) : IntegrationalTest(f)
     {
-        private RepositoriesRealisation.Models.CompetitionModel? tracking;
+        private RepositoriesRealisation.Models.CompetitionModel tracking = null!;
 
         [Fact]
         public async Task GetRewards()

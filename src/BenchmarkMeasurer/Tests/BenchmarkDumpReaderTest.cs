@@ -37,7 +37,6 @@ namespace BenchmarkMeasurer.Tests
         protected async Task Init()
         {
             using RepositoriesRealisation.BaseDbContext context = await GetContext();
-            context.AccountsProfileImages.Add(new RepositoriesRealisation.DatabaseObjects.AccountModelProfileImage());
         }
     }
 }

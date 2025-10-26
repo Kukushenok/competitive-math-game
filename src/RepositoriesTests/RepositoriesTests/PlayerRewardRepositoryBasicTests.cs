@@ -1,7 +1,7 @@
-﻿using CompetitiveBackend.Core.Objects;
+﻿using AwesomeAssertions;
+using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Repositories.Exceptions;
-using FluentAssertions;
 using RepositoriesRealisation.Models;
 using Xunit.Abstractions;
 
@@ -32,7 +32,7 @@ namespace RepositoriesTests.RepositoriesTests
         public async Task AddRewardFailure()
         {
             await ExecSQLFile("mix_no_rewards.sql");
-            await (async () => await testing.CreateReward(new PlayerReward(8, 1, "hi", "deo", null))).Should().ThrowExactlyAsync<FailedOperationException>();
+            await Assert.ThrowsAsync<FailedOperationException>(async () => await testing.CreateReward(new PlayerReward(8, 1, "hi", "deo", null)));
         }
 
         [Fact]
@@ -48,10 +48,10 @@ namespace RepositoriesTests.RepositoriesTests
         public async Task DeleteRewardFailure()
         {
             await ExecSQLFile("mix_no_rewards.sql");
-            await (async () => await testing.DeleteReward(1)).Should().ThrowExactlyAsync<MissingDataException>();
+            await Assert.ThrowsAsync<MissingDataException>(async () => await testing.DeleteReward(1));
         }
 
-        public static object[][] Limiters = [
+        public static readonly object[][] Limiters = [
                 [new DataLimiter(0, 3)],
                 [new DataLimiter(0, 2)],
                 [new DataLimiter(0, 1)],

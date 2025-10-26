@@ -8,7 +8,7 @@ namespace ChronoServiceTests
 {
     public class MockSubscriber : ITimeScheduledTaskSubscriber
     {
-        public static TimeSpan ACCEPTABLELATENCY = new(0, 0, 0, 0, 500);
+        public static readonly TimeSpan ACCEPTABLELATENCY = new(0, 0, 0, 0, 500);
         public TimeScheduledTaskData? Expected;
         public bool Recieved { get; private set; }
         private ITimeScheduler? sched;

@@ -8,7 +8,7 @@ namespace CompetitiveBackend.BackendUsage.Objects
         public int? ID { get; set; }
         public IntIdentifiableDTO(int? iD)
         {
-            this.ID = iD;
+            ID = iD;
         }
 
         public IntIdentifiableDTO()

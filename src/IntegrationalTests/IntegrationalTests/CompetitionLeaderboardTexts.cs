@@ -1,13 +1,13 @@
-﻿using CompetitiveBackend.BackendUsage.Objects;
+﻿using AwesomeAssertions;
+using CompetitiveBackend.BackendUsage.Objects;
 using CompetitiveBackend.Core.Auth;
-using FluentAssertions;
 using RepositoriesRealisation.Models;
 
 namespace IntegrationalTests
 {
     public class CompetitionLeaderboardTexts(IntegrationalFixture f) : IntegrationalTest(f)
     {
-        private readonly int competitionID;
+        private int competitionID;
         [Fact]
         public async Task GetLeaderboard()
         {
@@ -22,6 +22,7 @@ namespace IntegrationalTests
         {
             CompetitionModel t = await Instantiate(new CompetitionModel("A", "B", DateTime.UtcNow, DateTime.UtcNow.AddDays(2)));
             await Context.SaveChangesAsync();
+            competitionID = t.Id;
             AccountModel x = await Instantiate(new AccountModel(
                 new CompetitiveBackend.Core.Objects.Account(Faker.Internet.UserName()),
                 "PASSWORDHASH",

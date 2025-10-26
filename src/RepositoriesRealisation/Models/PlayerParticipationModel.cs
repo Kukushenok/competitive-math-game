@@ -23,9 +23,9 @@ namespace RepositoriesRealisation.Models
         public DateTime LastUpdateTime { get; set; }
         public PlayerParticipationModel(int competitionID, int accountID, int score, DateTime lastUpdateTime)
         {
-            this.CompetitionID = competitionID;
-            this.AccountID = accountID;
-            this.Score = score;
+            CompetitionID = competitionID;
+            AccountID = accountID;
+            Score = score;
             LastUpdateTime = lastUpdateTime;
         }
 

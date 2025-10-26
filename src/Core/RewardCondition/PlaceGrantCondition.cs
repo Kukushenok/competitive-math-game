@@ -7,8 +7,8 @@
         public int MaxPlace;
         public PlaceGrantCondition(int minPlace, int maxPlace)
         {
-            this.MinPlace = minPlace;
-            this.MaxPlace = maxPlace;
+            MinPlace = minPlace;
+            MaxPlace = maxPlace;
         }
     }
 }
