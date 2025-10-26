@@ -1,10 +1,11 @@
 name: .NET CI
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_dispatch: 
+  #push:
+  #  branches: [ main ]
+  #pull_request:
+  #  branches: [ main ]
 
 env:
   DOTNET_CLI_TELEMETRY_OPTOUT: "1"

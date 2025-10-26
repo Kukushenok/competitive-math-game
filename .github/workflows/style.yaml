@@ -32,4 +32,6 @@ jobs:
 
       # --- 5 Запускаем Husky pre-commit проверки ---
       - name: Run Husky checks
-        run: dotnet husky run --group pre-commit
+        run: |
+          dotnet husky install
+          dotnet husky run --group pre-commit
