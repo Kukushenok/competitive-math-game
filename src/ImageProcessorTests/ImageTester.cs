@@ -31,9 +31,7 @@ namespace ImageProcessorTests
             IServiceCollection coll = new ServiceCollection();
             coll.AddMajickImageRescaler((options) =>
             {
-                options.AddConstraints(
-                    ImageTestingDataManager.MinSize,
-                    ImageTestingDataManager.MaxSize);
+                ImageTestingDataManager.SetupConstraints(options);
             });
             coll.UseXUnitLogging(helper);
             ServiceProvider s = coll.BuildServiceProvider();

@@ -20,7 +20,8 @@ namespace BenchmarkMeasurer
         [MeasurementData(10)]
         public async Task MakeDumps(EnvironmentSettings settings)
         {
-            using IServiceScope scope = serviceProvider.CreateScope();
+            using IServiceScope? scope = serviceProvider?.CreateScope();
+            Assert.NotNull(scope);
             ICompetitionEnvironmentGenerator host = scope.ServiceProvider.GetRequiredService<ICompetitionEnvironmentGenerator>();
             CompetitiveBackend.Core.Objects.Competition stopwatch = await host.GenerateEnvironment(settings);
             await DoDumpings($"{settings.SupposedRewardCount}_{Guid.NewGuid()}");

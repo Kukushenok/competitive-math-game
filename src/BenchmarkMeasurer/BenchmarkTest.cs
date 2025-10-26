@@ -41,6 +41,7 @@ namespace BenchmarkMeasurer
 
         protected async Task ExecSQL(string sql)
         {
+            Assert.NotNull(container);
             _ = await container.ExecScriptAsync(sql);
         }
 
@@ -52,6 +53,7 @@ namespace BenchmarkMeasurer
 
         protected async Task DoDumpings(string dumpName, FileDumper? dumper = null)
         {
+            Assert.NotNull(container);
             dumper ??= testDumper;
             List<string> commands = ["/bin/bash", "-c", $"PGPASSWORD={PASSWORD} pg_dump --username {USERNAME} {DATABASE}"];
             DotNet.Testcontainers.Containers.ExecResult result = await container.ExecAsync(commands);

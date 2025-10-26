@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Xml.Linq;
+using ImageProcessorRealisation;
 
 namespace ImageProcessorTests
 {
@@ -8,16 +9,47 @@ namespace ImageProcessorTests
         private static string resultsDir = string.Empty;
         private static string testsDir = string.Empty;
         private static bool initialized;
-        public static uint MinSize;
-        public static uint MaxSize = 256;
+        private static uint minSize;
+        private static uint maxSize = 256;
 
         public ImageTestingDataManager()
         {
         }
 
+        public static Options SetupConstraints(Options opt)
+        {
+            return opt.AddConstraints(minSize, maxSize);
+        }
+
         private static string TotalPath(string path)
         {
             return Path.Combine(Environment.CurrentDirectory, "../../../", path);
+        }
+
+        private static void ParseDimensionsElements(XElement? dimensionsElement)
+        {
+            if (!uint.TryParse(dimensionsElement?.Element(nameof(minSize))?.Value, out minSize))
+            {
+                minSize = 0;
+            }
+
+            if (!uint.TryParse(dimensionsElement?.Element(nameof(maxSize))?.Value, out maxSize))
+            {
+                maxSize = 256;
+            }
+        }
+
+        private static void ReadElement(XElement? directoriesElement, XElement? dimensionsElement)
+        {
+            resultsDir = directoriesElement?.Element(nameof(resultsDir))?.Value ?? string.Empty;
+            testsDir = directoriesElement?.Element(nameof(testsDir))?.Value ?? string.Empty;
+            ParseDimensionsElements(dimensionsElement);
+
+            resultsDir = TotalPath(resultsDir);
+            testsDir = TotalPath(testsDir);
+
+            Assert.False(resultsDir == string.Empty, "Please set up ResultsDir in testsettings.xml");
+            Assert.False(testsDir == string.Empty, "Please set up TestsDir in testsettings.xml");
         }
 
         public static void InitFuncTestData()
@@ -29,18 +61,7 @@ namespace ImageProcessorTests
             XElement? dimensionsElement = xmlDoc.Element("Settings")?.Element("Dimensions");
             XElement? directoriesElement = xmlDoc.Element("Settings")?.Element("Paths");
 
-            resultsDir = directoriesElement?.Element(nameof(resultsDir))?.Value ?? string.Empty;
-            testsDir = directoriesElement?.Element(nameof(testsDir))?.Value ?? string.Empty;
-            uint.TryParse(dimensionsElement?.Element(nameof(MinSize))?.Value, out MinSize);
-            uint.TryParse(dimensionsElement?.Element(nameof(MaxSize))?.Value, out MaxSize);
-
-            // resultsDir = "./results/";
-            // testsDir = "../../../Tests";
-            resultsDir = TotalPath(resultsDir);
-            testsDir = TotalPath(testsDir);
-
-            Assert.False(resultsDir == string.Empty, "Please set up ResultsDir in testsettings.xml");
-            Assert.False(testsDir == string.Empty, "Please set up TestsDir in testsettings.xml");
+            ReadElement(directoriesElement, dimensionsElement);
 
             if (!Directory.Exists(resultsDir))
             {
