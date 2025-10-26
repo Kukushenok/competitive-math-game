@@ -2,6 +2,12 @@
   "$schema": "https://alirezanet.github.io/Husky.Net/schema.json",
   "tasks": [
     {
+      "name": "check-halstead-complexity",
+      "command": "dotnet",
+      "group": "pre-commit",
+      "args": [ "run", "--project", "./tools/HalsteadAnalyzer", "--path", "./src/" ]
+    },
+    {
       "name": "dotnet-format",
       "command": "dotnet",
       "group": "pre-commit",
