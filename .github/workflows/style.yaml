@@ -1,0 +1,35 @@
+name: Husky Validation
+
+on:
+  push:
+    branches: ["**"]      # запуск при пуше в любую ветку
+  pull_request:
+    branches: ["**"]      # запуск при PR в любую ветку
+
+jobs:
+  husky-check:
+    name: Run Husky .NET Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      # --- 1 Клонируем репозиторий ---
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # --- 2 Устанавливаем .NET 8 SDK ---
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      # --- 3 Восстанавливаем зависимости ---
+      - name: Restore dependencies
+        run: dotnet restore ./src/CompetitiveBackend.sln
+
+      # --- 4 Устанавливаем Husky.NET (из .config/dotnet-tools.json) ---
+      - name: Install Husky.NET
+        run: dotnet tool restore
+
+      # --- 5 Запускаем Husky pre-commit проверки ---
+      - name: Run Husky checks
+        run: dotnet husky run --group pre-commit

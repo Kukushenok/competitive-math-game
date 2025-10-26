@@ -21,18 +21,15 @@ namespace TechnologicalUIHost.Commands
             yield return new CallbackConsoleMenuCommand("Начать игру", TaskDecorator.Sync(Play), IsAuthed);
         }
 
-        private async Task Play(IConsole console)
+        private static List<RiddleAnswerDTO> CollectAnswers(CompetitionParticipationTaskDTO gameplay, IConsole console)
         {
-            using IGamePlayUseCase g = await Auth(this.gameplay);
-            int compID = console.ReadInt("Введите ID соревнования: ");
-            CompetitionParticipationTaskDTO gameplay = await g.DoPlay(compID);
             var answers = new List<RiddleAnswerDTO>();
             int r = 0;
             int total = answers.Count;
             foreach (UserRiddleInfoDTO p in gameplay.Riddles)
             {
                 console.PromtOutput($"ВОПРОС {r}/{total}: {p.Question}");
-                string answer = string.Empty;
+                string answer;
                 if (p.AvailableAnswers.Length == 0)
                 {
                     answer = console.PromtInput("Введите ответ: ");
@@ -56,6 +53,16 @@ namespace TechnologicalUIHost.Commands
 
                 answers.Add(new RiddleAnswerDTO(answer));
             }
+
+            return answers;
+        }
+
+        private async Task Play(IConsole console)
+        {
+            using IGamePlayUseCase g = await Auth(this.gameplay);
+            int compID = console.ReadInt("Введите ID соревнования: ");
+            CompetitionParticipationTaskDTO gameplay = await g.DoPlay(compID);
+            List<RiddleAnswerDTO> answers = CollectAnswers(gameplay, console);
 
             var dto = new CompetitionParticipationRequestDTO(
                 gameplay.SessionID,

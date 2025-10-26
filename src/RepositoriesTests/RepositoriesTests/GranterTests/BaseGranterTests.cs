@@ -48,6 +48,19 @@ namespace RepositoriesTests.RepositoriesTests.GranterTests
             await DoDumpings(Name + $"place_{minPlace}_{maxPlace}");
         }
 
+        private static int GetRewardCount(int grantCount, float maxRank, float minRank)
+        {
+            int minPlace = (int)Math.Floor(grantCount * (1.0 - maxRank)) + 1;
+            int maxPlace = (int)Math.Ceiling(grantCount * (1.0 - minRank)) + 1;
+            if (maxPlace >= grantCount)
+            {
+                maxPlace = grantCount;
+            }
+
+            int rewardCount = maxPlace - minPlace + 1;
+            return rewardCount;
+        }
+
         [Theory]
         [InlineData(1.0, 1.0)]
         [InlineData(0.5, 1.0)]
@@ -61,16 +74,9 @@ namespace RepositoriesTests.RepositoriesTests.GranterTests
             await testing.GrantRewardsFor(1);
             using RepositoriesRealisation.BaseDbContext context = await GetContext();
             int gRANT_COUNT = await context.PlayerParticipation.Where(x => x.CompetitionID == 1).CountAsync();
-            int minPlace = (int)Math.Floor(gRANT_COUNT * (1.0 - maxRank)) + 1;
-            int maxPlace = (int)Math.Ceiling(gRANT_COUNT * (1.0 - minRank)) + 1;
-            if (maxPlace >= gRANT_COUNT)
-            {
-                maxPlace = gRANT_COUNT;
-            }
 
-            int rewardCount = maxPlace - minPlace + 1;
             var lst = context.PlayerReward.ToList();
-            lst.Should().HaveCount(rewardCount);
+            lst.Should().HaveCount(GetRewardCount(gRANT_COUNT, maxRank, minRank));
             lst.Should().AllSatisfy(x =>
             {
                 x.CompetitionID.Should().Be(1, "Competition granted");
@@ -102,14 +108,7 @@ namespace RepositoriesTests.RepositoriesTests.GranterTests
                 }
                 else if (cnd is RankGrantCondition rank)
                 {
-                    int minPlace = (int)Math.Floor(pLAYER_COUNT * (1.0 - rank.MaxRank)) + 1;
-                    int maxPlace = (int)Math.Ceiling(pLAYER_COUNT * (1.0 - rank.MinRank)) + 1;
-                    if (maxPlace >= pLAYER_COUNT)
-                    {
-                        maxPlace = pLAYER_COUNT;
-                    }
-
-                    rewardCount += maxPlace - minPlace + 1;
+                    rewardCount += GetRewardCount(pLAYER_COUNT, rank.MaxRank, rank.MinRank);
                 }
             }
 

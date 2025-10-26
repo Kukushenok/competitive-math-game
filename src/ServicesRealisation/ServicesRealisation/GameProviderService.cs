@@ -97,6 +97,21 @@ namespace CompetitiveBackend.Services.RewardDescriptionService
             return givenAnswer.TextAnswer.Trim() == expectedAnswer.TextAnswer.Trim();
         }
 
+        private static int CalculateBonus(RiddleGameInfo gameInfo, RiddleGameSettings settings)
+        {
+            double ratio = 0;
+            if (settings.TimeLimit != null)
+            {
+                ratio = 1.0 - ((DateTime.UtcNow - gameInfo.StartTime).TotalSeconds / settings.TimeLimit.Value.TotalSeconds);
+                if (ratio < 0)
+                {
+                    ratio = 0;
+                }
+            }
+
+            return (int)Math.Round(settings.TimeLinearBonus * ratio);
+        }
+
         private async Task<ParticipationFeedback> Calculate(RiddleGameInfo gameInfo, CompetitionParticipationRequest req)
         {
             RiddleGameSettings settings = await riddleSettingsRepository.GetRiddleSettings(gameInfo.CompetitionID);
@@ -115,17 +130,8 @@ namespace CompetitiveBackend.Services.RewardDescriptionService
             }
 
             int totalCount = gameInfo.Riddles.Count;
-            double ratio = 0;
-            if (settings.TimeLimit != null)
-            {
-                ratio = 1.0 - ((DateTime.UtcNow - gameInfo.StartTime).TotalSeconds / settings.TimeLimit.Value.TotalSeconds);
-                if (ratio < 0)
-                {
-                    ratio = 0;
-                }
-            }
 
-            int score = (int)Math.Round(settings.TimeLinearBonus * ratio);
+            int score = CalculateBonus(gameInfo, settings);
             score += (rightAnswCount * settings.ScoreOnRightAnswer) + ((totalCount - rightAnswCount) * settings.ScoreOnBadAnswer);
             return new ParticipationFeedback(
                 score,

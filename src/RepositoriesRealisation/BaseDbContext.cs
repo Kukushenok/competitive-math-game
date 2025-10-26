@@ -31,20 +31,8 @@ namespace RepositoriesRealisation
         {
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        private static void AddCompetitionModel(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<PlayerParticipationModel>().HasKey(table => new { table.AccountID, table.CompetitionID });
-            modelBuilder.Entity<AccountModel>(options =>
-            {
-                options.Ignore(x => x.PasswordHash); // the forbidden knowledge
-            });
-            ConnectOneToOne<AccountModel, PlayerProfileModel>(modelBuilder, nameof(AccountModel.Profile));
-
-            // ConnectOneToOne<CompetitionLevelDataModel, CompetitionLevelDataModelData>(modelBuilder, nameof(CompetitionLevelDataModel.LevelData));
-            ConnectOneToOne<RewardDescriptionModel, RewardDescriptionModelIconImage>(modelBuilder, nameof(RewardDescriptionModel.IconImage));
-            ConnectOneToOne<AccountModel, AccountModelProfileImage>(modelBuilder, nameof(AccountModel.ProfileImage));
-            ConnectOneToOne<CompetitionModel, RiddleGameSettingsModel>(modelBuilder, nameof(CompetitionModel.RiddleGameSettings));
-            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<CompetitionRiddleModel>(entity =>
             {
                 entity.ToTable("competition_riddle");
@@ -61,6 +49,23 @@ namespace RepositoriesRealisation
                 entity.Property(e => e.Answer).HasMaxLength(256);
                 entity.Property(e => e.OtherAnswers).HasColumnType("jsonb");
             });
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<PlayerParticipationModel>().HasKey(table => new { table.AccountID, table.CompetitionID });
+            modelBuilder.Entity<AccountModel>(options =>
+            {
+                options.Ignore(x => x.PasswordHash); // the forbidden knowledge
+            });
+            ConnectOneToOne<AccountModel, PlayerProfileModel>(modelBuilder, nameof(AccountModel.Profile));
+            AddCompetitionModel(modelBuilder);
+
+            // ConnectOneToOne<CompetitionLevelDataModel, CompetitionLevelDataModelData>(modelBuilder, nameof(CompetitionLevelDataModel.LevelData));
+            ConnectOneToOne<RewardDescriptionModel, RewardDescriptionModelIconImage>(modelBuilder, nameof(RewardDescriptionModel.IconImage));
+            ConnectOneToOne<AccountModel, AccountModelProfileImage>(modelBuilder, nameof(AccountModel.ProfileImage));
+            ConnectOneToOne<CompetitionModel, RiddleGameSettingsModel>(modelBuilder, nameof(CompetitionModel.RiddleGameSettings));
+            base.OnModelCreating(modelBuilder);
         }
 
         private static void ConnectOneToOne<T, TOther>(ModelBuilder builder, string propertyName)

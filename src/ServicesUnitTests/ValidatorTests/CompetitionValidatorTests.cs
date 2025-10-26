@@ -9,38 +9,26 @@ namespace ServicesUnitTests.ValidatorTests
     {
         private sealed class Values : IEnumerable<object[]>
         {
+            private static readonly object[][] Data = [
+                [new Competition("Abob", new string('*', 10), new DateTime(2025, 1, 1, 1, 1, 1), new DateTime(2025, 1, 1, 1, 10, 1)),
+                true],
+                [new Competition("Abo", new string('*', 10), new DateTime(2025, 1, 1, 1, 1, 1), new DateTime(2025, 1, 1, 1, 10, 1)),
+                    false],
+                [new Competition("Abondus", new string('*', 10), new DateTime(2025, 1, 1, 1, 1, 1), new DateTime(2024, 1, 1, 1, 10, 1)),
+                    false],
+                [new Competition("Colon", new string('*', 11), new DateTime(2025, 1, 1, 1, 1, 1), new DateTime(2025, 1, 1, 1, 10, 1)),
+                    true],
+                [new Competition("Colon", new string('*', 12), new DateTime(2025, 1, 1, 1, 1, 1), new DateTime(2025, 1, 1, 1, 10, 1)),
+                    false],
+                [new Competition("Colon", new string('*', 9), new DateTime(2025, 1, 1, 1, 1, 1), new DateTime(2025, 1, 1, 1, 10, 1)),
+                    false],
+                ];
             public IEnumerator<object[]> GetEnumerator()
             {
-                yield return new object[]
+                foreach (object[] x in Data)
                 {
-                    new Competition("Abob", new string('*', 10), new DateTime(2025, 1, 1, 1, 1, 1), new DateTime(2025, 1, 1, 1, 10, 1)),
-                    true,
-                };
-                yield return new object[]
-                {
-                    new Competition("Abo", new string('*', 10), new DateTime(2025, 1, 1, 1, 1, 1), new DateTime(2025, 1, 1, 1, 10, 1)),
-                    false,
-                };
-                yield return new object[]
-                {
-                    new Competition("Abondus", new string('*', 10), new DateTime(2025, 1, 1, 1, 1, 1), new DateTime(2024, 1, 1, 1, 10, 1)),
-                    false,
-                };
-                yield return new object[]
-                {
-                    new Competition("Colon", new string('*', 11), new DateTime(2025, 1, 1, 1, 1, 1), new DateTime(2025, 1, 1, 1, 10, 1)),
-                    true,
-                };
-                yield return new object[]
-                {
-                    new Competition("Colon", new string('*', 12), new DateTime(2025, 1, 1, 1, 1, 1), new DateTime(2025, 1, 1, 1, 10, 1)),
-                    false,
-                };
-                yield return new object[]
-                {
-                    new Competition("Colon", new string('*', 9), new DateTime(2025, 1, 1, 1, 1, 1), new DateTime(2025, 1, 1, 1, 10, 1)),
-                    false,
-                };
+                    yield return x;
+                }
             }
 
             IEnumerator IEnumerable.GetEnumerator()

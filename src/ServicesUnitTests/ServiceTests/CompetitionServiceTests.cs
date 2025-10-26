@@ -18,21 +18,43 @@ namespace ServicesUnitTests.ServiceTests
             rewardScheduler = new Mock<ICompetitionRewardScheduler>();
         }
 
+        private static Competition CreateEtalon(int deltaSec1, int deltaSec2)
+        {
+            DateTime dt = DateTime.Now;
+            var etalon = new Competition("Hello", "World", dt + TimeSpan.FromSeconds(deltaSec1), dt + TimeSpan.FromSeconds(deltaSec2), 0);
+            return etalon;
+        }
+
+        private static MockValidator<Competition> GetValidator(Competition comp)
+        {
+            return new MockValidatorBuilder<Competition>().CheckEtalon(comp).Build();
+        }
+
+        private void CheckWasAdded(Competition etalon)
+        {
+            rewardScheduler.Verify(x => x.OnCompetitionCreated(It.Is<Competition>(x => x.Equals(etalon))), Times.Once);
+            repository.Verify(x => x.CreateCompetition(It.Is<Competition>(x => x.Equals(etalon))), Times.Once);
+        }
+
+        private void CheckShouldNotAdd()
+        {
+            repository.Verify(x => x.CreateCompetition(It.IsAny<Competition>()), Times.Never);
+            rewardScheduler.Verify(x => x.OnCompetitionCreated(It.IsAny<Competition>()), Times.Never);
+        }
+
         [Fact]
         public async Task CompetitionServiceTestsCreateCompetitionOK()
         {
             // Arrange
-            DateTime dt = DateTime.Now;
-            var etalon = new Competition("Hello", "World", dt + TimeSpan.FromSeconds(5), dt + TimeSpan.FromSeconds(10), 0);
-            MockValidator<Competition> validator = new MockValidatorBuilder<Competition>().CheckEtalon(etalon).Build();
+            Competition etalon = CreateEtalon(5, 10);
+            MockValidator<Competition> validator = GetValidator(etalon);
             var service = new CompetitionService(repository.Object, validator, rewardScheduler.Object);
 
             // Act
             await service.CreateCompetition(etalon);
 
             // Assert
-            rewardScheduler.Verify(x => x.OnCompetitionCreated(It.Is<Competition>(x => x.Equals(etalon))), Times.Once);
-            repository.Verify(x => x.CreateCompetition(It.Is<Competition>(x => x.Equals(etalon))), Times.Once);
+            CheckWasAdded(etalon);
             validator.CheckWasCalled();
         }
 
@@ -40,9 +62,8 @@ namespace ServicesUnitTests.ServiceTests
         public async Task CompetitionServiceTestsCreateCompetitionBad1()
         {
             // Arrange
-            DateTime dt = DateTime.Now;
-            var etalon = new Competition("Hello", "World", dt - TimeSpan.FromSeconds(5), dt + TimeSpan.FromSeconds(10));
-            MockValidator<Competition> validator = new MockValidatorBuilder<Competition>().CheckEtalon(etalon).Build();
+            Competition etalon = CreateEtalon(-5, 10);
+            MockValidator<Competition> validator = GetValidator(etalon);
             var service = new CompetitionService(repository.Object, validator, rewardScheduler.Object);
 
             // Act
@@ -50,16 +71,14 @@ namespace ServicesUnitTests.ServiceTests
 
             // Assert
             validator.CheckWasCalled();
-            repository.Verify(x => x.CreateCompetition(It.IsAny<Competition>()), Times.Never);
-            rewardScheduler.Verify(x => x.OnCompetitionCreated(It.IsAny<Competition>()), Times.Never);
+            CheckShouldNotAdd();
         }
 
         [Fact]
         public async Task CompetitionServiceTestsCreateCompetitionBad2()
         {
             // Arrange
-            DateTime dt = DateTime.Now;
-            var etalon = new Competition("Hello", "World", dt + TimeSpan.FromSeconds(20), dt + TimeSpan.FromSeconds(10));
+            Competition etalon = CreateEtalon(20, 10);
             MockValidator<Competition> validator = new MockValidatorBuilder<Competition>().FailByDefault().Build();
             var service = new CompetitionService(repository.Object, validator, rewardScheduler.Object);
 
@@ -68,17 +87,15 @@ namespace ServicesUnitTests.ServiceTests
 
             // Assert
             validator.CheckWasCalled();
-            repository.Verify(x => x.CreateCompetition(It.IsAny<Competition>()), Times.Never);
-            rewardScheduler.Verify(x => x.OnCompetitionCreated(It.IsAny<Competition>()), Times.Never);
+            CheckShouldNotAdd();
         }
 
         [Fact]
         public async Task CompetitionServiceTestUpdateCompetitionOK()
         {
             // Arrange
-            DateTime dt = DateTime.Now;
-            var etalon = new Competition("Hello", "World", dt + TimeSpan.FromSeconds(5), dt + TimeSpan.FromSeconds(10), 0);
-            var pending = new Competition("a", "b", dt + TimeSpan.FromSeconds(5), dt + TimeSpan.FromSeconds(10), 0);
+            Competition etalon = CreateEtalon(5, 10);
+            var pending = new Competition("a", "b", etalon.StartDate, etalon.EndDate, 0);
             MockValidator<Competition> validator = new MockValidatorBuilder<Competition>().Build();
             repository.Setup(x => x.GetCompetition(0)).ReturnsAsync(etalon);
             var service = new CompetitionService(repository.Object, validator, rewardScheduler.Object);
@@ -96,9 +113,8 @@ namespace ServicesUnitTests.ServiceTests
         public async Task CompetitionServiceTestUpdateCompetitionOK2()
         {
             // Arrange
-            DateTime dt = DateTime.Now;
-            var etalon = new Competition("Hello", "World", dt + TimeSpan.FromSeconds(5), dt + TimeSpan.FromSeconds(10), 0);
-            var pending = new Competition("Hello", "World", dt + TimeSpan.FromSeconds(5), dt + TimeSpan.FromSeconds(10), 0);
+            Competition etalon = CreateEtalon(5, 10);
+            Competition pending = etalon;
             MockValidator<Competition> validator = new MockValidatorBuilder<Competition>().Build();
             repository.Setup(x => x.GetCompetition(0)).ReturnsAsync(etalon);
             var service = new CompetitionService(repository.Object, validator, rewardScheduler.Object);
@@ -128,8 +144,7 @@ namespace ServicesUnitTests.ServiceTests
 
             // Assert
             validator.CheckWasCalled();
-            repository.Verify(x => x.CreateCompetition(It.IsAny<Competition>()), Times.Never);
-            rewardScheduler.Verify(x => x.OnCompetitionCreated(It.IsAny<Competition>()), Times.Never);
+            CheckShouldNotAdd();
         }
 
         [Fact]
@@ -148,8 +163,7 @@ namespace ServicesUnitTests.ServiceTests
 
             // Assert
             validator.CheckWasCalled();
-            repository.Verify(x => x.CreateCompetition(It.IsAny<Competition>()), Times.Never);
-            rewardScheduler.Verify(x => x.OnCompetitionCreated(It.IsAny<Competition>()), Times.Never);
+            CheckShouldNotAdd();
         }
 
         [Fact]
@@ -168,8 +182,7 @@ namespace ServicesUnitTests.ServiceTests
 
             // Assert
             validator.CheckWasCalled();
-            repository.Verify(x => x.CreateCompetition(It.IsAny<Competition>()), Times.Never);
-            rewardScheduler.Verify(x => x.OnCompetitionCreated(It.IsAny<Competition>()), Times.Never);
+            CheckShouldNotAdd();
         }
 
         [Fact]

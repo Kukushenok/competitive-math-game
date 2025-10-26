@@ -33,6 +33,13 @@ namespace RepositoriesRealisation.RewardGranters
                                                                                                  .ToArrayAsync();
             List<CompetitionRewardModel> rewards = await context.CompetitionReward.Where(x => x.CompetitionId == competitionID)
                                                                                    .ToListAsync();
+            await GrantRewards(context, participations, rewards);
+
+            await context.SaveChangesAsync();
+        }
+
+        private async Task GrantRewards(BaseDbContext context, PlayerParticipationModel[] participations, IEnumerable<CompetitionRewardModel> rewards)
+        {
             foreach (CompetitionRewardModel reward in rewards)
             {
                 GrantCondition cond = reward.GetCondition();
@@ -49,8 +56,6 @@ namespace RepositoriesRealisation.RewardGranters
                     logger.LogError($"Unspecified rank condition \"{cond.Type}\", skipping");
                 }
             }
-
-            await context.SaveChangesAsync();
         }
 
         private static async Task GrantByCondition(BaseDbContext context, CompetitionRewardModel model, PlayerParticipationModel[] participations, PlaceGrantCondition placeCondition)

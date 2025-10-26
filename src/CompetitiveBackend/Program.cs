@@ -7,16 +7,12 @@ namespace CompetitiveBackend
 {
     public partial class Program
     {
-        public static void Main(string[] args)
+        private static void SetupServices(WebApplicationBuilder builder)
         {
-            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-
-            // The SIN of us. Pray for it to work blud.
             builder.Services.AddCompetitiveBackendSolution();
             builder.Services.AddExceptionHandler<BaseControllerErrorHandler>();
             builder.Services.AddProblemDetails();
 
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddControllers().AddNewtonsoftJson();
             builder.Services.AddSwaggerGen(setup =>
@@ -50,27 +46,30 @@ namespace CompetitiveBackend
                     setup.IncludeXmlComments(xmlPath);
                 }
             });
+        }
 
-            WebApplication app = builder.Build();
-
-            // Configure the HTTP request pipeline.
+        public static void SetupApp(WebApplication app)
+        {
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
-
-                // x=>
-                // {
-                //    x.RoutePrefix = "/api/v1";
-                // }
             }
 
-            // app.UseHttpsRedirection();
-            // app.UseAuthentication();
-            // app.UseAuthorization();
             app.UseExceptionHandler();
             app.MapControllers();
             app.Services.InitializeCompetitiveBackendSolution();
+        }
+
+        public static void Main(string[] args)
+        {
+            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+            SetupServices(builder);
+
+            WebApplication app = builder.Build();
+
+            SetupApp(app);
             app.Run();
         }
     }

@@ -80,13 +80,31 @@ namespace BenchmarkMeasurerHost.DataGenerator
             return (await competitionRepository.GetActiveCompetitions()).First();
         }
 
+        private static GrantCondition FakeGranter(Faker f, int batchSize, int totalCount)
+        {
+            float batchSuperstition = 0.2f;
+            if (f.Random.Bool())
+            {
+                float offset = (float)f.Random.Double(0, 1.0f - batchSuperstition);
+                return new RankGrantCondition(
+                    offset,
+                    offset + batchSuperstition);
+            }
+            else
+            {
+                int offset = f.Random.Int(1, totalCount - batchSize);
+                return new PlaceGrantCondition(
+                    offset,
+                    offset + batchSize);
+            }
+        }
+
         private async Task CreateCompetitionRewards(EnvironmentSettings currDataSettings, Competition coreCompetition, List<RewardDescription> rewards)
         {
             // float supposedCount = (float)(currDataSettings.SupposedRewardCount) / (currDataSettings.ParticipantsCount);
             // float batchSuperstition = supposedCount / MathF.Ceiling(supposedCount) / 2;
             // int batchSize = (int)(currDataSettings.ParticipantsCount * batchSuperstition);
             // int batchCount = ((int)MathF.Ceiling(supposedCount)) * 2;
-            float batchSuperstition = 0.2f;
             int batchSize = currDataSettings.SupposedRewardCount / 5;
             int batchCount = 5;
 
@@ -94,23 +112,7 @@ namespace BenchmarkMeasurerHost.DataGenerator
             Faker<CompetitionReward> competitionRewardFaker = new AutoFaker<CompetitionReward>(LOCALE)
                 .RuleFor(cr => cr.RewardDescriptionID, f => f.PickRandom(rewards).Id)
                 .RuleFor(cr => cr.CompetitionID, f => coreCompetition.Id)
-                .RuleFor(cr => cr.Condition, f =>
-                {
-                    if (f.Random.Bool())
-                    {
-                        float offset = (float)f.Random.Double(0, 1.0f - batchSuperstition);
-                        return new RankGrantCondition(
-                            offset,
-                            offset + batchSuperstition);
-                    }
-                    else
-                    {
-                        int offset = f.Random.Int(1, currDataSettings.ParticipantsCount - batchSize);
-                        return new PlaceGrantCondition(
-                            offset,
-                            offset + batchSize);
-                    }
-                });
+                .RuleFor(cr => cr.Condition, f => FakeGranter(f, batchSize, currDataSettings.ParticipantsCount));
 
             await Parallel.ForEachAsync(
                 competitionRewardFaker.Generate(batchCount).ToList(),
