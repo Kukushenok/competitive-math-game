@@ -9,7 +9,7 @@ on:
 jobs:
   husky-check:
     name: Run Husky .NET Checks
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       # --- 1 Клонируем репозиторий ---
