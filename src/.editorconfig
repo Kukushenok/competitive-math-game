@@ -68,6 +68,7 @@ dotnet_diagnostic.IDE0058.severity = none
 dotnet_diagnostic.IDE0290.severity = none
 dotnet_diagnostic.IDE0130.severity = none
 dotnet_diagnostic.IDE0060.severity = none
+dotnet_diagnostic.IDE0350.severity = none
 dotnet_diagnostic.CA1848.severity = none # wants logger methods for each message for some reason
 dotnet_diagnostic.CA2254.severity = none # wants different format string. Yeah this would be better if I coded it that way right from the start.
 dotnet_diagnostic.SA1401.severity = none # HEHEHEHA
