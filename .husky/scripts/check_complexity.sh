@@ -13,7 +13,7 @@ find . -type f -name "*.Metrics.xml" | while read -r file; do
     while IFS= read -r line; do
         name=$(echo "$line" | sed -n 's/.*Name="\([^"]*\)".*/\1/p')
         complexity=$(echo "$line" | sed -n 's/.*CyclomaticComplexity="\([0-9]*\)".*/\1/p')
-        if [ -n "$complexity" ] && [ "$complexity" -gt 10 ]; then
+        if [ -n "$complexity" ] && [ "$complexity" -gt 5 ]; then
             echo "❌ $name in $file has CyclomaticComplexity=$complexity"
             violations=1
         fi
