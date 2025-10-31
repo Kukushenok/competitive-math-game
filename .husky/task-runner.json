@@ -8,6 +8,20 @@
       "args": [ "run", "--project", "./tools/HalsteadAnalyzer", "--path", "./src/" ]
     },
     {
+      "name": "check-cyclomatic-complexity",
+      "command": "dotnet",
+      "group": "pre-commit",
+      "args": [
+        "run",
+        "--project",
+        "./tools/CodeAnalyzer",
+        "--path",
+        "./src/",
+        "--limit",
+        "10"
+      ]
+    },
+    {
       "name": "dotnet-format",
       "command": "dotnet",
       "group": "pre-commit",
@@ -18,18 +32,6 @@
       "command": "dotnet",
       "group": "pre-commit",
       "args": [ "build", "-warnaserror", "./src/CompetitiveBackend.sln"]
-    },
-    {
-      "name": "dotnet-metrics",
-      "command": "dotnet",
-      "group": "pre-commit",
-      "args": [ "msbuild", "-t:Metrics", "./src/CompetitiveBackend.sln"]
-    },
-    {
-      "name": "check-cyclomatic-complexity",
-      "command": "bash",
-      "group": "pre-commit",
-      "args": [ "./.husky/scripts/check_complexity.sh" ]
     }
   ]
 }

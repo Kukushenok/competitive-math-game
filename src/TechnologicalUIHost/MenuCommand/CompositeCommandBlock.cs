@@ -57,44 +57,54 @@ namespace TechnologicalUIHost.Command
                     idx++;
                 }
 
-                try
+                if (!await AskAndExec(console, commands))
                 {
-                    int commandIdx = console.ReadInt("> ");
-                    commandIdx--;
-                    if (commandIdx < 0)
+                    break;
+                }
+            }
+        }
+
+        private static async Task<bool> AskAndExec(IConsole console, List<IConsoleMenuCommand> commands)
+        {
+            try
+            {
+                int commandIdx = console.ReadInt("> ");
+                commandIdx--;
+                if (commandIdx < 0)
+                {
+                    return false;
+                }
+
+                foreach (IConsoleMenuCommand cmd in commands)
+                {
+                    if (cmd.Enabled && commandIdx == 0)
                     {
+                        await cmd.Execute(console);
                         break;
                     }
 
-                    foreach (IConsoleMenuCommand cmd in commands)
-                    {
-                        if (cmd.Enabled && commandIdx == 0)
-                        {
-                            await cmd.Execute(console);
-                            break;
-                        }
+                    commandIdx--;
+                }
 
-                        commandIdx--;
-                    }
-
-                    if (commandIdx != 0)
-                    {
-                        console.PromtOutput("Команда не найдена");
-                    }
-                }
-                catch (FormatException)
+                if (commandIdx != 0)
                 {
-                    console.PromtOutput("Неверный ввод данных");
-                }
-                catch (UseCaseException ex)
-                {
-                    console.PromtOutput($"Возникла ошибка на уровне пользовательских сценариев: {ex.Message}");
-                }
-                catch (Exception ex)
-                {
-                    console.PromtOutput($"Возникла ошибка при выполнении пользовательского сценария: {ex.Message}");
+                    console.PromtOutput("Команда не найдена");
                 }
             }
+            catch (FormatException)
+            {
+                console.PromtOutput("Неверный ввод данных");
+            }
+            catch (UseCaseException ex)
+            {
+                console.PromtOutput($"Возникла ошибка на уровне пользовательских сценариев: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                console.PromtOutput($"Возникла ошибка при выполнении пользовательского сценария: {ex.Message}");
+            }
+
+            return true;
         }
 
         protected abstract IEnumerable<IConsoleMenuCommand> GetCommands();
