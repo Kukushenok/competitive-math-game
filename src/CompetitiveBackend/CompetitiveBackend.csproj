@@ -16,6 +16,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Benchmark\Advanced\BenchmarkFaker\BenchmarkFaker.csproj" />
+    <ProjectReference Include="..\Benchmark\Advanced\PrometheusCollectorSetupper\PrometheusCollectorSetupper.csproj" />
     <ProjectReference Include="..\SolutionInstaller\SolutionInstaller.csproj" />
   </ItemGroup>
 </Project>

@@ -2,20 +2,15 @@ using System.Reflection;
 using CompetitiveBackend.Controllers;
 using CompetitiveBackend.SolutionInstaller;
 using Microsoft.OpenApi.Models;
+using PrometheusCollectorSetupper;
 
 namespace CompetitiveBackend
 {
     public partial class Program
     {
-        private static void SetupServices(WebApplicationBuilder builder)
+        private static void SetupSwagger(IServiceCollection coll)
         {
-            builder.Services.AddCompetitiveBackendSolution();
-            builder.Services.AddExceptionHandler<BaseControllerErrorHandler>();
-            builder.Services.AddProblemDetails();
-
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddControllers().AddNewtonsoftJson();
-            builder.Services.AddSwaggerGen(setup =>
+            coll.AddSwaggerGen(setup =>
             {
                 var jwtSecurityScheme = new OpenApiSecurityScheme
                 {
@@ -48,28 +43,30 @@ namespace CompetitiveBackend
             });
         }
 
-        public static void SetupApp(WebApplication app)
+        public static void Main(string[] args)
         {
+            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddCompetitiveBackendSolution();
+            builder.Services.AddExceptionHandler<BaseControllerErrorHandler>();
+            builder.Services.AddProblemDetails();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddPrometheusMetrics();
+            builder.Services.AddControllers().AddNewtonsoftJson();
+            SetupSwagger(builder.Services);
+
+            WebApplication app = builder.Build();
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
 
+            app.MapPost("/competition_ensurance/{minutes}", async (int minutes) => await BenchmarkFakerSetupper.BenchmarkBypass(app.Services, minutes));
+            app.UsePrometheusMetrics();
             app.UseExceptionHandler();
             app.MapControllers();
             app.Services.InitializeCompetitiveBackendSolution();
-        }
-
-        public static void Main(string[] args)
-        {
-            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-
-            SetupServices(builder);
-
-            WebApplication app = builder.Build();
-
-            SetupApp(app);
             app.Run();
         }
     }

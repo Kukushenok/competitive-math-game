@@ -6,12 +6,6 @@ using Repositories.Objects;
 
 namespace CompetitiveBackend.Services.CompetitionService
 {
-    public interface ICompetitionRewardScheduler
-    {
-        Task OnCompetitionCreated(Competition c);
-        Task OnCompetitionUpdated(Competition c);
-    }
-
     public class CompetitionRewardScheduler : ICompetitionRewardScheduler, ITimeScheduledTaskSubscriber
     {
         private const string SCHEDCATEGORY = "Competition";

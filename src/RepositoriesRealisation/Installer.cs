@@ -22,7 +22,7 @@ namespace RepositoriesRealisation
             container.AddScoped<SessionRepositoryConfiguration>();
             container.AddScoped<IRiddleRepository, RiddleRepository>();
             container.AddScoped<IRiddleSettingsRepository, RiddleSettingsRepository>();
-            container.AddDbContextFactory<BaseDbContext, BaseContextFactory>(lifetime: ServiceLifetime.Scoped);
+            container.AddDbContextFactory<BaseDbContext, BaseContextFactory>(lifetime: ServiceLifetime.Singleton);
             opt?.Invoke(myOptions);
             if (!myOptions.SetUpRewardGranter)
             {

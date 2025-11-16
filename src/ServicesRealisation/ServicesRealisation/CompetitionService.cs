@@ -1,6 +1,7 @@
 ﻿using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Services.Exceptions;
+using CompetitiveBackend.Services.ExtraTools;
 using ServicesRealisation.ServicesRealisation.Validator;
 
 namespace CompetitiveBackend.Services.CompetitionService

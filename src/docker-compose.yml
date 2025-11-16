@@ -4,10 +4,17 @@ services:
     build:
       context: .
       dockerfile: CompetitiveBackend/Dockerfile
+    ports:
+      - "8080:8080"
     depends_on:
       - postgres
     networks:
       - my_persistent_network
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2g
   postgres:
     container_name: database
     image: postgres
@@ -17,39 +24,98 @@ services:
       POSTGRES_DB: maindb
       PGDATA: /data/postgres
     volumes:
-        - ./postgres/data:/var/lib/postgresql/data
+        - database-data:/var/lib/postgresql/data
         - ./postgres/init:/docker-entrypoint-initdb.d/ 
     ports:
         - 5432:5432
     networks:
       - my_persistent_network
-  adminer:
-    image: adminer:4.8.1
-    container_name: db_adminer
-    restart: always
-    environment:
-      - ADMINER_DEFAULT_SERVER=postgres
-    depends_on:
-      - postgres
-    networks:
-      - my_persistent_network
-  nginx:
-    build:
-      context: ..
-      dockerfile: nginx/Dockerfile
-    container_name: nginx_gateway
-    ports:
-      - "8080:80"  
-    depends_on:
-      - competitivebackend
-      - adminer
-    networks:
-      - my_persistent_network
     deploy:
       resources:
         limits:
-          cpus: "2"
-          memory: 512M
+          cpus: '2'
+          memory: 2g
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/console_templates'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+      - '--web.enable-remote-write-receiver'
+      - '--enable-feature=native-histograms'
+    networks:
+      - my_persistent_network
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_PATH_PROVISIONING=/etc/grafana/provisioning
+      - GF_DASHBOARDS_JSON_ENABLED=true
+    volumes:
+      - ./Benchmark/grafana/provisioning:/etc/grafana/provisioning
+      - ./Benchmark/grafana/dashboards:/var/lib/grafana/dashboards
+    networks:
+      - my_persistent_network
+  # cadvisor:
+  #   image: gcr.io/cadvisor/cadvisor:latest
+  #   container_name: cadvisor
+  #   platform: linux/aarch64
+  #   ports:
+  #     - "8081:8080"
+  #   volumes:
+  #     - /:/rootfs:ro
+  #     - /var/run:/var/run:rw
+  #     - /sys:/sys:ro
+  #     - /var/lib/docker/:/var/lib/docker:ro
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #     - /dev/disk/:/dev/disk:ro
+  #   privileged: true
+  #   devices:
+  #     - /dev/kmsg
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         cpus: '0.5'
+  #         memory: 512M
+  #   networks:
+  #     - my_persistent_network
+  #   command:
+  #   - --logtostderr=true 
+  #   - --docker_only=true
+  #   - --log_cadvisor_usage=false
+  #   - --store_container_labels=true
+  netdata:
+    image: netdata/netdata
+    container_name: netdata
+    hostname: netdata # The hostname Netdata will use
+    ports:
+      - 19999:19999 # Netdata web UI
+    environment:
+      - NETDATA_PROMETHEUS_WEB=yes
+    cap_add:
+      - SYS_PTRACE # Required for process monitoring
+      - SYS_ADMIN # Required for various system metrics
+    volumes:
+      - /proc:/host/proc:ro # Mount /proc for process metrics
+      - /sys:/host/sys:ro # Mount /sys for system metrics
+      - /var/run/docker.sock:/var/run/docker.sock:ro # For Docker container monitoring
+    networks:
+      - my_persistent_network  # Добавьте это!
+    restart: always
+volumes:
+  database-data:
+  prometheus-data:
 networks:
   my_persistent_network:
     driver: bridge

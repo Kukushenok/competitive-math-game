@@ -1,0 +1,239 @@
+{
+  "id": null,
+  "uid": "http-monitoring-dashboard-v1",
+  "title": "HTTP Service Monitoring v1",
+  "tags": ["http", "performance", "k6", "dotnet"],
+  "timezone": "browser",
+  "panels": [
+    {
+      "id": 1,
+      "title": "CPU Utilization",
+      "type": "stat",
+      "gridPos": {"h": 8, "w": 6, "x": 0, "y": 0},
+      "targets": [
+        {
+          "expr": "system_runtime_cpu_usage * 100",
+          "legendFormat": "CPU Usage",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "color": {"mode": "palette-classic"},
+          "thresholds": {"steps": [{"color": "green", "value": null}, {"color": "yellow", "value": 70}, {"color": "red", "value": 85}]}
+        }
+      }
+    },
+    {
+      "id": 2,
+      "title": "Memory Usage",
+      "type": "stat",
+      "gridPos": {"h": 8, "w": 6, "x": 6, "y": 0},
+      "targets": [
+        {
+          "expr": "dotnet_total_memory_bytes",
+          "legendFormat": "Memory",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "color": {"mode": "palette-classic"},
+          "thresholds": {"steps": [{"color": "green", "value": null}, {"color": "yellow", "value": 500000000}, {"color": "red", "value": 800000000}]}
+        }
+      }
+    },
+    {
+      "id": 3,
+      "title": "DB Read Throughput",
+      "type": "stat",
+      "gridPos": {"h": 8, "w": 6, "x": 12, "y": 0},
+      "targets": [
+        {
+          "expr": "rate(npgsql_db_client_commands_bytes_read[5m])",
+          "legendFormat": "Read Bytes/sec",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "Bps",
+          "color": {"mode": "palette-classic"}
+        }
+      }
+    },
+    {
+      "id": 4,
+      "title": "DB Write Throughput",
+      "type": "stat",
+      "gridPos": {"h": 8, "w": 6, "x": 18, "y": 0},
+      "targets": [
+        {
+          "expr": "rate(npgsql_db_client_commands_bytes_written[5m])",
+          "legendFormat": "Write Bytes/sec",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "Bps",
+          "color": {"mode": "palette-classic"}
+        }
+      }
+    },
+    {
+  "id": 5,
+  "title": "Request Duration Over Time",
+  "type": "timeseries",
+  "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
+  "targets": [
+    {
+      "expr": "histogram_quantile(0.50, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))",
+      "legendFormat": "p50",
+      "refId": "A"
+    },
+    {
+      "expr": "histogram_quantile(0.75, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))",
+      "legendFormat": "p75",
+      "refId": "B"
+    },
+    {
+      "expr": "histogram_quantile(0.90, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))",
+      "legendFormat": "p90",
+      "refId": "C"
+    },
+    {
+      "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))",
+      "legendFormat": "p95",
+      "refId": "D"
+    },
+    {
+      "expr": "histogram_quantile(0.99, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))",
+      "legendFormat": "p99",
+      "refId": "E"
+    }
+  ],
+  "fieldConfig": {
+    "defaults": {
+      "unit": "s",
+      "color": {"mode": "palette-classic"}
+    }
+  }
+},
+{
+  "id": 6,
+  "title": "Request Duration Percentiles",
+  "type": "table",
+  "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8},
+  "targets": [
+    {
+      "expr": "histogram_quantile(0.50, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))",
+      "format": "table",
+      "instant": true,
+      "legendFormat": "p50",
+      "refId": "A"
+    },
+    {
+      "expr": "histogram_quantile(0.75, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))",
+      "format": "table",
+      "instant": true,
+      "legendFormat": "p75",
+      "refId": "B"
+    },
+    {
+      "expr": "histogram_quantile(0.90, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))",
+      "format": "table",
+      "instant": true,
+      "legendFormat": "p90",
+      "refId": "C"
+    },
+    {
+      "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))",
+      "format": "table",
+      "instant": true,
+      "legendFormat": "p95",
+      "refId": "D"
+    },
+    {
+      "expr": "histogram_quantile(0.99, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))",
+      "format": "table",
+      "instant": true,
+      "legendFormat": "p99",
+      "refId": "E"
+    }
+  ],
+  "fieldConfig": {
+    "defaults": {
+      "unit": "s",
+      "color": {"mode": "palette-classic"}
+    }
+  }
+},
+{
+  "id": 7,
+  "title": "Request Duration Distribution",
+  "type": "bargauge",
+  "gridPos": {"h": 8, "w": 12, "x": 0, "y": 16},
+  "targets": [
+    {
+      "expr": "histogram_quantile(0.50, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))",
+      "legendFormat": "p50",
+      "refId": "A"
+    },
+    {
+      "expr": "histogram_quantile(0.75, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))",
+      "legendFormat": "p75",
+      "refId": "B"
+    },
+    {
+      "expr": "histogram_quantile(0.90, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))",
+      "legendFormat": "p90",
+      "refId": "C"
+    },
+    {
+      "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))",
+      "legendFormat": "p95",
+      "refId": "D"
+    },
+    {
+      "expr": "histogram_quantile(0.99, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))",
+      "legendFormat": "p99",
+      "refId": "E"
+    }
+  ],
+  "fieldConfig": {
+    "defaults": {
+      "unit": "s",
+      "color": {"mode": "palette-classic"}
+    }
+  }
+},
+    {
+      "id": 8,
+      "title": "Requests Per Second",
+      "type": "timeseries",
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 16},
+      "targets": [
+        {
+          "expr": "rate(microsoft_aspnetcore_hosting_requests_per_second_total[5m])",
+          "legendFormat": "RPS",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "reqps",
+          "color": {"mode": "palette-classic"}
+        }
+      }
+    }
+  ],
+  "time": {"from": "now-5m", "to": "now"},
+  "timepicker": {},
+  "templating": {"list": []},
+  "refresh": "5s",
+  "schemaVersion": 35,
+  "version": 0
+}

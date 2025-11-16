@@ -13,7 +13,11 @@ namespace CompetitiveBackend.SolutionInstaller
     {
         public static IServiceCollection AddCompetitiveBackendSolution(this IServiceCollection coll)
         {
-            coll.AddCompetitiveRepositories(options => { options.UsePrivilegiedConnectionString("Guest"); })
+            coll.AddCompetitiveRepositories(options =>
+            {
+                options.UseDefaultConnectionString("postgres");
+                options.GrantRewardsWithStoredProcedure();
+            })
                 .AddQuartzTimeScheduler(options => options.UseSqlite("Data Source=quartznet.sqlite;Version=3"))
                 .AddMajickImageRescaler(option => option.UseConfigurationConstraints())
                 .AddInMemorySessions()

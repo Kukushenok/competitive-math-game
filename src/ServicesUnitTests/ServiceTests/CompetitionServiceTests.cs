@@ -2,6 +2,7 @@
 using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Services.CompetitionService;
 using CompetitiveBackend.Services.Exceptions;
+using CompetitiveBackend.Services.ExtraTools;
 using Moq;
 
 namespace ServicesUnitTests.ServiceTests

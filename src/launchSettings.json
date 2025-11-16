@@ -5,7 +5,10 @@
       "commandVersion": "1.0",
       "serviceActions": {
         "competitivebackend": "StartWithoutDebugging",
-        "postgres": "StartWithoutDebugging"
+        "grafana": "StartWithoutDebugging",
+        "k6": "StartWithoutDebugging",
+        "postgres": "StartWithoutDebugging",
+        "prometheus": "StartWithoutDebugging"
       }
     }
   }

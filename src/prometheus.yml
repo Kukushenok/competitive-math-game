@@ -1,0 +1,24 @@
+global:
+  scrape_interval: 5s
+  evaluation_interval: 5s
+
+scrape_configs:
+  - job_name: 'competitivebackend'
+    static_configs:
+      - targets: ['competitivebackend:8080']
+    metrics_path: '/metrics'
+    scrape_interval: 5s
+
+  - job_name: 'netdata'
+    static_configs:
+      - targets: ['netdata:19999']
+    metrics_path: '/api/v1/allmetrics'  # Правильный путь для Netdata
+    params:
+      format: ['prometheus']  # Формат Prometheus
+    scrape_interval: 5s
+    honor_labels: true  # Важно для Netdata
+
+  - job_name: 'k6'
+    static_configs:
+      - targets: ['k6:6565']
+    scrape_interval: 1s
