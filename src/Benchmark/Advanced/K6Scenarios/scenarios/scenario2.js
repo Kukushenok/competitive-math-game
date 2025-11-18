@@ -17,8 +17,8 @@ const opts = {
       executor: 'ramping-vus',
       startVUs: 0,
       stages: [
-         { target: 700, duration: '30s' },
-         { target: 700, duration: '3m' },
+         { target: 10, duration: '30s' },
+         { target: 10, duration: '3m' },
          { target: 0, duration: '30s' },
       ],
     },

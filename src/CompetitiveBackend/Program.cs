@@ -3,6 +3,7 @@ using CompetitiveBackend.Controllers;
 using CompetitiveBackend.SolutionInstaller;
 using Microsoft.OpenApi.Models;
 using PrometheusCollectorSetupper;
+using TelemetryInstaller;
 
 namespace CompetitiveBackend
 {
@@ -52,6 +53,7 @@ namespace CompetitiveBackend
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddPrometheusMetrics();
             builder.Services.AddControllers().AddNewtonsoftJson();
+            builder.Services.AddTelemetry(builder.Environment);
             SetupSwagger(builder.Services);
 
             WebApplication app = builder.Build();

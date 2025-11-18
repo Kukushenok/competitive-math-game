@@ -1,7 +1,7 @@
-﻿using Microsoft.Extensions.Hosting;
-using Prometheus;
+﻿#if DISABLED
 using System.Diagnostics;
-#if DISABLED
+using Microsoft.Extensions.Hosting;
+using Prometheus;
 namespace PrometheusCollectorSetupper
 {
     public class CpuPressureMonitor : BackgroundService

@@ -1,0 +1,42 @@
+services:
+  competitivebackend:
+    image: ${DOCKER_REGISTRY-}competitivebackend
+    build:
+      context: .
+      dockerfile: CompetitiveBackend/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    networks:
+      - my_persistent_network
+    environment:
+      - TELEMETRY_OLTP_ADDRESS=http://otel-collector:4317
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2g
+  
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:latest
+    container_name: otel-collector
+    command: ["--config=/etc/otel/otel-collector-config.yaml"]
+    volumes:
+      - ./otel-collector-config.yml:/etc/otel/otel-collector-config.yaml
+    ports:
+      - "4317:4317"
+      - "4318:4318"
+      - "9464:9464"
+    networks:
+      - my_persistent_network
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.57
+    container_name: jaeger
+    ports:
+      - "6831:6831/udp" # UDP port for Jaeger agent
+      - "16686:16686" # Web UI
+      - "14268:14268" # HTTP port for spans
+    networks:
+      - my_persistent_network

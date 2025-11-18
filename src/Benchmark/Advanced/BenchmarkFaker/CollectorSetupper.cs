@@ -1,13 +1,10 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using CompetitiveBackend.Repositories;
-using CompetitiveBackend.Core;
-using CompetitiveBackend.Core.Objects;
+﻿using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Core.Objects.Riddles;
-using Repositories.Objects;
 using CompetitiveBackend.Core.RewardCondition;
+using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Services.ExtraTools;
-using static System.Formats.Asn1.AsnWriter;
+using Microsoft.Extensions.DependencyInjection;
+using Repositories.Objects;
 
 namespace PrometheusCollectorSetupper
 {
@@ -42,23 +39,23 @@ namespace PrometheusCollectorSetupper
             await InitializeRewards(compReward, rewardDescr, compID);
         }
 
-        private static IEnumerable<RiddleAnswer> YieldFakeRandom(Random rnd, int A, int B)
+        private static IEnumerable<RiddleAnswer> YieldFakeRandom(Random rnd, int a, int b)
         {
             int count = rnd.Next(0, 5);
             while (count > 0)
             {
-                yield return new RiddleAnswer($"{A + B + (rnd.Next(1, 6) * (1 - (2 * rnd.Next(0, 2))))}");
+                yield return new RiddleAnswer($"{a + b + (rnd.Next(1, 6) * (1 - (2 * rnd.Next(0, 2))))}");
                 count--;
             }
         }
 
         private static GrantCondition GetGrantCondition(Random rnd)
         {
-            if(rnd.Next() % 2 == 0)
+            if (rnd.Next() % 2 == 0)
             {
                 int place = 1 + (rnd.Next() % 200);
                 return new PlaceGrantCondition(place, place + 50);
-            } 
+            }
             else
             {
                 float ratio1 = (float)rnd.NextDouble() * 0.75f;
@@ -99,12 +96,12 @@ namespace PrometheusCollectorSetupper
             await riddleRepo.CreateRiddle(info);
         }
 
-        private static async Task<Competition> InitializeCompetition(ICompetitionRepository P, IRiddleSettingsRepository settingsRepo, IRiddleRepository riddleRepo, int minutes)
+        private static async Task<Competition> InitializeCompetition(ICompetitionRepository p, IRiddleSettingsRepository settingsRepo, IRiddleRepository riddleRepo, int minutes)
         {
             var rnd = new Random();
             string randname = $"R{DateTime.UtcNow.Ticks}{rnd.Next(0, 10000)}";
-            await P.CreateCompetition(new Competition(randname, "haii! :3", DateTime.UtcNow.AddYears(-1), DateTime.UtcNow.AddMinutes(minutes)));
-            Competition[] createdComps = [.. await P.GetActiveCompetitions()];
+            await p.CreateCompetition(new Competition(randname, "haii! :3", DateTime.UtcNow.AddYears(-1), DateTime.UtcNow.AddMinutes(minutes)));
+            Competition[] createdComps = [.. await p.GetActiveCompetitions()];
             Competition result = createdComps.First(x => x.Name == randname);
             for (int i = 0; i < 30; i++)
             {

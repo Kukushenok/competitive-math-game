@@ -133,10 +133,14 @@ export function createScenario(customConstants = {}, optionsConfig = {}) {
       // Submit answers
       const submitSuccess = retryRequest(() => {
         const answers = generateAnswers(questionsData.riddles);
-        
+        const payload = JSON.stringify({
+            sessionID: sessionId,
+            answers: answers
+        });
+
         const submitRes = http.post(
-          `http://competitivebackend:8080/api/v1/competitions/${competitionId}/game_session/${sessionId}`,
-          JSON.stringify(answers),
+          `http://competitivebackend:8080/api/v1/competitions/${competitionId}/game_session`,
+          JSON.stringify(payload),
           { headers: { 
             'Content-Type': 'application/json',
             'Bearer': `${token}`

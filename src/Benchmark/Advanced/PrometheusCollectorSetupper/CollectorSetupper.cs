@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Prometheus;
 using Prometheus.SystemMetrics;
 
@@ -12,7 +11,6 @@ namespace PrometheusCollectorSetupper
         {
             services.UseHttpClientMetrics();
             services.AddSystemMetrics();
-           // services.AddHostedService<CpuPressureMonitor>();
             return services;
         }
 
@@ -22,7 +20,6 @@ namespace PrometheusCollectorSetupper
             // Включаем сбор метрик HTTP запросов
             app.UseMetricServer();
             app.UseHttpMetrics();
-           // app.UseMiddleware<ThrottlingMonitoringMiddleware>();
             return app;
         }
     }
