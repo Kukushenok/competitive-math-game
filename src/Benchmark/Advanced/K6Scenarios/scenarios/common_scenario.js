@@ -133,11 +133,10 @@ export function createScenario(customConstants = {}, optionsConfig = {}) {
       // Submit answers
       const submitSuccess = retryRequest(() => {
         const answers = generateAnswers(questionsData.riddles);
-        const payload = JSON.stringify({
+        const payload = {
             sessionID: sessionId,
             answers: answers
-        });
-
+        };
         const submitRes = http.post(
           `http://competitivebackend:8080/api/v1/competitions/${competitionId}/game_session`,
           JSON.stringify(payload),
@@ -148,7 +147,7 @@ export function createScenario(customConstants = {}, optionsConfig = {}) {
         );
         
         if (submitRes.status === 400) {
-          console.log(`Competition ${competitionId} might be expired (400 response) during submission, skipping`);
+          console.log(`ERROR ${submitRes.body}`);
           return { success: true, retry: false };
         }
         
