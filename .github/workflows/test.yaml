@@ -113,7 +113,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: otel-traces
-          path: src/otel-data/traces.json
+          path: src/otel-data
 
   e2e_tests:
     name: E2E Tests
@@ -158,12 +158,17 @@ jobs:
           name: e2e-test-results
           path: |
             src/E2ETests/bin/Debug/net8.0/allure-results
+      - name: Debug OTEL output
+        if: always()
+        run: |
+          echo "--- host src/otel-data ---"
+          ls -la src/otel-data
       - name: Upload OTEL traces
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: otel-traces
-          path: src/otel-data/traces.json
+          path: src/otel-data
 
 
 

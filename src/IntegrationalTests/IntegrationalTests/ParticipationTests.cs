@@ -12,7 +12,7 @@ namespace IntegrationalTests
         private CompetitionModel tracking = null!;
 
         [Fact]
-        public async Task Participate()
+        public async Task ParticipateDeprecatedAPI()
         {
             await using var rEGISTERACC = new SetupAuth(Client, Context, Faker.Internet.UserName());
             AuthSuccessResultDTO aCCOUNT = await rEGISTERACC.RegisterAndLogIn();
@@ -21,7 +21,7 @@ namespace IntegrationalTests
             HttpResponseMessage result = await Client.PutAsync($"/api/v1/competitions/{tracking.Id}/participations/?score=500", null); // await Client.GetAsync($"{APIConsts.ROOTV1}/{APIConsts.COMPETITIONS}/1");
 
             // Assert
-            result.IsSuccessStatusCode.Should().BeTrue();
+            result.IsSuccessStatusCode.Should().BeFalse();
             await Context.PlayerParticipation.Where(x => x.AccountID == aCCOUNT.AccountID).ExecuteDeleteAsync();
         }
 
