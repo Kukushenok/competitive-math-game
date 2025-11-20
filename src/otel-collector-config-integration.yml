@@ -1,0 +1,24 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+
+processors:
+  batch:
+
+exporters:
+  file:
+    path: /data/traces.json
+    rotation:
+      max_megabytes: 50
+      max_backups: 5
+      max_days: 3
+    format: json
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [file]

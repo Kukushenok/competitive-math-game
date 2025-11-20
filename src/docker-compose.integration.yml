@@ -6,6 +6,7 @@ services:
       dockerfile: CompetitiveBackend/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Integration
+      - TELEMETRY_OLTP_ADDRESS=http://otel-collector:4317
     depends_on:
       - postgres
     ports:
@@ -24,6 +25,18 @@ services:
         - ./postgres/init:/docker-entrypoint-initdb.d/ 
     ports:
         - 5432:5432
+    networks:
+      - my_persistent_network
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:latest
+    container_name: otel-collector
+    command: ["--config=/etc/otel/otel-collector-config.yml"]
+    volumes:
+      - ./otel-collector-config-integration.yml:/etc/otel/otel-collector-config.yml
+      - ./otel-data:/data
+    ports:
+      - "4317:4317" # OTLP gRPC
+      - "4318:4318" # OTLP HTTP
     networks:
       - my_persistent_network
 
