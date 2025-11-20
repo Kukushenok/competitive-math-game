@@ -1,18 +1,15 @@
-﻿using CompetitiveBackend.BackendUsage.Objects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using CompetitiveBackend.BackendUsage.Objects;
 
 namespace CompetitiveBackend.BackendUsage.UseCases
 {
     public interface ICompetitionWatchUseCase
     {
-        public Task<IEnumerable<CompetitionDTO>> GetActiveCompetitions();
-        public Task<IEnumerable<CompetitionDTO>> GetAllCompetitions(DataLimiterDTO limiter);
-        public Task<CompetitionDTO> GetCompetition(int competitionID);
-        public Task<LargeDataDTO> GetCompetitionLevel(int competitionID, string? Platform = null, int? maxVersion = null);
-        public Task<IEnumerable<CompetitionRewardDTO>> GetRewardsFor(int competitionID);
+        Task<IEnumerable<CompetitionDTO>> GetActiveCompetitions();
+        Task<IEnumerable<CompetitionDTO>> GetAllCompetitions(DataLimiterDTO limiter);
+        Task<CompetitionDTO> GetCompetition(int competitionID);
+        Task<LargeDataDTO> GetCompetitionLevel(int competitionID, string? platform = null, int? maxVersion = null);
+        Task<IEnumerable<CompetitionRewardDTO>> GetRewardsFor(int competitionID);
     }
 }

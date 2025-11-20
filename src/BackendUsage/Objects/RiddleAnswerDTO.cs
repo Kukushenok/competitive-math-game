@@ -5,7 +5,7 @@ namespace CompetitiveBackend.BackendUsage.Objects
     [Serializable]
     public class RiddleAnswerDTO
     {
-        public string TextAnswer { get; set; } = "";
+        public string TextAnswer { get; set; } = string.Empty;
 
         public RiddleAnswerDTO(string textAnswer)
         {

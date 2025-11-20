@@ -1,0 +1,37 @@
+{
+  "$schema": "https://alirezanet.github.io/Husky.Net/schema.json",
+  "tasks": [
+    {
+      "name": "check-halstead-complexity",
+      "command": "dotnet",
+      "group": "pre-commit",
+      "args": [ "run", "--project", "./tools/HalsteadAnalyzer", "--path", "./src/" ]
+    },
+    {
+      "name": "check-cyclomatic-complexity",
+      "command": "dotnet",
+      "group": "pre-commit",
+      "args": [
+        "run",
+        "--project",
+        "./tools/CodeAnalyzer",
+        "--path",
+        "./src/",
+        "--limit",
+        "10"
+      ]
+    },
+    {
+      "name": "dotnet-format",
+      "command": "dotnet",
+      "group": "pre-commit",
+      "args": [ "format", "analyzers", "--verify-no-changes", "--severity", "error", "./src/CompetitiveBackend.sln"]
+    },
+    {
+      "name": "dotnet-build",
+      "command": "dotnet",
+      "group": "pre-commit",
+      "args": [ "build", "-warnaserror", "./src/CompetitiveBackend.sln"]
+    }
+  ]
+}

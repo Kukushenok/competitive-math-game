@@ -1,26 +1,22 @@
-﻿using CompetitiveBackend.Repositories;
+﻿using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 namespace CompetitiveBackend.Repositories
 {
     public class SessionRepositoryConfiguration
     {
-        private IConfiguration configuration;
+        private readonly IConfiguration configuration;
         public SessionRepositoryConfiguration(IConfiguration conf)
         {
             configuration = conf;
             Key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(conf["Secrets:SessionKey"] ?? new string('N', 128)));
             Credentials = new SigningCredentials(Key, conf["Secrets:Algo"] ?? SecurityAlgorithms.HmacSha256);
         }
+
         public SymmetricSecurityKey Key { get; private set; }
         public SigningCredentials Credentials { get; private set; }
-        public DateTime? Expires { get 
-            {
-                double val = 24.0;
-                double.TryParse(configuration["SessionTimeHrs"] ?? "24", out val);
-                return DateTime.UtcNow.AddHours(val);
-            }
-        }
+        public DateTime? Expires => double.TryParse(configuration["SessionTimeHrs"] ?? "24", out double val)
+                    ? DateTime.UtcNow.AddHours(val)
+                    : DateTime.UtcNow.AddHours(24);
     }
 }

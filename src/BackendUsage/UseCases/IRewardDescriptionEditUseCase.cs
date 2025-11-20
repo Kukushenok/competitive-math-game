@@ -1,12 +1,12 @@
-﻿using CompetitiveBackend.BackendUsage.Objects;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using CompetitiveBackend.BackendUsage.Objects;
 
 namespace CompetitiveBackend.BackendUsage.UseCases
 {
     public interface IRewardDescriptionEditUseCase : IAuthableUseCase<IRewardDescriptionEditUseCase>
     {
-        public Task CreateRewardDescription(RewardDescriptionDTO reward);
-        public Task UpdateRewardDescription(RewardDescriptionDTO reward);
-        public Task SetRewardIcon(int id, LargeDataDTO rewardIcon);
+        Task CreateRewardDescription(RewardDescriptionDTO reward);
+        Task UpdateRewardDescription(RewardDescriptionDTO reward);
+        Task SetRewardIcon(int id, LargeDataDTO rewardIcon);
     }
 }

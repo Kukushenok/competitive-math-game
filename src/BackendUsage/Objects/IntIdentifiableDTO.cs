@@ -6,10 +6,11 @@ namespace CompetitiveBackend.BackendUsage.Objects
     public class IntIdentifiableDTO
     {
         public int? ID { get; set; }
-        public IntIdentifiableDTO(int? ID)
+        public IntIdentifiableDTO(int? iD)
         {
-            this.ID = ID;
+            ID = iD;
         }
+
         public IntIdentifiableDTO()
         {
             ID = null;

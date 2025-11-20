@@ -1,0 +1,2 @@
+# thresholds for code metrics rules
+CA1502: 10

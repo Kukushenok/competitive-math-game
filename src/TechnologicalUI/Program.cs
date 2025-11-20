@@ -1,26 +1,37 @@
-﻿using CompetitiveBackend.SolutionInstaller;
-using Microsoft.Extensions.Configuration;
+﻿using ClientUsage.Installer;
+
+// using CompetitiveBackend.SolutionInstaller;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using TechnologicalUI;
 using TechnologicalUIHost;
-using TechnologicalUIHost.Commands;
-using TechnologicalUIHost.ConsoleAbstractions;
-using TechnologicalUIHost.MenuCommand;
 
-namespace TechnologicalUI
+HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
+builder.Services.AddLogging(conf => conf.AddProvider(new FileLoggerProvider("log.log")));
+bool local = Decide(builder.Services);
+builder.Services.AddTechnologicalUIHostWithConsole<ConsoleInOut>();
+IHost hst = builder.Build();
+
+// if(local) hst.Services.InitializeCompetitiveBackendSolution();
+hst.Run();
+
+static bool Decide(IServiceCollection coll)
 {
-    internal class Program
+    Console.Write("Введите HTTP-адрес сервера (по умолчанию http://localhost:8080/). (Напишите host, чтобы не использовать): ");
+    string? input = Console.ReadLine()?.Trim();
+    if (string.IsNullOrEmpty(input))
     {
-        static void Main(string[] args)
-        {
-            HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
-            builder.Services.AddLogging(conf => conf.AddProvider(new FileLoggerProvider("log.log")));
-            builder.Services.AddCompetitiveBackendSolution();
-            builder.Services.AddTechnologicalUIHostWithConsole<ConsoleInOut>();
-            IHost hst = builder.Build();
-            hst.Services.InitializeCompetitiveBackendSolution();
-            hst.Run();
-        }
+        input = "http://localhost:8080/";
     }
+
+    // {
+    //    coll.AddCompetitiveBackendSolution();
+    // }
+    // else
+    // {
+    coll.AddRemoteUseCases(input);
+
+    // }
+    return false;
 }

@@ -1,11 +1,11 @@
-﻿using CompetitiveBackend.BackendUsage.Objects;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using CompetitiveBackend.BackendUsage.Objects;
 
 namespace CompetitiveBackend.BackendUsage.UseCases
 {
-    public interface IGamePlayUseCase: IAuthableUseCase<IGamePlayUseCase>
+    public interface IGamePlayUseCase : IAuthableUseCase<IGamePlayUseCase>
     {
-        public Task<CompetitionParticipationTaskDTO> DoPlay(int competitionID);
-        public Task<ParticipationFeedbackDTO> DoSubmit(CompetitionParticipationRequestDTO request);
+        Task<CompetitionParticipationTaskDTO> DoPlay(int competitionID);
+        Task<ParticipationFeedbackDTO> DoSubmit(CompetitionParticipationRequestDTO request);
     }
 }

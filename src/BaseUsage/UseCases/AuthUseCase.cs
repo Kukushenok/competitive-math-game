@@ -6,7 +6,7 @@ namespace CompetitiveBackend.BaseUsage.UseCases
 {
     public class AuthUseCase : IAuthUseCase
     {
-        private IAuthService authService;
+        private readonly IAuthService authService;
         public AuthUseCase(IAuthService authService)
         {
             this.authService = authService;
@@ -14,14 +14,14 @@ namespace CompetitiveBackend.BaseUsage.UseCases
 
         public async Task<AuthSuccessResultDTO> Login(AccountLoginDTO loginRequest)
         {
-            var result = await authService.LogIn(loginRequest.Login, loginRequest.Password);
+            Services.Objects.AuthSuccessResult result = await authService.LogIn(loginRequest.Login, loginRequest.Password);
             return new AuthSuccessResultDTO(result.Token, result.RoleName, result.AccountID);
         }
 
-        public async Task<AuthSuccessResultDTO> Register(AccountCreationDTO creationDTO)
+        public async Task<AuthSuccessResultDTO> Register(AccountCreationDTO creation)
         {
-            await authService.Register(new Core.Objects.Account(creationDTO.Login, creationDTO.Email), creationDTO.Password);
-            return await Login(creationDTO);
+            await authService.Register(new Core.Objects.Account(creation.Login, creation.Email), creation.Password);
+            return await Login(creation);
         }
     }
 }

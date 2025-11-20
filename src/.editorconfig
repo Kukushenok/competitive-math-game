@@ -1,0 +1,95 @@
+# StyleCop-friendly modern config (.NET 8)
+# ========================================
+root = true
+
+[*.cs]
+
+#############################################
+# 🔹 Общие настройки форматирования
+#############################################
+# Включаем все анализаторы
+dotnet_analyzer_diagnostic.severity = warning
+
+# Устанавливаем порог сложности
+dotnet_code_quality.CA1502.threshold = 10
+
+# Превращаем превышение в ошибку
+dotnet_diagnostic.CA1502.severity = error
+
+# Не требовать this.
+dotnet_diagnostic.SA1101.severity = none
+dotnet_diagnostic.CA1816.severity = none
+# Не требовать XML-комментарии для всего подряд
+dotnet_diagnostic.SA1600.severity = none      # Missing XML comment
+dotnet_diagnostic.SA1601.severity = none      # Elements should be documented
+dotnet_diagnostic.SA1602.severity = none      # Enum items
+dotnet_diagnostic.SA1633.severity = none      # File header
+# Не заставлять строго следовать порядку членов
+dotnet_diagnostic.SA1200.severity = none
+dotnet_diagnostic.SA1201.severity = none
+dotnet_diagnostic.SA1202.severity = none
+dotnet_diagnostic.SA1203.severity = none
+dotnet_diagnostic.SA1204.severity = none
+dotnet_diagnostic.SA1205.severity = none
+dotnet_diagnostic.SA1206.severity = none
+
+# Разрешить пустые строки между методами и полями
+dotnet_diagnostic.SA1516.severity = none
+
+# Люблю хранить два класса в одном файле
+dotnet_diagnostic.SA1649.severity = none
+dotnet_diagnostic.SA1402.severity = none
+
+# don't mind about documentation because im a lazy slob
+dotnet_diagnostic.SA0001.severity = none
+
+#############################################
+# 🔹 Что оставить включенным
+#############################################
+
+# Пробелы и форматирование
+
+dotnet_diagnostic.SA1000.severity = warning
+dotnet_diagnostic.SA1001.severity = warning
+dotnet_diagnostic.SA1005.severity = warning
+dotnet_diagnostic.SA1028.severity = warning
+
+# Имена и константы
+dotnet_diagnostic.SA1300.severity = warning   # Element should begin with upper-case letter
+dotnet_diagnostic.SA1309.severity = warning   # Field names should not begin with underscore
+
+# Скобки, отступы и пр.
+dotnet_diagnostic.SA1500.severity = warning
+dotnet_diagnostic.SA1503.severity = warning
+dotnet_diagnostic.SA1513.severity = warning
+
+# swag
+dotnet_diagnostic.IDE0058.severity = none
+dotnet_diagnostic.IDE0290.severity = none
+dotnet_diagnostic.IDE0130.severity = none
+dotnet_diagnostic.IDE0060.severity = none
+dotnet_diagnostic.IDE0350.severity = none
+dotnet_diagnostic.CA1848.severity = none # wants logger methods for each message for some reason
+dotnet_diagnostic.CA2254.severity = none # wants different format string. Yeah this would be better if I coded it that way right from the start.
+dotnet_diagnostic.SA1401.severity = none # HEHEHEHA
+dotnet_diagnostic.CA1051.severity = none # HEHEHEHA
+
+dotnet_diagnostic.FAA0002.severity = none
+#############################################
+# 🔹 Настройки для форматтера
+#############################################
+
+# Всегда использовать var, когда тип очевиден
+csharp_style_var_when_type_is_apparent = true:suggestion
+
+
+
+# Отступы 4 пробела
+indent_size = 4
+tab_width = 4
+use_tab = false
+
+# Открывающая скобка на новой строке (по Microsoft style)
+csharp_new_line_before_open_brace = all
+
+

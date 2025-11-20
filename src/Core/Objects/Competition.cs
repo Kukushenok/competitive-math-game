@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace CompetitiveBackend.Core.Objects
+﻿namespace CompetitiveBackend.Core.Objects
 {
     public class Competition : IntIdentifiable, IEquatable<Competition>
     {
@@ -8,7 +6,8 @@ namespace CompetitiveBackend.Core.Objects
         public readonly string Description;
         public readonly DateTime StartDate;
         public readonly DateTime EndDate;
-        public Competition(string name, string description, DateTime startDate, DateTime endDate, int? id = null) : base(id)
+        public Competition(string name, string description, DateTime startDate, DateTime endDate, int? id = null)
+            : base(id)
         {
             Name = name;
             Description = description;
@@ -24,6 +23,16 @@ namespace CompetitiveBackend.Core.Objects
                 (StartDate == x.StartDate) &&
                 (EndDate == x.EndDate) &&
                 (Id == x.Id);
-        } 
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return Equals(obj as Competition);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Name, Description, StartDate, EndDate);
+        }
     }
 }

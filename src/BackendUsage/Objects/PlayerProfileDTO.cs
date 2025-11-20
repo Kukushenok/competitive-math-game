@@ -7,7 +7,8 @@ namespace CompetitiveBackend.BackendUsage.Objects
     {
         public string? Name { get; set; }
         public string? Description { get; set; }
-        public PlayerProfileDTO(string? name, string? description, int? ID) : base(ID)
+        public PlayerProfileDTO(string? name, string? description, int? iD)
+            : base(iD)
         {
             Name = name;
             Description = description;

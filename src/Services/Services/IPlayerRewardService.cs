@@ -5,24 +5,26 @@ namespace CompetitiveBackend.Services
     public interface IPlayerRewardService
     {
         /// <summary>
-        /// Выдать игроку награду вручную
+        /// Выдать игроку награду вручную.
         /// </summary>
-        /// <param name="playerID">Игрок</param>
-        /// <param name="rewardDescriptionID">Описание награды</param>
-        /// <returns></returns>
-        public Task GrantRewardToPlayer(int playerID, int rewardDescriptionID);
+        /// <param name="playerID">Игрок.</param>
+        /// <param name="rewardDescriptionID">Описание награды.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        Task GrantRewardToPlayer(int playerID, int rewardDescriptionID);
+
         /// <summary>
-        /// Удалить награду игрока
+        /// Удалить награду игрока.
         /// </summary>
-        /// <param name="playerRewardID">Идентификатор награды игрока</param>
-        /// <returns></returns>
-        public Task DeleteReward(int playerRewardID);
+        /// <param name="playerRewardID">Идентификатор награды игрока.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        Task DeleteReward(int playerRewardID);
+
         /// <summary>
-        /// Получить все награды игрока
+        /// Получить все награды игрока.
         /// </summary>
-        /// <param name="playerID">Идентификатор игрока</param>
-        /// <param name="limiter">Ограничитель данных</param>
-        /// <returns>Множество наград игрока</returns>
-        public Task<IEnumerable<PlayerReward>> GetAllRewardsOf(int playerID, DataLimiter limiter);
+        /// <param name="playerID">Идентификатор игрока.</param>
+        /// <param name="limiter">Ограничитель данных.</param>
+        /// <returns>Множество наград игрока.</returns>
+        Task<IEnumerable<PlayerReward>> GetAllRewardsOf(int playerID, DataLimiter limiter);
     }
 }

@@ -8,7 +8,8 @@ namespace TechnologicalUIHost
 {
     public static class Installer
     {
-        public static IServiceCollection AddTechnologicalUIHostWithConsole<T>(this IServiceCollection collection) where T: class, IConsole
+        public static IServiceCollection AddTechnologicalUIHostWithConsole<T>(this IServiceCollection collection)
+            where T : class, IConsole
         {
             collection.AddSingleton<RootCommand>();
             collection.AddSingleton<IHost, TechnologicalUIHost>();

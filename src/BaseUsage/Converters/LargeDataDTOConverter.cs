@@ -9,9 +9,10 @@ namespace CompetitiveBackend.BaseUsage.Converters
         {
             return new LargeData(dto.Data);
         }
+
         public static LargeDataDTO Convert(this LargeData data)
         {
-            return new LargeDataDTO(data.Data ?? Array.Empty<byte>());
+            return new LargeDataDTO(data.Data ?? []);
         }
     }
 }

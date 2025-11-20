@@ -1,12 +1,6 @@
-﻿using CompetitiveBackend.Core.Objects;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+using CompetitiveBackend.Core.Objects;
 
 namespace RepositoriesRealisation.Models
 {
@@ -24,26 +18,31 @@ namespace RepositoriesRealisation.Models
         public RewardDescriptionModelIconImage IconImage { get; set; } = null!;
         public RewardDescriptionModel()
         {
-
+            Name = string.Empty;
+            Description = string.Empty;
         }
+
         public RewardDescriptionModel(string name, string? description = null)
         {
             Name = name;
             Description = description;
         }
+
         public RewardDescriptionModel(int id, string name, string? description = null)
         {
             Id = id;
             Name = name;
             Description = description;
         }
+
         public RewardDescription ToCoreRewardDescription()
         {
-            return new RewardDescription(Name, Description ?? "", Id);
+            return new RewardDescription(Name, Description ?? string.Empty, Id);
         }
     }
+
     [Table("reward_description")]
-    public class RewardDescriptionModelIconImage: OneToOneEntity<RewardDescriptionModel>
+    public class RewardDescriptionModelIconImage : OneToOneEntity<RewardDescriptionModel>
     {
         [Column("icon_image", TypeName = "bytea")]
         public byte[]? IconImage { get; set; }

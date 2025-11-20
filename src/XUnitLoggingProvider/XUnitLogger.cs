@@ -2,24 +2,25 @@
 using Xunit.Abstractions;
 namespace XUnitLoggingProvider
 {
-    internal class XUnitLogger : ILogger
+    internal sealed class XUnitLogger : ILogger
     {
-        class DummyScope : IDisposable
+        private sealed class DummyScope : IDisposable
         {
             public void Dispose()
             {
-
             }
         }
-        ITestOutputHelper output;
-        string? category;
+
+        private readonly ITestOutputHelper output;
+        private readonly string? category;
         public XUnitLogger(ITestOutputHelper output, string? category = null)
         {
             this.output = output;
             this.category = category;
         }
 
-        public IDisposable BeginScope<TState>(TState state)
+        public IDisposable? BeginScope<TState>(TState state)
+            where TState : notnull
         {
             output.WriteLine("Got into " + state.ToString());
             return new DummyScope();
@@ -30,13 +31,14 @@ namespace XUnitLoggingProvider
             return true;
         }
 
-        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
+        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
         {
             string form = formatter(state, exception);
-            output.WriteLine((category ?? "") + eventId.ToString() + " : " + form);
+            output.WriteLine((category ?? string.Empty) + eventId.ToString() + " : " + form);
         }
     }
-    internal class XUnitFactory(ITestOutputHelper output) : ILoggerFactory, ILoggerProvider
+
+    internal sealed class XUnitFactory(ITestOutputHelper output) : ILoggerFactory, ILoggerProvider
     {
         public void AddProvider(ILoggerProvider provider)
         {
@@ -50,7 +52,6 @@ namespace XUnitLoggingProvider
 
         public void Dispose()
         {
-
         }
     }
 }

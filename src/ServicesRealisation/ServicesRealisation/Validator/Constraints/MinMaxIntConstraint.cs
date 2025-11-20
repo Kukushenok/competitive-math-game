@@ -8,12 +8,16 @@ namespace ServicesRealisation.ServicesRealisation.Validator.Constraints
         public int Max { get; private set; }
         public MinMaxIntConstraint(int min, int max)
         {
-            Min = min; Max = max;
+            Min = min;
+            Max = max;
         }
+
         public MinMaxIntConstraint()
         {
-            Min = 0; Max = -1; // So it fails.
+            Min = 0;
+            Max = -1; // So it fails.
         }
+
         public bool IsValid(int value, out string? msg)
         {
             msg = null;
@@ -21,9 +25,11 @@ namespace ServicesRealisation.ServicesRealisation.Validator.Constraints
             {
                 return true;
             }
+
             msg = "Not in range";
             return false;
         }
+
         public bool IsValid(int? value, out string? msg)
         {
             msg = null;

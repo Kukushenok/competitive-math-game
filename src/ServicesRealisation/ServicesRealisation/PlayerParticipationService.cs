@@ -1,39 +1,34 @@
 ﻿using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
-using CompetitiveBackend.Repositories.Exceptions;
-using CompetitiveBackend.Services.Exceptions;
 
 namespace CompetitiveBackend.Services.PlayerParticipationService
 {
     public class PlayerParticipationService : IPlayerParticipationService
     {
-        private readonly IPlayerParticipationRepository _playerParticipationRepository;
-        private readonly ICompetitionRepository _competitionRepository;
-        public PlayerParticipationService(IPlayerParticipationRepository playerParticipationRepository, ICompetitionRepository competitionRepository)
+        private readonly IPlayerParticipationRepository playerParticipationRepository;
+        public PlayerParticipationService(IPlayerParticipationRepository playerParticipationRepository)
         {
-            _playerParticipationRepository = playerParticipationRepository;
-            _competitionRepository = competitionRepository;
+            this.playerParticipationRepository = playerParticipationRepository;
         }
 
         public async Task DeleteParticipation(int playerID, int competitionID)
         {
-            await _playerParticipationRepository.DeleteParticipation(playerID, competitionID);
+            await playerParticipationRepository.DeleteParticipation(playerID, competitionID);
         }
 
         public async Task<IEnumerable<PlayerParticipation>> GetLeaderboard(int competitionID, DataLimiter limiter)
         {
-            return await _playerParticipationRepository.GetLeaderboard(competitionID, limiter);
+            return await playerParticipationRepository.GetLeaderboard(competitionID, limiter);
         }
 
-        public async Task<PlayerParticipation> GetParticipation(int userID, int competitionID)
+        public async Task<PlayerParticipation> GetParticipation(int playerID, int competitionID)
         {
-            return await _playerParticipationRepository.GetParticipation(userID, competitionID, true, true);
+            return await playerParticipationRepository.GetParticipation(playerID, competitionID, true, true);
         }
 
-        public async Task<IEnumerable<PlayerParticipation>> GetPlayerParticipations(int userID, DataLimiter limiter)
+        public async Task<IEnumerable<PlayerParticipation>> GetPlayerParticipations(int playerID, DataLimiter limiter)
         {
-            return await _playerParticipationRepository.GetPlayerParticipations(userID, limiter);
+            return await playerParticipationRepository.GetPlayerParticipations(playerID, limiter);
         }
     }
-
 }

@@ -8,14 +8,15 @@ namespace RepositoriesRealisation
     {
         public static IServiceCollection AddCompetitiveRepositories(this IServiceCollection container, Action<Options>? opt = null)
         {
-            Options myOptions = new Options(container);
+            var myOptions = new Options(container);
             container.AddScoped<IAccountRepository, AccountRepository>();
             container.AddScoped<ISessionRepository, SessionRepository>();
             container.AddScoped<IPlayerProfileRepository, PlayerProfileRepository>();
             container.AddScoped<IRewardDescriptionRepository, RewardDescriptionRepository>();
             container.AddScoped<ICompetitionRepository, CompetitionRepository>();
             container.AddScoped<ICompetitionRewardRepository, CompetitionRewardRepository>();
-            container.AddScoped<ICompetitionLevelRepository, CompetitionLevelDataRepository>();
+
+            // container.AddScoped<ICompetitionLevelRepository, CompetitionLevelDataRepository>();
             container.AddScoped<IPlayerRewardRepository, PlayerRewardRepository>();
             container.AddScoped<IPlayerParticipationRepository, PlayerParticipationRepository>();
             container.AddScoped<SessionRepositoryConfiguration>();
@@ -23,8 +24,16 @@ namespace RepositoriesRealisation
             container.AddScoped<IRiddleSettingsRepository, RiddleSettingsRepository>();
             container.AddDbContextFactory<BaseDbContext, BaseContextFactory>(lifetime: ServiceLifetime.Scoped);
             opt?.Invoke(myOptions);
-            if (!myOptions.SetUpRewardGranter) myOptions.GrantRewardsWithDefaultCalls();
-            if (!myOptions.SetUpConnectionStringGetter) myOptions.UseDefaultConnectionString();
+            if (!myOptions.SetUpRewardGranter)
+            {
+                myOptions.GrantRewardsWithDefaultCalls();
+            }
+
+            if (!myOptions.SetUpConnectionStringGetter)
+            {
+                myOptions.UseDefaultConnectionString();
+            }
+
             return container;
         }
     }

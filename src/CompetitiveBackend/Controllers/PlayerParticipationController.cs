@@ -10,87 +10,87 @@ namespace CompetitiveBackend.Controllers
     [Route($"{APIConsts.ROOTV1}/")]
     public class PlayerParticipationController : ControllerBase
     {
-        private IPlayerParticipationWatchUseCase _watchUseCase;
-        private IPlayerParticipationUseCase _editUseCase;
+        private readonly IPlayerParticipationWatchUseCase watchUseCase;
+        private readonly IPlayerParticipationUseCase editUseCase;
         public PlayerParticipationController(IPlayerParticipationWatchUseCase watchUseCase, IPlayerParticipationUseCase useCase)
         {
-            _editUseCase = useCase;
-            _watchUseCase = watchUseCase;
+            editUseCase = useCase;
+            this.watchUseCase = watchUseCase;
         }
 
         /// <summary>
-        /// Получить таблицу лидеров соревнования
+        /// Получить таблицу лидеров соревнования.
         /// </summary>
-        /// <param name="compID">Идентификатор соревнования</param>
-        /// <param name="page">Индекс страницы</param>
-        /// <param name="count">Количество соревнований на одной странице</param>
-        /// <returns>Успешное выполнение</returns>
-        /// <response code="200">Успешное выполнение</response>
-        /// <response code="404">Соревнование с таким ID не найдено</response>
-        /// <response code="500">Ошибка сервера</response>
+        /// <param name="compID">Идентификатор соревнования.</param>
+        /// <param name="page">Индекс страницы.</param>
+        /// <param name="count">Количество соревнований на одной странице.</param>
+        /// <returns>Результат операции.</returns>
+        /// <response code="200">Успешное выполнение.</response>
+        /// <response code="404">Соревнование с таким ID не найдено.</response>
+        /// <response code="500">Ошибка сервера.</response>
         [ProducesResponseType(typeof(IEnumerable<PlayerParticipationDTO>), 200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(typeof(ProblemDetails), 500)]
-        [HttpGet($"{APIConsts.COMPETITIONS}/{{compID:int}}/{APIConsts.COMP_PARTICIPATIONS}")]
+        [HttpGet($"{APIConsts.COMPETITIONS}/{{compID:int}}/{APIConsts.COMPPARTICIPATIONS}")]
         public async Task<ActionResult<PlayerParticipationDTO[]>> GetLeaderboard(int compID, [FromQuery] int page = 0, [FromQuery] int count = 0)
         {
-            return (await _watchUseCase.GetLeaderboard(compID, new DataLimiterDTO(page, count))).ToArray();
+            return (await watchUseCase.GetLeaderboard(compID, new DataLimiterDTO(page, count))).ToArray();
         }
 
         /// <summary>
-        /// Получить полную информации об участии в соревновании
+        /// Получить полную информации об участии в соревновании.
         /// </summary>
-        /// <param name="compID">Идентификатор соревнования</param>
-        /// <param name="profileID">Идентификатор профиля</param>
-        /// <returns>Успешное выполнение</returns>
-        /// <response code="200">Успешное выполнение</response>
-        /// <response code="404">Участие пользователя profileID в соревновании compID не найдено</response>
-        /// <response code="500">Ошибка сервера</response>
+        /// <param name="profileID">Идентификатор профиля.</param>
+        /// <param name="compID">Идентификатор соревнования.</param>
+        /// <returns>Результат операции.</returns>
+        /// <response code="200">Успешное выполнение.</response>
+        /// <response code="404">Участие пользователя profileID в соревновании compID не найдено.</response>
+        /// <response code="500">Ошибка сервера.</response>
         [ProducesResponseType(typeof(PlayerParticipation), 200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(typeof(ProblemDetails), 500)]
-        [HttpGet($"{APIConsts.COMPETITIONS}/{{compID}}/{APIConsts.COMP_PARTICIPATIONS}/{{profileID}}")]
+        [HttpGet($"{APIConsts.COMPETITIONS}/{{compID}}/{APIConsts.COMPPARTICIPATIONS}/{{profileID}}")]
         public async Task<ActionResult<PlayerParticipationDTO>> GetParticipationInfo(int profileID, int compID)
         {
-            return (await _watchUseCase.GetParticipation(compID, profileID));
+            return await watchUseCase.GetParticipation(compID, profileID);
         }
 
         /// <summary>
-        /// Удалить участие игрока в соревновании
+        /// Удалить участие игрока в соревновании.
         /// </summary>
-        /// <param name="profileID">Идентификатор профиля игрока</param>
-        /// <param name="compID">Идентификатор соревнования</param>
-        /// <returns>Успешное выполнение</returns>
-        /// <response code="204">Участие успешно удалено</response>
-        /// <response code="404">Участие не найдено</response>
-        /// <response code="500">Ошибка сервера</response>
+        /// <param name="profileID">Идентификатор профиля игрока.</param>
+        /// <param name="compID">Идентификатор соревнования.</param>
+        /// <returns>Результат операции.</returns>
+        /// <response code="204">Участие успешно удалено.</response>
+        /// <response code="404">Участие не найдено.</response>
+        /// <response code="500">Ошибка сервера.</response>
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
         [ProducesResponseType(typeof(ProblemDetails), 500)]
-        [HttpDelete($"{APIConsts.COMPETITIONS}/{{compID}}/{APIConsts.COMP_PARTICIPATIONS}/{{profileID}}")]
+        [HttpDelete($"{APIConsts.COMPETITIONS}/{{compID}}/{APIConsts.COMPPARTICIPATIONS}/{{profileID}}")]
         public async Task<NoContentResult> DeleteParticipation(int profileID, int compID)
         {
-            using var self = await _editUseCase.Auth(HttpContext);
+            using IPlayerParticipationUseCase self = await editUseCase.Auth(HttpContext);
             await self.DeleteParticipation(compID, profileID);
             return NoContent();
         }
 
         /// <summary>
-        /// Получить список участий текущего пользователя в соревнованиях
+        /// Получить список участий текущего пользователя в соревнованиях.
         /// </summary>
-        /// <param name="page">Индекс страницы</param>
-        /// <param name="count">Количество участий на одной странице</param>
-        /// <returns>Успешное выполнение</returns>
-        /// <response code="200">Успешное выполнение</response>
-        /// <response code="401">Пользователь не авторизован</response>
-        /// <response code="500">Ошибка сервера</response>
+        /// <param name="page">Индекс страницы.</param>
+        /// <param name="count">Количество участий на одной странице.</param>
+        /// <returns>Результат операции.</returns>
+        /// <response code="200">Успешное выполнение.</response>
+        /// <response code="401">Пользователь не авторизован.</response>
+        /// <response code="500">Ошибка сервера.</response>
         [ProducesResponseType(typeof(IEnumerable<PlayerParticipationDTO>), 200)]
         [ProducesResponseType(401)]
         [ProducesResponseType(typeof(ProblemDetails), 500)]
-        [HttpGet($"{APIConsts.PLAYERS}/{APIConsts.SELF}/{APIConsts.PLAYER_PARTICIPATIONS}")]
+        [HttpGet($"{APIConsts.PLAYERS}/{APIConsts.SELF}/{APIConsts.PLAYERPARTICIPATIONS}")]
         public async Task<ActionResult<PlayerParticipationDTO[]>> GetMyParticipations(int page = 0, int count = 0)
         {
-            using var self = await _editUseCase.Auth(HttpContext);
+            using IPlayerParticipationUseCase self = await editUseCase.Auth(HttpContext);
             return (await self.GetMyParticipations(new DataLimiterDTO(page, count))).ToArray();
         }
     }

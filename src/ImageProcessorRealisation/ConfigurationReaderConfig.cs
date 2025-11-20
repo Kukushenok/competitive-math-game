@@ -1,25 +1,21 @@
 ﻿using ImageProcessorRealisation;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SolutionInstaller
 {
-    class ConfigurationReaderConfig : IImageConfig
+    internal sealed class ConfigurationReaderConfig : IImageConfig
     {
-        private IConfiguration conf;
-        private string _section;
+        private readonly IConfiguration conf;
+        private readonly string section;
         public ConfigurationReaderConfig(IConfiguration conf, string sectionName)
         {
-            _section = sectionName;
+            section = sectionName;
             this.conf = conf;
         }
+
         private uint TryGet(string name, uint deflt)
         {
-            return uint.TryParse(conf.GetSection(_section)[name], out uint result) ? result : deflt;
+            return uint.TryParse(conf.GetSection(section)[name], out uint result) ? result : deflt;
         }
 
         public uint MinSize => TryGet(nameof(MinSize), 32);

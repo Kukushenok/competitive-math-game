@@ -1,41 +1,46 @@
-﻿namespace TechnologicalUIHost.ConsoleAbstractions
+﻿using System.Globalization;
+
+namespace TechnologicalUIHost.ConsoleAbstractions
 {
     public static class ConsoleInputExtensions
     {
         public static int ReadInt(this IConsoleInput input, string promt = "> ")
         {
-            return Convert.ToInt32(input.PromtInput(promt));
+            return Convert.ToInt32(input.PromtInput(promt), CultureInfo.InvariantCulture);
         }
+
         public static float ReadFloat(this IConsoleInput input, string promt = "> ")
         {
-            return (float)Convert.ToDouble(input.PromtInput(promt));
+            return (float)Convert.ToDouble(input.PromtInput(promt), CultureInfo.InvariantCulture);
         }
+
         public static DateTime ReadDateTime(this IConsoleInput input, string promt = "> ")
         {
-            return Convert.ToDateTime(input.PromtInput(promt));
+            return Convert.ToDateTime(input.PromtInput(promt), CultureInfo.InvariantCulture);
         }
 
         public static int? ReadNullableInt(this IConsoleInput input, string promt = "> ")
         {
             string inputStr = input.PromtInput(promt);
-            return string.IsNullOrWhiteSpace(inputStr) ? null : Convert.ToInt32(inputStr);
+            return string.IsNullOrWhiteSpace(inputStr) ? null : Convert.ToInt32(inputStr, CultureInfo.InvariantCulture);
         }
 
         public static float? ReadNullableFloat(this IConsoleInput input, string promt = "> ")
         {
             string inputStr = input.PromtInput(promt);
-            return string.IsNullOrWhiteSpace(inputStr) ? null : (float)Convert.ToDouble(inputStr);
+            return string.IsNullOrWhiteSpace(inputStr) ? null : (float)Convert.ToDouble(inputStr, CultureInfo.InvariantCulture);
         }
 
         public static DateTime? ReadNullableDateTime(this IConsoleInput input, string promt = "> ")
         {
             string inputStr = input.PromtInput(promt);
-            return string.IsNullOrWhiteSpace(inputStr) ? null : Convert.ToDateTime(inputStr);
+            return string.IsNullOrWhiteSpace(inputStr) ? null : Convert.ToDateTime(inputStr, CultureInfo.InvariantCulture);
         }
+
         public static TimeSpan? ReadNullableTimeSpan(this IConsoleInput input, string promt = "> ")
         {
             string inputStr = input.PromtInput(promt);
-            return string.IsNullOrWhiteSpace(inputStr) ? null : TimeSpan.Parse(inputStr);
+            return string.IsNullOrWhiteSpace(inputStr) ? null : TimeSpan.Parse(inputStr, CultureInfo.InvariantCulture);
         }
     }
 }

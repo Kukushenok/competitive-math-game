@@ -14,6 +14,7 @@ namespace CompetitiveBackend.BackendUsage.Objects
             MaxRank = maxRank;
         }
     }
+
     [Serializable]
     public class PlaceRewardConditionDTO
     {
@@ -26,6 +27,7 @@ namespace CompetitiveBackend.BackendUsage.Objects
             MaxPlace = maxPlace;
         }
     }
+
     [Serializable]
     public class UpdateCompetitionRewardDTO : IntIdentifiableDTO
     {
@@ -33,7 +35,9 @@ namespace CompetitiveBackend.BackendUsage.Objects
         public RankRewardConditionDTO? ConditionByRank { get; set; }
         public PlaceRewardConditionDTO? ConditionByPlace { get; set; }
 
-        public UpdateCompetitionRewardDTO(int? id, int rewardDescriptionID,
+        public UpdateCompetitionRewardDTO(
+            int? id,
+            int rewardDescriptionID,
             RankRewardConditionDTO? conditionByRank = null,
             PlaceRewardConditionDTO? conditionByPlace = null)
             : base(id)
@@ -43,12 +47,16 @@ namespace CompetitiveBackend.BackendUsage.Objects
             ConditionByPlace = conditionByPlace;
         }
     }
+
     [Serializable]
     public class CreateCompetitionRewardDTO : UpdateCompetitionRewardDTO
     {
         public int CompetitionID { get; set; }
 
-        public CreateCompetitionRewardDTO(int? id, int rewardDescriptionID, int competitionID,
+        public CreateCompetitionRewardDTO(
+            int? id,
+            int rewardDescriptionID,
+            int competitionID,
             RankRewardConditionDTO? conditionByRank = null,
             PlaceRewardConditionDTO? conditionByPlace = null)
             : base(id, rewardDescriptionID, conditionByRank, conditionByPlace)
@@ -56,14 +64,19 @@ namespace CompetitiveBackend.BackendUsage.Objects
             CompetitionID = competitionID;
         }
     }
+
     [Serializable]
     public class CompetitionRewardDTO : CreateCompetitionRewardDTO
     {
         public string? Name { get; set; }
         public string? Description { get; set; }
 
-        public CompetitionRewardDTO(int? id, int rewardDescriptionID, int competitionID,
-            string? name = null, string? description = null,
+        public CompetitionRewardDTO(
+            int? id,
+            int rewardDescriptionID,
+            int competitionID,
+            string? name = null,
+            string? description = null,
             RankRewardConditionDTO? conditionByRank = null,
             PlaceRewardConditionDTO? conditionByPlace = null)
             : base(id, rewardDescriptionID, competitionID, conditionByRank, conditionByPlace)

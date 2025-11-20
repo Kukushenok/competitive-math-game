@@ -1,21 +1,18 @@
 ﻿using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CompetitiveBackend.Services.ServicesRealisation
 {
+    [Obsolete("Deprecated functionality which doesnt work now")]
     public class CompetitionLevelService : ICompetitionLevelService
     {
-        public ICompetitionLevelRepository levelRepository;
+        private readonly ICompetitionLevelRepository levelRepository;
         public CompetitionLevelService(ICompetitionLevelRepository levelRepository)
         {
             this.levelRepository = levelRepository;
         }
 
+        [Obsolete("Deprecated functionality which doesnt work now")]
         public async Task CreateLevelData(LevelDataInfo levelDataInfo, LargeData embeddedData)
         {
             await levelRepository.AddCompetitionLevel(embeddedData, levelDataInfo);

@@ -1,16 +1,16 @@
-﻿using CompetitiveBackend.Services.Objects;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
+using CompetitiveBackend.Services.Objects;
 
 namespace CompetitiveBackend.Services.AuthService
 {
-    class SHA256HashAlgorithm : IHashAlgorithm
+    internal sealed class SHA256HashAlgorithm : IHashAlgorithm
     {
-        SHA256 sha256 = SHA256.Create();
+        private readonly SHA256 sha256 = SHA256.Create();
         public string Hash(string input)
         {
             byte[] hashValue;
-            UTF8Encoding objUtf8 = new UTF8Encoding();
+            var objUtf8 = new UTF8Encoding();
             hashValue = sha256.ComputeHash(objUtf8.GetBytes(input));
             return Convert.ToBase64String(hashValue);
         }

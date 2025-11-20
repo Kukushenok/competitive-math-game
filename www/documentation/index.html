@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>README.md Viewer</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 40px auto;
+      max-width: 900px;
+      line-height: 1.6;
+      color: #333;
+    }
+    h1, h2, h3 { color: #1a73e8; }
+    pre { background: #f4f4f4; padding: 10px; border-radius: 8px; }
+    code { background: #f8f8f8; padding: 2px 4px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <article id="content">Loading README.md...</article>
+  <script>
+    fetch('README.md')
+      .then(res => res.text())
+      .then(md => document.getElementById('content').innerHTML = marked.parse(md));
+  </script>
+</body>
+</html>

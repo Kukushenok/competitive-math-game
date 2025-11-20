@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Управление системой</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .management-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            padding: 40px;
+        }
+        
+        .card {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            background: #ffffff;
+            border-color: #667eea;
+        }
+        
+        .card h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card p {
+            color: #666;
+            margin-bottom: 0;
+        }
+        
+        .icon {
+            font-size: 1.5em;
+            width: 30px;
+            text-align: center;
+        }
+        
+        .api-section {
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .legacy-section {
+            border-left: 4px solid #f39c12;
+        }
+        
+        .docs-section {
+            border-left: 4px solid #3498db;
+        }
+        
+        .main-section {
+            border-left: 4px solid #2ecc71;
+        }
+        
+        .reserved-section {
+            border-left: 4px solid #9b59b6;
+        }
+        
+        .admin-section {
+            border-left: 4px solid #e67e22;
+        }
+        
+        .status-section {
+            border-left: 4px solid #1abc9c;
+        }
+        
+        footer {
+            background: #ecf0f1;
+            padding: 20px;
+            text-align: center;
+            color: #7f8c8d;
+            border-top: 1px solid #bdc3c7;
+        }
+        
+        @media (max-width: 768px) {
+            .management-grid {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Панель управления системой</h1>
+            <div class="subtitle">Централизованный доступ ко всем компонентам приложения</div>
+        </header>
+        
+        <div class="management-grid">
+            <a href="/api/v1/" class="card api-section">
+                <h2>
+                    REST API v1
+                </h2>
+                <p>Доступ к REST API версии 1. Включает Swagger документацию с полным описанием всех эндпоинтов и возможностей API.</p>
+            </a>
+            
+            <a href="/legacy/" class="card legacy-section">
+                <h2>
+                    Legacy Interface
+                </h2>
+                <p>Устаревший MPA/SPA интерфейс или загрузка десктопной/консольной версии приложения. Полнофункциональная версия, работающая через API.</p>
+            </a>
+            
+            <a href="/documentation/" class="card docs-section">
+                <h2>
+                    Documentation
+                </h2>
+                <p>Полная документация системы в формате Readme.md. Содержит описание архитектуры, руководство по установке и использованию.</p>
+            </a>
+            
+            <a href="/" class="card main-section">
+                <h2>
+                    Main Application
+                </h2>
+                <p>Главное SPA-приложение системы. Современный пользовательский интерфейс с интуитивной навигацией и полным функционалом.</p>
+            </a>
+            
+            <a href="/reserved/" class="card reserved-section">
+                <h2>
+                    Reserved Access
+                </h2>
+                <p>Резервный доступ к главному приложению. Альтернативный путь к основному функционалу системы.</p>
+            </a>
+            
+            <a href="/admin/" class="card admin-section">
+                <h2>
+                    Database Admin
+                </h2>
+                <p>Web-админка базы данных. Полный доступ к управлению БД приложения с возможностью просмотра и редактирования данных.</p>
+            </a>
+            
+            <a href="/status/" class="card status-section">
+                <h2>
+                    Server Status
+                </h2>
+                <p>Мониторинг состояния сервера. Детальная информация о работе системы, метриках производительности и статистике.</p>
+            </a>
+        </div>
+        
+        <footer>
+            <p>DeepSeek &copy; 2025. Все права защищены.</p>
+        </footer>
+    </div>
+</body>
+</html>

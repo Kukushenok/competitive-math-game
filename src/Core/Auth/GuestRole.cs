@@ -2,8 +2,19 @@
 {
     public class GuestRole : Role
     {
-        public override bool IsPlayer() => false;
-        public override bool IsAdmin() => false;
-        public override string ToString() => "Guest";
+        public override bool IsPlayer()
+        {
+            return false;
+        }
+
+        public override bool IsAdmin()
+        {
+            return false;
+        }
+
+        public override string ToString()
+        {
+            return "Guest";
+        }
     }
 }

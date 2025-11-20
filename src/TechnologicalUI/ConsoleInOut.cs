@@ -1,15 +1,8 @@
-﻿using CompetitiveBackend.BackendUsage.Objects;
-using CompetitiveBackend.Core.Objects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TechnologicalUIHost.ConsoleAbstractions;
+﻿using TechnologicalUIHost.ConsoleAbstractions;
 namespace TechnologicalUI
 {
     public class ConsoleInOut : IConsole
-    { 
+    {
         public string PromtInput(string promt = "> ")
         {
             Console.Write(promt);
@@ -31,7 +24,7 @@ namespace TechnologicalUI
                 byte[] data = File.ReadAllBytes(path);
                 return data;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new FormatException(ex.Message);
             }
@@ -46,7 +39,7 @@ namespace TechnologicalUI
             {
                 File.WriteAllBytes(path, largeData);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine($"Ошибка при сохранении файла: {ex.Message}");
             }

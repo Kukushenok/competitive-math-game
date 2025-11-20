@@ -5,42 +5,50 @@ namespace CompetitiveBackend.Repositories
     public interface IRewardDescriptionRepository
     {
         /// <summary>
-        /// Добавить описание награды
+        /// Добавить описание награды.
         /// </summary>
-        /// <param name="description">Описание награды. ID может быть null</param>
-        public Task CreateRewardDescription(RewardDescription description);
+        /// <param name="description">Описание награды. ID может быть null.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        Task CreateRewardDescription(RewardDescription description);
+
         /// <summary>
-        /// Обновить описание награды
+        /// Обновить описание награды.
         /// </summary>
-        /// <param name="description">Описание награды. ID не может быть null</param>
-        /// <exception cref="CompetitiveBackend.Repositories.Exceptions.IncorrectOperationException">Описания награды с таким ID не существует</exception>
-        public Task UpdateRewardDescription(RewardDescription description);
+        /// <param name="description">Описание награды. ID не может быть null.</param>
+        /// <exception cref="Exceptions.IncorrectOperationException">Описания награды с таким ID не существует.</exception>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        Task UpdateRewardDescription(RewardDescription description);
+
         /// <summary>
-        /// Получить описание награды по идентификатору
+        /// Получить описание награды по идентификатору.
         /// </summary>
-        /// <param name="rewardID">Идентификатор описания награды</param>
-        /// <returns>Описание награды</returns>
-        /// <exception cref="CompetitiveBackend.Repositories.Exceptions.IncorrectOperationException">Описания награды с таким ID не существует</exception>
-        public Task<RewardDescription> GetRewardDescription(int rewardID);
+        /// <param name="rewardID">Идентификатор описания награды.</param>
+        /// <returns>Описание награды.</returns>
+        /// <exception cref="Exceptions.IncorrectOperationException">Описания награды с таким ID не существует.</exception>
+        Task<RewardDescription> GetRewardDescription(int rewardID);
+
         /// <summary>
-        /// Получить описания всех существующих наград
+        /// Получить описания всех существующих наград.
         /// </summary>
-        /// <param name="limiter">Ограничитель данных</param>
-        /// <returns>Описания всех существующих наград</returns>
-        public Task<IEnumerable<RewardDescription>> GetAllRewardDescriptions(DataLimiter limiter);
+        /// <param name="limiter">Ограничитель данных.</param>
+        /// <returns>Описания всех существующих наград.</returns>
+        Task<IEnumerable<RewardDescription>> GetAllRewardDescriptions(DataLimiter limiter);
+
         /// <summary>
-        /// Получить данные об иконке награды
+        /// Получить данные об иконке награды.
         /// </summary>
-        /// <param name="rewardID">Идентификатор описания награды</param>
-        /// <returns>Данные</returns>
-        /// <exception cref="CompetitiveBackend.Repositories.Exceptions.MissingDataException">Описания награды с таким ID не существует</exception>
-        public Task<LargeData> GetRewardIcon(int rewardID);
+        /// <param name="rewardID">Идентификатор описания награды.</param>
+        /// <returns>Данные.</returns>
+        /// <exception cref="Exceptions.MissingDataException">Описания награды с таким ID не существует.</exception>
+        Task<LargeData> GetRewardIcon(int rewardID);
+
         /// <summary>
-        /// Задать данные об иконке награды
+        /// Задать данные об иконке награды.
         /// </summary>
-        /// <param name="rewardID">Идентификатор описания награды</param>
-        /// <param name="data">Данные</param>
-        /// <exception cref="CompetitiveBackend.Repositories.Exceptions.MissingDataException">Описания награды с таким ID не существует</exception>
-        public Task SetRewardIcon(int rewardID, LargeData data);
+        /// <param name="rewardID">Идентификатор описания награды.</param>
+        /// <param name="data">Данные.</param>
+        /// <exception cref="Exceptions.MissingDataException">Описания награды с таким ID не существует.</exception>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        Task SetRewardIcon(int rewardID, LargeData data);
     }
 }

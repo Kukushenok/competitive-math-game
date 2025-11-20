@@ -1,19 +1,13 @@
-﻿using CompetitiveBackend.Core.Objects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CompetitiveBackend.Core.Objects
+﻿namespace CompetitiveBackend.Core.Objects
 {
-    [System.Obsolete("We're determined not to do this")]
-    public class LevelDataInfo: IntIdentifiable
+    [Obsolete("We're determined not to do this")]
+    public class LevelDataInfo : IntIdentifiable
     {
-        public int CompetitionID;
         public readonly int VersionCode;
         public readonly string PlatformName;
-        public LevelDataInfo(int competitionID, int version, string platform, int? ID = null) : base(ID)
+        public int CompetitionID;
+        public LevelDataInfo(int competitionID, int version, string platform, int? iD = null)
+            : base(iD)
         {
             CompetitionID = competitionID;
             VersionCode = version;

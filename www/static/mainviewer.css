@@ -1,0 +1,11 @@
+body {
+  margin: 0;
+  height: 100vh;
+  background: hsl(0, 100%, 50%);
+  animation: colorLoop 10s linear infinite;
+}
+
+@keyframes colorLoop {
+  0% { background-color: hsl(0, 100%, 50%); }
+  100% { background-color: hsl(360, 100%, 50%); }
+}

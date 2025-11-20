@@ -12,6 +12,7 @@
             StartTime = startTime;
         }
     }
+
     public class CompetitionParticipationTask
     {
         public string SessionID;

@@ -2,8 +2,14 @@
 {
     public class UnauthenticatedSessionToken : SessionToken
     {
-        public UnauthenticatedSessionToken() : base(new GuestRole()) { }
+        public UnauthenticatedSessionToken()
+            : base(new GuestRole())
+        {
+        }
 
-        public override bool IsAuthenticated() => false;
+        public override bool IsAuthenticated()
+        {
+            return false;
+        }
     }
 }

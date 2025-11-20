@@ -22,22 +22,22 @@ namespace CompetitiveBackend.Services.CompetitionRewardService
             return await repository.GetCompetitionRewards(competitionID);
         }
 
-        public async Task RemoveCompetitionReward(int rewardID)
+        public async Task RemoveCompetitionReward(int compRewardID)
         {
-            await repository.RemoveCompetitionReward(rewardID);
+            await repository.RemoveCompetitionReward(compRewardID);
         }
-        public async Task UpdateCompetitionReward(int competitionRewardID, int? rewardDescriptionID, GrantCondition? condition)
-        {
-            CompetitionReward curr = await repository.GetCompetitionReward(competitionRewardID);
 
-            CompetitionReward rwd = new CompetitionReward(
+        public async Task UpdateCompetitionReward(int compRewardID, int? rewardDescriptionID, GrantCondition? condition)
+        {
+            CompetitionReward curr = await repository.GetCompetitionReward(compRewardID);
+
+            var rwd = new CompetitionReward(
                 rewardDescriptionID ?? curr.RewardDescriptionID,
                 curr.CompetitionID,
                 curr.Name,
                 curr.Description,
                 condition ?? curr.Condition,
-                curr.Id
-                );
+                curr.Id);
             await repository.UpdateCompetitionReward(rwd);
         }
     }

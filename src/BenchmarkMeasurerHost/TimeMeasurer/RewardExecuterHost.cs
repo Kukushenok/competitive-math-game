@@ -1,21 +1,13 @@
-﻿using BenchmarkMeasurerHost.DataGenerator;
-using CompetitiveBackend.Core.Objects;
+﻿using System.Diagnostics;
+using BenchmarkMeasurerHost.DataGenerator;
 using CompetitiveBackend.Repositories;
-using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.WebRequestMethods;
 
 namespace BenchmarkMeasurerHost.TimeMeasurer
 {
-    class RewardExecuterHost: ITimeMeasurerHost
+    internal sealed class RewardExecuterHost : ITimeMeasurerHost
     {
-        private IPlayerRewardRepository repository;
-        private ICompetitionEnvironmentGenerator environmentGenerator;
+        private readonly IPlayerRewardRepository repository;
+        private readonly ICompetitionEnvironmentGenerator environmentGenerator;
         public RewardExecuterHost(IPlayerRewardRepository repository, ICompetitionEnvironmentGenerator environmentGenerator)
         {
             this.repository = repository;
@@ -30,7 +22,7 @@ namespace BenchmarkMeasurerHost.TimeMeasurer
 
         public async Task<Stopwatch> Measure()
         {
-            Stopwatch stp = new Stopwatch();
+            var stp = new Stopwatch();
             stp.Start();
             await repository.GrantRewardsFor(1);
             stp.Stop();

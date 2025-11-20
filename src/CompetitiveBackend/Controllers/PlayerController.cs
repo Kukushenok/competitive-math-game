@@ -1,12 +1,6 @@
 ﻿using CompetitiveBackend.BackendUsage.Objects;
 using CompetitiveBackend.BackendUsage.UseCases;
-using CompetitiveBackend.Core.Auth;
 using CompetitiveBackend.Core.Objects;
-using CompetitiveBackend.Repositories;
-using CompetitiveBackend.Repositories.Exceptions;
-using CompetitiveBackend.Services;
-using CompetitiveBackend.Services.Exceptions;
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CompetitiveBackend.Controllers
@@ -16,34 +10,36 @@ namespace CompetitiveBackend.Controllers
     [Route($"{APIConsts.ROOTV1}/{APIConsts.PLAYERS}/")]
     public class PlayerController : ControllerBase
     {
-        private IPlayerProfileUseCase _profileUseCase;
+        private readonly IPlayerProfileUseCase profileUseCase;
         public PlayerController(IPlayerProfileUseCase useCase)
         {
-            _profileUseCase = useCase;
+            profileUseCase = useCase;
         }
+
         /// <summary>
-        /// Получить информацию о профиле
+        /// Получить информацию о профиле.
         /// </summary>
-        /// <param name="profileID">Идентификатор игрока</param>
-        /// <returns>Информация о профиле</returns>
-        /// <response code="200">Success</response>
-        /// <response code="500">Ошибка сервера</response>
+        /// <param name="profileID">Идентификатор игрока.</param>
+        /// <returns>Информация о профиле.</returns>
+        /// <response code="200">Success.</response>
+        /// <response code="500">Ошибка сервера.</response>
         [HttpGet("{profileID:int}")]
         [ProducesResponseType(typeof(PlayerProfile), 200)]
         [ProducesResponseType(500)]
         public async Task<ActionResult<PlayerProfileDTO>> GetPlayerProfile(int profileID)
         {
-            return await _profileUseCase.GetProfile(profileID);
+            return await profileUseCase.GetProfile(profileID);
         }
+
         /// <summary>
-        /// Получить информацию о изображении
+        /// Получить информацию о изображении.
         /// </summary>
-        /// <param name="profileID">Идентификатор игрока</param>
-        /// <returns></returns>
+        /// <param name="profileID">Идентификатор игрока.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [HttpGet($"{{profileID:int}}/{APIConsts.IMAGE}")]
         public async Task<FileResult> GetPlayerImage(int profileID)
         {
-            var data = await _profileUseCase.GetProfileImage(profileID);
+            LargeDataDTO data = await profileUseCase.GetProfileImage(profileID);
             return data.ToFileResult($"player_{profileID}.jpg");
         }
     }

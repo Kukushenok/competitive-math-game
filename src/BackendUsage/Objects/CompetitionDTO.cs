@@ -10,9 +10,8 @@ namespace CompetitiveBackend.BackendUsage.Objects
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
-        public CompetitionDTO(int? ID, string? name, string? description,
-                             DateTime startDate, DateTime endDate)
-            : base(ID)
+        public CompetitionDTO(int? iD, string? name, string? description, DateTime startDate, DateTime endDate)
+            : base(iD)
         {
             Name = name;
             Description = description;
@@ -20,6 +19,7 @@ namespace CompetitiveBackend.BackendUsage.Objects
             EndDate = endDate;
         }
     }
+
     [Serializable]
     public class CompetitionPatchRequestDTO : IntIdentifiableDTO
     {
@@ -28,8 +28,7 @@ namespace CompetitiveBackend.BackendUsage.Objects
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
 
-        public CompetitionPatchRequestDTO(int id, string? name, string? description,
-                                          DateTime? startDate, DateTime? endDate)
+        public CompetitionPatchRequestDTO(int id, string? name, string? description, DateTime? startDate, DateTime? endDate)
             : base(id)
         {
             Name = name;

@@ -9,9 +9,10 @@ namespace XUnitLoggingProvider
         {
             var factory = new XUnitFactory(helper);
             coll.AddLogging(logging => logging.AddProvider(factory));
-            //coll.AddSingleton<ILoggerFactory>(factory);
+
+            // coll.AddSingleton<ILoggerFactory>(factory);
             ////coll.AddSingleton<ILogger>(new XUnitLogger(helper));
-            //coll.AddSingleton<ILoggerProvider>(factory);
+            // coll.AddSingleton<ILoggerProvider>(factory);
             return coll;
         }
     }

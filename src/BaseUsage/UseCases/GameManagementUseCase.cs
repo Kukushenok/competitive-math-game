@@ -7,8 +7,9 @@ namespace CompetitiveBackend.BaseUsage.UseCases
 {
     public class GameManagementUseCase : BaseAuthableUseCase<GameManagementUseCase>, IGameManagementUseCase
     {
-        private IGameManagementService managementService;
-        public GameManagementUseCase(IAuthService authService, IGameManagementService managementService) : base(authService)
+        private readonly IGameManagementService managementService;
+        public GameManagementUseCase(IAuthService authService, IGameManagementService managementService)
+            : base(authService)
         {
             this.managementService = managementService;
         }
@@ -49,6 +50,9 @@ namespace CompetitiveBackend.BaseUsage.UseCases
             await managementService.UpdateSettings(competitionID, settings.Convert());
         }
 
-        async Task<IGameManagementUseCase> IAuthableUseCase<IGameManagementUseCase>.Auth(string token) => await Auth(token);
+        async Task<IGameManagementUseCase> IAuthableUseCase<IGameManagementUseCase>.Auth(string token)
+        {
+            return await Auth(token);
+        }
     }
 }

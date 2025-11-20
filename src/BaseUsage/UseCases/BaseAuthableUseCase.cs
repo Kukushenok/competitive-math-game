@@ -4,31 +4,44 @@ using CompetitiveBackend.Services;
 
 namespace CompetitiveBackend.BaseUsage.UseCases
 {
-    public class BaseAuthableUseCase<T> : AuthableUseCase<T> where T : BaseAuthableUseCase<T>
+    public class BaseAuthableUseCase<T> : AuthableUseCase<T>
+        where T : BaseAuthableUseCase<T>
     {
-        private IAuthService authService;
+        private readonly IAuthService authService;
         public BaseAuthableUseCase(IAuthService authService)
         {
             this.authService = authService;
         }
+
         protected override async Task<SessionToken> GetSessionToken(string token)
         {
             return await authService.GetSessionToken(token);
         }
+
         protected void AuthCheck(out int id)
         {
-            id = 0;
-            if(!User.TryGetAccountIdentifier(out id)) throw new UnauthenticatedException();
+            if (!User.TryGetAccountIdentifier(out id))
+            {
+                throw new UnauthenticatedException();
+            }
         }
+
         protected void PlayerAuthCheck(out int id)
         {
             AuthCheck(out id);
-            if (!User.Role.IsPlayer()) throw new IsNotPlayerException();
+            if (!User.Role.IsPlayer())
+            {
+                throw new IsNotPlayerException();
+            }
         }
+
         protected void AdminAuthCheck(out int id)
         {
             AuthCheck(out id);
-            if (!User.Role.IsAdmin()) throw new OperationNotPermittedException();
+            if (!User.Role.IsAdmin())
+            {
+                throw new OperationNotPermittedException();
+            }
         }
     }
 }

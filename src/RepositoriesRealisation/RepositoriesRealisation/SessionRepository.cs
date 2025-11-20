@@ -1,68 +1,70 @@
-﻿using CompetitiveBackend.Core.Auth;
+﻿using System.Globalization;
+using System.IdentityModel.Tokens.Jwt;
+using CompetitiveBackend.Core.Auth;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RepositoriesRealisation;
 using RepositoriesRealisation.DatabaseObjects;
 using RepositoriesRealisation.Models;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 namespace CompetitiveBackend.Repositories
 {
-    internal class SessionRepository : ISessionRepository
+    internal sealed class SessionRepository : ISessionRepository
     {
-        private IDbContextFactory<BaseDbContext> contextFactory;
-        private JwtSecurityTokenHandler _handler;
-        private SessionRepositoryConfiguration _configuration;
+        private readonly IDbContextFactory<BaseDbContext> contextFactory;
+        private readonly JwtSecurityTokenHandler handler;
+        private readonly SessionRepositoryConfiguration configuration;
         public SessionRepository(IDbContextFactory<BaseDbContext> contextFactory, SessionRepositoryConfiguration conf)
         {
             this.contextFactory = contextFactory;
-            _handler = new JwtSecurityTokenHandler();
-            _configuration = conf;
+            handler = new JwtSecurityTokenHandler();
+            configuration = conf;
         }
+
         public async Task<string> CreateSessionFor(int accountID)
         {
-            using BaseDbContext _context = await contextFactory.CreateDbContextAsync();
-            AccountModel? model = await _context.AccountsReadOnly.FindAsync(accountID);
-            if (model == null) throw new Exceptions.MissingDataException();
+            using BaseDbContext context = await contextFactory.CreateDbContextAsync();
+            AccountModel? model = await context.AccountsReadOnly.FindAsync(accountID) ?? throw new Exceptions.MissingDataException();
             Role rl = PrivilegyRoleResolver.Resolve(model.AccountPrivilegyLevel);
             var token = new JwtSecurityToken(
-                claims: new List<Claim>()
-                {
-                    new Claim("ID", accountID.ToString()),
-                    new Claim("Role", rl.ToString()),
-                    new Claim("PrivilegyLevel", model.AccountPrivilegyLevel.ToString())
-                },
-                expires: _configuration.Expires,
-                signingCredentials: _configuration.Credentials);
-            string q = _handler.WriteToken(token);
+                claims:
+                [
+                    new("ID", accountID.ToString(CultureInfo.InvariantCulture)),
+                    new("Role", rl.ToString()),
+                    new("PrivilegyLevel", model.AccountPrivilegyLevel.ToString(CultureInfo.InvariantCulture)),
+                ],
+                expires: configuration.Expires,
+                signingCredentials: configuration.Credentials);
+            string q = handler.WriteToken(token);
             return q;
         }
 
         public async Task<SessionToken> GetSessionToken(string token)
         {
-            TokenValidationResult tkn = await _handler.ValidateTokenAsync(token, GetValidationParameters());
+            TokenValidationResult tkn = await handler.ValidateTokenAsync(token, GetValidationParameters());
             if (tkn.Exception != null)
             {
                 return new UnauthenticatedSessionToken();
             }
+
             try
             {
-                string ID = tkn.Claims["ID"].ToString()!;
-                string PrivilegyLevel = tkn.Claims["PrivilegyLevel"].ToString()!;
-                return new AuthenticatedSessionToken(PrivilegyRoleResolver.Resolve(int.Parse(PrivilegyLevel)), int.Parse(ID));
+                string iD = tkn.Claims["ID"].ToString()!;
+                string privilegyLevel = tkn.Claims["PrivilegyLevel"].ToString()!;
+                return new AuthenticatedSessionToken(PrivilegyRoleResolver.Resolve(int.Parse(privilegyLevel, CultureInfo.InvariantCulture)), int.Parse(iD, CultureInfo.InvariantCulture));
             }
             catch
             {
                 return new UnauthenticatedSessionToken();
             }
         }
+
         private TokenValidationParameters GetValidationParameters()
         {
             return new TokenValidationParameters()
             {
                 ValidateAudience = false,
                 ValidateIssuer = false,
-                IssuerSigningKey = _configuration.Key
+                IssuerSigningKey = configuration.Key,
             };
         }
     }

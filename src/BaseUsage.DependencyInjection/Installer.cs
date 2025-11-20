@@ -6,6 +6,7 @@ namespace CompetitiveBackend.BaseUsage.DependencyInjection
 {
     public static class Installer
     {
+        // [Obsolete]
         public static IServiceCollection AddCompetitiveUseCases(this IServiceCollection coll)
         {
             coll.AddScoped<IAuthUseCase, AuthUseCase>();
@@ -19,7 +20,8 @@ namespace CompetitiveBackend.BaseUsage.DependencyInjection
             coll.AddScoped<IPlayerParticipationWatchUseCase, PlayerParticipationWatchUseCase>();
             coll.AddScoped<ICompetitionRewardEditUseCase, CompetitionRewardEditUseCase>();
             coll.AddScoped<IPlayerRewardUseCase, PlayerRewardUseCase>();
-            coll.AddScoped<ICompetitionLevelEditUseCase, CompetitionLevelEditUseCase>();
+
+            // coll.AddScoped<ICompetitionLevelEditUseCase, CompetitionLevelEditUseCase>();
             coll.AddScoped<IGamePlayUseCase, GamePlayUseCase>();
             coll.AddScoped<IGameManagementUseCase, GameManagementUseCase>();
             return coll;

@@ -1,0 +1,3878 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "CompetitiveBackend",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/v1/auth/login": {
+      "post": {
+        "tags": [
+          "Authorization"
+        ],
+        "summary": "Логин",
+        "requestBody": {
+          "description": "Данные для входа в аккаунт",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountLoginDTO"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountLoginDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountLoginDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountLoginDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Успешный вход в аккаунт",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthSuccessResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthSuccessResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthSuccessResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Пароль не подошёл или логин не найден",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/register": {
+      "post": {
+        "tags": [
+          "Authorization"
+        ],
+        "summary": "Регистрация нового аккаунта",
+        "requestBody": {
+          "description": "Данные для регистрации",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountCreationDTO"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountCreationDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountCreationDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountCreationDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Успешная регистрация",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthSuccessResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthSuccessResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthSuccessResult"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Такой логин уже занят",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера"
+          }
+        }
+      }
+    },
+    "/api/v1/competitions/{id}": {
+      "get": {
+        "tags": [
+          "Competition"
+        ],
+        "summary": "Информация о конкретном соревновании",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор соревнования",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешное получение информации",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompetitionDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompetitionDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompetitionDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Соревнование не найдено",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Competition"
+        ],
+        "summary": "Частичное обновление соревнования",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор соревнования",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Описание частичного изменения соревнования",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompetitionPatchRequestDTO"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompetitionPatchRequestDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompetitionPatchRequestDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompetitionPatchRequestDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Успешное изменение"
+          },
+          "400": {
+            "description": "Некорректные данные запроса",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/competitions": {
+      "get": {
+        "tags": [
+          "Competition"
+        ],
+        "summary": "Получить информацию о множестве соревнований",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Индекс страницы",
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "Количество соревнований на одной странице",
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Выбрать только те соревнования, которые на данный момент времени активны",
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешное выполнение",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompetitionDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompetitionDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompetitionDTO"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Competition"
+        ],
+        "summary": "Добавить новое соревнование",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompetitionDTO"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompetitionDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompetitionDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompetitionDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Успешное выполнение"
+          },
+          "400": {
+            "description": "Некорректные данные запроса",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Пользователь не авторизован",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Пользователь не имеет прав администратора",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/competitions/{compID}/rewards": {
+      "get": {
+        "tags": [
+          "CompetitionReward"
+        ],
+        "summary": "Получить информацию о выдаваемых наградах",
+        "parameters": [
+          {
+            "name": "compID",
+            "in": "path",
+            "description": "Идентификатор соревнования",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешное выполнение",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompetitionRewardDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompetitionRewardDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompetitionRewardDTO"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Соревнование с таким ID не найдено",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "CompetitionReward"
+        ],
+        "summary": "Добавить выдаваемую награду",
+        "parameters": [
+          {
+            "name": "compID",
+            "in": "path",
+            "description": "Идентификатор соревнования",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Описание выдаваемой награды",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCompetitionRewardDTO"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCompetitionRewardDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCompetitionRewardDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCompetitionRewardDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Успешное добавление",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompetitionReward"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompetitionReward"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompetitionReward"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Пользователь не авторизован",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Пользователь не авторизован как администратор",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/competitions/{compID}/rewards/{rewardID}": {
+      "delete": {
+        "tags": [
+          "CompetitionReward"
+        ],
+        "summary": "Удалить выдаваемую награду",
+        "parameters": [
+          {
+            "name": "compID",
+            "in": "path",
+            "description": "Идентификатор соревнования",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "rewardID",
+            "in": "path",
+            "description": "Идентификатор выдаваемой награды",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Успешное удаление"
+          },
+          "401": {
+            "description": "Пользователь не авторизован",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Пользователь не авторизован как администратор",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Награда или соревнование с таким ID не найдены",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "CompetitionReward"
+        ],
+        "summary": "Обновить выдаваемую награду",
+        "parameters": [
+          {
+            "name": "compID",
+            "in": "path",
+            "description": "Идентификатор соревнования",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "rewardID",
+            "in": "path",
+            "description": "Идентификатор выдаваемой награды",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCompetitionRewardDTO"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCompetitionRewardDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCompetitionRewardDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCompetitionRewardDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Успешное удаление"
+          },
+          "401": {
+            "description": "Пользователь не авторизован",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Пользователь не авторизован как администратор",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Награда или соревнование с таким ID не найдены",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера"
+          }
+        }
+      }
+    },
+    "/api/v1/competitions/{compID}/game_session": {
+      "get": {
+        "tags": [
+          "CompetitionRiddleGameplay"
+        ],
+        "summary": "Получить задание на игру",
+        "parameters": [
+          {
+            "name": "compID",
+            "in": "path",
+            "description": "Идентификатор соревнования",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешное выполнение",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompetitionParticipationTaskDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompetitionParticipationTaskDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompetitionParticipationTaskDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Соревнование с таким ID не найдено",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Пользователь не авторизован",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Не является игроком",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "CompetitionRiddleGameplay"
+        ],
+        "summary": "Выполнить задание на игру",
+        "parameters": [
+          {
+            "name": "compID",
+            "in": "path",
+            "description": "Идентификатор соревнования",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Ответы на вопросы",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompetitionParticipationRequestDTO"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompetitionParticipationRequestDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompetitionParticipationRequestDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompetitionParticipationRequestDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Успешное выполнение",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParticipationFeedbackDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParticipationFeedbackDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParticipationFeedbackDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Соревнование с таким ID не найдено",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Пользователь не авторизован",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Не игрок",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера"
+          }
+        }
+      }
+    },
+    "/api/v1/competitions/{compID}/game_settings": {
+      "put": {
+        "tags": [
+          "CompetitionRiddleManagement"
+        ],
+        "summary": "Задать правила для выбора загадок",
+        "parameters": [
+          {
+            "name": "compID",
+            "in": "path",
+            "description": "Идентификатор соревнования",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Запрос на установку правил",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RiddleGameSettingsDTO"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RiddleGameSettingsDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RiddleGameSettingsDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RiddleGameSettingsDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Успешное выполнение"
+          },
+          "404": {
+            "description": "Соревнование с таким ID не найдено",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Пользователь не авторизован",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Нет прав администратора",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "CompetitionRiddleManagement"
+        ],
+        "summary": "Получить правила для выбора загадок",
+        "parameters": [
+          {
+            "name": "compID",
+            "in": "path",
+            "description": "Идентификатор соревнования",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RiddleGameSettingsDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RiddleGameSettingsDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RiddleGameSettingsDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Соревнование с таким ID не найдено",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Пользователь не авторизован",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Нет прав администратора",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера"
+          },
+          "201": {
+            "description": "Успешное выполнение"
+          }
+        }
+      }
+    },
+    "/api/v1/competitions/{compID}/riddles": {
+      "post": {
+        "tags": [
+          "CompetitionRiddleManagement"
+        ],
+        "summary": "Добавить задачу",
+        "parameters": [
+          {
+            "name": "compID",
+            "in": "path",
+            "description": "Идентификатор соревнования",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Данные задачи для добавления",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RiddleInfoDTO"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RiddleInfoDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RiddleInfoDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RiddleInfoDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Соревнование с таким ID не найдено",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Пользователь не авторизован",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Нет прав администратора",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера"
+          },
+          "200": {
+            "description": "Успешное выполнение"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "CompetitionRiddleManagement"
+        ],
+        "summary": "Получить весь список задач",
+        "parameters": [
+          {
+            "name": "compID",
+            "in": "path",
+            "description": "Идентификатор соревнования",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Индекс страницы",
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "Количество задач на одной странице",
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешное выполнение",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RiddleInfoDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RiddleInfoDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RiddleInfoDTO"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Соревнование с таким ID не найдено",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Пользователь не авторизован",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Нет прав администратора",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/competitions/{compID}/riddles/{id}": {
+      "delete": {
+        "tags": [
+          "CompetitionRiddleManagement"
+        ],
+        "summary": "Удалить задачу",
+        "parameters": [
+          {
+            "name": "compID",
+            "in": "path",
+            "description": "Идентификатор соревнования",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор задачи",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Успешное выполнение"
+          },
+          "401": {
+            "description": "Пользователь не авторизован",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Нет прав администратора",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Соревнование или задача с таким ID не найдены",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "CompetitionRiddleManagement"
+        ],
+        "summary": "Обновить задачу",
+        "parameters": [
+          {
+            "name": "compID",
+            "in": "path",
+            "description": "Идентификатор соревнования",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Данные задачи для обновления",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RiddleInfoDTO"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RiddleInfoDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RiddleInfoDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RiddleInfoDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Успешное выполнение"
+          },
+          "401": {
+            "description": "Пользователь не авторизован",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Нет прав администратора",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Соревнование или задача с таким ID не найдены",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера"
+          }
+        }
+      }
+    },
+    "/api/v1/players/{profileID}": {
+      "get": {
+        "tags": [
+          "Player"
+        ],
+        "summary": "Получить информацию о профиле",
+        "parameters": [
+          {
+            "name": "profileID",
+            "in": "path",
+            "description": "Идентификатор игрока",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlayerProfile"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера"
+          }
+        }
+      }
+    },
+    "/api/v1/players/{profileID}/image": {
+      "get": {
+        "tags": [
+          "Player"
+        ],
+        "summary": "Получить информацию о изображении",
+        "parameters": [
+          {
+            "name": "profileID",
+            "in": "path",
+            "description": "Идентификатор игрока",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/competitions/{compID}/participations": {
+      "get": {
+        "tags": [
+          "PlayerParticipation"
+        ],
+        "summary": "Получить таблицу лидеров соревнования",
+        "parameters": [
+          {
+            "name": "compID",
+            "in": "path",
+            "description": "Идентификатор соревнования",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Индекс страницы",
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "Количество соревнований на одной странице",
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешное выполнение",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PlayerParticipationDTO"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Соревнование с таким ID не найдено",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/competitions/{compID}/participations/{profileID}": {
+      "get": {
+        "tags": [
+          "PlayerParticipation"
+        ],
+        "summary": "Получить полную информации об участии в соревновании",
+        "parameters": [
+          {
+            "name": "profileID",
+            "in": "path",
+            "description": "Идентификатор профиля",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "compID",
+            "in": "path",
+            "description": "Идентификатор соревнования",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешное выполнение",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlayerParticipation"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Участие пользователя profileID в соревновании compID не найдено",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "PlayerParticipation"
+        ],
+        "summary": "Удалить участие игрока в соревновании",
+        "parameters": [
+          {
+            "name": "profileID",
+            "in": "path",
+            "description": "Идентификатор профиля игрока",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "compID",
+            "in": "path",
+            "description": "Идентификатор соревнования",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Участие успешно удалено"
+          },
+          "404": {
+            "description": "Участие не найдено",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/players/me/participations": {
+      "get": {
+        "tags": [
+          "PlayerParticipation"
+        ],
+        "summary": "Получить список участий текущего пользователя в соревнованиях",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Индекс страницы",
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "Количество участий на одной странице",
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешное выполнение",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PlayerParticipationDTO"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Пользователь не авторизован",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/players/me/rewards": {
+      "get": {
+        "tags": [
+          "PlayerRewards"
+        ],
+        "summary": "Получить информацию о наградах текущего пользователя",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Индекс страницы",
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "Количество наград на одной странице",
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешное выполнение",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PlayerRewardDTO"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Пользователь не авторизован",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/players/{playerID}/rewards": {
+      "get": {
+        "tags": [
+          "PlayerRewards"
+        ],
+        "summary": "Получить информацию о наградах игрока",
+        "parameters": [
+          {
+            "name": "playerID",
+            "in": "path",
+            "description": "Идентификатор игрока",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Индекс страницы",
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "Количество наград на одной странице",
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешное выполнение",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PlayerRewardDTO"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Пользователь с таким ID не найден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "PlayerRewards"
+        ],
+        "summary": "Выдать награду игроку",
+        "parameters": [
+          {
+            "name": "playerID",
+            "in": "path",
+            "description": "Идентификатор игрока",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "rewardDescriptionID",
+            "in": "query",
+            "description": "Идентификатор описания награды",
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Награда успешно выдана"
+          },
+          "400": {
+            "description": "Неверные параметры запроса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Игрок или описание награды не найдены",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/players/{playerID}/rewards/{rewardID}": {
+      "delete": {
+        "tags": [
+          "PlayerRewards"
+        ],
+        "summary": "Удалить награду у игрока",
+        "parameters": [
+          {
+            "name": "rewardID",
+            "in": "path",
+            "description": "Идентификатор награды",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "playerID",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Награда успешно удалена"
+          },
+          "404": {
+            "description": "Награда с указанным ID не найдена",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/reward_descriptions/{id}": {
+      "get": {
+        "tags": [
+          "RewardDescription"
+        ],
+        "summary": "Получить описание награды",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор описания награды",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешное выполнение",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RewardDescriptionDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RewardDescriptionDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RewardDescriptionDTO"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "RewardDescription"
+        ],
+        "summary": "Обновить описание награды",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Обновленные данные награды",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RewardDescriptionDTO"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RewardDescriptionDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RewardDescriptionDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RewardDescriptionDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Награда успешно обновлена"
+          },
+          "400": {
+            "description": "Неверные данные запроса",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Пользователь не авторизован",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Пользователь не авторизован как администратор",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Награда не найдена",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/reward_descriptions": {
+      "get": {
+        "tags": [
+          "RewardDescription"
+        ],
+        "summary": "Получить список всех описаний наград",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Индекс страницы",
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "Количество наград на одной странице",
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешное выполнение",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RewardDescriptionDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RewardDescriptionDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RewardDescriptionDTO"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Пользователь не авторизован",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Пользователь не авторизован как администратор",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "RewardDescription"
+        ],
+        "summary": "Создать новое описание награды",
+        "requestBody": {
+          "description": "Данные для создания награды",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RewardDescriptionDTO"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RewardDescriptionDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RewardDescriptionDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RewardDescriptionDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Награда успешно создана"
+          },
+          "400": {
+            "description": "Неверные данные запроса",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Пользователь не авторизован",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Пользователь не авторизован как администратор",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/reward_descriptions/{id}/image": {
+      "get": {
+        "tags": [
+          "RewardDescription"
+        ],
+        "summary": "Получить иконку награды",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор награды",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешное выполнение"
+          },
+          "404": {
+            "description": "Награда или иконка не найдены",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "RewardDescription"
+        ],
+        "summary": "Обновить иконку награды",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор награды",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "file": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Иконка успешно обновлена"
+          },
+          "400": {
+            "description": "Неверный файл",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Пользователь не авторизован",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Пользователь не авторизован как администратор",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Награда не найдена",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/players/me": {
+      "get": {
+        "tags": [
+          "SelfPlayer"
+        ],
+        "summary": "Получить данные своего профиля",
+        "responses": {
+          "200": {
+            "description": "Успешное выполнение",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlayerProfile"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Пользователь не авторизован",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Пользователь не авторизован как игрок",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "SelfPlayer"
+        ],
+        "summary": "Обновить данные своего профиля",
+        "requestBody": {
+          "description": "Профиль",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlayerProfileDTO"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlayerProfileDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlayerProfileDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlayerProfileDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/players/me/image": {
+      "get": {
+        "tags": [
+          "SelfPlayer"
+        ],
+        "summary": "Получить изображение своего профиля",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "SelfPlayer"
+        ],
+        "summary": "Обновить изображение своего профиля",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "file": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AccountCreationDTO": {
+        "type": "object",
+        "properties": {
+          "login": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AccountLoginDTO": {
+        "type": "object",
+        "properties": {
+          "login": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthSuccessResult": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "nullable": true
+          },
+          "roleName": {
+            "type": "string",
+            "nullable": true
+          },
+          "accountID": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CompetitionDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CompetitionParticipationRequestDTO": {
+        "type": "object",
+        "properties": {
+          "sessionID": {
+            "type": "string",
+            "nullable": true
+          },
+          "answers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RiddleAnswerDTO"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CompetitionParticipationTaskDTO": {
+        "type": "object",
+        "properties": {
+          "sessionID": {
+            "type": "string",
+            "nullable": true
+          },
+          "riddles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserRiddleInfoDTO"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CompetitionPatchRequestDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CompetitionReward": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "CompetitionRewardDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "rewardDescriptionID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "conditionByRank": {
+            "$ref": "#/components/schemas/RankRewardConditionDTO"
+          },
+          "conditionByPlace": {
+            "$ref": "#/components/schemas/PlaceRewardConditionDTO"
+          },
+          "competitionID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ParticipationFeedbackDTO": {
+        "type": "object",
+        "properties": {
+          "score": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rightAnswersCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalAnswersCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PlaceRewardConditionDTO": {
+        "type": "object",
+        "properties": {
+          "minPlace": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxPlace": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PlayerParticipation": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "PlayerParticipationDTO": {
+        "type": "object",
+        "properties": {
+          "accountID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "competition": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "score": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "lastUpdateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "profileInfo": {
+            "$ref": "#/components/schemas/PlayerProfileDTO"
+          },
+          "competitionInfo": {
+            "$ref": "#/components/schemas/CompetitionDTO"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PlayerProfile": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "PlayerProfileDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PlayerRewardDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "playerID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rewardDescriptionID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "grantedCompetitionID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "grantDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": { }
+      },
+      "RankRewardConditionDTO": {
+        "type": "object",
+        "properties": {
+          "minRank": {
+            "type": "number",
+            "format": "float"
+          },
+          "maxRank": {
+            "type": "number",
+            "format": "float"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RewardDescriptionDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RiddleAnswerDTO": {
+        "type": "object",
+        "properties": {
+          "textAnswer": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RiddleGameSettingsDTO": {
+        "type": "object",
+        "properties": {
+          "scoreOnRightAnswer": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "scoreOnBadAnswer": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalRiddles": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "timeLimit": {
+            "$ref": "#/components/schemas/TimeSpan"
+          },
+          "timeLinearBonus": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RiddleInfoDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "competitionID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "question": {
+            "type": "string",
+            "nullable": true
+          },
+          "possibleAnswers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RiddleAnswerDTO"
+            },
+            "nullable": true
+          },
+          "trueAnswer": {
+            "$ref": "#/components/schemas/RiddleAnswerDTO"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimeSpan": {
+        "type": "object",
+        "properties": {
+          "ticks": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "days": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hours": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "milliseconds": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "microseconds": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "nanoseconds": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "minutes": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "seconds": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "totalDays": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalHours": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalMilliseconds": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalMicroseconds": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalNanoseconds": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalMinutes": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalSeconds": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateCompetitionRewardDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "rewardDescriptionID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "conditionByRank": {
+            "$ref": "#/components/schemas/RankRewardConditionDTO"
+          },
+          "conditionByPlace": {
+            "$ref": "#/components/schemas/PlaceRewardConditionDTO"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserRiddleInfoDTO": {
+        "type": "object",
+        "properties": {
+          "question": {
+            "type": "string",
+            "nullable": true
+          },
+          "availableAnswers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RiddleAnswerDTO"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Put **_ONLY_** your JWT Bearer token on textbox below!",
+        "name": "Bearer",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
+}

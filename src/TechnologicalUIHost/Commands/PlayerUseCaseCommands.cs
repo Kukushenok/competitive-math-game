@@ -5,24 +5,28 @@ using TechnologicalUIHost.ConsoleAbstractions;
 
 namespace TechnologicalUIHost.Commands
 {
-    public class PlayerUseCaseCommands: CompositeCommandBlock
+    public class PlayerUseCaseCommands : CompositeCommandBlock
     {
-        IPlayerProfileUseCase _playerProfileUseCase;
-        public PlayerUseCaseCommands(IPlayerProfileUseCase playerProfileUseCase): base("Профили игроков")
+        private readonly IPlayerProfileUseCase playerProfileUseCase;
+        public PlayerUseCaseCommands(IPlayerProfileUseCase playerProfileUseCase)
+            : base("Профили игроков")
         {
-            _playerProfileUseCase = playerProfileUseCase;
+            this.playerProfileUseCase = playerProfileUseCase;
         }
+
         private async Task GetPlayerProfile(IConsole console)
         {
-            PlayerProfileDTO p = await _playerProfileUseCase.GetProfile(console.ReadInt("Введите ID профиля: "));
+            PlayerProfileDTO p = await playerProfileUseCase.GetProfile(console.ReadInt("Введите ID профиля: "));
             console.Print(p);
         }
+
         private Task GetPlayerProfileImage(IConsole console)
         {
-            var p = _playerProfileUseCase.GetProfileImage(console.ReadInt("Введите ID профиля: ")).GetAwaiter().GetResult();
+            LargeDataDTO p = playerProfileUseCase.GetProfileImage(console.ReadInt("Введите ID профиля: ")).GetAwaiter().GetResult();
             console.Print(p);
             return Task.CompletedTask;
         }
+
         protected override IEnumerable<IConsoleMenuCommand> GetCommands()
         {
             yield return new CallbackConsoleMenuCommand("Получить профиль по ID", TaskDecorator.Sync(GetPlayerProfile));

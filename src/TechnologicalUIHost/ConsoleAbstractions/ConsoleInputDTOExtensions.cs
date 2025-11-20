@@ -8,10 +8,12 @@ namespace TechnologicalUIHost.ConsoleAbstractions
         {
             return new AccountCreationDTO(input.PromtInput($"Логин {promt}"), input.PromtInput($"Пароль {promt}"), input.PromtInput($"Почта {promt}"));
         }
+
         public static AccountLoginDTO ReadAccountLogin(this IConsoleInput input, string promt = "> ")
         {
             return new AccountLoginDTO(input.PromtInput($"Логин {promt}"), input.PromtInput($"Пароль {promt}"));
         }
+
         public static CompetitionDTO ReadCompetitionDTO(this IConsoleInput input, string prompt = "> ")
         {
             string? name = input.PromtInput($"Name {prompt}");
@@ -40,6 +42,7 @@ namespace TechnologicalUIHost.ConsoleAbstractions
 
             return new CompetitionPatchRequestDTO(id, name, description, startDate, endDate);
         }
+
         public static LevelDataInfoDTO ReadLevelDataInfoDTOWithoutID(this IConsoleInput input, string prompt)
         {
             int id = input.ReadInt($"Введите ID соревнования {prompt}");
@@ -47,6 +50,7 @@ namespace TechnologicalUIHost.ConsoleAbstractions
             int version = input.ReadInt($"Введите код версии уровня {prompt}");
             return new LevelDataInfoDTO(id, place, version, null);
         }
+
         public static LevelDataInfoDTO ReadLevelDataInfoDTO(this IConsoleInput input, string prompt)
         {
             int id = input.ReadInt($"Введите ID уровня {prompt}");
@@ -54,6 +58,7 @@ namespace TechnologicalUIHost.ConsoleAbstractions
             res.ID = id;
             return res;
         }
+
         public static UpdateCompetitionRewardDTO ReadUpdateCompetitionRewardDTO(this IConsoleInput input, string prompt = "> ")
         {
             int? id = input.ReadNullableInt($"ID: {prompt}");
@@ -82,12 +87,14 @@ namespace TechnologicalUIHost.ConsoleAbstractions
 
             return new UpdateCompetitionRewardDTO(id, rewardDescriptionID, rankCondition, placeCondition);
         }
+
         public static CreateCompetitionRewardDTO ReadCreateCompetitionRewardDO(this IConsoleInput input, string promt = "> ")
         {
             int compID = input.ReadInt("Введите ID соревнования: ");
             UpdateCompetitionRewardDTO dto = input.ReadUpdateCompetitionRewardDTO(promt);
             return new CreateCompetitionRewardDTO(dto.ID, dto.RewardDescriptionID, compID, dto.ConditionByRank, dto.ConditionByPlace);
         }
+
         public static DataLimiterDTO ReadDataLimiterDTO(this IConsoleInput input, string prompt = "> ")
         {
             int page = (input.ReadNullableInt($"Номер страницы {prompt}") ?? 1) - 1;
@@ -125,6 +132,7 @@ namespace TechnologicalUIHost.ConsoleAbstractions
             string description = input.PromtInput($"Описание награды {prompt}");
             return new RewardDescriptionDTO(name, description, null);
         }
+
         public static RiddleGameSettingsDTO ReadRiddleGameSettingsDTO(this IConsoleInput input, string prompt = "> ")
         {
             int count = input.ReadInt($"Кол-во заданий {prompt}");
@@ -134,27 +142,31 @@ namespace TechnologicalUIHost.ConsoleAbstractions
             int timeScore = input.ReadInt($"Очки за время {prompt}");
             return new RiddleGameSettingsDTO(pScore, fScore, count, totalTime, timeScore);
         }
+
         public static RiddleInfoDTO ReadRiddleInfoDTO(this IConsoleInput input, string promt = "> ")
         {
-            int? ID = input.ReadNullableInt($"ID {promt}");
+            int? iD = input.ReadNullableInt($"ID {promt}");
             int compID = input.ReadInt($"ID соревнования: {promt}");
             string question = input.PromtInput($"Вопрос {promt}");
             string answer = input.PromtInput($"Ответ {promt}");
             string? otherAnswer = null;
-            List<string> otherAnswers = new List<string>();
+            List<string> otherAnswers = [];
             do
             {
                 otherAnswer = input.PromtInput($"+ Альтернативный ответ (возможно скип) {promt}");
                 otherAnswer = string.IsNullOrWhiteSpace(otherAnswer) ? null : otherAnswer;
-                if (otherAnswer != null) otherAnswers.Add(otherAnswer);
-            } while (otherAnswer != null);
+                if (otherAnswer != null)
+                {
+                    otherAnswers.Add(otherAnswer);
+                }
+            }
+            while (otherAnswer != null);
             return new RiddleInfoDTO(
                 compID,
                 question,
-                (from s in otherAnswers select new RiddleAnswerDTO(s)).ToList(),
+                [.. from s in otherAnswers select new RiddleAnswerDTO(s)],
                 new RiddleAnswerDTO(answer),
-                ID
-            );
+                iD);
         }
     }
 }

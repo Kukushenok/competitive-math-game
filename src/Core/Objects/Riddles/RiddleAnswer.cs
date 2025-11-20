@@ -2,7 +2,7 @@
 {
     public class RiddleAnswer
     {
-        public string TextAnswer = "";
+        public string TextAnswer = string.Empty;
         public RiddleAnswer(string textAnswer)
         {
             TextAnswer = textAnswer;

@@ -9,7 +9,6 @@ using CompetitiveBackend.Services.PlayerParticipationService;
 using CompetitiveBackend.Services.PlayerProfileService;
 using CompetitiveBackend.Services.PlayerRewardService;
 using CompetitiveBackend.Services.RewardDescriptionService;
-using CompetitiveBackend.Services.ServicesRealisation;
 using Microsoft.Extensions.DependencyInjection;
 using ServicesRealisation.Objects;
 using ServicesRealisation.ServicesRealisation.Validator;
@@ -18,12 +17,13 @@ namespace ServicesRealisation
 {
     public class BasicRandom : IRandom
     {
-        private Random random = new Random();
-        public int Next(int minInclusive, int maxExclusive)
+        private readonly Random random = new();
+        public int NextNumber(int minInclusive, int maxExclusive)
         {
             return random.Next(minInclusive, maxExclusive);
         }
     }
+
     public static class ServicesInstaller
     {
         public static IServiceCollection AddCompetitiveServices(this IServiceCollection container)
@@ -36,12 +36,14 @@ namespace ServicesRealisation
             container.AddScoped<IPlayerRewardService, PlayerRewardService>();
             container.AddScoped<IRewardDescriptionService, RewardDescriptionService>();
             container.AddSingleton<ICompetitionRewardScheduler, CompetitionRewardScheduler>();
-            container.AddScoped<ICompetitionLevelService, CompetitionLevelService>();
+
+            // container.AddScoped<ICompetitionLevelService, CompetitionLevelService>();
             container.AddScoped<IGameProviderService, GameProviderService>();
             container.AddScoped<IGameManagementService, GameManagementService>();
             container.AddTransient<IRandom, BasicRandom>();
             return container;
         }
+
         public static IServiceCollection AddAuthService(this IServiceCollection container)
         {
             container.AddScoped<IHashAlgorithm, SHA256HashAlgorithm>();
@@ -50,11 +52,13 @@ namespace ServicesRealisation
             container.AddValidators();
             return container;
         }
+
         public static IServiceCollection AddPlayerProfileService(this IServiceCollection container)
         {
             container.AddScoped<IPlayerProfileService, PlayerProfileService>();
             return container;
         }
+
         public static IServiceCollection AddServicesWhichAreDone(this IServiceCollection container)
         {
             container.AddValidators();
@@ -62,6 +66,7 @@ namespace ServicesRealisation
             container.AddPlayerProfileService();
             return container;
         }
+
         public static IServiceCollection AddValidators(this IServiceCollection container)
         {
             container.AddScoped<IValidator<PlayerProfile>, PlayerAccountValidator>();

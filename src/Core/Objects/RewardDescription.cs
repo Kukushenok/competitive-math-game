@@ -1,11 +1,11 @@
-﻿
-namespace CompetitiveBackend.Core.Objects
+﻿namespace CompetitiveBackend.Core.Objects
 {
     public class RewardDescription : IntIdentifiable, IEquatable<RewardDescription>
     {
         public string Name;
         public string Description;
-        public RewardDescription(string name, string description, int? id = null) : base(id)
+        public RewardDescription(string name, string description, int? id = null)
+            : base(id)
         {
             Name = name;
             Description = description;
@@ -14,6 +14,16 @@ namespace CompetitiveBackend.Core.Objects
         public bool Equals(RewardDescription? other)
         {
             return other != null && Id == other.Id && Name == other.Name && Description == other.Description;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return Equals(obj as RewardDescription);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Name, Description);
         }
     }
 }

@@ -1,13 +1,7 @@
-﻿using CompetitiveBackend.Core.Objects;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using RepositoriesRealisation.DatabaseObjects;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CompetitiveBackend.Core.Objects;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace RepositoriesRealisation.Models
 {
@@ -37,20 +31,34 @@ namespace RepositoriesRealisation.Models
             Description = description;
             StartTime = startTime;
             EndTime = endTime;
+            RiddleGameSettings = new RiddleGameSettingsModel(id, new CompetitiveBackend.Core.Objects.Riddles.RiddleGameSettings(0, 0, 0, null, 0));
         }
+
         public CompetitionModel(string name, string? description, DateTime startTime, DateTime endTime)
         {
             Name = name;
             Description = description;
             StartTime = startTime;
             EndTime = endTime;
+            RiddleGameSettings = null!;
         }
+
         public CompetitionModel()
         {
-            Name = "";
+            Name = string.Empty;
+            Description = string.Empty;
+            StartTime = DateTime.MinValue;
+            EndTime = DateTime.MinValue;
+            RiddleGameSettings = null!;
         }
-        public Competition ToCoreModel() => new Competition(Name, Description ?? "", StartTime, EndTime, Id);
+
+        public Competition ToCoreModel()
+        {
+            return new Competition(Name, Description ?? string.Empty, StartTime, EndTime, Id);
+        }
     }
+
+    [Obsolete("Defunct")]
     [Table("competition_level")]
     public class CompetitionLevelDataModel
     {
@@ -59,14 +67,21 @@ namespace RepositoriesRealisation.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("id")]
         public int Id { get; set; }
-        [ForeignKey("competition_id"), Column("competition_id", TypeName = "int")]
+        [ForeignKey("competition_id")]
+        [Column("competition_id", TypeName = "int")]
         public int CompetitionID { get; set; }
         [Column("platform", TypeName = "varchar(32)")]
         public string Platform { get; set; }
         [Column("version_key", TypeName = "int")]
         public int VersionKey { get; set; }
         public CompetitionLevelDataModelData LevelData { get; set; } = null!;
-        public CompetitionLevelDataModel() { }
+        public CompetitionLevelDataModel()
+        {
+            CompetitionID = 0;
+            Platform = string.Empty;
+            VersionKey = 0;
+        }
+
         public CompetitionLevelDataModel(LevelDataInfo info)
         {
             CompetitionID = info.CompetitionID;
@@ -74,10 +89,12 @@ namespace RepositoriesRealisation.Models
             VersionKey = info.VersionCode;
         }
     }
+
+    [Obsolete("Defunct")]
     [Table("competition_level")]
-    public class CompetitionLevelDataModelData: OneToOneEntity<CompetitionLevelDataModel>
+    public class CompetitionLevelDataModelData : OneToOneEntity<CompetitionLevelDataModel>
     {
         [Column("level_data", TypeName = "bytea")]
-        public byte[] LevelData { get; set; }
+        public byte[]? LevelData { get; set; }
     }
 }

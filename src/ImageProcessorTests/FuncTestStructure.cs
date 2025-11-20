@@ -7,16 +7,18 @@ namespace ImageProcessorTests
         public bool IsPositive { get; init; }
         public string ResultStorage { get; init; }
         public string TestStorage { get; init; }
-        public FuncTestStructure(string testStorage, bool isPositive, string ResultStorage)
+        public FuncTestStructure(string testStorage, bool isPositive, string resultStorage)
         {
             TestStorage = testStorage;
             IsPositive = isPositive;
-            this.ResultStorage = ResultStorage;
+            this.ResultStorage = resultStorage;
         }
+
         public async Task<LargeData> LoadData()
         {
             return new LargeData(await File.ReadAllBytesAsync(TestStorage));
         }
+
         public async Task SaveTest(LargeData data)
         {
             await File.WriteAllBytesAsync(ResultStorage, data.Data);

@@ -1,36 +1,39 @@
 ﻿using CompetitiveBackend.BackendUsage.UseCases;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TechnologicalUIHost.Command;
 using TechnologicalUIHost.MenuCommand;
 
 namespace TechnologicalUIHost.Commands
 {
-    class RootCommand: CompositeCommandBlock
+    internal sealed class RootCommand : CompositeCommandBlock
     {
-        private AuthCommands authCommands;
-        private SelfPlayerCommands selfPlayerCommands;
-        private PlayerUseCaseCommands playerUseCaseCommands;
-        private CompetitionWatchCommands competitionWatchCommands;
-        private CompetitionEditCommands competitionEditCommands;
-        private RewardDescriptionEditCommands rewardDescriptionEditCommands;
-        private RewardDescriptionWatchCommands rewardDescriptionWatchCommands;
-        private CompetitionRewardEditCommands competitionRewardEditCommands;
-        private PlayerRewardUseCaseCommands playerRewardUseCase;
-        private PlayerParticipationUseCaseCommands playerParticipationUseCaseCommands;
-        private PlayerParticipationWatchUseCaseCommands playerParticipationWatchCommands;
-        private GameParticipationUseCaseCommands gameUseCaseCommands;
-        private GameManagementUseCaseCommands managementUseCaseCommands;
-        public RootCommand(IAuthUseCase authUseCase, ISelfUseCase selfUseCase, 
-            IPlayerProfileUseCase playerProfileUseCase, IAuthCache authCache,
-            ICompetitionEditUseCase competitionEditUseCase, ICompetitionWatchUseCase competitionWatchUseCase,
-            IRewardDescriptionEditUseCase rewardDescriptionEditUseCase, IRewardDescriptionWatchUseCase rewardDescriptionWatchUseCase,
-            ICompetitionRewardEditUseCase competitionRewardEditUseCase, IPlayerRewardUseCase playerReward,
-            IPlayerParticipationUseCase playerParticipationUseCase, IPlayerParticipationWatchUseCase playerParticipationWatchUseCase,
-            IGamePlayUseCase gamePlayUseCase, IGameManagementUseCase gameManagementUseCase)
+        private readonly AuthCommands authCommands;
+        private readonly SelfPlayerCommands selfPlayerCommands;
+        private readonly PlayerUseCaseCommands playerUseCaseCommands;
+        private readonly CompetitionWatchCommands competitionWatchCommands;
+        private readonly CompetitionEditCommands competitionEditCommands;
+        private readonly RewardDescriptionEditCommands rewardDescriptionEditCommands;
+        private readonly RewardDescriptionWatchCommands rewardDescriptionWatchCommands;
+        private readonly CompetitionRewardEditCommands competitionRewardEditCommands;
+        private readonly PlayerRewardUseCaseCommands playerRewardUseCase;
+        private readonly PlayerParticipationUseCaseCommands playerParticipationUseCaseCommands;
+        private readonly PlayerParticipationWatchUseCaseCommands playerParticipationWatchCommands;
+        private readonly GameParticipationUseCaseCommands gameUseCaseCommands;
+        private readonly GameManagementUseCaseCommands managementUseCaseCommands;
+        public RootCommand(
+            IAuthUseCase authUseCase,
+            ISelfUseCase selfUseCase,
+            IPlayerProfileUseCase playerProfileUseCase,
+            IAuthCache authCache,
+            ICompetitionEditUseCase competitionEditUseCase,
+            ICompetitionWatchUseCase competitionWatchUseCase,
+            IRewardDescriptionEditUseCase rewardDescriptionEditUseCase,
+            IRewardDescriptionWatchUseCase rewardDescriptionWatchUseCase,
+            ICompetitionRewardEditUseCase competitionRewardEditUseCase,
+            IPlayerRewardUseCase playerReward,
+            IPlayerParticipationUseCase playerParticipationUseCase,
+            IPlayerParticipationWatchUseCase playerParticipationWatchUseCase,
+            IGamePlayUseCase gamePlayUseCase,
+            IGameManagementUseCase gameManagementUseCase)
             : base("Основной интерфейс")
         {
             authCommands = new AuthCommands(authCache, authUseCase);
@@ -47,14 +50,16 @@ namespace TechnologicalUIHost.Commands
             gameUseCaseCommands = new GameParticipationUseCaseCommands(gamePlayUseCase, authCache);
             managementUseCaseCommands = new GameManagementUseCaseCommands(gameManagementUseCase, authCache);
         }
+
         protected override IEnumerable<IConsoleMenuCommand> GetCommands()
         {
             yield return authCommands;
             yield return Sum("Игрок", playerUseCaseCommands, selfPlayerCommands, playerRewardUseCase);
-            yield return Sum("Соревнования", 
-                Join("Просмотр соревнований", competitionWatchCommands, playerParticipationWatchCommands), 
-                Join("Редактирование", competitionEditCommands, managementUseCaseCommands), 
-                competitionRewardEditCommands, 
+            yield return Sum(
+                "Соревнования",
+                Join("Просмотр соревнований", competitionWatchCommands, playerParticipationWatchCommands),
+                Join("Редактирование", competitionEditCommands, managementUseCaseCommands),
+                competitionRewardEditCommands,
                 playerParticipationUseCaseCommands,
                 gameUseCaseCommands);
             yield return Sum("Награды", rewardDescriptionWatchCommands, rewardDescriptionEditCommands);

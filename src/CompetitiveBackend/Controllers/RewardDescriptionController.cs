@@ -1,18 +1,15 @@
 ﻿using CompetitiveBackend.BackendUsage.Objects;
 using CompetitiveBackend.BackendUsage.UseCases;
-using CompetitiveBackend.Core.Objects;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CompetitiveBackend.Controllers
 {
-    [Route($"{APIConsts.ROOTV1}/{APIConsts.REWARD_DESCRIPTIONS}/")]
+    [Route($"{APIConsts.ROOTV1}/{APIConsts.REWARDDESCRIPTIONS}/")]
     [ApiController]
     public class RewardDescriptionController : ControllerBase
     {
-        private IRewardDescriptionEditUseCase editUseCase;
-        private IRewardDescriptionWatchUseCase watchUseCase;
+        private readonly IRewardDescriptionEditUseCase editUseCase;
+        private readonly IRewardDescriptionWatchUseCase watchUseCase;
         public RewardDescriptionController(IRewardDescriptionEditUseCase editUseCase, IRewardDescriptionWatchUseCase watchUseCase)
         {
             this.editUseCase = editUseCase;
@@ -20,12 +17,12 @@ namespace CompetitiveBackend.Controllers
         }
 
         /// <summary>
-        /// Получить описание награды
+        /// Получить описание награды.
         /// </summary>
-        /// <param name="id">Идентификатор описания награды</param>
-        /// <returns>Успешное выполнение</returns>
-        /// <response code="200">Успешное выполнение</response>
-        /// <response code="500">Ошибка сервера</response>
+        /// <param name="id">Идентификатор описания награды.</param>
+        /// <returns>Результат операции.</returns>
+        /// <response code="200">Успешное выполнение.</response>
+        /// <response code="500">Ошибка сервера.</response>
         [HttpGet("{id:int}")]
         [ProducesResponseType(typeof(RewardDescriptionDTO), 200)]
         [ProducesResponseType(typeof(ProblemDetails), 500)]
@@ -35,15 +32,15 @@ namespace CompetitiveBackend.Controllers
         }
 
         /// <summary>
-        /// Получить список всех описаний наград
+        /// Получить список всех описаний наград.
         /// </summary>
-        /// <param name="page">Индекс страницы</param>
-        /// <param name="count">Количество наград на одной странице</param>
-        /// <returns>Успешное выполнение</returns>
-        /// <response code="200">Успешное выполнение</response>
-        /// <response code="401">Пользователь не авторизован</response>
-        /// <response code="403">Пользователь не авторизован как администратор</response>
-        /// <response code="500">Ошибка сервера</response>
+        /// <param name="page">Индекс страницы.</param>
+        /// <param name="count">Количество наград на одной странице.</param>
+        /// <returns>Результат операции.</returns>
+        /// <response code="200">Успешное выполнение.</response>
+        /// <response code="401">Пользователь не авторизован.</response>
+        /// <response code="403">Пользователь не авторизован как администратор.</response>
+        /// <response code="500">Ошибка сервера.</response>
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<RewardDescriptionDTO>), 200)]
         [ProducesResponseType(401)]
@@ -55,13 +52,13 @@ namespace CompetitiveBackend.Controllers
         }
 
         /// <summary>
-        /// Получить иконку награды
+        /// Получить иконку награды.
         /// </summary>
-        /// <param name="id">Идентификатор награды</param>
-        /// <returns>Файл иконки</returns>
-        /// <response code="200">Успешное выполнение</response>
-        /// <response code="404">Награда или иконка не найдены</response>
-        /// <response code="500">Ошибка сервера</response>
+        /// <param name="id">Идентификатор награды.</param>
+        /// <returns>Файл иконки.</returns>
+        /// <response code="200">Успешное выполнение.</response>
+        /// <response code="404">Награда или иконка не найдены.</response>
+        /// <response code="500">Ошибка сервера.</response>
         [HttpGet($"{{id}}/{APIConsts.IMAGE}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
@@ -71,22 +68,22 @@ namespace CompetitiveBackend.Controllers
             return (await watchUseCase.GetRewardIcon(id)).ToFileResult($"reward_{id}.jpg");
         }
 
-        //[HttpGet($"{{id}}/{APIConsts.ASSET}")]
-        //public async Task<FileContentResult> GetRewardGameAsset(int id)
-        //{
+        // [HttpGet($"{{id}}/{APIConsts.ASSET}")]
+        // public async Task<FileContentResult> GetRewardGameAsset(int id)
+        // {
         //    return (await watchUseCase.GetRewardGameAsset(id)).ToFileResult($"reward_{id}_asset.bytes");
-        //}
+        // }
 
         /// <summary>
-        /// Создать новое описание награды
+        /// Создать новое описание награды.
         /// </summary>
-        /// <param name="dto">Данные для создания награды</param>
-        /// <returns>Успешное выполнение</returns>
-        /// <response code="204">Награда успешно создана</response>
-        /// <response code="400">Неверные данные запроса</response>
-        /// <response code="401">Пользователь не авторизован</response>
-        /// <response code="403">Пользователь не авторизован как администратор</response>
-        /// <response code="500">Ошибка сервера</response>
+        /// <param name="dto">Данные для создания награды.</param>
+        /// <returns>Результат операции.</returns>
+        /// <response code="204">Награда успешно создана.</response>
+        /// <response code="400">Неверные данные запроса.</response>
+        /// <response code="401">Пользователь не авторизован.</response>
+        /// <response code="403">Пользователь не авторизован как администратор.</response>
+        /// <response code="500">Ошибка сервера.</response>
         [HttpPost("")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
@@ -95,22 +92,23 @@ namespace CompetitiveBackend.Controllers
         [ProducesResponseType(typeof(ProblemDetails), 500)]
         public async Task<NoContentResult> CreateReward(RewardDescriptionDTO dto)
         {
-            using var self = await editUseCase.Auth(HttpContext);
+            using IRewardDescriptionEditUseCase self = await editUseCase.Auth(HttpContext);
             await self.CreateRewardDescription(dto);
             return NoContent();
         }
 
         /// <summary>
-        /// Обновить описание награды
+        /// Обновить описание награды.
         /// </summary>
-        /// <param name="dto">Обновленные данные награды</param>
-        /// <returns>Успешное выполнение</returns>
-        /// <response code="204">Награда успешно обновлена</response>
-        /// <response code="400">Неверные данные запроса</response>
-        /// <response code="401">Пользователь не авторизован</response>
-        /// <response code="403">Пользователь не авторизован как администратор</response>
-        /// <response code="404">Награда не найдена</response>
-        /// <response code="500">Ошибка сервера</response>
+        /// <param name="id">Идентификатор описания награды.</param>
+        /// <param name="dto">Обновленные данные награды.</param>
+        /// <returns>Результат операции.</returns>
+        /// <response code="204">Награда успешно обновлена.</response>
+        /// <response code="400">Неверные данные запроса.</response>
+        /// <response code="401">Пользователь не авторизован.</response>
+        /// <response code="403">Пользователь не авторизован как администратор.</response>
+        /// <response code="404">Награда не найдена.</response>
+        /// <response code="500">Ошибка сервера.</response>
         [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
@@ -118,25 +116,25 @@ namespace CompetitiveBackend.Controllers
         [ProducesResponseType(403)]
         [ProducesResponseType(404)]
         [ProducesResponseType(typeof(ProblemDetails), 500)]
-        public async Task<NoContentResult> UpdateRewardDescription(RewardDescriptionDTO dto)
+        public async Task<NoContentResult> UpdateRewardDescription(string id, RewardDescriptionDTO dto)
         {
-            using var self = await editUseCase.Auth(HttpContext);
+            using IRewardDescriptionEditUseCase self = await editUseCase.Auth(HttpContext);
             await self.UpdateRewardDescription(dto);
             return NoContent();
         }
 
         /// <summary>
-        /// Обновить иконку награды
+        /// Обновить иконку награды.
         /// </summary>
-        /// <param name="id">Идентификатор награды</param>
-        /// <param name="file">Файл иконки</param>
-        /// <returns>Успешное выполнение</returns>
-        /// <response code="204">Иконка успешно обновлена</response>
-        /// <response code="400">Неверный файл</response>
-        /// <response code="401">Пользователь не авторизован</response>
-        /// <response code="403">Пользователь не авторизован как администратор</response>
-        /// <response code="404">Награда не найдена</response>
-        /// <response code="500">Ошибка сервера</response>
+        /// <param name="id">Идентификатор награды.</param>
+        /// <param name="file">Файл иконки.</param>
+        /// <returns>Результат операции.</returns>
+        /// <response code="204">Иконка успешно обновлена.</response>
+        /// <response code="400">Неверный файл.</response>
+        /// <response code="401">Пользователь не авторизован.</response>
+        /// <response code="403">Пользователь не авторизован как администратор.</response>
+        /// <response code="404">Награда не найдена.</response>
+        /// <response code="500">Ошибка сервера.</response>
         [HttpPut($"{{id}}/{APIConsts.IMAGE}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
@@ -146,17 +144,17 @@ namespace CompetitiveBackend.Controllers
         [ProducesResponseType(typeof(ProblemDetails), 500)]
         public async Task<NoContentResult> UpdateRewardDescriptionIcon(int id, IFormFile file)
         {
-            using var self = await editUseCase.Auth(HttpContext);
+            using IRewardDescriptionEditUseCase self = await editUseCase.Auth(HttpContext);
             await self.SetRewardIcon(id, await file.ToLargeData());
             return NoContent();
         }
 
-        //[HttpPatch($"{{id}}/{APIConsts.ASSET}")]
-        //public async Task<ActionResult> UpdateRewardGameAsset(int id, IFormFile file)
-        //{
+        // [HttpPatch($"{{id}}/{APIConsts.ASSET}")]
+        // public async Task<ActionResult> UpdateRewardGameAsset(int id, IFormFile file)
+        // {
         //    using var self = await editUseCase.Auth(HttpContext);
         //    await self.SetRewardGameAsset(id, await file.ToLargeData());
         //    return NoContent();
-        //}
+        // }
     }
 }

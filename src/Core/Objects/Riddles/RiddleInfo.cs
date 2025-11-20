@@ -3,10 +3,11 @@
     public class RiddleInfo : IntIdentifiable
     {
         public int CompetitionID;
-        public string Question = "";
-        public List<RiddleAnswer> PossibleAnswers = new List<RiddleAnswer>();
+        public string Question = string.Empty;
+        public List<RiddleAnswer> PossibleAnswers = [];
         public RiddleAnswer TrueAnswer;
-        public RiddleInfo(int competitionID, string question, List<RiddleAnswer> possibleAnswers, RiddleAnswer trueAnswer, int? ID = null): base(ID)
+        public RiddleInfo(int competitionID, string question, List<RiddleAnswer> possibleAnswers, RiddleAnswer trueAnswer, int? iD = null)
+            : base(iD)
         {
             CompetitionID = competitionID;
             Question = question;

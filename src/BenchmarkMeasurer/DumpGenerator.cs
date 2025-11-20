@@ -1,31 +1,30 @@
 ﻿using BenchmarkMeasurerHost.DataGenerator;
-using BenchmarkMeasurerHost.TimeMeasurer;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit.Abstractions;
 
 namespace BenchmarkMeasurer
 {
     public class DumpGenerator : BenchmarkTest
     {
-        public DumpGenerator(ITestOutputHelper helper) : base(helper)
+        public DumpGenerator(ITestOutputHelper helper)
+            : base(helper)
         {
         }
 
-        protected override string GetName() => "Dumper";
+        protected override string GetName()
+        {
+            return "Dumper";
+        }
+
         [Theory]
         [MeasurementData(10)]
         public async Task MakeDumps(EnvironmentSettings settings)
         {
-            using var scope = serviceProvider.CreateScope();
+            using IServiceScope? scope = serviceProvider?.CreateScope();
+            Assert.NotNull(scope);
             ICompetitionEnvironmentGenerator host = scope.ServiceProvider.GetRequiredService<ICompetitionEnvironmentGenerator>();
-            var stopwatch = await host.GenerateEnvironment(settings);
+            CompetitiveBackend.Core.Objects.Competition stopwatch = await host.GenerateEnvironment(settings);
             await DoDumpings($"{settings.SupposedRewardCount}_{Guid.NewGuid()}");
         }
-
     }
 }
