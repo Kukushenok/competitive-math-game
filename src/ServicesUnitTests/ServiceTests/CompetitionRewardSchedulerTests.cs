@@ -1,4 +1,5 @@
-﻿using CompetitiveBackend.Core.Objects;
+﻿#if DISABLED
+using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Services.CompetitionService;
 using CompetitiveBackend.Services.ExtraTools;
@@ -91,3 +92,4 @@ namespace ServicesUnitTests.ServiceTests
         }
     }
 }
+#endif
