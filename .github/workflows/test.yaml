@@ -78,6 +78,11 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
+      - name: Fix OTEL data directory permissions
+        run: |
+          echo "=== Fixing permissions ==="
+          mkdir -p src/otel-data
+          chmod 777 src/otel-data  # Give everyone write access
       - name: Start the application
         run: |
           cd src/
@@ -143,6 +148,11 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
+      - name: Fix OTEL data directory permissions
+        run: |
+          echo "=== Fixing permissions ==="
+          mkdir -p src/otel-data
+          chmod 777 src/otel-data  # Give everyone write access
       - name: Start the application
         run: |
           cd src/
