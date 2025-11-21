@@ -96,6 +96,11 @@ jobs:
           cd src/IntegrationalTests
           dotnet test --logger "trx;LogFileName=e2e-tests.trx" \
                       --results-directory ./TestResults
+      - name: Check competitive backend logs
+        if: always()
+        run: |
+          echo "=== COMPETITIVE BACKEND Collector Logs ==="
+          docker logs src-competitivebackend-1
       - name: Check OTEL collector logs
         if: always()
         run: |
