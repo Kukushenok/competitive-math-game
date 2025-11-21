@@ -133,14 +133,14 @@ jobs:
         run: |
           echo "=== Fixing file permissions ==="
           ls -la src/otel-data/
-          chmod 644 src/otel-data/traces.json  # Make it readable by everyone
+          chmod 644 src/otel-data/*  # Make it readable by everyone
           ls -la src/otel-data/
       - name: Upload OTEL traces
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: otel-traces-integration
-          path: src/otel-data/traces.json
+          path: src/otel-data/
 
   e2e_tests:
     name: E2E Tests
@@ -205,14 +205,14 @@ jobs:
         run: |
           echo "=== Fixing file permissions ==="
           ls -la src/otel-data/
-          chmod 644 src/otel-data/traces.json  # Make it readable by everyone
+          chmod 644 src/otel-data/*  # Make it readable by everyone
           ls -la src/otel-data/
       - name: Upload OTEL traces
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: otel-traces-e2e
-          path: src/otel-data/traces.json
+          path: src/otel-data/
 
 
 
