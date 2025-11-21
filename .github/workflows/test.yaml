@@ -133,7 +133,7 @@ jobs:
         run: |
           echo "=== Fixing file permissions ==="
           ls -la src/otel-data/
-          chmod 644 src/otel-data/*  # Make it readable by everyone
+          sudo chmod 644 src/otel-data/*  # Make it readable by everyone
           ls -la src/otel-data/
       - name: Upload OTEL traces
         if: always()
@@ -205,7 +205,7 @@ jobs:
         run: |
           echo "=== Fixing file permissions ==="
           ls -la src/otel-data/
-          chmod 644 src/otel-data/*  # Make it readable by everyone
+          sudo chmod 644 src/otel-data/*  # Make it readable by everyone
           ls -la src/otel-data/
       - name: Upload OTEL traces
         if: always()
