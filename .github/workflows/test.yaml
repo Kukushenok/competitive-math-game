@@ -91,17 +91,26 @@ jobs:
         run: |
           cd src/IntegrationalTests
           dotnet restore -s "https://api.nuget.org/v3/index.json" -s $NUGET_SOURCE
+      - name: Create OTEL data directory
+        run: |
+          mkdir -p src/otel-data
+          chmod 777 src/otel-data
       - name: Run Integration Tests
         run: |
           cd src/IntegrationalTests
           dotnet test --logger "trx;LogFileName=e2e-tests.trx" \
                       --results-directory ./TestResults
-      - name: Stop services
+      - name: Stop services gracefully
         if: always()
         run: |
           cd src/
+          # Stop otel-collector first to ensure it flushes all traces
+          docker compose -f docker-compose.integration.yml stop otel-collector
+          # Give it time to flush
+          sleep 10
+          # Then stop all services
           docker compose -f docker-compose.integration.yml down -v
-      - name: Upload E2E Test Results
+      - name: Upload Integrational Test Results
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -141,15 +150,24 @@ jobs:
         run: |
           cd src/E2ETests
           dotnet restore -s "https://api.nuget.org/v3/index.json" -s $NUGET_SOURCE
+      - name: Create OTEL data directory
+        run: |
+          mkdir -p src/otel-data
+          chmod 777 src/otel-data
       - name: Run E2E Tests
         run: |
           cd src/E2ETests
           dotnet test --logger "trx;LogFileName=e2e-tests.trx" \
                       --results-directory ./TestResults
-      - name: Stop services
+      - name: Stop services gracefully
         if: always()
         run: |
           cd src/
+          # Stop otel-collector first to ensure it flushes all traces
+          docker compose -f docker-compose.integration.yml stop otel-collector
+          # Give it time to flush
+          sleep 10
+          # Then stop all services
           docker compose -f docker-compose.integration.yml down -v
       - name: Upload E2E Test Results
         if: always()
