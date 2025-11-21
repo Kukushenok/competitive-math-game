@@ -91,10 +91,6 @@ jobs:
         run: |
           cd src/IntegrationalTests
           dotnet restore -s "https://api.nuget.org/v3/index.json" -s $NUGET_SOURCE
-      - name: Create OTEL data directory
-        run: |
-          mkdir -p src/otel-data
-          chmod 777 src/otel-data
       - name: Run Integration Tests
         run: |
           cd src/IntegrationalTests
@@ -155,10 +151,6 @@ jobs:
         run: |
           cd src/E2ETests
           dotnet restore -s "https://api.nuget.org/v3/index.json" -s $NUGET_SOURCE
-      - name: Create OTEL data directory
-        run: |
-          mkdir -p src/otel-data
-          chmod 777 src/otel-data
       - name: Run E2E Tests
         run: |
           cd src/E2ETests
