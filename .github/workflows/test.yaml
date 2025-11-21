@@ -128,6 +128,13 @@ jobs:
           name: integration-test-results
           path: |
             src/IntegrationalTests/bin/Debug/net8.0/allure-results
+      - name: Fix trace file permissions
+        if: always()
+        run: |
+          echo "=== Fixing file permissions ==="
+          ls -la src/otel-data/
+          chmod 644 src/otel-data/traces.json  # Make it readable by everyone
+          ls -la src/otel-data/
       - name: Upload OTEL traces
         if: always()
         uses: actions/upload-artifact@v4
@@ -193,11 +200,13 @@ jobs:
           name: e2e-test-results
           path: |
             src/E2ETests/bin/Debug/net8.0/allure-results
-      - name: Debug OTEL output
+      - name: Fix trace file permissions
         if: always()
         run: |
-          echo "--- host src/otel-data ---"
-          ls -la src/otel-data
+          echo "=== Fixing file permissions ==="
+          ls -la src/otel-data/
+          chmod 644 src/otel-data/traces.json  # Make it readable by everyone
+          ls -la src/otel-data/
       - name: Upload OTEL traces
         if: always()
         uses: actions/upload-artifact@v4
