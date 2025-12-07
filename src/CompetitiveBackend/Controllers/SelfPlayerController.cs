@@ -31,7 +31,6 @@ namespace CompetitiveBackend.Controllers
         /// <response code="401">Пользователь не авторизован</response>
         /// <response code="403">Пользователь не авторизован как игрок</response>
         /// <response code="500">Ошибка сервера</response>
-        [Authorize(Roles = "Player")]
         [ProducesResponseType(typeof(PlayerProfile), 200)]
         [ProducesResponseType(401)]
         [ProducesResponseType(403)]
