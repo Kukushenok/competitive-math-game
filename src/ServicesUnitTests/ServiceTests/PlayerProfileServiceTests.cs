@@ -14,12 +14,12 @@ namespace ServicesUnitTests.ServiceTests
     {
         private PlayerProfileService _service;
         private Mock<IPlayerProfileRepository> _profileRepo;
-        private Mock<IImageProcessor> _fileProcessor;
+        private Mock<IImageEffector> _fileProcessor;
         private MockValidator<PlayerProfile> _validator;
         public PlayerProfileServiceTests()
         {
             _profileRepo = new Mock<IPlayerProfileRepository>();
-            _fileProcessor = new Mock<IImageProcessor>();
+            _fileProcessor = new Mock<IImageEffector>();
 
         }
         [Fact]
@@ -80,7 +80,7 @@ namespace ServicesUnitTests.ServiceTests
         {
             // Arrange
             _validator = (new MockValidatorBuilder<PlayerProfile>()).Build();
-            _fileProcessor.Setup(x => x.Resize(It.IsAny<LargeData>())).ReturnsAsync(new LargeData([42]));
+            _fileProcessor.Setup(x => x.Process(It.IsAny<LargeData>())).ReturnsAsync(new LargeData([42]));
             var _service = new PlayerProfileService(_profileRepo.Object, _fileProcessor.Object, _validator);
 
             // Act

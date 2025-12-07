@@ -11,11 +11,11 @@ namespace ServicesUnitTests.ServiceTests
     public class RewardDescriptionServiceTests
     {
         Mock<IRewardDescriptionRepository> _repository;
-        Mock<IImageProcessor> _imageProcessor;
+        Mock<IImageEffector> _imageProcessor;
         public RewardDescriptionServiceTests()
         {
             _repository = new Mock<IRewardDescriptionRepository>();
-            _imageProcessor = new Mock<IImageProcessor>();
+            _imageProcessor = new Mock<IImageEffector>();
         }
         [Fact]
         public async Task RewardDescriptionServiceTests_SetRewardIcon()
@@ -23,7 +23,7 @@ namespace ServicesUnitTests.ServiceTests
             // Arrange
             var processedData = new LargeData([42]);
             MockValidator<RewardDescription> _rdValidator = new MockValidatorBuilder<RewardDescription>().Build();
-            _imageProcessor.Setup(x => x.Resize(It.Is<LargeData>(x=>x.Data.Length == 3))).ReturnsAsync(processedData);
+            _imageProcessor.Setup(x => x.Process(It.Is<LargeData>(x=>x.Data.Length == 3))).ReturnsAsync(processedData);
             var _service = new RewardDescriptionService(_repository.Object, _imageProcessor.Object, _rdValidator);
 
             // Act

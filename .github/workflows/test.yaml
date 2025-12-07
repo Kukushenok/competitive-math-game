@@ -203,7 +203,7 @@ jobs:
     name: Merge Allure Results
     runs-on: ubuntu-latest
     container: alpine:latest
-    needs: [unit_tests, integration_tests, e2e_tests]
+    needs: [unit_tests, integration_tests, e2e_tests, e2e_tests_mocks]
     if: always()
     steps:
       - uses: actions/download-artifact@v4
