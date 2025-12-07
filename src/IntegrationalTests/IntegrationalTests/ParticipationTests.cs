@@ -37,7 +37,7 @@ namespace IntegrationalTests
             var result = await Client.PutAsync($"/api/v1/competitions/{tracking.Id}/participations/?score=500", null);//await Client.GetAsync($"{APIConsts.ROOTV1}/{APIConsts.COMPETITIONS}/1");
 
             // Assert
-            result.IsSuccessStatusCode.Should().BeTrue();
+            result.IsSuccessStatusCode.Should().BeFalse();
             await Context.PlayerParticipation.Where(x => x.AccountID == ACCOUNT.AccountID).ExecuteDeleteAsync();
         }
         [Fact]

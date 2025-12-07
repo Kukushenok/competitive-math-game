@@ -2,29 +2,29 @@ syntax = "proto3";
 
 option csharp_namespace = "ImageProcessorService";
 option java_package = "com.imageprocessor";
-
+option go_package = "imageprocessor-grpc-mock/gen;gen";
 package imageprocessor;
 
-// Сервис обработки изображений
+// РЎРµСЂРІРёСЃ РѕР±СЂР°Р±РѕС‚РєРё РёР·РѕР±СЂР°Р¶РµРЅРёР№
 service ImageProcessor {
   rpc Resize (ResizeRequest) returns (ImageResponse);
   rpc FitInBox (FitInBoxRequest) returns (ImageResponse);
 }
 
-// Запрос на изменение размера
+// Р—Р°РїСЂРѕСЃ РЅР° РёР·РјРµРЅРµРЅРёРµ СЂР°Р·РјРµСЂР°
 message ResizeRequest {
   bytes data = 1;
   uint32 minSize = 2;
   uint32 maxSize = 3;
 }
 
-// Запрос на вписывание в квадрат
+// Р—Р°РїСЂРѕСЃ РЅР° РІРїРёСЃС‹РІР°РЅРёРµ РІ РєРІР°РґСЂР°С‚
 message FitInBoxRequest {
   bytes data = 1;
-  uint32 colorRGBA = 2;  // По умолчанию 0x000000FF (синий)
+  uint32 colorRGBA = 2;  // РџРѕ СѓРјРѕР»С‡Р°РЅРёСЋ 0x000000FF (СЃРёРЅРёР№)
 }
 
-// Ответ с изображением
+// РћС‚РІРµС‚ СЃ РёР·РѕР±СЂР°Р¶РµРЅРёРµРј
 message ImageResponse {
   bytes data = 1;
 }

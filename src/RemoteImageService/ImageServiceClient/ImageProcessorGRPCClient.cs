@@ -28,7 +28,7 @@ namespace ImageServiceClient
                 }
             };
 
-            _channel = GrpcChannel.ForAddress(conf.GetConnectionString("ImageService") ?? "http://image-processor:8081", channelOptions);
+            _channel = GrpcChannel.ForAddress(conf.GetConnectionString("ImageService") ?? "grpc://image-processor:8081", channelOptions);
             _client = new ImageProcessor.ImageProcessorClient(_channel);
         }
 

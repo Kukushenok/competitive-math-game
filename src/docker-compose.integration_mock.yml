@@ -2,7 +2,7 @@ services:
   image-service:
       build:
           context: .
-          dockerfile: RemoteImageService/ImageService/Dockerfile
+          dockerfile: RemoteImageService/ImageServiceMock/Dockerfile
       environment:
           - ASPNETCORE_ENVIRONMENT=Production
           - ASPNETCORE_URLS=http://+:8080

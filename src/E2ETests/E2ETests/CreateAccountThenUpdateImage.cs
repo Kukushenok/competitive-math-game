@@ -76,7 +76,10 @@ namespace E2ETests
         [ClassData(typeof(ImageTestingDataManager))]
         public async Task CompetitionFetchOne(FuncTestStructure std)
         {
-            
+            if(!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("MOCK_IN_USE")))
+            {
+                AllureApi.AddFeature("Mock in use");
+            }
             var acc = await CreateAccount();
             if(std.IsPositive)
             {
