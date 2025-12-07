@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+option csharp_namespace = "ImageProcessorService";
+option java_package = "com.imageprocessor";
+
+package imageprocessor;
+
+// Сервис обработки изображений
+service ImageProcessor {
+  rpc Resize (ResizeRequest) returns (ImageResponse);
+  rpc FitInBox (FitInBoxRequest) returns (ImageResponse);
+}
+
+// Запрос на изменение размера
+message ResizeRequest {
+  bytes data = 1;
+  uint32 minSize = 2;
+  uint32 maxSize = 3;
+}
+
+// Запрос на вписывание в квадрат
+message FitInBoxRequest {
+  bytes data = 1;
+  uint32 colorRGBA = 2;  // По умолчанию 0x000000FF (синий)
+}
+
+// Ответ с изображением
+message ImageResponse {
+  bytes data = 1;
+}

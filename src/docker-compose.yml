@@ -1,4 +1,14 @@
 services:
+  image-service:
+      build:
+          context: .
+          dockerfile: RemoteImageService/ImageService/Dockerfile
+      environment:
+          - ASPNETCORE_ENVIRONMENT=Production
+          - ASPNETCORE_URLS=http://+:8080
+          - ASPNETCORE_Kestrel__EndpointDefaults__Protocols=Http2
+      networks:
+          - my_persistent_network
   competitivebackend:
     image: ${DOCKER_REGISTRY-}competitivebackend
     build:
@@ -6,6 +16,7 @@ services:
       dockerfile: CompetitiveBackend/Dockerfile
     depends_on:
       - postgres
+      - image-service
     ports:
       - "8080:8080"
     networks:
@@ -25,7 +36,6 @@ services:
         - 5432:5432
     networks:
       - my_persistent_network
-
 networks:
   my_persistent_network:
     driver: bridge

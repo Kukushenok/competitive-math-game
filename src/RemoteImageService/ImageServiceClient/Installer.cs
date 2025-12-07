@@ -1,4 +1,5 @@
 ﻿using CompetitiveBackend.Services.ExtraTools;
+using ImageServiceClient;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,9 @@ namespace ImageProcessorRealisation
 {
     public static class Installer
     {
-        public static IServiceCollection AddMajickImageRescaler(this IServiceCollection container)
+        public static IServiceCollection AddImageRescalerClient(this IServiceCollection container)
         {
-            container.AddScoped<IImageProcessor, ImageRescaler>();
+            container.AddScoped<IImageProcessor, ImageProcessorGrpcClient>();
             return container;
         }
     }
