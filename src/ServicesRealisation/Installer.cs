@@ -40,6 +40,7 @@ namespace ServicesRealisation
             container.AddScoped<IGameProviderService, GameProviderService>();
             container.AddScoped<IGameManagementService, GameManagementService>();
             container.AddTransient<IRandom, BasicRandom>();
+            container.AddScoped<IImageEffector, ImageEffector>();
             return container;
         }
         public static IServiceCollection AddAuthService(this IServiceCollection container)

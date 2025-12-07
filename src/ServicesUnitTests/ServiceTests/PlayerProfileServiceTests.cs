@@ -80,7 +80,7 @@ namespace ServicesUnitTests.ServiceTests
         {
             // Arrange
             _validator = (new MockValidatorBuilder<PlayerProfile>()).Build();
-            _fileProcessor.Setup(x => x.Process(It.IsAny<LargeData>())).ReturnsAsync(new LargeData([42]));
+            _fileProcessor.Setup(x => x.Resize(It.IsAny<LargeData>())).ReturnsAsync(new LargeData([42]));
             var _service = new PlayerProfileService(_profileRepo.Object, _fileProcessor.Object, _validator);
 
             // Act

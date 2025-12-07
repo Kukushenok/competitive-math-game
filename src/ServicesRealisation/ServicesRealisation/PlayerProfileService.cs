@@ -1,6 +1,7 @@
 ﻿using CompetitiveBackend.Core.Objects;
 using CompetitiveBackend.Repositories;
 using CompetitiveBackend.Services.ExtraTools;
+using CompetitiveBackend.Services.Objects;
 using ServicesRealisation.ServicesRealisation.Validator;
 using System.ComponentModel.DataAnnotations;
 
@@ -9,9 +10,9 @@ namespace CompetitiveBackend.Services.PlayerProfileService
     public class PlayerProfileService : IPlayerProfileService
     {
         private readonly IPlayerProfileRepository _profileRepository;
-        private readonly IImageProcessor _imageProcessor;
+        private readonly IImageEffector _imageProcessor;
         private readonly IValidator<PlayerProfile> _validator;
-        public PlayerProfileService(IPlayerProfileRepository profileRepository, IImageProcessor processor, IValidator<PlayerProfile> validator)
+        public PlayerProfileService(IPlayerProfileRepository profileRepository, IImageEffector processor, IValidator<PlayerProfile> validator)
         {
             _profileRepository = profileRepository;
             _imageProcessor = processor;

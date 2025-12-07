@@ -11,7 +11,9 @@ namespace CompetitiveBackend.Services.ExtraTools
     /// <summary>
     /// Логическое разделение: оно обрабатывает только изображения.
     /// </summary>
-    public interface IImageProcessor: ILargeFileProcessor
+    public interface IImageProcessor
     {
+        public Task<LargeData> Resize(LargeData data, uint minSize, uint maxSize);
+        public Task<LargeData> FitInBox(LargeData data, uint colorRGBA = 0x000000FF);
     }
 }

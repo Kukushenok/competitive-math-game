@@ -51,7 +51,7 @@ namespace ImageProcessorTests
             if (test.IsPositive)
             {
                 logger.LogInformation($"Excepting positive result");
-                LargeData result = await processor.Process(await test.LoadData());
+                LargeData result = await processor.Resize(await test.LoadData());
                 await test.SaveTest(result);
                 logger.LogInformation($"Output was saved: {test.ResultStorage}");
             }
@@ -59,7 +59,7 @@ namespace ImageProcessorTests
             {
                 logger.LogInformation($"Excepting negative result");
                 await Assert.ThrowsAnyAsync<ServiceException>(async ()
-                    => await processor.Process(await test.LoadData()));
+                    => await processor.Resize(await test.LoadData()));
             }
         }
     }

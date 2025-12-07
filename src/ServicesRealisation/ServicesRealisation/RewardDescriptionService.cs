@@ -9,9 +9,9 @@ namespace CompetitiveBackend.Services.RewardDescriptionService
     public class RewardDescriptionService : IRewardDescriptionService
     {
         private readonly IRewardDescriptionRepository _repository;
-        private readonly IImageProcessor _imageProcessor;
+        private readonly IImageEffector _imageProcessor;
         private readonly IValidator<RewardDescription> _rewardDescriptionValidator;
-        public RewardDescriptionService(IRewardDescriptionRepository repository, IImageProcessor imageProcessor, IValidator<RewardDescription> rewardDescriptionValidator)
+        public RewardDescriptionService(IRewardDescriptionRepository repository, IImageEffector imageProcessor, IValidator<RewardDescription> rewardDescriptionValidator)
         {
             _rewardDescriptionValidator = rewardDescriptionValidator;
             _repository = repository;

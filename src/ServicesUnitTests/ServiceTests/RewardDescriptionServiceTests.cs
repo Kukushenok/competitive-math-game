@@ -23,7 +23,7 @@ namespace ServicesUnitTests.ServiceTests
             // Arrange
             var processedData = new LargeData([42]);
             MockValidator<RewardDescription> _rdValidator = new MockValidatorBuilder<RewardDescription>().Build();
-            _imageProcessor.Setup(x => x.Process(It.Is<LargeData>(x=>x.Data.Length == 3))).ReturnsAsync(processedData);
+            _imageProcessor.Setup(x => x.Resize(It.Is<LargeData>(x=>x.Data.Length == 3))).ReturnsAsync(processedData);
             var _service = new RewardDescriptionService(_repository.Object, _imageProcessor.Object, _rdValidator);
 
             // Act

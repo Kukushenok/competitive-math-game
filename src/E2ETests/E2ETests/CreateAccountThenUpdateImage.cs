@@ -114,6 +114,7 @@ namespace E2ETests
         [AllureStep("Do successful")]
         private async Task DoSuccessful(FuncTestStructure std, string token)
         {
+            AllureApi.AddAttachment(std.TestStorage, "Original image");
             await using var dpd = std.Data;
             dpd.FormContent.Headers.Add("Bearer", token);
             var res1 = await Client.PutAsync($"/api/v1/players/me/image", dpd.FormContent);
